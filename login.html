@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login | Security Sciences</title>
+    <link rel="stylesheet" href="style.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,300' rel='stylesheet' type='text/css'>
+    <!--script src="/socket.io/socket.io.js"></script-->
+    <!-- PRODUCTION ENVIRONMENT 
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js" />
+    -->
+    <!-- DEVELOPMENT ENVIRONMENT -->
+    <script src="/js/knockout-2.2.1.js"></script>
+    <script src="/js/jquery-1.9.1.js"></script>
+    <!-- APP CODE -->
+    <script src="/js/main.js"></script>
+  </head>
+  <body> 
+    <div class="login">
+        <h2 class="logo">Security Sciences</h2>
+        <form class="login-form" method="POST">
+            <h1 class="title" data-bind="text: LoginTitle"></h1>
+            <div class="social-login">
+                <a href="/login/google" class="gplus"><span id="google_icon" class="hover"></span>Login with Google Plus</a>
+                <a href="/login/twitter" class="twitter"><span id="twitter_icon" class="hover"></span>Login with Twitter</a>
+                <a href="/login/facebook" class="fb"><span id="facebook_icon" class="hover"></span>Login with Facebook</a>
+            </div>
+            <input type="text" data-bind="value: userName" name="email" class="email" placeholder="E-mail">
+            <input type="password" data-bind="value: userPassword" name="password" class="password" placeholder="Password">
+            <input type="submit" value="Login" class="submit">
+            <div class="helper-actions">
+                <input type="checkbox" id="remember" class="remember"><label for="remember">Remember me</label>
+                <a href="#" class="forgot">Forgot your password?</a>
+            </div>
+        </form>
+        <div class="signup-link">Not a member? <a href="signup.html">Sign up</a></div>
+    </div>
+  </body>
+  <script>
+    ko.applyBindings(oViewModel);
+  </script>
+</html>
