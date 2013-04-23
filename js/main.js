@@ -9,7 +9,6 @@ oViewModel.LoginTitle.subscribe(function(newValue){
 	alert("The Login Title has changed to : " + newValue);
 });
 
-<<<<<<< HEAD
 $(function() {
 
 	var currentModule = 'home';
@@ -27,7 +26,7 @@ $(function() {
 		$('body').addClass(currentModule);
 	});
 });
-=======
+
 function TestSosStart()
 {
 	var oData = {};
@@ -55,4 +54,4 @@ function fxFailure(response)
 	alert('Failure: ' + response);
 	console.log(response);
 }
->>>>>>> Added the Ajax calls
+
