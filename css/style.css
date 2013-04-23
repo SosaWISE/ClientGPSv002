@@ -254,8 +254,8 @@ nav.primary a .ico {
 	text-align: center;
 	color: rgba(255,255,255,.25);
 	font-family: 'entypo';
-	font-size: 62px;
-	line-height: .66em;
+	font-size: 30px;
+	line-height: 1.3em;
 	-webkit-transition: .25s;
 	-moz-transition: .25s;
 	-ms-transition: .25s;
@@ -351,7 +351,6 @@ nav.primary .indicator {
 .modules > div { 
 	position: absolute;
 	top:0;right:0;bottom:0;left:0;
-	overflow: scroll;
 	opacity: 0;
 	-webkit-transition: .25s;
 	-moz-transition: .25s;
@@ -376,7 +375,21 @@ nav.primary .indicator {
 .billing .modules .billing,
 .reports .modules .reports { z-index:1; opacity: 1; }
 
+.sidebars h2 {
+	font-size: 21px;
+}
 
+.sidebars ul {
+	border-top: 1px solid rgba(255,255,255,.12);
+	margin-bottom: 20px;
+}
+
+.sidebars ul li a {
+	display: block;
+	color: rgba(255,255,255,0.66);
+	padding: 10px 20px;
+	border-bottom: 1px solid rgba(255,255,255,.12)
+}
 
 
 
