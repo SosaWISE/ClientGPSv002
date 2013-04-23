@@ -63,7 +63,7 @@ input{
 	left:35px;
 	width:240px;
 	text-indent:-99999px;
-	background:url("img/login-logo.png") left center no-repeat;
+	background:url("/img/login-logo.png") left center no-repeat;
 	border-right:1px solid #d5d5d2;
 	-webkit-box-shadow:1px 0 0 #fff;
 	box-shadow:1px 0 0 #fff
