@@ -1,5 +1,5 @@
 /**********************************************************************************************************************
- * @fileOverview Created by JetBrains WebStorm.
+ * @fileOverview Created by Andres Sosa
  * Date: 4/23/2013
  * Time: 04:37 PM
  * @author: <a href="mailto:asosa@securitysciences.com">Andres Sosa</a>
@@ -10,9 +10,7 @@
  *
  /********************************************************************************************************************/
  // ** Make sure we are using the right NameSpace.
-SSE = SSE || {};
-SSE.Services = SSE.Services || {};
-
+namespace('SSE.Services');
 /**
  * Creates a new CORS request object.
  * @class Represents a CORS Request object.
@@ -20,6 +18,10 @@ SSE.Services = SSE.Services || {};
 (function (CORSRequest, $, undefined) {
 	/** START Private properties. */
 	/**   END Private properties. */
+
+	/** START Public Properties. */
+	CORSRequest._namespace = 'SSE.Services.CORSRequest';
+	/**   END Public Properties. */
 
 	/** START Public Method. */
 	//noinspection JSValidateJSDoc
@@ -29,7 +31,7 @@ SSE.Services = SSE.Services || {};
 	 * @param url
 	 * @returns {XMLHttpRequest|XDomainRequest} Depends on the browser
 	 */
-	CORSRequest.createNew = function (method, url) {
+	CORSRequest.createRequest = function (method, url) {
 		/** Initialize */
 		var xhr = new XMLHttpRequest();
 
@@ -52,4 +54,5 @@ SSE.Services = SSE.Services || {};
 	};
 	/**   END Public Method. */
 
-}( SSE.Services.CORSRequest = SSE.Services.CORSRequest || {}, JQuery ));
+}( SSE.Services.CORSRequest = SSE.Services.CORSRequest || {}, jQuery ));
+

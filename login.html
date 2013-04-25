@@ -5,16 +5,25 @@
     <link rel="stylesheet" href="css/style.css" />
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,300' rel='stylesheet' type='text/css'>
     <!--script src="/socket.io/socket.io.js"></script-->
-    <!-- PRODUCTION ENVIRONMENT 
+    <!-- START PRODUCTION ENVIRONMENT 
     <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js" />
     -->
-    <!-- DEVELOPMENT ENVIRONMENT -->
-    <script src="/js/knockout-2.2.1.js"></script>
-    <script src="/js/jquery-1.9.1.js"></script>
+    <!--   END PRODUCTION ENVIRONMENT -->
+    <!-- START DEVELOPMENT ENVIRONMENT -->
+    <!-- Opensource Libraries -->
+    <script type="text/javascript" src="/js/knockout-2.2.1.js"></script>
+    <script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+    <!-- Home made Libraries -->
+    <script type="text/javascript" src="/js/lib/namespaces.js"></script>
+    <script type="text/javascript" src="/js/lib/messageBox.js"></script>
+    <!-- MODELS -->
+    <script type="text/javascript" src="/js/models/message.js"></script>
     <!-- APP CODE -->
-    <script src="/js/login.js"></script>
-  </head>
+    <script type="text/javascript" src="/js/login.js"></script>
+    <script type="text/javascript" src="/js/services/CORSRequest.js"></script>
+    <!--   END DEVELOPMENT ENVIRONMENT -->
+   </head>
   <body> 
     <div class="login">
         <h2 class="logo">Security Sciences</h2>
