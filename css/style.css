@@ -63,7 +63,7 @@ input{
 	left:35px;
 	width:240px;
 	text-indent:-99999px;
-	background:url("img/login-logo.png") left center no-repeat;
+	background:url("/img/login-logo.png") left center no-repeat;
 	border-right:1px solid #d5d5d2;
 	-webkit-box-shadow:1px 0 0 #fff;
 	box-shadow:1px 0 0 #fff
@@ -193,7 +193,7 @@ input{
 	margin-left:10px;
 	text-indent:-99999px;
 	position:relative;
-	background:url("img/social-login-sprite.png") no-repeat
+	background:url("../img/social-login-sprite.png") no-repeat
 }
 .login .social-login a.gplus{background-position:0 0}
 .login .social-login a.twitter{background-position:-32px 0}
@@ -207,7 +207,7 @@ input{
 	right:0;
 	bottom:0;
 	left:0;
-	background:url("img/social-login-sprite.png") no-repeat;
+	background:url("../img/social-login-sprite.png") no-repeat;
 	-webkit-transition:.2s;
 	-moz-transition:.2s;
 	-o-transition:.2s;
