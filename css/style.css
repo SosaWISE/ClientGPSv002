@@ -376,22 +376,159 @@ nav.primary .indicator {
 .reports .modules .reports { z-index:1; opacity: 1; }
 
 .sidebars h2 {
-	font-size: 21px;
+	font-size: 18px;
+	padding: 20px;
 }
 
-.sidebars ul {
+.sidebars .home ul {
 	border-top: 1px solid rgba(255,255,255,.12);
-	margin-bottom: 20px;
+	margin-bottom: 10px;
 }
 
-.sidebars ul li a {
+.sidebars .home ul li a {
 	display: block;
 	color: rgba(255,255,255,0.66);
 	padding: 10px 20px;
-	border-bottom: 1px solid rgba(255,255,255,.12)
+	border-bottom: 1px solid rgba(255,255,255,.12);
+	-webkit-transition: .1s;
+	-moz-transition: .1s;
+	-ms-transition: .1s;
+	transition: .1s;
 }
 
+.sidebars .home ul li a:hover {
+	color: white;
+}
 
+.content ul li {
+	color: rgba(0,0,0,0.66);
+	padding: 20px;
+	border-bottom: 1px solid rgba(0,0,0,.1);	
+}
+.content ul li .sub {
+	font-size: 12px;
+	color: rgba(0,0,0,0.5);
+}
+
+.modules a {
+	font-weight: 400;
+	color: rgba(0,0,0,0.66);
+}
+.modules a:hover {
+	text-decoration: underline;
+}
+
+.modules div .head {
+	height: 60px;
+	padding: 20px;
+	position: relative;
+	   -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.1);
+            box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.1); 
+}
+
+.modules div .head h2 {
+	font-size: 18px;
+	color: rgba(0, 0, 0, 0.66)
+}
+
+.modules div .head input.search {
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	   -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+            border-radius: 50px; 
+    padding: 5px 5px 5px 30px;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    outline: none;
+    width: 225px;
+}
+
+.modules .content {
+	position: absolute;
+	top:60px;right:0;bottom:0;left:0;
+	overflow: scroll;
+}
+
+.sidebars ul.tabs {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	border: 0 solid transparent;
+}
+
+.sidebars ul.tabs li.tab {
+	list-style: none;
+	float: left;
+	margin: 0 1px 0 0;
+	padding: 0;
+}
+
+.sidebars ul.tabs li.tab:last-child {
+	margin-right: 0;
+}
+
+.sidebars ul.tabs li.tab a {
+	display: block;
+	width: 99px;
+	padding: 10px;
+	margin: 0;
+	text-align: center;
+	background: rgba(0, 0, 0, 0.15);
+	border: 0 solid transparent;
+	text-transform: uppercase;
+	font-weight: 500;
+	color: rgba(255,255,255,0.66);
+}
+.sidebars ul.tabs li.tab a:hover {
+	background: rgba(0, 0, 0, 0.25);
+	color: rgba(255,255,255,0.8);
+}
+
+.sidebars ul.tabs li.tab.active a {
+	background: transparent;
+	color: white;
+}
+
+.sidebars .devices .content {
+	position: absolute;
+	top:97px;right:0;bottom:0;left:0;
+	overflow: scroll;
+}
+.sidebars .content ul li {
+	border-bottom: 1px solid rgba(255,255,255,0.2);
+	color: rgba(255,255,255,0.75);
+}
+.sidebars .content ul li a {
+	font-weight: 500;
+	color: rgba(255,255,255,0.75);
+}
+.sidebars .content ul li .sub {
+	color: rgba(255,255,255,0.5);
+}
+.sidebars .content {
+	border-top: 1px solid rgba(255,255,255,0.2);
+}
+
+.sidebars .search-bar {
+	padding: 15px;
+}
+
+.sidebars .search-bar input.search {
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	   -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+            border-radius: 50px; 
+    padding: 5px 5px 5px 30px;
+    outline: none;
+    width: 225px;
+}
+
+#devices-map {
+	position: absolute;
+	top:0;right:0;bottom:0;left:0;
+}
 
 
 @media (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3/2), (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5), (min-resolution: 1.5dppx){
