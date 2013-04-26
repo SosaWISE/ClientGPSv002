@@ -39,7 +39,7 @@ namespace('SSE.Services');
 		 * "withCredentials" only exits on the XMLHttpRequest2 object. */
 		if ("withCredentials" in xhr) {
 			xhr.open(method, url, true);
-		} else if (typeof XDomainRequest != "undefined") {
+		} else if (typeof XDomainRequest !== "undefined") {
 			/** Otherwise, check if XDomainRequest.
 			 * XDomainRequest only exists in IE, and is IE's way of making CORS requests. */
 			xhr = new XDomainRequest();

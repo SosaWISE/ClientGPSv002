@@ -57,8 +57,8 @@ if ('XDomainRequest' in window && window.XDomainRequest !== null) {
 		oXhr = new XDomainRequest(); 
 		if (oXhr)
 		{
-			oXhr.onerror     = fxFailure;
-			oXhr.onload      = fxSuccess;
+			//oXhr.onerror     = fxFailure;
+			//oXhr.onload      = fxSuccess;
 		}
 
 		/** Set Content Type. */
