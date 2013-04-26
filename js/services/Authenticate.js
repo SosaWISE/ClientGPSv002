@@ -31,11 +31,29 @@ namespace('SSE.Services');
 		/** Make Async call. */
 		return SSE.Services.ClientAPI.ajaxAsync({
 			Data: data
-			, ActionMethod: 'AuthSrv/SosStart'
+			, ActionMethod: 'AuthSrv/SessionStart'
 			, SuccessFx: params.SuccessFx
 			, FailureFx: params.FailureFx
 		});
 	};
+
+	Authentication.CustomerAuth = function(params)
+	{
+		/** Initialize. */
+		var data = {
+			SessionID: params.SessionID
+			, Username: params.Username
+			, Password: params.Password
+		};
+
+		/** Make the async call. */
+		return SSE.Services.ClientAPI.ajaxAsync({
+			Data: data
+			, ActionMethod: 'AuthSrv/CustomerAuth'
+			, SuccessFx: params.SuccessFx
+			, FailureFx: params.FailureFx
+		});
+	}
 	/**   END Public Method. */
 
 
