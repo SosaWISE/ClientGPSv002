@@ -9,10 +9,15 @@
 // ** Make sure we are using the right NameSpace.
 namespace('SSE');
 
-(function (Configuration) {
+/**
+ * @class Singleton class that contains all the settings for the application.
+ */
+SSE.Configuration =
+(function () {
 	//noinspection JSUnusedAssignment
 	/** Initialize object. */
-	Configuration = {
-		get ServicesDomain() { return "//sse.services.cors/"; }
+	return {
+		get ServicesDomain() { return "//sse.services.cors/"; },
+		get ApplicationToken() { return "SSE_MAIN_PORTAL"; }
 	};
-}(SSE.Configuration = SSE.Configuration || {}));
+}());

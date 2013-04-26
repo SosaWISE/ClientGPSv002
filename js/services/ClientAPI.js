@@ -37,17 +37,39 @@ namespace('SSE.Services');
 		/** Initialize */
 		var xhr = new XMLHttpRequest();
 
-        /** Check the type of handler available. */
-        if (typeof XDomainRequest !== "undefined") {
+		/** Check if the XMLHttpRequest object has a "withCredentials" property.
+		 * "withCredentials" only exits on the XMLHttpRequest2 object. */
+		if ("withCredentials" in xhr) {
+				return xhr;
+
+		/** Check the type of handler available. */
+		} else if (typeof XDomainRequest !== "undefined") {
 			/** Otherwise, check if XDomainRequest.
 			 * XDomainRequest only exists in IE, and is IE's way of making CORS requests. */
 			xhr = new XDomainRequest();
-			if (xhr)
-			{
-				xhr.onerror = _failureWrapperIE;
-				xhr.onload  = _successWrapperIE;
-				_isDomainRequest = true;
-			}
+			_isDomainRequest = true;
+
+			/** Assigned the jQuery ajax settings. */
+			$.ajaxSettings.xhr = function() {
+				try {
+					if (xhr)
+					{
+						xhr.onerror = _failureWrapperIE;
+						xhr.onload  = _successWrapperIE;
+					}
+					return xhr;
+				}
+				catch(e)
+				{
+					SSE.Lib.MessageBox.Critical(SSE.Model.Message.new({
+						title: "Exception thrown configuring XDomainRequest"
+						, messageBody: "The following exception was thrown: " + e
+					}));
+
+					/** Needs to return something in the event of an error. */
+					return null;
+				}
+			};
 		} else {
 			/** Otherwise CORS is not supported in this browser. */
 			SSE.Lib.MessageBox.Critical(SSE.Models.Message.new({
@@ -56,12 +78,14 @@ namespace('SSE.Services');
 			}));
 
 			/** Exit the function. */
-			return;
+			return null;
 		}
 
-		/** Assigned the jQuery ajax settings. */
-		$.ajaxSettings.xhr = xhr;
+		/** Set default configs. */
 		$.support.cors = true;
+
+		/** Return handler. */
+		return xhr;
 	}
 
 	/**
@@ -71,7 +95,9 @@ namespace('SSE.Services');
 	 */
 	function _successWrapperIE(response)
 	{
-
+		/** Initialize. */
+		var jsonObject = eval("(" + response.currentTarget.responseText + ")");
+		return _successFx(jsonObject);
 	}
 
 	/**
@@ -80,7 +106,9 @@ namespace('SSE.Services');
 	 * @private
 	 */
 	function _failureWrapperIE(response)
-	{}
+	{
+		return _failureFx(response);
+	}
 	/**   END Private Methods. */
 
 	/** START Public Method. */
@@ -90,6 +118,13 @@ namespace('SSE.Services');
      */
 	ClientAPI.ajaxAsync = function (params)
 	{
+		/** Check if using DomainRequest. */
+		if (_isDomainRequest)
+		{
+			_successFx = params.SuccessFx;
+			_failureFx = params.FailureFx;
+		}
+
 		/** Initialize the ajax and get the handler. */
 		var jxHdr = $.ajax({
 			url: SSE.Configuration.ServicesDomain + params.ActionMethod
@@ -104,43 +139,8 @@ namespace('SSE.Services');
 			, error: params.FailureFx
 		});
 
-		/** Check if using DomainRequest. */
-		if (_isDomainRequest)
-		{
-			_successFx = params.SuccessFx;
-			_failureFx = params.FailureFx;
-		}
-
 		/** Return handler. */
 		return jxHdr;
-	};
-
-	/**
-	 * @description This class will allow is to create instances of the CORS Request object.
-	 * @param method
-	 * @param url
-	 * @returns {XMLHttpRequest|XDomainRequest} Depends on the browser
-	 */
-	ClientAPI.createRequest = function (method, url) {
-		/** Initialize */
-		var xhr = new XMLHttpRequest();
-
-		/** Check if the XMLHttpRequest object has a "withCredentials" property.
-		 * "withCredentials" only exits on the XMLHttpRequest2 object. */
-		if ("withCredentials" in xhr) {
-			xhr.open(method, url, true);
-		} else if (typeof XDomainRequest !== "undefined") {
-			/** Otherwise, check if XDomainRequest.
-			 * XDomainRequest only exists in IE, and is IE's way of making CORS requests. */
-			xhr = new XDomainRequest();
-			xhr.open(method, url);
-		} else {
-			/** Otherwise CORS is not supported in this browser. */
-			xhr = null;
-		}
-
-		/** Return result. */
-		return xhr;
 	};
 	/**   END Public Method. */
 

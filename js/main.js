@@ -1,57 +1,23 @@
-var oViewModel = {
-	LoginTitle: ko.observable("Login"),
-	PersonAge: ko.observable(43),
-	userName: ko.observable("SosaWISE"),
-	userPassword: ko.observable("GetThis")
-};
+/**********************************************************************************************************************
+ * @fileOverview Created by Andres Sosa
+ * Date: 4/26/2013
+ * Time: 12:19 PM
+ * @author: <a href="mailto:asosa@securitysciences.com">Andres Sosa</a>
+ * @description This file has the main entry point to the application.
+ *
+ /********************************************************************************************************************/
+// ** Make sure we are using the right NameSpace.
+namespace('SSE');
 
-oViewModel.LoginTitle.subscribe(function(newValue){
-	alert("The Login Title has changed to : " + newValue);
-});
+(function (Main, $) {
+	/** Initializing. */
 
-$(function() {
 
-	var currentModule = 'home';
-	$('body').addClass(currentModule);
-	$('nav.primary .indicator').css('top',$('nav.primary a.'+currentModule).offset().top + 15);
+	/** START Public Method. */
+	Main.Initialize = function()
+	{
 
-	$('nav.primary a').click(function() {
-		$('body').removeClass(currentModule);
-		currentModule = $(this).attr('class');
-		$('nav.primary .indicator').css('top',$(this).offset().top + 15);
-		if(currentModule == 'logo') {
-			$('nav.primary .indicator').css('top',$('nav.primary a.home').offset().top + 15);
-			currentModule = 'home';
-		}
-		$('body').addClass(currentModule);
-	});
-});
+	};
+	/**   END Public Method. */
 
-function TestSosStart()
-{
-	var oData = {};
-	oData.szApplicationToken = 'SSE_MAIN_PORTAL';
-
-	var jxHdr = $.ajax({
-		//url: 'http://localhost:50475/api/AuthSrv'
-		url: 'http://localhost:61023/api/Values'
-		, data: JSON.stringify(oData)
-		, type: "POST"
-		, dataType: "json"
-		, contentType: 'application/json; charset=utf-8'
-		, success: fxSuccess
-		, error: fxFailure
-	});
-}
-
-function fxSuccess(response)
-{
-	alert('Success: ' + response);
-}
-
-function fxFailure(response)
-{
-	alert('Failure: ' + response);
-	console.log(response);
-}
-
+}(SSE.Main = SSE.Main || {}, jQuery));
