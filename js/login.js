@@ -61,6 +61,9 @@ if ('XDomainRequest' in window && window.XDomainRequest !== null) {
 			oXhr.onload      = fxSuccess;
 		}
 
+		/** Set Content Type. */
+		oXhr.contentType = 'application/json; charset=utf-8';
+
 
       	return oXhr;
       }
