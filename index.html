@@ -42,8 +42,12 @@
         <div class="indicator"></div>
     </nav>
     <div class="wrap"> 
-        <div class="sidebars">
-            <div class="home">
+        <div class="sidebars visible">
+            <div class="sidebar-toggle">
+                <div class="hide">&#59229;</div>
+                <div class="show">&#59230;</div>
+            </div>
+            <div class="home sidebar">
                 <h2 class="title">Devices</h2>
                 <ul class="devices">
                     <li class="watch"><a href="#">Austin's GPS Watch</a></li>
@@ -61,17 +65,20 @@
                     <li class="watch"><a href="#">GPS Watch</a></li>
                 </ul>
             </div>
-            <div class="devices">
+            <div class="devices sidebar">
 
                 <ul class="tabs cf">
-                    <li class="tab active"><a href="#" class="events">Events</a></li>
+                    <li class="tab"><a href="#" class="events active">Events</a></li>
                     <li class="tab"><a href="#" class="devices">Devices</a></li>
                     <li class="tab"><a href="#" class="geofences">Geofences</a></li>
                 </ul>
-                <div class="events-tab">
+                <div class="events pane active">
                     <div class="search-bar">
                         <input type="text" class="search" placeholder="Search Events">
-                        <div class="hide-sidebar"></div>
+                        <div class="sidebar-toggle">
+                            <div class="hide">&#59229;</div>
+                            <div class="show">&#59230;</div>
+                        </div>
                     </div>
                     <div class="content">
                         <ul class="events">
@@ -154,15 +161,184 @@
                     </div>
                 </div>
 
+                <div class="devices pane">
+                    <div class="search-bar">
+                        <input type="text" class="search" placeholder="Search Devices">
+                    </div>
+                    <div class="content">
+                        <ul class="events">
+                            <li class="event">
+                                <div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>
+                                <div class="sub">April 23, 2013 at 12:42pm</div>
+                                <div class="actions"></div>
+                            </li>
+                            <li class="event">
+                                <div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>
+                                <div class="sub">April 23, 2013 at 12:42pm</div>
+                                <div class="actions"></div>
+                            </li>
+                            <li class="event">
+                                <div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>
+                                <div class="sub">April 23, 2013 at 12:42pm</div>
+                                <div class="actions"></div>
+                            </li>
+                            <li class="event">
+                                <div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>
+                                <div class="sub">April 23, 2013 at 12:42pm</div>
+                                <div class="actions"></div>
+                            </li>
+                            <li class="event">
+                                <div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>
+                                <div class="sub">April 23, 2013 at 12:42pm</div>
+                                <div class="actions"></div>
+                            </li>
+                            <li class="event">
+                                <div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>
+                                <div class="sub">April 23, 2013 at 12:42pm</div>
+                                <div class="actions"></div>
+                            </li>
+                            <li class="event">
+                                <div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>
+                                <div class="sub">April 23, 2013 at 12:42pm</div>
+                                <div class="actions"></div>
+                            </li>
+                            <li class="event">
+                                <div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>
+                                <div class="sub">April 23, 2013 at 12:42pm</div>
+                                <div class="actions"></div>
+                            </li>
+                            <li class="event">
+                                <div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>
+                                <div class="sub">April 23, 2013 at 12:42pm</div>
+                                <div class="actions"></div>
+                            </li>
+                            <li class="event">
+                                <div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>
+                                <div class="sub">April 23, 2013 at 12:42pm</div>
+                                <div class="actions"></div>
+                            </li>
+                            <li class="event">
+                                <div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>
+                                <div class="sub">April 23, 2013 at 12:42pm</div>
+                                <div class="actions"></div>
+                            </li>
+                            <li class="event">
+                                <div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>
+                                <div class="sub">April 23, 2013 at 12:42pm</div>
+                                <div class="actions"></div>
+                            </li>
+                            <li class="event">
+                                <div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>
+                                <div class="sub">April 23, 2013 at 12:42pm</div>
+                                <div class="actions"></div>
+                            </li>
+                            <li class="event">
+                                <div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>
+                                <div class="sub">April 23, 2013 at 12:42pm</div>
+                                <div class="actions"></div>
+                            </li>
+                            <li class="event">
+                                <div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>
+                                <div class="sub">April 23, 2013 at 12:42pm</div>
+                                <div class="actions"></div>
+                            </li>
+                        </ul>                        
+                    </div>
+                </div>
+
+                <div class="geofences pane">
+                    <div class="search-bar">
+                        <input type="text" class="search" placeholder="Search Geofences">
+                    </div>
+                    <div class="content">
+                        <ul class="events">
+                            <li class="event">
+                                <div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>
+                                <div class="sub">April 23, 2013 at 12:42pm</div>
+                                <div class="actions"></div>
+                            </li>
+                            <li class="event">
+                                <div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>
+                                <div class="sub">April 23, 2013 at 12:42pm</div>
+                                <div class="actions"></div>
+                            </li>
+                            <li class="event">
+                                <div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>
+                                <div class="sub">April 23, 2013 at 12:42pm</div>
+                                <div class="actions"></div>
+                            </li>
+                            <li class="event">
+                                <div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>
+                                <div class="sub">April 23, 2013 at 12:42pm</div>
+                                <div class="actions"></div>
+                            </li>
+                            <li class="event">
+                                <div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>
+                                <div class="sub">April 23, 2013 at 12:42pm</div>
+                                <div class="actions"></div>
+                            </li>
+                            <li class="event">
+                                <div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>
+                                <div class="sub">April 23, 2013 at 12:42pm</div>
+                                <div class="actions"></div>
+                            </li>
+                            <li class="event">
+                                <div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>
+                                <div class="sub">April 23, 2013 at 12:42pm</div>
+                                <div class="actions"></div>
+                            </li>
+                            <li class="event">
+                                <div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>
+                                <div class="sub">April 23, 2013 at 12:42pm</div>
+                                <div class="actions"></div>
+                            </li>
+                            <li class="event">
+                                <div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>
+                                <div class="sub">April 23, 2013 at 12:42pm</div>
+                                <div class="actions"></div>
+                            </li>
+                            <li class="event">
+                                <div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>
+                                <div class="sub">April 23, 2013 at 12:42pm</div>
+                                <div class="actions"></div>
+                            </li>
+                            <li class="event">
+                                <div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>
+                                <div class="sub">April 23, 2013 at 12:42pm</div>
+                                <div class="actions"></div>
+                            </li>
+                            <li class="event">
+                                <div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>
+                                <div class="sub">April 23, 2013 at 12:42pm</div>
+                                <div class="actions"></div>
+                            </li>
+                            <li class="event">
+                                <div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>
+                                <div class="sub">April 23, 2013 at 12:42pm</div>
+                                <div class="actions"></div>
+                            </li>
+                            <li class="event">
+                                <div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>
+                                <div class="sub">April 23, 2013 at 12:42pm</div>
+                                <div class="actions"></div>
+                            </li>
+                            <li class="event">
+                                <div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>
+                                <div class="sub">April 23, 2013 at 12:42pm</div>
+                                <div class="actions"></div>
+                            </li>
+                        </ul>                        
+                    </div>
+                </div>
                 
             </div>
-            <div class="users">Users Sidebar</div>
-            <div class="billing">Billing Sidebar</div>
-            <div class="reports">Reports Sidebar</div>
-            <div class="settings">Settings Sidebar</div>
+            <div class="users sidebar">Users Sidebar</div>
+            <div class="billing sidebar">Billing Sidebar</div>
+            <div class="reports sidebar">Reports Sidebar</div>
+            <div class="settings sidebar">Settings Sidebar</div>
         </div> 
         <div class="modules">
-            <div class="home">
+            <div class="home module">
 
                 <div class="head">
                     <h2>Recent Activity</h2>
@@ -249,7 +425,7 @@
                 </div>
 
             </div>
-            <div class="devices">     
+            <div class="devices module">     
                     
                 <script type="text/javascript">
 
@@ -269,12 +445,12 @@
                 </script>
                 
                 <div id="devices-map"></div>
-
+                <div class="devices-pane">Devices Pane</div>
             </div>
-            <div class="users">Users</div>
-            <div class="billing">Billing</div>
-            <div class="reports">Reports</div>
-            <div class="settings">Settings</div>
+            <div class="users module">Users</div>
+            <div class="billing module">Billing</div>
+            <div class="reports module">Reports</div>
+            <div class="settings module">Settings</div>
         </div>
     </div>
   </body>
