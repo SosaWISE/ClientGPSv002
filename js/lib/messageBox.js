@@ -38,6 +38,15 @@ namespace('SSE.Lib');
 	 * This method will display a message box on the browser in failure mode.
 	 * @param message @type {SSE.Models.Message}
 	 */
+	MessageBox.Error = function (message)
+	{
+		/** Initialize. */
+		alert('ERROR:  \r\nTitle: ' + message.Title + '\r\nBody: ' + message.MessageBody + '\r\nType: ' + message.MessageType);
+	};
+	/**
+	 * This method will display a message box on the browser in failure mode.
+	 * @param message @type {SSE.Models.Message}
+	 */
 	MessageBox.Failure = function (message)
 	{
 		/** Initialize. */
