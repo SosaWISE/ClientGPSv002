@@ -49,7 +49,7 @@ namespace('SSE.Services');
 			Data: data
 			, ActionMethod: 'AuthSrv/SessionStart'
 		});
-	}
+	};
 
 	Authentication.CustomerAuth = function(params)
 	{
@@ -67,7 +67,7 @@ namespace('SSE.Services');
 			, SuccessFx: params.SuccessFx
 			, FailureFx: params.FailureFx
 		});
-	}
+	};
 	/**   END Public Method. */
 
 

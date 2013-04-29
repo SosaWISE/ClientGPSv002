@@ -39,7 +39,8 @@ namespace('SSE.Services');
 
 		/** Check if the XMLHttpRequest object has a "withCredentials" property.
 		 * "withCredentials" only exits on the XMLHttpRequest2 object. */
-		if ("withCredentials" in xhr) {
+ 		if ("withCredentials" in xhr) {
+			xhr.withCredentials = true; // This is very important for server-side cookies to be sent to the server.
 				return xhr;
 
 		/** Check the type of handler available. */
@@ -114,7 +115,8 @@ namespace('SSE.Services');
 	/** START Public Method. */
     /**
      * @description This method will make the asynchronous call to the WS API.
-     * @param params List of possible options being passed.
+     * @param params {object} List of possible options being passed.
+     * @returns {object} The request handler
      */
 	ClientAPI.ajaxAsync = function (params)
 	{
@@ -129,6 +131,9 @@ namespace('SSE.Services');
 		var jxHdr = $.ajax({
 			url: SSE.Configuration.ServicesDomain + params.ActionMethod
 			, crossDomain: true
+			, xhrFields: {
+				withCredentials: true
+			}
 			, async: true
 			, cache: false
 			, data: JSON.stringify(params.Data)
@@ -142,12 +147,20 @@ namespace('SSE.Services');
 		/** Return handler. */
 		return jxHdr;
 	};
+	/**
+	 * @description This makes the ajax call synchronously to the WS API.
+	 * @param params {object} List of all possible options.
+	 * @returns {object} The request handler
+	 */
 	ClientAPI.ajaxSync = function(params)
 	{
 		/** Initialize. */
 		var response = $.ajax({
 			url: SSE.Configuration.ServicesDomain + params.ActionMethod
 			, crossDomain: true
+			, xhrFields: {
+				withCredentials: true
+			}
 			, async: false
 			, cache: false
 			, data: JSON.stringify(params.Data)
@@ -171,5 +184,5 @@ namespace('SSE.Services');
 	_initializeRequestHandler();
 	/**   END Class Initialization. */
 
-}( SSE.Services.ClientAPI = SSE.Services.ClientAPI || {}, jQuery ));
+} ( SSE.Services.ClientAPI = SSE.Services.ClientAPI || {}, jQuery ));
 

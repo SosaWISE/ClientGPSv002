@@ -102,16 +102,37 @@ namespace('SSE');
 	 * @returns {long}
 	 */
 	Main.GetSessionIdFxSync = function (){
-		/** Execute call. */
-		var responseObj = SSE.Services.Authentication.SessionStartSync();
+		/** Check to see if the SessionID is already present. */
+		if (_sessionId === undefined || _sessionId === null)
+		{
+			/** Execute call. */
+			var responseObj = SSE.Services.Authentication.SessionStartSync();
+			_sessionId = responseObj.SessionID;
+		}
 
-		return responseObj.SessionId;
+		/** Return sessionId. */
+		return _sessionId;
 	};
 
 
+	/**
+	 * @description This is the main entry point for the application.
+	 */
 	Main.Initialize = function()
 	{
-
+		SSE.Services.Authentication.SessionStart({
+			SuccessFx: function (response)
+			{
+				_sessionId = response.SessionId;
+			}
+			, FailureFx: function (response){
+				SSE.Lib.MessageBox.Failure(SSE.Models.Message.new({
+					Title: "Failure on Main Init"
+					, MessageBody: "When calling SessionStart a failure occurred: " * response
+					, MessageType: "Failure"
+				}));
+			}
+		});
 	};
 	/**   END Public Method. */
 
