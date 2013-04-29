@@ -19,10 +19,13 @@
 		<script type="text/javascript" src="/js/lib/messageBox.js"></script>
 		<!-- MODELS -->
 		<script type="text/javascript" src="/js/models/message.js"></script>
+		<!-- VIEW MODEL -->
+		<script type="text/javascript" src="/js/viewmodels/loginViewModel.js"></script>
 		<!-- SERVICES -->
 		<script type="text/javascript" src="/js/services/Authenticate.js"></script>
 		<script type="text/javascript" src="/js/services/ClientAPI.js"></script>
 		<!-- APP CODE -->
+		<script type="text/javascript" src="/js/main.js"></script>
 		<script type="text/javascript" src="/js/Configuration.js"></script>
 		<script type="text/javascript" src="/js/login.js"></script>
 		<!--   END DEVELOPMENT ENVIRONMENT -->
@@ -40,7 +43,7 @@
 			<input type="hidden" name="szApplicationToken" id="szApplicationToken" value="12345" />
 			<input type="text" data-bind="value: userName" name="email" class="email" placeholder="E-mail">
 			<input type="password" data-bind="value: userPassword" name="password" class="password" placeholder="Password">
-			<input type="submit" value="Login" class="submit" onClick="SSE.ViewModels.Login.AuthenticateUser(SSE.Main.GetSessionIdFx);">
+			<input type="button" value="Login" class="submit" onClick="SSE.ViewModels.Login.AuthenticateUser(SSE.Main.GetSessionIdFxSync);">
 			<div class="helper-actions">
 				<input type="checkbox" id="remember" class="remember"><label for="remember">Remember me</label>
 				<a href="#" class="forgot" onClick="TestSosStart()">Forgot your password?</a>
@@ -50,6 +53,9 @@
 	</div>
 	</body>
 	<script type="text/javascript">
-		ko.applyBindings(oViewModel);
+		//ko.applyBindings(oViewModel);
+		$(document).ready(function () {
+			SSE.ViewModels.Login.Initialize();
+		});
 	</script>
 </html>

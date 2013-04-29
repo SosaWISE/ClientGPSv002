@@ -142,6 +142,29 @@ namespace('SSE.Services');
 		/** Return handler. */
 		return jxHdr;
 	};
+	ClientAPI.ajaxSync = function(params)
+	{
+		/** Initialize. */
+		var response = $.ajax({
+			url: SSE.Configuration.ServicesDomain + params.ActionMethod
+			, crossDomain: true
+			, async: false
+			, cache: false
+			, data: JSON.stringify(params.Data)
+			, type: 'POST'
+			, dataType: 'json'
+			, contentType: 'application/json; charset=utf-8'
+		});
+
+		/** Check if using DomainRequest. */
+		if (_isDomainRequest)
+		{
+			return eval("(" + response.currentTarget.responseText + ")");
+		}
+
+		/** Default result. */
+		return eval("(" + response.responseText + ')');
+	}
 	/**   END Public Method. */
 
 	/** START Class Initialization. */

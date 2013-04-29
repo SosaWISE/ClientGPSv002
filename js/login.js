@@ -1,8 +1,4 @@
 
-oViewModel.LoginTitle.subscribe(function(newValue){
-	alert("The Login Title has changed to : " + newValue);
-});
-
 
 function TestSosStart()
 {

@@ -107,7 +107,7 @@ namespace('SSE');
 		/** Initialize. */
 		function fxSuccess(response)
 		{
-			_sessionId = response.SessionID;
+			_sessionId = response.SessionId;
 		}
 		function fxFailure(response)
 		{
@@ -122,6 +122,17 @@ namespace('SSE');
 		{
 			SSE.Services.Authentication.SessionStart({'SuccessFx': fxSuccess, 'FailureFx': fxFailure});
 		}
+	};
+
+	/**
+	 * This method returns the session id for a new session.  It does this by making an syncronous call.
+	 * @returns {long}
+	 */
+	Main.GetSessionIdFxSync = function (){
+		/** Execute call. */
+		var responseObj = SSE.Services.Authentication.SessionStartSync();
+
+		return responseObj.SessionId;
 	};
 
 

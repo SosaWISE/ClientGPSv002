@@ -37,6 +37,20 @@ namespace('SSE.Services');
 		});
 	};
 
+	Authentication.SessionStartSync = function()
+	{
+		/** Initialize. */
+		var data = {
+			"AppToken": SSE.Configuration.ApplicationToken
+		};
+
+		/** Make Async call. */
+		return SSE.Services.ClientAPI.ajaxSync({
+			Data: data
+			, ActionMethod: 'AuthSrv/SessionStart'
+		});
+	}
+
 	Authentication.CustomerAuth = function(params)
 	{
 		/** Initialize. */

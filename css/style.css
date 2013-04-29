@@ -124,7 +124,7 @@ input{
 	background:#fff;
 	background-image:none
 }
-.login input[type=submit]{
+.login input[type=button]{
 	width:100%;
 	color:#fff;
 	text-shadow:0 1px 0 #000;

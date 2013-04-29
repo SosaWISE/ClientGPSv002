@@ -14,14 +14,25 @@ namespace('SSE.ViewModels');
  */
 (function(Login) {
 	/** Initialize. */
-	var vm = {
-		LoginTitle: ko.observable("Login"),
-		PersonAge: ko.observable(43),
-		userName: ko.observable("SosaWISE"),
-		userPassword: ko.observable("GetThis")
-	};
+	var vm = {};
 
 	/** START Public Methods. */
+	Login.Initialize = function ()
+	{
+		vm = {
+			LoginTitle: ko.observable("Login"),
+			PersonAge: ko.observable(43),
+			userName: ko.observable("SosaWISE"),
+			userPassword: ko.observable("GetThis")
+		};
+
+		vm.LoginTitle.subscribe(function(newValue){
+			alert("The Login Title has changed to : " + newValue);
+		});
+
+		ko.applyBindings(vm);
+	};
+
 	Login.AuthenticateUser = function (getSessionIDFx)
 	{
 		/** Valida Arguments. */
@@ -34,17 +45,23 @@ namespace('SSE.ViewModels');
 			}));
 
 			// ** Exit method.
-			return;
+			return null;
 		}
 
 		/** Initialize values. */
 		var sessionID = getSessionIDFx();
+		function successFx(response){
+			console.log(response);
+		}
+		function failureFx(response){
+
+		}
 
 		/** Execute Authentication. */
 		return SSE.Services.Authentication.CustomerAuth({
 			SessionID: sessionID
-			, Username: vm.userName
-			, Password: vm.userPassword
+			, Username: vm.userName()
+			, Password: vm.userPassword()
 			, SuccessFx: successFx
 			, FailureFx: failureFx
 		});
