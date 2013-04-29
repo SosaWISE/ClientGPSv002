@@ -22,7 +22,8 @@ namespace('SSE.Models');
 		if (argsObj !== undefined && argsObj !== null)
 		{
 			if (argsObj.title !== undefined && argsObj.title !== null) title = argsObj.title;
-			if (argsObj.messageBody != undefined && argsObj.messageBody !== null) messageBody = argsObj.messageBody;
+			if (argsObj.messageBody !== undefined && argsObj.messageBody !== null) messageBody = argsObj.messageBody;
+			if (argsObj.messageType !== undefined && argsObj.messageType !== null) messageType = argsObj.messageType;
 		}
 
 		/** Return result. */

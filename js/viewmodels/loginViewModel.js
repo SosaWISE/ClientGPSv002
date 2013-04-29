@@ -12,7 +12,7 @@ namespace('SSE.ViewModels');
 /**
  * @class Singleton object that will allow for user Authentication.  This is tied to the View.
  */
-(function(Login) {
+(function(Login, $) {
 	/** Initialize. */
 	var vm = {};
 
@@ -37,17 +37,19 @@ namespace('SSE.ViewModels');
 	 * @description This is a public method for the Login ViewModel class.  Given a function as an argument it will
 	 * authenticate the user with the credentials bound to the knockout ViewModel.
 	 * @param getSessionIDFx {function}
+	 * @param aSuccessFx {function} Closure for the success of the method.
+	 * @param aFailureFx {function} Closure for the failure of the ajax call.
 	 * @returns {object}
 	 */
-	Login.AuthenticateUser = function (getSessionIDFx)
+	Login.AuthenticateUser = function (getSessionIDFx, aSuccessFx, aFailureFx)
 	{
 		/** Valida Arguments. */
 		if (getSessionIDFx === undefined || getSessionIDFx === null || typeof getSessionIDFx !== 'function')
 		{
 			SSE.Lib.MessageBox.Error(SSE.Models.Message.new({
-				Title: "Argument failure"
-				, MessageBody: "Failed to retrieve the SessionID"
-				, MessageType: "Error"
+				title: "Argument failure"
+				, messageBody: "Failed to retrieve the SessionID"
+				, messageType: "Error"
 			}));
 
 			// ** Exit method.
@@ -58,13 +60,35 @@ namespace('SSE.ViewModels');
 		var sessionID = getSessionIDFx();
 		function successFx(response){
 			console.log(response);
+
+			/** Check that the call was successfull. */
+			if (response.Code !== 0)
+			{
+				SSE.Lib.MessageBox.Error(SSE.Models.Message.new({
+					title: "Authentication Failed"
+					, messageBody: response.Message
+					, messageType: 'Error'
+				}));
+				return; //Exit
+			}
+
+			/** Fire trigger. */
+			$.event.trigger({
+				type: 'custAuthentication'
+				, authenticatedCustomer: response.Value
+				, time: new Date()
+			});
+
+			/** Check to see if there is a clousure. */
+			if (aSuccessFx) aSuccessFx(response);
 		}
 		function failureFx(response){
 			SSE.Lib.MessageBox.Failure(SSE.Models.Message.new({
 				Title: 'Failure on User Authentication'
 				, MessageBody: "Connection failed object: " + response
 				, MessageType: "Failure"
-			}))
+			}));
+			if (aFailureFx) aFailureFx(response);
 		}
 
 		/** Execute Authentication. */
@@ -77,4 +101,4 @@ namespace('SSE.ViewModels');
 		});
 	};
 	/**   END Public Methods. */
-} (SSE.ViewModels.Login = SSE.ViewModels.Login || {}));
+} (SSE.ViewModels.Login = SSE.ViewModels.Login || {}, jQuery));

@@ -60,21 +60,45 @@
 // ** Make sure we are using the right NameSpace.
 namespace('SSE');
 
-(function (Main) {
+(function (Main, $) {
 	/** Initializing. */
 
 	/** START Private Properties. */
+	/**
+	 * @property {long} _sessionId This is the currently active session.  This is stored in a cockie.
+	 * @private
+	 */
 	var _sessionId = null;
+	/**
+	 * @property {object} _authCustomer This is the Authenticated Customer.
+	 * @private
+	 */
+	var _authCustomer = null;
 	/**   END Private Properties. */
+
+	/** START Private Methods. */
+	function _onCustAuthentication(e)
+	{
+		_authCustomer = e.authenticatedCustomer;
+	}
+	/**   END Private Methods. */
+
 
 	/** START Public Properties. */
 	Object.defineProperty(Main, 'SessionID', {
 		get: function() { return _sessionId; }
+		, set: function(val) { _sessionId = val; }
+	});
+	Object.defineProperty(Main, 'AuthCustomer', {
+		get: function() { return _authCustomer; }
 	});
 	/**   END Public Properties. */
 
 	/** START Public Method. */
 
+	/**
+	 * @description This method retrieves the SessionID Asynchronously.
+	 */
 	Main.GetSessionIdFx = function ()
 	{
 		/** Initialize. */
@@ -120,10 +144,25 @@ namespace('SSE');
 	 */
 	Main.Initialize = function()
 	{
+		/** Initialize any special handlers of internal events. */
+		$(document).on('custAuthentication', _onCustAuthentication);
+
+		/** Start the new session. */
 		SSE.Services.Authentication.SessionStart({
 			SuccessFx: function (response)
 			{
 				_sessionId = response.SessionId;
+
+				/** Check to see if there was a successfull authentication. */
+				if (response.Value.AuthCustomer !== null)
+				{
+					/** Fire trigger. */
+					$.event.trigger({
+						type: 'custAuthentication'
+						, authenticatedCustomer: response.Value.AuthCustomer
+						, time: new Date()
+					});
+				}
 			}
 			, FailureFx: function (response){
 				SSE.Lib.MessageBox.Failure(SSE.Models.Message.new({
@@ -136,4 +175,4 @@ namespace('SSE');
 	};
 	/**   END Public Method. */
 
-}(SSE.Main = SSE.Main || {}));
+}(SSE.Main = SSE.Main || {}, jQuery));
