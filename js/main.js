@@ -1,54 +1,54 @@
-//$(function() {
-//
-//	var currentModule = 'home';
-//	var sidebarHidden = false;
-//
-//	$('body').addClass(currentModule);
-//	$('nav.primary .indicator').css('top',$('nav.primary a.'+currentModule).offset().top + 15);
-//
-//	$('nav.primary a').click(function() {
-//		$('body').removeClass(currentModule);
-//		$('body').removeClass('sidebar-hidden');
-//		sidebarHidden = false;
-//		currentModule = $(this).attr('class');
-//		$('nav.primary .indicator').css('top',$(this).offset().top + 15);
-//		if(currentModule == 'logo') {
-//			$('nav.primary .indicator').css('top',$('nav.primary a.home').offset().top + 15);
-//			currentModule = 'home';
-//		}
-//		$('body').addClass(currentModule);
-//	});
-//
-//	sidebarTabs = $('.sidebars li.tab a');
-//	sidebarTabs.click(function() {
-//		that = $(this);
-//		if($(this).hasClass('devices')) {
-//			$('#devices-map').css('right', 300);
-//			$('.devices-pane').css('right', 0);
-//		} else {
-//			$('#devices-map').css('right', '');
-//			$('.devices-pane').css('right', '');
-//		}
-//		sidebarTabs.removeClass('active');
-//		sidebarTabPanes = $(this).parent().parent().parent().find('.pane');
-//		sidebarTabPanes.removeClass('active');
-//		thisSidebarTabPane = $(this).parent().parent().parent().find('.'+that.attr('class')+'.pane');
-//		thisSidebarTabPane.addClass('active');
-//		$(this).addClass('active');
-//	});
-//
-//
-//	$('.sidebar-toggle').click(function() {
-//		if(!sidebarHidden) {
-//			$('body').addClass('sidebar-hidden');
-//			sidebarHidden = true;
-//		} else {
-//			$('body').removeClass('sidebar-hidden');
-//			sidebarHidden = false;
-//		}
-//	});
-//
-//});
+$(function() {
+
+	var currentModule = 'home';
+	var sidebarHidden = false;
+
+	$('body').addClass(currentModule);
+	$('nav.primary .indicator').css('top',$('nav.primary a.'+currentModule).offset().top + 15);
+
+	$('nav.primary a').click(function() {
+		$('body').removeClass(currentModule);
+		$('body').removeClass('sidebar-hidden');
+		sidebarHidden = false;
+		currentModule = $(this).attr('class');
+		$('nav.primary .indicator').css('top',$(this).offset().top + 15);
+		if(currentModule == 'logo') {
+			$('nav.primary .indicator').css('top',$('nav.primary a.home').offset().top + 15);
+			currentModule = 'home';
+		}
+		$('body').addClass(currentModule);
+	});
+
+	sidebarTabs = $('.sidebars li.tab a');
+	sidebarTabs.click(function() {
+		that = $(this);
+		if($(this).hasClass('devices')) {
+			$('#devices-map').css('right', 300);
+			$('.devices-pane').css('right', 0);
+		} else {
+			$('#devices-map').css('right', '');
+			$('.devices-pane').css('right', '');
+		}
+		sidebarTabs.removeClass('active');
+		sidebarTabPanes = $(this).parent().parent().parent().find('.pane');
+		sidebarTabPanes.removeClass('active');
+		thisSidebarTabPane = $(this).parent().parent().parent().find('.'+that.attr('class')+'.pane');
+		thisSidebarTabPane.addClass('active');
+		$(this).addClass('active');
+	});
+
+
+	$('.sidebar-toggle').click(function() {
+		if(!sidebarHidden) {
+			$('body').addClass('sidebar-hidden');
+			sidebarHidden = true;
+		} else {
+			$('body').removeClass('sidebar-hidden');
+			sidebarHidden = false;
+		}
+	});
+
+});
 /**********************************************************************************************************************
  * @fileOverview Created by Andres Sosa
  * Date: 4/26/2013
