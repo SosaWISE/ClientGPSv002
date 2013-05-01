@@ -51,6 +51,16 @@ namespace('SSE.Services');
 		});
 	};
 
+	Authentication.SessionTerminate = function (params)
+	{
+		/** Make Async call. */
+		return SSE.Services.ClientAPI.ajaxAsync({
+			ActionMethod: 'AuthSrv/SessionTerminate'
+			, SuccessFx: params.SuccessFx
+			, FailureFx: params.FailureFx
+		})
+	};
+
 	Authentication.CustomerAuth = function(params)
 	{
 		/** Initialize. */
@@ -58,6 +68,7 @@ namespace('SSE.Services');
 			SessionID: params.SessionID
 			, Username: params.Username
 			, Password: params.Password
+			, RememberMe: params.RememberMe
 		};
 
 		/** Make the async call. */

@@ -20,10 +20,11 @@ namespace('SSE.ViewModels');
 	Login.Initialize = function ()
 	{
 		vm = {
-			LoginTitle: ko.observable("Login"),
+			LoginTitle: ko.observable("Secure Login"),
 			PersonAge: ko.observable(43),
-			userName: ko.observable("SosaWISE"),
-			userPassword: ko.observable("GetThis")
+			userName: ko.observable(""),
+			userPassword: ko.observable(""),
+			rememberMe: ko.observable(false)
 		};
 
 		vm.LoginTitle.subscribe(function(newValue){
@@ -96,6 +97,7 @@ namespace('SSE.ViewModels');
 			SessionID: sessionID
 			, Username: vm.userName()
 			, Password: vm.userPassword()
+			, RememberMe: vm.rememberMe()
 			, SuccessFx: successFx
 			, FailureFx: failureFx
 		});
