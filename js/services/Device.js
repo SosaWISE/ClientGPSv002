@@ -31,20 +31,20 @@ namespace('SSE.Services');
 		var data = { "UniqueID": params.CMFID };
 		function successFx(response)
 		{
-			if (resposne.Code === 0)
+			if (response.Code === 0)
 			{
 				SSE.Lib.MessageBox.Success(SSE.Models.Message.new({
 					title: 'Successfull Device Retrieval'
-					, MessageBody: "You have successfully retrieved the list of devices for this account."
-					, MessageType: 'Success'
+					, messageBody: "You have successfully retrieved the list of devices for this account."
+					, messageType: 'Success'
 				}));
 			}
 			else
 			{
 				SSE.Lib.MessageBox.Error(SSE.Models.Message.new({
 					title: 'Error Device Retrieval'
-					, MessageBody: "The following message was returned: " + response.Message
-					, MessageType: 'Error'
+					, messageBody: "The following message was returned: " + response.Message
+					, messageType: 'Error'
 				}));
 			}
 			if (params.SuccessFx) params.SuccessFx(resposne);
