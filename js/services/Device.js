@@ -28,7 +28,7 @@ namespace('SSE.Services');
 	Devices.GetList = function (params)
 	{
 		/** Initialize.  */
-		var data = { "UniqueID": params.CMFID };
+        var data = { UniqueID: params.UniqueID };
 		function successFx(response)
 		{
 			if (response.Code === 0)
@@ -57,11 +57,48 @@ namespace('SSE.Services');
 		/** Execute. */
 		return SSE.Services.ClientAPI.ajaxAsync({
 			Data: data
-			, ActionMethod: 'Device/GetList'
+			, ActionMethod: 'Device/AcquireList'
 			, SuccessFx: successFx
 			, FailureFX: failureFx
 		});
 	};
+
+    Devices.GetListByCustomerID = function (params) {
+        /** Initialize. */
+        var data = { UniqueID: params.UniqueID };
+        function successFx(response)
+        {
+            if (response.Code === 0)
+            {
+                SSE.Lib.MessageBox.Success(SSE.Models.Message.new({
+                    title: 'Successfull Device Retrieval'
+                    , messageBody: "You have successfully retrieved the list of devices for this account."
+                    , messageType: 'Success'
+                }));
+            }
+            else
+            {
+                SSE.Lib.MessageBox.Error(SSE.Models.Message.new({
+                    title: 'Error Device Retrieval'
+                    , messageBody: "The following message was returned: " + response.Message
+                    , messageType: 'Error'
+                }));
+            }
+            if (params.SuccessFx) params.SuccessFx(resposne);
+        }
+        function failureFx(response)
+        {
+            if (params.FailureFx) params.FailureFx(response);
+        }
+
+        /** Execute. */
+        return SSE.Services.ClientAPI.ajaxAsync({
+            Data: data
+            , ActionMethod: 'Device/AcquireListByCustomerID'
+            , SuccessFx: successFx
+            , FailureFX: failureFx
+        });
+    };
 
 	/**   END Public Method. */
 

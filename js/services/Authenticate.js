@@ -14,6 +14,18 @@ namespace('SSE.Services');
  */
 (function (Authentication) {
 
+    /** START Private Methods. */
+    _successFX = function (response, successFx, failureFx) {
+        if (response.Code !== 0)
+        {
+            if (failureFx) failureFx(resposne);
+        }
+
+        /** Default path of execution. */
+        if (successFx) successFx(response);
+    };
+    /**   END Private Methods. */
+
 	/** START Public Method. */
 
 	/**
