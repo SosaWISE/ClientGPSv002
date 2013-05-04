@@ -83,12 +83,21 @@ namespace('SSE');
 	var _authCustomer = null;
 	/**   END Private Properties. */
 
-	/** START Private Methods. */
+	/** START Private event handlers. */
+	function _onSessionStart(e)
+	{
+		_sessionId = e.SessionID;
+	}
 	function _onCustAuthentication(e)
 	{
 		_authCustomer = e.authenticatedCustomer;
 	}
-	/**   END Private Methods. */
+	function _onSessionTermination()
+	{
+		_authCustomer = null;
+		_sessionId = null;
+	}
+	/**   END Private event handlers. */
 
 
 	/** START Public Properties. */
@@ -153,6 +162,8 @@ namespace('SSE');
 	{
 		/** Initialize any special handlers of internal events. */
 		$(document).on('custAuthentication', _onCustAuthentication);
+		$(document).on('sessionTermination', _onSessionTermination);
+		$(document).on('sessionStart', _onSessionStart);
 
 		/** Start the new session. */
 		SSE.Services.Authentication.SessionStart({

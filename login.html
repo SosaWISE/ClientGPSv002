@@ -22,12 +22,12 @@
 		<!-- VIEW MODEL -->
 		<script type="text/javascript" src="/js/viewmodels/loginViewModel.js"></script>
 		<!-- SERVICES -->
+		<script type="text/javascript" src="/js/services/Device.js"></script>
 		<script type="text/javascript" src="/js/services/Authenticate.js"></script>
 		<script type="text/javascript" src="/js/services/ClientAPI.js"></script>
 		<!-- APP CODE -->
-		<script type="text/javascript" src="/js/main.js"></script>
-		<script type="text/javascript" src="/js/Configuration.js"></script>
 		<script type="text/javascript" src="/js/login.js"></script>
+		<script type="text/javascript" src="/js/Configuration.js"></script>
 		<!--   END DEVELOPMENT ENVIRONMENT -->
 	</head>
 	<body>
@@ -45,8 +45,9 @@
 			<input type="password" data-bind="value: userPassword" name="password" class="password" placeholder="Password">
 			<input type="button" value="Login" class="submit" onClick="SSE.ViewModels.Login.AuthenticateUser(SSE.Main.GetSessionIdFxSync);">
 			<div class="helper-actions">
-				<input type="checkbox" id="remember" class="remember"><label for="remember">Remember me</label>
+				<input type="checkbox" id="remember" data-bind="checked: rememberMe" class="remember"><label for="remember">Remember me</label>
 				<a href="#" class="forgot" onClick="TestSosStart()">Forgot your password?</a>
+				<a href="#" class="forgot" onClick="SSE.Services.Authentication.SessionStart({});">Restart Session</a>
 			</div>
 		</form>
 		<div class="signup-link">Not a member? <a href="signup.html">Sign up</a></div>

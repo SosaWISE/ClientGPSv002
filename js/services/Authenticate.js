@@ -14,6 +14,18 @@ namespace('SSE.Services');
  */
 (function (Authentication) {
 
+    /** START Private Methods. */
+    _successFX = function (response, successFx, failureFx) {
+        if (response.Code !== 0)
+        {
+            if (failureFx) failureFx(resposne);
+        }
+
+        /** Default path of execution. */
+        if (successFx) successFx(response);
+    };
+    /**   END Private Methods. */
+
 	/** START Public Method. */
 
 	/**
@@ -51,6 +63,16 @@ namespace('SSE.Services');
 		});
 	};
 
+	Authentication.SessionTerminate = function (params)
+	{
+		/** Make Async call. */
+		return SSE.Services.ClientAPI.ajaxAsync({
+			ActionMethod: 'AuthSrv/SessionTerminate'
+			, SuccessFx: params.SuccessFx
+			, FailureFx: params.FailureFx
+		})
+	};
+
 	Authentication.CustomerAuth = function(params)
 	{
 		/** Initialize. */
@@ -58,6 +80,7 @@ namespace('SSE.Services');
 			SessionID: params.SessionID
 			, Username: params.Username
 			, Password: params.Password
+			, RememberMe: params.RememberMe
 		};
 
 		/** Make the async call. */
