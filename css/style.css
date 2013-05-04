@@ -6,6 +6,190 @@ caption,th,td{text-align:left;font-weight:normal;vertical-align:middle}
 a img{border:none}
 @font-face{font-family:'entypo';src:url("../fonts/entypo.eot");src:url("../fonts/entypo.eot?#iefix") format('embedded-opentype'),url("../fonts/entypo.woff") format('woff'),url("../fonts/entypo.ttf") format('truetype'),url("../fonts/entypo.svg#entypo") format('svg');font-weight:normal;font-style:normal}
 
+
+
+
+
+
+
+
+@font-face {
+	font-family: 'SecuritySciences';
+	src:url('../fonts/SecuritySciences.eot');
+	src:url('../fonts/SecuritySciences.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/SecuritySciences.woff') format('woff'),
+		url('../fonts/SecuritySciences.ttf') format('truetype'),
+		url('../fonts/SecuritySciences.svg#SecuritySciences') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* Use the following CSS code if you want to use data attributes for inserting your icons */
+[data-icon]:before {
+	font-family: 'SecuritySciences';
+	content: attr(data-icon);
+	speak: none;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+}
+
+/* Use the following CSS code if you want to have a class per icon */
+/*
+Instead of a list of all class selectors,
+you can use the generic selector below, but it's slower:
+[class*="ico"] {
+*/
+.ico.icon-01, .ico.icon-02, .ico.icon-03, .ico.icon-04, .ico.icon-05, .ico.icon-06, .ico.icon-07, .ico.icon-08, .ico.icon-10, .ico.icon-11, .ico.icon-12, .ico.icon-13, .ico.icon-14, .ico.icon-15, .ico.icon-16, .ico.icon-17, .ico.icon-18, .ico.icon-19, .ico.icon-20, .ico.icon-21, .ico.icon-22, .ico.icon-23, .ico.icon-24, .ico.icon-25, .ico.icon-26, .ico.icon-27, .ico.icon-28, .ico.icon-29, .ico.icon-30, .ico.icon-31, .ico.icon-32, .ico.icon-33, .ico.icon-34, .ico.icon-35, .ico.icon-36, .ico.icon-37, .ico.icon-38, .ico.icon-39, .ico.icon-40, .ico.icon-41, .ico.icon-42, .ico.icon-43, .ico.icon-44 {
+	font-family: 'SecuritySciences';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+}
+.ico.logo:before {
+	content: "\e000";
+}
+.ico.home:before {
+	content: "\e001";
+}
+.ico.compass:before {
+	content: "\e002";
+}
+.ico.users:before {
+	content: "\e003";
+}
+.ico.cart:before {
+	content: "\e004";
+}
+.ico.graph:before {
+	content: "\e005";
+}
+.ico.cog:before {
+	content: "\e006";
+}
+.ico.home-security:before {
+	content: "\e007";
+}
+.ico.medical:before {
+	content: "\e008";
+}
+.ico.iphone:before {
+	content: "\e009";
+}
+.ico.child:before {
+	content: "\e00a";
+}
+.ico.dog:before {
+	content: "\e00b";
+}
+.ico.car:before {
+	content: "\e00c";
+}
+.ico.watch:before {
+	content: "\e00d";
+}
+.ico.lifesaver:before {
+	content: "\e00e";
+}
+.ico.low-battery:before {
+	content: "\e00f";
+}
+.ico.speedometer:before {
+	content: "\e010";
+}
+.ico.enter:before {
+	content: "\e011";
+}
+.ico.exit:before {
+	content: "\e012";
+}
+.ico.impact:before {
+	content: "\e013";
+}
+.ico.tools:before {
+	content: "\e014";
+}
+.ico.minus-square:before {
+	content: "\e015";
+}
+.ico.plus-square:before {
+	content: "\e016";
+}
+.ico.delete-square:before {
+	content: "\e017";
+}
+.ico.minus-circle:before {
+	content: "\e018";
+}
+.ico.close-circle:before {
+	content: "\e019";
+}
+.ico.fence:before {
+	content: "\e01a";
+}
+.ico.pencil:before {
+	content: "\e01b";
+}
+.ico.trash:before {
+	content: "\e01c";
+}
+.ico.disk:before {
+	content: "\e01d";
+}
+.ico.search:before {
+	content: "\e01e";
+}
+.ico.bell:before {
+	content: "\e01f";
+}
+.ico.undo:before {
+	content: "\e020";
+}
+.ico.redo:before {
+	content: "\e021";
+}
+.ico.question:before {
+	content: "\e022";
+}
+.ico.info:before {
+	content: "\e023";
+}
+.ico.caution:before {
+	content: "\e024";
+}
+.ico.close:before {
+	content: "\e025";
+}
+.ico.phone:before {
+	content: "\e026";
+}
+.ico.speach-bubble:before {
+	content: "\e027";
+}
+.ico.polygon:before {
+	content: "\e028";
+}
+.ico.circle:before {
+	content: "\e029";
+}
+.ico.rectangle:before {
+	content: "\e02a";
+}
+
+
+
+
+
+
+
+
+
 .cf{zoom:1}
 .cf:before,.cf:after{content:"";display:table}
 .cf:after{clear:both}
@@ -400,7 +584,6 @@ nav.primary .indicator {
 
 .sidebars .home ul {
 	border-top: 1px solid rgba(255,255,255,.12);
-	margin-bottom: 10px;
 }
 
 .sidebars .home ul li a {
@@ -416,16 +599,6 @@ nav.primary .indicator {
 
 .sidebars .home ul li a:hover {
 	color: white;
-}
-
-.content ul li {
-	color: rgba(0,0,0,0.66);
-	padding: 20px;
-	border-bottom: 1px solid rgba(0,0,0,.1);	
-}
-.content ul li .sub {
-	font-size: 12px;
-	color: rgba(0,0,0,0.5);
 }
 
 .modules a {
@@ -447,7 +620,29 @@ nav.primary .indicator {
 
 .modules div .head h2 {
 	font-size: 18px;
-	color: rgba(0, 0, 0, 0.66)
+	color: rgba(0, 0, 0, 0.66);
+}
+
+.modules div .head .search-wrap {
+	position: absolute;
+    top: 17px;
+    right: 15px;
+}
+.sidebars .search-wrap {
+	position: relative;
+}
+
+.search-wrap:before {
+	content: "\e01e";
+	display: block;
+	width: 14px;
+	height: 14px;
+	font-family: 'SecuritySciences';
+	font-size: 14px;
+	position: absolute;
+	top: 7px;
+	left: 7px;
+	color: rgba(0, 0, 0, 0.33);
 }
 
 .modules div .head input.search {
@@ -456,11 +651,9 @@ nav.primary .indicator {
     -webkit-border-radius: 50px;
             border-radius: 50px; 
     padding: 5px 5px 5px 30px;
-    position: absolute;
-    top: 15px;
-    right: 15px;
     outline: none;
     width: 225px;
+    margin: 0;
 }
 
 .modules .content {
@@ -488,10 +681,6 @@ nav.primary .indicator {
 	opacity: 0;
 	top: 53px;
 	right: 20px;
-}
-
-.sidebars > .sidebar-toggle {
-
 }
 
 .devices .sidebars > .sidebar-toggle {
@@ -566,15 +755,80 @@ nav.primary .indicator {
 	color: white;
 }
 
-.sidebars .devices .content {
+.sidebars .content {
 	position: absolute;
-	top:62px;right:0;bottom:0;left:0;
+	top:119px;right:0;bottom:0;left:0;
 	overflow: scroll;
+}
+.sidebars .home .content,
+.sidebars .devices .content,
+.sidebars .reports .content {
+	top:61px;
+}
+
+
+
+
+
+
+.content ul li {
+	color: rgba(0,0,0,0.66);
+	padding: 20px 20px 20px 50px;
+	border-bottom: 1px solid rgba(0,0,0,.1);
+	position: relative;	
+}
+.content ul li .sub {
+	font-size: 12px;
+	color: rgba(0,0,0,0.5);
+}
+.sidebars .content {
+	border-top: 1px solid rgba(255,255,255,0.2);
 }
 .sidebars .content ul li {
 	border-bottom: 1px solid rgba(255,255,255,0.2);
 	color: rgba(255,255,255,0.75);
+	cursor: pointer;
+	position: relative;
 }
+.sidebars .home .content ul li {
+	border-bottom: 0px solid transparent;
+	color: rgba(255,255,255,0.75);
+	cursor: default;
+	padding: 0;
+}
+.sidebars .home .content ul li a {
+	display: block;
+	border-bottom: 1px solid rgba(255,255,255,0.2);
+	color: rgba(255,255,255,0.75);
+	cursor: pointer;
+	padding: 20px 20px 20px 50px;
+	font-weight: 300;
+	position: relative;
+}
+.sidebars .content h3 {
+	font-weight: 500;
+	color: white;
+	padding: 10px 20px;
+	text-transform: uppercase;
+	background: rgba(255,255,255,0.125);
+}
+
+.sidebars .content ul li:hover {
+	background: rgba(255,255,255,0.1);
+}
+.sidebars .content ul li a:hover {
+	background: rgba(255,255,255,0.1);
+}
+.sidebars .home .content ul li:hover {
+	background: transparent;
+}
+.sidebars .content ul li:hover {
+	background: rgba(255,255,255,0.1);
+}
+.sidebars .content ul li.active {
+	background: white;
+}
+
 .sidebars .content ul li a {
 	font-weight: 500;
 	color: rgba(255,255,255,0.75);
@@ -582,12 +836,159 @@ nav.primary .indicator {
 .sidebars .content ul li .sub {
 	color: rgba(255,255,255,0.5);
 }
-.sidebars .content {
-	border-top: 1px solid rgba(255,255,255,0.2);
+
+.sidebars .home .content ul li.active      { color: #2a7ddc; }
+.sidebars .home .content ul li.active a    { color: #2a7ddc; }
+.sidebars .home .content ul li.active .sub { color: #2a7ddc; }
+
+.sidebars .devices .content ul li.active      { color: #7fbb45; }
+.sidebars .devices .content ul li.active a    { color: #7fbb45; }
+.sidebars .devices .content ul li.active .sub { color: #7fbb45; }
+
+.sidebars .users .content ul li.active      { color: #dd9c10; }
+.sidebars .users .content ul li.active a    { color: #dd9c10; }
+.sidebars .users .content ul li.active .sub { color: #dd9c10; }
+
+.sidebars .billing .content ul li.active      { color: #cc481a; }
+.sidebars .billing .content ul li.active a    { color: #cc481a; }
+.sidebars .billing .content ul li.active .sub { color: #cc481a; }
+
+.sidebars .reports .content ul li.active      { color: #b93e92; }
+.sidebars .reports .content ul li.active a    { color: #b93e92; }
+.sidebars .reports .content ul li.active .sub { color: #b93e92; }
+
+
+
+.sidebars .home ul li a:before {
+	content:'';
+	display: block;
+	width: 24px;
+	height: 24px;
+	font-family: 'SecuritySciences';
+	font-size: 24px;
+	position: absolute;
+	top: 15px;
+	left: 15px;
 }
+
+
+.sidebars .home ul li.home a:before {
+	content: "\e007";
+}
+.sidebars .home ul li.car-nav a:before {
+	content: "\e002";
+}
+.sidebars .home ul li.bracelet a:before {
+	content: "\e008";
+}
+.sidebars .home ul li.phone a:before {
+	content: "\e009";
+}
+.sidebars .home ul li.child a:before {
+	content: "\e00a";
+}
+.sidebars .home ul li.pet a:before {
+	content: "\e00b";
+}
+.sidebars .home ul li.car a:before {
+	content: "\e00c";
+}
+.sidebars .home ul li.watch a:before {
+	content: "\e00d";
+}
+
+
+.content ul li:before {
+	content:'';
+	display: block;
+	width: 24px;
+	height: 24px;
+	font-family: 'SecuritySciences';
+	font-size: 24px;
+	position: absolute;
+	top: 22px;
+	left: 15px;
+	color: rgba(0, 0, 0, 0.5);
+}
+.sidebars .content ul li:before {
+	color: white;
+	top: 20px;
+}
+.sidebars .content ul li:before {
+	color: white;
+}
+
+
+.content ul li.home:before,
+.devices-pane .titlebar.home:before {
+	content: "\e007";
+}
+.content ul li.car-nav:before,
+.devices-pane .titlebar.car-nav:before {
+	content: "\e002";
+}
+.content ul li.bracelet:before,
+.devices-pane .titlebar.bracelet:before {
+	content: "\e008";
+}
+.content ul li.phone:before,
+.devices-pane .titlebar.phone:before {
+	content: "\e009";
+}
+.content ul li.child:before,
+.devices-pane .titlebar.child:before {
+	content: "\e00a";
+}
+.content ul li.pet:before,
+.devices-pane .titlebar.pet:before {
+	content: "\e00b";
+}
+.content ul li.car:before,
+.devices-pane .titlebar.car:before {
+	content: "\e00c";
+}
+.content ul li.watch:before,
+.devices-pane .titlebar.watch:before {
+	content: "\e00d";
+}
+.content ul li.sos:before {
+	content: "\e00e";
+}
+.content ul li.battery:before {
+	content: "\e00f";
+}
+.content ul li.speed:before {
+	content: "\e010";
+}
+.content ul li.enter:before {
+	content: "\e011";
+}
+.content ul li.exit:before {
+	content: "\e012";
+}
+.content ul li.fall:before {
+	content: "\e013";
+}
+.content ul li.tamper:before {
+	content: "\e014";
+}
+.content ul li.fence:before {
+	content: "\e01a";
+}
+
+.sidebars .home .content ul li:before {
+	content: '';
+}
+
 
 .sidebars .search-bar {
 	padding: 15px;
+	background: rgba(255,255,255,0.15);
+}
+
+.sidebars .devices .search-bar {
+	padding: 15px;
+	background: transparent;
 }
 
 .sidebars .search-bar input.search {
@@ -597,7 +998,12 @@ nav.primary .indicator {
             border-radius: 50px; 
     padding: 5px 5px 5px 30px;
     outline: none;
-    width: 240px;
+    width: 270px;
+    margin: 0;
+}
+
+.sidebars .devices .search-bar input.search {
+	width: 240px;
 }
 
 .sidebars .pane {
@@ -615,6 +1021,45 @@ nav.primary .indicator {
 	z-index: 10;
 }
 
+.sidebars .geofences.pane ul li .title,
+.sidebars .devices.pane ul li .title {
+	font-weight: 500;
+}
+
+.sidebars .devices .devices.pane .content {
+	bottom: 65px;
+}
+
+.sidebars .devices a.add-device {
+	color: white;
+	font-size: 18px;
+	font-weight: 500;
+	text-transform: uppercase;
+	padding: 24px 60px;
+	display: block;
+	width: 100%;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	height: 65px;
+	background: rgba(255,255,255,0.1);
+	   -moz-box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    -webkit-box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+            box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25); 
+}
+.sidebars .devices a.add-device:before {
+	content: "\e016";
+	display: block;
+	width: 32px;
+	height: 32px;
+	position: absolute;
+	top: 20px;
+	left: 20px;
+	color: white;
+	font-family: 'SecuritySciences';
+	font-size: 28px;
+	text-align: center;
+}
 
 #devices-map {
 	position: absolute;
@@ -635,8 +1080,106 @@ nav.primary .indicator {
 	transition: .5s;
 }
 
+.devices-pane .titlebar {
+	padding: 20px 20px 20px 55px;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1); 
+	position: relative;
+}
+
+.devices-pane .titlebar:before {
+	display: block;
+	width: 32px;
+	height: 32px;
+	position: absolute;
+	top: 20px;
+	left: 15px;
+	color: rgba(0, 0, 0, 0.5);
+	font-family: 'SecuritySciences';
+	font-size: 32px;
+	text-align: center;
+}
+
+.devices-pane h3.title {
+	color: #6c6c6c;
+	font-size: 16px;
+	font-weight: 500;
+	text-transform: uppercase;
+}
+
+.devices-pane .subtitle {
+	color: #a4a4a4;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.devices-pane > .actions {
+	padding: 15px 0;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1); 
+}
+
+.devices-pane > .actions a {
+	display: block;
+	padding: 50px 0 0 0;
+	width: 75px;
+	color: #7fbb45;
+	font-size: 11px;
+	font-weight: bold;
+	text-transform: uppercase;
+	text-align: center;
+	text-decoration: none;
+	float: left;
+	border-right: 1px solid rgba(0, 0, 0, 0.1); 
+	position: relative;
+}
+
+.devices-pane > .actions a:before {
+	content: '';
+	display: block;
+	width: 32px;
+	height: 32px;
+	position: absolute;
+	top:10px;
+	left: 50%;
+	margin-left: -16px;
+	color: #7fbb45;
+	font-family: 'SecuritySciences';
+	font-size: 28px;
+	text-align: center;
+}
+.devices-pane > .actions a.alert:before {
+	content: "\e01f";
+}
+.devices-pane > .actions a.text:before {
+	content: "\e027";
+}
+.devices-pane > .actions a.call:before {
+	content: "\e026";
+}
+.devices-pane > .actions a.directions:before {
+	content: "\e002";
+}
+
+.devices-pane > .actions a:last-child {
+	border-right: 0px solid transparent; 
+}
+
+.devices-pane > h4 {
+	text-transform: uppercase;
+	color: rgba(0, 0, 0, 0.5);
+	font-size: 12px;
+	font-weight: 500;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1); 
+	padding: 15px;
+}
+
+.devices-pane .content {
+	top: 213px;
+}
 
 
+
+
+/* For retina display */
 
 @media (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3/2), (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5), (min-resolution: 1.5dppx){
 

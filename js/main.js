@@ -48,6 +48,13 @@ $(function() {
 		}
 	});
 
+	$('.sidebars .content ul li').click(function() {
+		if($('body').attr('class') != 'home' && $('body').attr('class') != 'reports') {
+			$(this).parent().find('li').removeClass('active');
+			$(this).addClass('active');	
+		}
+	});
+
 });
 /**********************************************************************************************************************
  * @fileOverview Created by Andres Sosa
