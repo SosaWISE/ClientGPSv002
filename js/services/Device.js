@@ -100,6 +100,124 @@ namespace('SSE.Services');
         });
     };
 
+    /**
+     * @Description This method will allow for acquiring device details
+     * @param params {object} consisting of the following:
+     * SessionID {long}
+     * AccountID {long}
+     * CustomerID {long}
+     * @returns {Object} Request header
+     */
+    Devices.GetDeviceDetails = function (params) {
+        /** Initialize. */
+        var data = {AccountID: params.accountId, CustomerID: params.customerId, SessionID: params.sessionId};
+        function successFx(response) {
+            if (response.Code == 0)
+            {
+                SSE.Lib.MessageBox.Success(SSE.Models.Message.new({
+                    title: "Successful Device Detail"
+                    , messageBody: "Successfully retrieved device detail."
+                    , messageType: "Success"
+                }));
+            }
+            else
+            {
+                SSE.Lib.MessageBox.Error(SSE.Models.Message.new({
+                    title:  'Error Device Details;'
+                    , messageBody: "The following messate was returned: " + response.Message
+                    , messageType: "Error"
+                }));
+            }
+            if (params.SuccessFx) { params.SuccessFx(response);}
+        }
+        function failureFx(response) {
+            if (params.failureFx) params.failureFx(response);
+        }
+
+        /** Executing statement. */
+        return SSE.Services.ClientAPI.ajaxAsync({
+            Data: data
+            , ActionMethod: 'Device/AcquireDeviceDetails'
+            , SuccessFx: successFx
+            , FailureFx: failureFx
+        });
+    };
+
+    Devices.GetDeviceGeoFences = function(params) {
+        /** Initialize. */
+        var data = {AccountID: params.accountId, CustomerID: params.customerId, SessionID: params.sessionId};
+        function successFx(response) {
+            if (response.Code == 0)
+            {
+                SSE.Lib.MessageBox.Success(SSE.Models.Message.new({
+                    title: "Successful Device Details"
+                    , messageBody: "Successfully retrieved device detail."
+                    , messageType: "Success"
+                }));
+            }
+            else
+            {
+                SSE.Lib.MessageBox.Error(SSE.Models.Message.new({
+                    title:  'Error Device Details;'
+                    , messageBody: "The following message was returned: " + response.Message
+                    , messageType: "Error"
+                }));
+            }
+            if (params.SuccessFx) { params.SuccessFx(response);}
+        }
+        function failureFx(response) {
+            if (params.failureFx) params.failureFx(response);
+        }
+
+        /** Executing statement. */
+        return SSE.Services.ClientAPI.ajaxAsync({
+            Data: data
+            , ActionMethod: 'Device/AcquireDeviceGeoFences'
+            , SuccessFx: successFx
+            , FailureFx: failureFx
+        });
+    };
+
+    Devices.GetDeviceEvents = function(params) {
+        /** Initialize. */
+        var data = {AccountID: params.accountId, CustomerID: params.customerId, SessionID: params.sessionId};
+        data.StartDate = params.startDate;
+        data.EndDate = params.endDate;
+	    data.PageSize = params.pageSize || 5;
+	    data.PageNumber = params.pageNumber || 1;
+
+	    function successFx(response) {
+		    if (response.Code == 0)
+		    {
+			    SSE.Lib.MessageBox.Success(SSE.Models.Message.new({
+				    title: "Successful Device Events"
+				    , messageBody: "Successfully retrieved device detail."
+				    , messageType: "Success"
+			    }));
+		    }
+		    else
+		    {
+			    SSE.Lib.MessageBox.Error(SSE.Models.Message.new({
+				    title:  'Error Device Events;'
+				    , messageBody: "The following message was returned: " + response.Message
+				    , messageType: "Error"
+			    }));
+		    }
+		    if (params.SuccessFx) { params.SuccessFx(response);}
+	    }
+	    function failureFx(response) {
+		    if (params.failureFx) params.failureFx(response);
+	    }
+
+	    /** Executing statement. */
+        return SSE.Services.ClientAPI.ajaxAsync({
+            Data: data
+            , ActionMethod: 'Device/AcquireDeviceEvents'
+            , SuccessFx: successFx
+            , FailureFx: failureFx
+        });
+    };
+
 	/**   END Public Method. */
 
 } (SSE.Services.Devices = SSE.Services.Devices || {}));
