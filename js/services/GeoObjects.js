@@ -22,7 +22,7 @@ namespace('SSE.Services');
 	GeoObjects.PointSave = function (params) {
 		/** Initialize. */
 		var data = { SessionID: params.sessionId, AccountID: params.accountId, CustomerID: params.customerId
-		, GeoFenceID: params.geoFenceId, PlaceName: params.placeName, PlaceDesc: params.placeDesc
+		, geoFenceId: params.geoFenceId, PlaceName: params.placeName, PlaceDesc: params.placeDesc
 		, Lattitude: params.lattitude, Longitude: params.longitude};
 		function successFx(response) {
 			if (response.Code === 0)
@@ -122,6 +122,90 @@ namespace('SSE.Services');
 		return SSE.Services.ClientAPI.ajaxAsync({
 			Data: data
 			, ActionMethod: 'GeoSrv/PointRead'
+			, Success: successFx
+			, Failure: failureFx
+		});
+	};
+
+	GeoObjects.RectangleSave = function (params) {
+		/** Initialize. */
+		var oData = {};
+		function successFx(oResponse) {
+			if (response.Code === 0)
+			{
+				SSE.Lib.MessageBox(SSE.Models.Message.new({
+					title: "Successfully Saved"
+					, messageBody: "Successfully saved a rectangular geo fence. "
+					, messageType: 'Success'
+				}));
+				if (params.fxSuccess) params.fxSuccess(oResponse);
+			}
+			else
+			{
+				SSE.Lib.MessageBox.Error(SSE.Models.Message.new({
+					title: "Error Saving Rectangle"
+					, messageBody: "The following message was returned: \r\n" + response.Message
+					, messageType: "Error"
+				}));
+			}
+		}
+		function failureFx(oResponse) { if (params.fxFailure) params.fxFailure(oResponse); }
+
+		/** Check Arguments. */
+		if (params === undefined)
+		{
+			alert("Please pass params argument.");
+			return null;
+		}
+		if (params.geoFenceId === undefined && params.accoutnId === undefined)
+		{
+			SSE.Lib.MessageBox.Warning(SSE.Models.Message.new({
+				title: "Invalid Arguments Passed."
+				, messageBody: "Confused.  By passing geoFenceId it will do an update.  If geoFenceId is missing then it will do a create.  However it appears that AccountID is missing."
+				, messageType: 'WARNING'
+			}));
+			return null;
+		}
+		if (params.maxLattitude === undefined
+			|| params.maxLongitude == undefined
+			|| params.minLattitude == undefined
+			|| params.minLongitude == undefined)
+		{
+			SSE.Lib.MessageBox.Warning(SSE.Models.Message.new({
+				title: "Invalid Arguments Passed."
+				, messageBody: "One of the coordinates is not defined."
+				, messageType: 'WARNING'
+			}));
+			return null;
+		}
+		if (params.geoFenceName === undefined
+			|| params.geoFenceName === null
+			|| params.geoFenceName === '')
+		{
+			SSE.Lib.MessageBox.Warning(SSE.Models.Message.new({
+				title: "Invalid Arguments Passed."
+				, messageBody: "Please give this fence a name."
+				, messageType: 'WARNING'
+			}));
+			return null;
+		}
+
+		/** Setup the data argument. */
+		oData.GeoFenceID = params.geoFenceId;
+		oData.AccoutnId = params.accountId;
+		oData.ItemId = params.itemId;
+		oData.ReportMode = params.reportMode;
+		if (params.geoFenceName) oData.GeoFenceName = params.geoFenceName;
+		if (params.geoFenceDescription) oData.GeoFenceDescription = params.geoFenceDescription;
+		oData.MaxLattitude = params.maxLattitude;
+		oData.MinLongitude = params.minLongitude;
+		oData.MaxLongitude = params.maxLongitude;
+		oData.MinLattitude = params.minLattitude;
+
+		/** Execute. */
+		return SSE.Services.ClientAPI.ajaxAsync({
+			Data: data
+			, ActionMethod: 'GeoSrv/GeoRectangleSave'
 			, Success: successFx
 			, Failure: failureFx
 		});
