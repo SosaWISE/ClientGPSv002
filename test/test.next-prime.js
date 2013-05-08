@@ -11,12 +11,21 @@ var assert = require('assert')
 	, asyncPrime = require('./index').asyncPrime;
 
 suite('nextPrime', function () {
-	test('nextPrime should return the next prime number', function () {
+	test('nextPrime should return the next prime number.', function () {
 		assert.equal(11, nextPrime(7));
 	});
 
 	test('zero and one are not prime numbers', function () {
-		assert(2, nextPrime(0));
-		assert(2, nextPrime(1));
+		assert.equal(2, nextPrime(0));
+		assert.equal(2, nextPrime(1));
+	});
+});
+
+suite('asyncPrim', function () {
+	test('asyncPrime should return the next prime number.', function (done) {
+		asyncPrime(128, function (n) {
+			assert.equal(1321, n, 'Wrong number');
+			done();
+		});
 	});
 });

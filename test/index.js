@@ -24,4 +24,11 @@ function nextPrime(n) {
 	}
 }
 
+function asyncPrime(n, fn) {
+	setTimeout(function() {
+		fn(nextPrime(n));
+	}, 10);
+}
+
 module.exports.nextPrime = nextPrime;
+module.exports.asyncPrime = asyncPrime;
