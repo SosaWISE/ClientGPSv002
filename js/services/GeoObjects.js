@@ -129,16 +129,16 @@ namespace('SSE.Services');
 
 	GeoObjects.RectangleSave = function (params) {
 		/** Initialize. */
-		var oData = {};
-		function successFx(oResponse) {
+		var data = {};
+		function successFx(response) {
 			if (response.Code === 0)
 			{
-				SSE.Lib.MessageBox(SSE.Models.Message.new({
-					title: "Successfully Saved"
+				SSE.Lib.MessageBox.Success(SSE.Models.Message.new({
+					title: "Successfully Saved Rectangle"
 					, messageBody: "Successfully saved a rectangular geo fence. "
 					, messageType: 'Success'
 				}));
-				if (params.fxSuccess) params.fxSuccess(oResponse);
+				if (params.fxSuccess) params.fxSuccess(response);
 			}
 			else
 			{
@@ -149,7 +149,7 @@ namespace('SSE.Services');
 				}));
 			}
 		}
-		function failureFx(oResponse) { if (params.fxFailure) params.fxFailure(oResponse); }
+		function failureFx(response) { if (params.fxFailure) params.fxFailure(response); }
 
 		/** Check Arguments. */
 		if (params === undefined)
@@ -157,7 +157,7 @@ namespace('SSE.Services');
 			alert("Please pass params argument.");
 			return null;
 		}
-		if (params.geoFenceId === undefined && params.accoutnId === undefined)
+		if (params.geoFenceId === undefined && params.accountId === undefined)
 		{
 			SSE.Lib.MessageBox.Warning(SSE.Models.Message.new({
 				title: "Invalid Arguments Passed."
@@ -191,23 +191,76 @@ namespace('SSE.Services');
 		}
 
 		/** Setup the data argument. */
-		oData.GeoFenceID = params.geoFenceId;
-		oData.AccoutnId = params.accountId;
-		oData.ItemId = params.itemId;
-		oData.ReportMode = params.reportMode;
-		if (params.geoFenceName) oData.GeoFenceName = params.geoFenceName;
-		if (params.geoFenceDescription) oData.GeoFenceDescription = params.geoFenceDescription;
-		oData.MaxLattitude = params.maxLattitude;
-		oData.MinLongitude = params.minLongitude;
-		oData.MaxLongitude = params.maxLongitude;
-		oData.MinLattitude = params.minLattitude;
+		data.GeoFenceID = params.geoFenceId;
+		data.AccountId = params.accountId;
+		data.ItemId = params.itemId;
+		data.ReportMode = params.reportMode;
+		if (params.geoFenceName) data.GeoFenceName = params.geoFenceName;
+		if (params.geoFenceDescription) data.GeoFenceDescription = params.geoFenceDescription;
+		data.MaxLattitude = params.maxLattitude;
+		data.MinLongitude = params.minLongitude;
+		data.MaxLongitude = params.maxLongitude;
+		data.MinLattitude = params.minLattitude;
 
 		/** Execute. */
 		return SSE.Services.ClientAPI.ajaxAsync({
 			Data: data
 			, ActionMethod: 'GeoSrv/GeoRectangleSave'
-			, Success: successFx
-			, Failure: failureFx
+			, SuccessFx: successFx
+			, FailureFx: failureFx
+		});
+	};
+
+	GeoObjects.CircleSave = function (params) {
+		/** Initialize. */
+		var data = {};
+		function successFx(response) {
+			if (response.Code === 0)
+			{
+				SSE.Lib.MessageBox.Success(SSE.Models.Message.new({
+					title: "Successfully Saved Circle"
+					, messageBody: "Successfully saved a rectangular geo fence. "
+					, messageType: 'Success'
+				}));
+				if (params.fxSuccess) params.fxSuccess(response);
+			}
+			else
+			{
+				SSE.Lib.MessageBox.Error(SSE.Models.Message.new({
+					title: "Error Saving Circle"
+					, messageBody: "The following message was returned: \r\n" + response.Message
+					, messageType: "Error"
+				}));
+			}
+		}
+		function failureFx(response) { if (params.fxFailure) params.fxFailure(response); }
+
+		/** Check Arguments. */
+		if (params === undefined)
+		{
+			SSE.Lib.MessageBox.Warning(SSE.Models.Message.Warning.new({
+				title: "Argument Validation"
+				, messageBody: "Please pass params argument."
+				, messageType: 'Warning'
+			}));
+			return null;
+		}
+		/** Setup the data argument. */
+		data.GeoFenceID = params.geoFenceID;
+		data.CustomerId = params.customerId;
+		data.AccountId = params.accountId;
+		data.GeoFenceName = params.geoFenceName;
+		data.GeoFenceDescription = params.geoFenceDescription;
+		data.Radius = params.radius;
+		data.CenterLattitude = params.centerLattitude;
+		data.CenterLongitude = params.centerLongitude;
+
+		/** Execute query. */
+		return SSE.Services.ClientAPI.ajaxAsync({
+			Data: data
+			, ActionMethod: 'GeoSrv/GeoCircleSave'
+			, SuccessFx: successFx
+			, FailureFx: failureFx
 		});
 	};
 	/**   END Public Methods. */
