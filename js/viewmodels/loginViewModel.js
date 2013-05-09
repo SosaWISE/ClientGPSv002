@@ -34,6 +34,55 @@ namespace('SSE.ViewModels');
 		ko.applyBindings(vm);
 	};
 
+	Login.AuthenticateUserSubmit = function () {
+		/** Initialize */
+		var sessionID = SSE.Main.GetSessionIdFxSync();
+
+		/** Callbacks */
+		function successFx(response){
+			console.log(response);
+
+			/** Check that the call was successfull. */
+			if (response.Code !== 0)
+			{
+				SSE.Lib.MessageBox.Error(SSE.Models.Message.new({
+					title: "Authentication Failed"
+					, messageBody: response.Message
+					, messageType: 'Error'
+				}));
+				return; //Exit
+			}
+
+			/** Fire trigger. */
+			$.event.trigger({
+				type: 'custAuthentication'
+				, authenticatedCustomer: response.Value
+				, time: new Date()
+			});
+
+			/** Check to see if there is a closure. */
+//			if (aSuccessFx) aSuccessFx(response);
+		}
+		function failureFx(response){
+			SSE.Lib.MessageBox.Failure(SSE.Models.Message.new({
+				Title: 'Failure on User Authentication'
+				, MessageBody: "Connection failed object: " + response
+				, MessageType: "Failure"
+			}));
+//			if (aFailureFx) aFailureFx(response);
+		}
+
+		/** Execute Authentication. */
+		SSE.Services.Authentication.CustomerAuth({
+			SessionID: sessionID
+			, Username: vm.userName()
+			, Password: vm.userPassword()
+			, RememberMe: vm.rememberMe()
+			, SuccessFx: successFx
+			, FailureFx: failureFx
+		});
+	};
+
 	/**
 	 * @description This is a public method for the Login ViewModel class.  Given a function as an argument it will
 	 * authenticate the user with the credentials bound to the knockout ViewModel.
