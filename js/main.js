@@ -9,6 +9,7 @@ $(function() {
 	$('nav.primary a').click(function() {
 		$('body').removeClass(currentModule);
 		$('body').removeClass('sidebar-hidden');
+		$('.sidebars > .sidebar').removeClass('active');
 		sidebarHidden = false;
 		currentModule = $(this).attr('class');
 		$('nav.primary .indicator').css('top',$(this).offset().top + 15);
@@ -17,6 +18,7 @@ $(function() {
 			currentModule = 'home';
 		}
 		$('body').addClass(currentModule);
+		$('.sidebars > .sidebar.'+currentModule).addClass('active');
 	});
 
 	sidebarTabs = $('.sidebars li.tab a');
@@ -54,6 +56,43 @@ $(function() {
 			$(this).addClass('active');	
 		}
 	});
+
+	$('a.edit-btn').click(function() {
+		parent = $(this).parent();
+		activeSidebar = $('.sidebar.active');
+		if(activeSidebar.hasClass('devices')) {
+			devicesModule = $('.modules .devices');
+			activePane = $('.pane.active');
+			activePane.addClass('editing');
+			$('.sidebar-toggle').css('z-index', 0);
+			if(activePane.hasClass('geofences')) {
+				devicesModule.addClass('editing');
+			}
+			if(parent.hasClass('actions')) {
+				activePane.addClass('edit-item');
+			}
+		} else {
+			activeSidebar.addClass('editing');
+			if(parent.hasClass('actions')) {
+				activeSidebar.addClass('edit-item');
+			}
+		}
+	});
+	$('.edit-wrap .cancel, .edit-wrap .save').click(function(){
+		activeSidebar = $('.sidebar.active');
+		if(activeSidebar.hasClass('devices')) {
+			panes = $('.sidebars .pane');
+			devicesModule = $('.modules .devices');
+			panes.removeClass('editing edit-item');
+			devicesModule.removeClass('editing');
+			$('.sidebar-toggle').css('z-index', '');
+		} else {
+			activeSidebar.removeClass('editing edit-item');
+		}
+	});
+
+
+
 
 });
 /**********************************************************************************************************************

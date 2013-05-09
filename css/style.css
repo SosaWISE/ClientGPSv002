@@ -42,7 +42,7 @@ Instead of a list of all class selectors,
 you can use the generic selector below, but it's slower:
 [class*="ico"] {
 */
-.ico.icon-01, .ico.icon-02, .ico.icon-03, .ico.icon-04, .ico.icon-05, .ico.icon-06, .ico.icon-07, .ico.icon-08, .ico.icon-10, .ico.icon-11, .ico.icon-12, .ico.icon-13, .ico.icon-14, .ico.icon-15, .ico.icon-16, .ico.icon-17, .ico.icon-18, .ico.icon-19, .ico.icon-20, .ico.icon-21, .ico.icon-22, .ico.icon-23, .ico.icon-24, .ico.icon-25, .ico.icon-26, .ico.icon-27, .ico.icon-28, .ico.icon-29, .ico.icon-30, .ico.icon-31, .ico.icon-32, .ico.icon-33, .ico.icon-34, .ico.icon-35, .ico.icon-36, .ico.icon-37, .ico.icon-38, .ico.icon-39, .ico.icon-40, .ico.icon-41, .ico.icon-42, .ico.icon-43, .ico.icon-44 {
+.ico:before {
 	font-family: 'SecuritySciences';
 	speak: none;
 	font-style: normal;
@@ -308,7 +308,7 @@ input{
 	background:#fff;
 	background-image:none
 }
-.login input[type=button]{
+.login input[type=button] {
 	width:100%;
 	color:#fff;
 	text-shadow:0 1px 0 #000;
@@ -342,34 +342,34 @@ input{
 	padding:9px 10px 7px 10px;
 }
 
-.login a.forgot{
+.login a.forgot {
 	float:right;
 	color:rgba(0,0,0,0.75);
 	font-size:13px;
 }
-.login a.forgot:hover{
+.login a.forgot:hover {
 	text-decoration:underline
 }
-.login input[type=checkbox]{
+.login input[type=checkbox] {
 	margin-left:0
 }
-.login label{
+.login label {
 	color:rgba(0,0,0,0.75);
 	font-size:13px
 }
-.login .login-link,.login .signup-link{
+.login .login-link,.login .signup-link {
 	position:absolute;
 	bottom:-25px;
 	right:5px;
 	color:#818487;
 	font-weight:400
 }
-.login .social-login{
+.login .social-login {
 	position:absolute;
 	top:18px;
 	right:0
 }
-.login .social-login a{
+.login .social-login a {
 	display:block;
 	float:left;
 	width:30px;
@@ -710,6 +710,9 @@ nav.primary .indicator {
 	display: block;
 }
 
+.sidebar-hidden .sidebars .sidebar {
+	opacity: 0;
+}
 
 .sidebars ul.tabs {
 	list-style: none;
@@ -805,6 +808,14 @@ nav.primary .indicator {
 	font-weight: 300;
 	position: relative;
 }
+.sidebars .home .content ul li a:active,
+.sidebars .home .content ul li:hover a:active {
+	background: white;
+	-webkit-transition: 0s;
+	-moz-transition: 0s;
+	-ms-transition: 0s;
+	transition: 0s;
+}
 .sidebars .content h3 {
 	font-weight: 500;
 	color: white;
@@ -816,7 +827,7 @@ nav.primary .indicator {
 .sidebars .content ul li:hover {
 	background: rgba(255,255,255,0.1);
 }
-.sidebars .content ul li a:hover {
+.sidebars .home .content ul li a:hover {
 	background: rgba(255,255,255,0.1);
 }
 .sidebars .home .content ul li:hover {
@@ -837,24 +848,55 @@ nav.primary .indicator {
 	color: rgba(255,255,255,0.5);
 }
 
-.sidebars .home .content ul li.active      { color: #2a7ddc; }
-.sidebars .home .content ul li.active a    { color: #2a7ddc; }
-.sidebars .home .content ul li.active .sub { color: #2a7ddc; }
+.sidebars .content ul li .actions {
+	position: absolute;
+	top: 26px;
+	right: 20px;
+	opacity: 0;
+}
 
-.sidebars .devices .content ul li.active      { color: #7fbb45; }
-.sidebars .devices .content ul li.active a    { color: #7fbb45; }
+.sidebars .content ul li .actions a {
+	float: left;
+	margin-left: 10px;
+	font-family: 'SecuritySciences';
+	font-size: 16px;
+}
+
+.sidebars .content ul li:hover .actions,
+.sidebars .content ul li.active .actions {
+	opacity: 1;
+}
+
+.sidebars .content ul li .actions a:hover {
+	color: white;
+}
+.sidebars .content ul li.active .actions a:hover {
+	color: black;
+}
+
+.sidebars .home .content ul li a:active:before,
+.sidebars .home .content ul li a:active,
+.sidebars .home .content ul li a:active a,
+.sidebars .home .content ul li a:active .sub { color: #2a7ddc; }
+
+.sidebars .devices .content ul li.active:before,
+.sidebars .devices .content ul li.active,      
+.sidebars .devices .content ul li.active a,    
 .sidebars .devices .content ul li.active .sub { color: #7fbb45; }
 
-.sidebars .users .content ul li.active      { color: #dd9c10; }
-.sidebars .users .content ul li.active a    { color: #dd9c10; }
+.sidebars .users .content ul li.active:before,
+.sidebars .users .content ul li.active,      
+.sidebars .users .content ul li.active a,    
 .sidebars .users .content ul li.active .sub { color: #dd9c10; }
 
-.sidebars .billing .content ul li.active      { color: #cc481a; }
-.sidebars .billing .content ul li.active a    { color: #cc481a; }
+.sidebars .billing .content ul li.active:before,
+.sidebars .billing .content ul li.active,      
+.sidebars .billing .content ul li.active a,   
 .sidebars .billing .content ul li.active .sub { color: #cc481a; }
 
-.sidebars .reports .content ul li.active      { color: #b93e92; }
-.sidebars .reports .content ul li.active a    { color: #b93e92; }
+.sidebars .reports .content ul li.active:before,
+.sidebars .reports .content ul li.active,      
+.sidebars .reports .content ul li.active a, 
 .sidebars .reports .content ul li.active .sub { color: #b93e92; }
 
 
@@ -1022,15 +1064,46 @@ nav.primary .indicator {
 }
 
 .sidebars .geofences.pane ul li .title,
-.sidebars .devices.pane ul li .title {
+.sidebars .devices.pane ul li .title,
+.sidebars .users ul li .title {
 	font-weight: 500;
 }
 
-.sidebars .devices .devices.pane .content {
+.sidebars .devices .devices.pane .content,
+.sidebars .devices .geofences.pane .content,
+.sidebars .users .content {
 	bottom: 65px;
 }
 
-.sidebars .devices a.add-device {
+.sidebars .edit-wrap {
+	position: absolute;
+	top:100%;right:0;bottom:0;left:0;
+	width: 100%;
+	-webkit-transition: .5s;
+	-moz-transition: .5s;
+	-ms-transition: .5s;
+	transition: .5s;
+	margin-top: -65px;
+	z-index: 20;
+}
+
+.sidebars .devices .edit-wrap {
+	background: #7fbb45;
+}
+.sidebars .users .edit-wrap {
+	background: #dd9c10;
+}
+
+.sidebars .editing .edit-wrap {
+	position: absolute;
+	top:0;right:0;bottom:0;left:0;
+	margin: 0;
+}
+.sidebars .devices .editing .edit-wrap {
+	top:-37px;
+}
+
+.sidebars .edit-wrap > a.edit-btn {
 	color: white;
 	font-size: 18px;
 	font-weight: 500;
@@ -1038,28 +1111,114 @@ nav.primary .indicator {
 	padding: 24px 60px;
 	display: block;
 	width: 100%;
-	position: absolute;
-	bottom: 0;
-	left: 0;
 	height: 65px;
 	background: rgba(255,255,255,0.1);
 	   -moz-box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
     -webkit-box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
             box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25); 
+    position: relative;
 }
-.sidebars .devices a.add-device:before {
+.sidebars .edit-wrap > a.edit-btn span {
+	display: block;
+	position: absolute;
+	top: 24px;
+	left: 60px;
+}
+.sidebars .edit-wrap > a.edit-btn .add-new-txt:before {
 	content: "\e016";
 	display: block;
 	width: 32px;
 	height: 32px;
 	position: absolute;
-	top: 20px;
-	left: 20px;
+	top: -4px;
+	left: -40px;
 	color: white;
 	font-family: 'SecuritySciences';
 	font-size: 28px;
 	text-align: center;
 }
+.sidebars .edit-wrap > a.edit-btn .edit-txt:before {
+	content: "\e01b";
+	display: block;
+	width: 32px;
+	height: 32px;
+	position: absolute;
+	top: -4px;
+	left: -40px;
+	color: white;
+	font-family: 'SecuritySciences';
+	font-size: 28px;
+	text-align: center;
+}
+
+.sidebars .edit-wrap > a.edit-btn .edit-txt {
+	opacity: 0;
+	-webkit-transition: .5s;
+	-moz-transition: .5s;
+	-ms-transition: .5s;
+	transition: .5s;
+}
+.sidebars .edit-wrap > a.edit-btn .add-new-txt {
+	opacity: 1;
+	-webkit-transition: .5s;
+	-moz-transition: .5s;
+	-ms-transition: .5s;
+	transition: .5s;
+}
+
+.sidebars .edit-item .edit-wrap > a.edit-btn .edit-txt {
+	opacity: 1;
+}
+.sidebars .edit-item .edit-wrap > a.edit-btn .add-new-txt {
+	opacity: 0;
+}
+
+.edit-wrap .form-wrap {
+	position: absolute;
+	top:65px;right:0;bottom:0;left:0;
+	overflow: scroll;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+
+.edit-wrap ul.edit-form {
+	padding: 20px;
+}
+.edit-wrap ul.edit-form li {
+	margin-bottom: 15px;
+}
+.edit-wrap ul.edit-form li .label {
+	display: block;
+	text-transform: uppercase;
+	font-weight: 500;
+	margin-bottom: 3px;
+}
+.edit-wrap ul.edit-form li input[type=text],
+.edit-wrap ul.edit-form li textarea {
+	border: 0;
+	   -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+            border-radius: 3px;
+    background: rgba(255,255,255,.9);
+    padding: 5px 7px;
+    margin: 0;
+    width: 100%;
+    outline: none;
+    -webkit-transition: .25s;
+	-moz-transition: .25s;
+	-ms-transition: .25s;
+	transition: .25s;
+	resize: none;
+}
+.edit-wrap ul.edit-form li textarea {
+	font-size: 13px;
+}
+.edit-wrap ul.edit-form li input[type=text]:focus,
+.edit-wrap ul.edit-form li textarea:focus {
+    background: rgba(255,255,255,1);
+}
+
+
 
 #devices-map {
 	position: absolute;
@@ -1068,6 +1227,9 @@ nav.primary .indicator {
 	-moz-transition: .5s;
 	-ms-transition: .5s;
 	transition: .5s;
+}
+.editing #devices-map {
+	right: 50px;
 }
 
 .devices-pane {
@@ -1176,6 +1338,65 @@ nav.primary .indicator {
 	top: 213px;
 }
 
+.editing-alert {
+	background: white;
+	   -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+            border-radius: 3px;
+    padding: 20px 10px 10px 10px;
+    position: absolute;
+    top: -60px;
+    left: 50%;
+    width: 50%;
+    margin-left: -25%;
+    text-align: center;
+	border: 1px solid #d9d9d9;
+	   -moz-box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
+            box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
+    -webkit-transition: .5s;
+	-moz-transition: .5s;
+	-ms-transition: .5s;
+	transition: .5s;
+
+}
+
+.editing .editing-alert {
+	top: -10px;
+}
+
+.editing-alert .ico.fence {
+	color: #7FBB45;
+	display: inline-block;
+	font-size: 16px;
+	position: absolute;
+	top: 0;
+	left: -20px;
+}
+.editing-alert .txt {
+	display: inline-block;
+	margin: 3px 0;
+	position: relative;
+	margin-left: 20px;
+}
+
+.editing-toolbar {
+	width: 50px;
+	position: absolute;
+	top:0;right:-50px;bottom:0;
+	-webkit-transition: .5s;
+	-moz-transition: .5s;
+	-ms-transition: .5s;
+	transition: .5s;
+	background: white;
+	   -moz-box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
+            box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);	
+}
+
+.editing .editing-toolbar {
+	right: 0;
+}
 
 
 
