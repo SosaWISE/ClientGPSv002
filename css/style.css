@@ -1119,6 +1119,7 @@ nav.primary .indicator {
             box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25); 
     position: relative;
 }
+.sidebars .editing .edit-wrap > a.edit-btn { cursor: default; }
 .sidebars .edit-wrap > a.edit-btn span {
 	display: block;
 	position: absolute;
@@ -1219,6 +1220,46 @@ nav.primary .indicator {
     background: rgba(255,255,255,1);
 }
 
+.edit-wrap input[type=button],
+.edit-wrap input[type=submit] {
+	padding: 8px 18px 6px 18px;
+	   -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+            border-radius: 3px; 
+       -moz-box-shadow: 0px 1px 0px rgba(255,255,255,0.2), inset 0px 1px 0px rgba(255,255,255,0.2);
+    -webkit-box-shadow: 0px 1px 0px rgba(255,255,255,0.2), inset 0px 1px 0px rgba(255,255,255,0.2);
+            box-shadow: 0px 1px 0px rgba(255,255,255,0.2), inset 0px 1px 0px rgba(255,255,255,0.2); 
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	background-color: rgba(255,255,255,0.1);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255,255,255,0.04)), to(rgba(0,0,0,0.04)));
+    background-image: -webkit-linear-gradient(top, rgba(255,255,255,0.04), rgba(0,0,0,0.04));
+    background-image:    -moz-linear-gradient(top, rgba(255,255,255,0.04), rgba(0,0,0,0.04));
+    background-image:     -ms-linear-gradient(top, rgba(255,255,255,0.04), rgba(0,0,0,0.04));
+    background-image:      -o-linear-gradient(top, rgba(255,255,255,0.04), rgba(0,0,0,0.04));
+    background-image:         linear-gradient(top, rgba(255,255,255,0.04), rgba(0,0,0,0.04));
+	color: white;
+	text-transform: uppercase;
+	font-weight: 500;
+	text-align: center;
+	margin: 0;
+	font-size: 13px;
+	margin-bottom: 10px;
+	width: 100%;
+	cursor: pointer;
+}
+.edit-wrap input[type=button]:hover,
+.edit-wrap input[type=submit]:hover {
+	background-color: rgba(255,255,255,0.15);
+}
+.edit-wrap input[type=button]:active,
+.edit-wrap input[type=submit]:active {
+	padding: 9px 18px 5px 18px;
+	background-color: rgba(0,0,0,0.15);
+       -moz-box-shadow: 0px 1px 0px rgba(255,255,255,0.2), inset 0px 1px 2px rgba(0,0,0,0.5);
+    -webkit-box-shadow: 0px 1px 0px rgba(255,255,255,0.2), inset 0px 1px 2px rgba(0,0,0,0.5);
+            box-shadow: 0px 1px 0px rgba(255,255,255,0.2), inset 0px 1px 2px rgba(0,0,0,0.5); 
+	color: rgba(255,255,255,0.75);
+}
 
 
 #devices-map {
