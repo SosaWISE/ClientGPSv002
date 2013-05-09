@@ -24,7 +24,7 @@ suite('nextPrime', function () {
 suite('asyncPrim', function () {
 	test('asyncPrime should return the next prime number.', function (done) {
 		asyncPrime(128, function (n) {
-			assert.equal(1321, n, 'Wrong number');
+			assert.equal(131, n, 'Wrong number');
 			done();
 		});
 	});
