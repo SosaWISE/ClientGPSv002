@@ -308,7 +308,8 @@ input{
 	background:#fff;
 	background-image:none
 }
-.login input[type=button] {
+
+.login input[type=submit]{
 	width:100%;
 	color:#fff;
 	text-shadow:0 1px 0 #000;

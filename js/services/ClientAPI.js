@@ -23,7 +23,7 @@ namespace('SSE.Services');
 	/**   END Private properties. */
 
 	/** START Public Properties. */
-	ClientAPI._namespace = 'SSE.Services.CORSRequest';
+	ClientAPI._namespace = 'SSE.Services.ClientAPI';
 	/**   END Public Properties. */
 
 	/** START Private Methods. */
