@@ -91,8 +91,13 @@ $(function() {
 		}
 	});
 
-
-
+	$('select').change(function(){
+	    if($(this).val() == 'placeholder') {
+	    	$(this).removeClass('item-selected');
+	    } else {
+	    	$(this).addClass('item-selected');
+	    }
+	});
 
 });
 /**********************************************************************************************************************
