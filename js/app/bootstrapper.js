@@ -11,7 +11,9 @@ define('bootstrapper',
 		/** Initialize. */
 		var
 			_run = function () {
-
+				console.log("Bootstrappling version: ", config.ApplicationVersion);
+				console.log("Application Token: " + config.ApplicationToken);
+				console.log("CORS Domain: " + config.ServicesDomain);
 			};
 
 		/** Return class. */
