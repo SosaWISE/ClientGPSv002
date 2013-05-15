@@ -1,3 +1,105 @@
+$(function() {
+
+	var currentModule = 'home';
+	var sidebarHidden = false;
+
+	$('body').addClass(currentModule);
+	$('nav.primary .indicator').css('top',$('nav.primary a.'+currentModule).offset().top + 15);
+
+	$('nav.primary a').click(function() {
+		$('body').removeClass(currentModule);
+		$('body').removeClass('sidebar-hidden');
+		$('.sidebars > .sidebar').removeClass('active');
+		sidebarHidden = false;
+		currentModule = $(this).attr('class');
+		$('nav.primary .indicator').css('top',$(this).offset().top + 15);
+		if(currentModule == 'logo') {
+			$('nav.primary .indicator').css('top',$('nav.primary a.home').offset().top + 15);
+			currentModule = 'home';
+		}
+		$('body').addClass(currentModule);
+		$('.sidebars > .sidebar.'+currentModule).addClass('active');
+	});
+
+	sidebarTabs = $('.sidebars li.tab a');
+	sidebarTabs.click(function() {
+		that = $(this);
+		if($(this).hasClass('devices')) {
+			$('#devices-map').css('right', 300);
+			$('.devices-pane').css('right', 0);
+		} else {
+			$('#devices-map').css('right', '');
+			$('.devices-pane').css('right', '');
+		}
+		sidebarTabs.removeClass('active');
+		sidebarTabPanes = $(this).parent().parent().parent().find('.pane');
+		sidebarTabPanes.removeClass('active');
+		thisSidebarTabPane = $(this).parent().parent().parent().find('.'+that.attr('class')+'.pane');
+		thisSidebarTabPane.addClass('active');
+		$(this).addClass('active');
+	});
+
+
+	$('.sidebar-toggle').click(function() {
+		if(!sidebarHidden) {
+			$('body').addClass('sidebar-hidden');
+			sidebarHidden = true;
+		} else {
+			$('body').removeClass('sidebar-hidden');
+			sidebarHidden = false;
+		}
+	});
+
+	$('.sidebars .content ul li').click(function() {
+		if($('body').attr('class') != 'home' && $('body').attr('class') != 'reports') {
+			$(this).parent().find('li').removeClass('active');
+			$(this).addClass('active');	
+		}
+	});
+
+	$('a.edit-btn').click(function() {
+		parent = $(this).parent();
+		activeSidebar = $('.sidebar.active');
+		if(activeSidebar.hasClass('devices')) {
+			devicesModule = $('.modules .devices');
+			activePane = $('.pane.active');
+			activePane.addClass('editing');
+			$('.sidebar-toggle').css('z-index', 0);
+			if(activePane.hasClass('geofences')) {
+				devicesModule.addClass('editing');
+			}
+			if(parent.hasClass('actions')) {
+				activePane.addClass('edit-item');
+			}
+		} else {
+			activeSidebar.addClass('editing');
+			if(parent.hasClass('actions')) {
+				activeSidebar.addClass('edit-item');
+			}
+		}
+	});
+	$('.edit-wrap .cancel, .edit-wrap .save').click(function(){
+		activeSidebar = $('.sidebar.active');
+		if(activeSidebar.hasClass('devices')) {
+			panes = $('.sidebars .pane');
+			devicesModule = $('.modules .devices');
+			panes.removeClass('editing edit-item');
+			devicesModule.removeClass('editing');
+			$('.sidebar-toggle').css('z-index', '');
+		} else {
+			activeSidebar.removeClass('editing edit-item');
+		}
+	});
+
+	$('select').change(function(){
+	    if($(this).val() == 'placeholder') {
+	    	$(this).removeClass('item-selected');
+	    } else {
+	    	$(this).addClass('item-selected');
+	    }
+	});
+
+});
 /**********************************************************************************************************************
  * @fileOverview Created by Andres Sosa
  * Date: 4/26/2013
@@ -23,30 +125,6 @@ namespace('SSE');
 	 * @private
 	 */
 	var _authCustomer = null;
-
-	/**
-	 *
-	 * @type {{lines: number, length: number, width: number, radius: number, corners: number, rotate: number, direction: number, color: string, speed: number, trail: number, shadow: boolean, hwaccel: boolean, className: string, zIndex: number, top: string, left: string}}
-	 * @private
-	 */
-	var _spinnerOpts = {
-		lines: 9, // The number of lines to draw
-		length: 0, // The length of each line
-		width: 8, // The line thickness
-		radius: 14, // The radius of the inner circle
-		corners: 1, // Corner roundness (0..1)
-		rotate: 0, // The rotation offset
-		direction: 1, // 1: clockwise, -1: counterclockwise
-		color: '#000', // #rgb or #rrggbb
-		speed: 1, // Rounds per second
-		trail: 60, // Afterglow percentage
-		shadow: false, // Whether to render a shadow
-		hwaccel: false, // Whether to use hardware acceleration
-		className: 'spinner', // The CSS class to assign to the spinner
-		zIndex: 2e9, // The z-index (defaults to 2000000000)
-		top: 'auto', // Top position relative to parent in px
-		left: 'auto' // Left position relative to parent in px
-	};
 	/**   END Private Properties. */
 
 	/** START Private event handlers. */
@@ -73,9 +151,6 @@ namespace('SSE');
 	});
 	Object.defineProperty(Main, 'AuthCustomer', {
 		get: function() { return _authCustomer; }
-	});
-	Object.defineProperty(Main, 'SpinnerOpts', {
-		get: function () {return _spinnerOpts; }
 	});
 	/**   END Public Properties. */
 

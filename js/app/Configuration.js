@@ -13,11 +13,11 @@ namespace('SSE');
  * @class Singleton class that contains all the settings for the application.
  */
 SSE.Configuration =
-(function () {
-	//noinspection JSUnusedAssignment
-	/** Initialize object. */
-	return {
-		get ServicesDomain() { return "//sse.services.cors/"; },
-		get ApplicationToken() { return "SSE_MAIN_PORTAL"; }
-	};
-}());
+	(function () {
+		//noinspection JSUnusedAssignment
+		/** Initialize object. */
+		return {
+			get ServicesDomain() { return "//sse.services.cors/"; },
+			get ApplicationToken() { return "SSE_MAIN_PORTAL"; }
+		};
+	}());

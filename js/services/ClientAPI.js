@@ -129,7 +129,7 @@ namespace('SSE.Services');
 
 		/** Initialize the ajax and get the handler. */
 		var jxHdr = $.ajax({
-			url: SSE.Configuration.ServicesDomain + params.ActionMethod
+			url: SSE.config.ServicesDomain + params.ActionMethod
 			, crossDomain: true
 			, xhrFields: {
 				withCredentials: true
@@ -156,7 +156,7 @@ namespace('SSE.Services');
 	{
 		/** Initialize. */
 		var response = $.ajax({
-			url: SSE.Configuration.ServicesDomain + params.ActionMethod
+			url: SSE.config.ServicesDomain + params.ActionMethod
 			, crossDomain: true
 			, xhrFields: {
 				withCredentials: true
