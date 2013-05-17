@@ -63,7 +63,7 @@ function (amplify, config) {
 	/** Return object. */
 	return {
 		customerAuth: customerAuth,
-		cutomerUpdate: customerUpdate
+		customerUpdate: customerUpdate
 	};
 
 });

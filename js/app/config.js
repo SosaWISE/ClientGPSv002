@@ -24,6 +24,17 @@ define('config',
 				customers:  '#/customers'
 			},
 
+			_toasts = {
+				changesPending: 'Please save or cancel your changes before leaving the page.',
+				errorSavingData: 'Data could not be saved.  Please check the logs.',
+				errorGettingData: 'Could not retrieve data.  Please check the logs.',
+				invalidRoute: 'Cannot navigate.  Invalid route.',
+				retrievedData: 'Data retrieved successfully',
+				savedData: 'Data saved successfully.',
+				successfulAuth: 'Successful authentication.',
+				failedAuth: 'Failed authentication.'
+			},
+
 			_initFx = function () {
 
 			};
@@ -38,6 +49,7 @@ define('config',
 			get ApplicationVersion() { return _applicationVersion; },
 			get Logger() { return _logger; },
 			get CurrentUser() { return _currentUser; },
-			get Hashes() { return _hashes; }
+			get Hashes() { return _hashes; },
+			get Toasts() { return _toasts; }
 		};
 	});

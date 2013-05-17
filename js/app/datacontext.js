@@ -146,4 +146,46 @@ function ($, _, ko, model, config, utils) {
 		 *  model mapper
 		 ******************************/
 		customer = new EntitySet(dataservice.customer.getCustomer, modelmapper.customer, model.Customer.Nullo);
+
+	/** Extensions. */
+	customer.updateData = function (customerModel, callbacks) {
+		var customerModelJson = ko.toJSON(customerModel);
+
+		/** Make the call. */
+		return $.Deferred(function (def) {
+			dataservice.customer.customerUpdate({
+				success: function (response) {
+					logger.success(config.Toasts.savedData);
+					customerModel.dirtyFlag().reset();
+					if (callbacks && callbacks.success) { callbacks.success(); }
+					def.resolve(response);
+				},
+				error: function (response) {
+					logger.error(config.Toasts.errorSavingData);
+					if (callbacks && callbacks.error) { callbacks.error(); }
+					def.reject(response);
+					return;
+				}
+			}, customerModelJson);
+		}).promise();
+	};
+
+	customer.authenticate = function (customerModel, callbacks) {
+		var customerModelJson = ko.toJSON(customerModel);
+
+		/** Make the call. */
+		return $.Deffered().promise(function(def) {
+			dataservice.customer.customerAuth({
+				success: function (response) {
+					logger.success(config.Toasts.successfulAuth)
+					def.resolve(response);
+				},
+				error: function (response) {
+					logger.error(config.Toasts.failedAuth);
+					def.refect(response);
+				}
+			}, customerModelJson);
+		});
+
+	};
 });
