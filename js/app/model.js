@@ -7,9 +7,10 @@
  */
 define('model',
 	[
-		'model.customer'
+		'model.customer',
+		'model.session'
 	],
-	function (customer) {
+	function (customer, session) {
 		var
 			model = {
 				Customer: customer

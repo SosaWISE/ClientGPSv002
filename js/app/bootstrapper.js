@@ -6,14 +6,25 @@
  * To change this template use File | Settings | File Templates.
  */
 define('bootstrapper',
-	['jquery','config'],
-	function ($, config) {
+	['jquery','config', 'route-config', 'presenter', 'dataprimer', 'binder'],
+	function ($, config, routeConfig, presenter, dataprimer, binder) {
 		/** Initialize. */
 		var
 			_run = function () {
-				console.log("Bootstrappling version: ", config.ApplicationVersion);
+				console.log("Bootstrapping version: ", config.ApplicationVersion);
 				console.log("Application Token: " + config.ApplicationToken);
 				console.log("CORS Domain: " + config.ServicesDomain);
+
+				presenter.ToggleActivity(true);
+
+				config.DataServiceInit();
+
+				$.when(dataprimer.fetch())
+					.done(binder.bind)
+					.done(routeConfig.register)
+					.always(function () {
+						presenter.ToggleActivity(false);
+					});
 			};
 
 		/** Return class. */

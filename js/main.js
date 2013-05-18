@@ -16,7 +16,7 @@
 		* We define them and put them in the root object. */
 		define('jquery', [], function () { return root.jQuery; });
 		define('ko', [], function () { return root.ko; });  // Knockout
-		define('amplify', [], function () { return root.amplify; });  // Handler events
+		define('amplify', [], function () { return root.amplify; });  // Handler events, and also browser storage.
 		define('infuser', [], function () { return root.infuser; });  // Template loading
 		define('moment', [], function () { return root.moment; });  // Used for Date object
 		define('sammy', [], function () { return root.Sammy; }); // Allows us to uniquely assign a URL to parts of the app.

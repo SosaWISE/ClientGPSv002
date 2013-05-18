@@ -37,7 +37,7 @@ namespace('SSE.Services');
 	{
 		/** Initialize. */
 		var data = {
-			"AppToken": SSE.config.ApplicationToken
+			"AppToken": SSE.Configuration.ApplicationToken
 		};
 
 		/** Make Async call. */
@@ -53,7 +53,7 @@ namespace('SSE.Services');
 	{
 		/** Initialize. */
 		var data = {
-			"AppToken": SSE.config.ApplicationToken
+			"AppToken": SSE.Configuration.ApplicationToken
 		};
 
 		/** Make Async call. */

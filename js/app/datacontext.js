@@ -145,7 +145,8 @@ function ($, _, ko, model, config, utils) {
 		 *  dataservice's 'get' method
 		 *  model mapper
 		 ******************************/
-		customer = new EntitySet(dataservice.customer.getCustomer, modelmapper.customer, model.Customer.Nullo);
+		customer = new EntitySet(dataservice.customer.getCustomer, modelmapper.customer, dataservice.customer.customerUpdate);
+		session  = new EntitySet(dataservice.session.getSession, modelmapper.session, dataservice.session.sessionStart);
 
 	/** Extensions. */
 	customer.updateData = function (customerModel, callbacks) {
@@ -164,7 +165,6 @@ function ($, _, ko, model, config, utils) {
 					logger.error(config.Toasts.errorSavingData);
 					if (callbacks && callbacks.error) { callbacks.error(); }
 					def.reject(response);
-					return;
 				}
 			}, customerModelJson);
 		}).promise();

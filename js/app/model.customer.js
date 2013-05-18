@@ -96,4 +96,7 @@ define('model.customer',
 			if (dc) { _dc = dc; }
 			return _dc;
 		};
+
+		/** Return the object. */
+		return Customer;
 	});
