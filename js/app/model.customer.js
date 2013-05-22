@@ -37,7 +37,7 @@ define('model.customer',
 				self.lastname = ko.observable().extend({ required: true });
 				self.postfix = ko.observable();
 				self.fullname = ko.computed(function () {
-					return self.firsname() + ' ' + self.lastname();
+					return self.firstname() + ' ' + self.lastname();
 				}, self);
 				self.gender = ko.observable().extend({ required: true });
 				self.phoneHome = ko.observable();
@@ -84,7 +84,7 @@ define('model.customer',
 
 		Customer.Nullo = new Customer()
 			.customerID(0)
-			.firstName('Not a')
+			.firstname('Not a')
 			.lastname('Customer')
 			.gender('M');
 		Customer.Nullo.isNullo = true;

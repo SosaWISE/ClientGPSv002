@@ -17,14 +17,14 @@ function ($, moment, config) {
 			$.mockJSON.DATE_FULL = [new Date()];
 		},
 
-		_generateCustomer = function () {
+		_sessionTerminate = function () {
 	        var data = $.mockJSON.generateFromTemplate({
 	        });
 
 			/** Return data object. */
 			return data;
 		},
-		_generateSession = function () {
+		_sessionStart = function () {
 			var data = $.mockJSON.generateFromTemplate({
 				"Code": 0,
 				'Message': "Success",
@@ -44,15 +44,26 @@ function ($, moment, config) {
 
 			/** Return data object. */
 			return data;
-		};
+		},
+		_customerAuth = function () {
+		var data = $.mockJSON.generateFromTemplate({
+			'Code': 0,
+			'Message': 'Success',
+			'SessionId|100000-200000': 100000,
+		});
+
+		/** Return data object. */
+		return data;
+	};
 
 	/** Init function. */
 	init();
 	/** Return object. */
 	return {
 		model: {
-			get GenerateCustomer() { return _generateCustomer; },
-			get GenerateSession() { return _generateSession; }
+			get SessionStart() { return _sessionStart; },
+			get SessionTerminate() { return _sessionTerminate; },
+			get CustomerAuth() { return _customerAuth; }
 		}
 	};
 });

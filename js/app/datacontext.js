@@ -6,8 +6,8 @@
  * To change this template use File | Settings | File Templates.
  */
 define('datacontext',
-['jquery', 'underscore', 'ko', 'model', 'config', 'utils'],
-function ($, _, ko, model, config, utils) {
+['jquery', 'underscore', 'ko', 'model', 'model.mapper', 'dataservice', 'config', 'utils'],
+function ($, _, ko, model, modelMapper, dataService, config, utils) {
 	var logger = config.Logger,
 		getCustomerId = function () { return config.CurrentUser().CustomerID(); },
 		getAccountId = function () { return config.CurrentUser().AccountId();},
@@ -88,7 +88,7 @@ function ($, _, ko, model, config, utils) {
 									def.resolve(results);
 								},
 								error: function (response) {
-									logger.error(config.toasts.errorGettingData);
+									logger.error(config.Toasts.errorGettingData);
 									def.reject();
 								}
 							}, param);
@@ -145,16 +145,18 @@ function ($, _, ko, model, config, utils) {
 		 *  dataservice's 'get' method
 		 *  model mapper
 		 ******************************/
-		customer = new EntitySet(dataservice.customer.getCustomer, modelmapper.customer, dataservice.customer.customerUpdate);
-		session  = new EntitySet(dataservice.session.getSession, modelmapper.session, dataservice.session.sessionStart);
+		_customer = new EntitySet(dataService.Customer.CustomerAuth, modelMapper.Customer, dataService.Customer.CustomerUpdate),
+		_session  = new EntitySet(dataService.Session.SessionStart, modelMapper.Session, dataService.Session.Nullo),
+		_devices = new EntitySet(dataService.Devices.AcquireList, modelMapper.Device, dataService.Devices.Nullo),
+		_events = new EntitySet(dataService.Events.GetData, modelMapper.Event, dataService.Events.Nullo);
 
 	/** Extensions. */
-	customer.updateData = function (customerModel, callbacks) {
+	_customer.updateData = function (customerModel, callbacks) {
 		var customerModelJson = ko.toJSON(customerModel);
 
 		/** Make the call. */
 		return $.Deferred(function (def) {
-			dataservice.customer.customerUpdate({
+			dataService.Customer.customerUpdate({
 				success: function (response) {
 					logger.success(config.Toasts.savedData);
 					customerModel.dirtyFlag().reset();
@@ -170,12 +172,12 @@ function ($, _, ko, model, config, utils) {
 		}).promise();
 	};
 
-	customer.authenticate = function (customerModel, callbacks) {
+	_customer.authenticate = function (customerModel, callbacks) {
 		var customerModelJson = ko.toJSON(customerModel);
 
 		/** Make the call. */
 		return $.Deffered().promise(function(def) {
-			dataservice.customer.customerAuth({
+			dataService.Customer.customerAuth({
 				success: function (response) {
 					logger.success(config.Toasts.successfulAuth)
 					def.resolve(response);
@@ -186,6 +188,17 @@ function ($, _, ko, model, config, utils) {
 				}
 			}, customerModelJson);
 		});
-
 	};
+
+	var datacontext = {
+		get Customer() { return _customer; },
+		get Session() { return _session; },
+		get Devices() { return _devices; }
+	};
+
+	// We did this so we can access the datacontext during ist construction
+	model.setDataContext(datacontext);
+
+	/** Return object. */
+	return datacontext;
 });

@@ -8,8 +8,8 @@
 define('mock/mock',
 [
 	'mock/mock.generator',
-	'mock/mock.session',
-	'mock/mock.customer'
+	'mock/mock.dataservice.session',
+	'mock/mock.dataservice.customer'
 ],
 function (generator, session, customer) {
 	var

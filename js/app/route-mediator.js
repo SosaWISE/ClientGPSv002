@@ -24,8 +24,8 @@ function (messenger, config) {
 
 		subscribeToViewModelActivations = function () {
 			var context = self;
-			messenger.subscribe({
-				topic: config.messages.viewModelActivated,
+			messenger.Subscribe({
+				topic: config.Messages.viewModelActivated,
 				context: context,
 				callback: viewModelActivated
 			});

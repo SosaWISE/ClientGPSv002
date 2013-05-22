@@ -60,10 +60,10 @@ function (amplify, config) {
 	_init();
 	/**   END Init Class. */
 
-	/** Return object. */
+		/** Return object. */
 	return {
-		customerAuth: customerAuth,
-		customerUpdate: customerUpdate
+		get CustomerAuth() { return customerAuth; },
+		get CustomerUpdate() { return customerUpdate; }
 	};
 
 });

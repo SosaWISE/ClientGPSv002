@@ -8,11 +8,17 @@
 define("dataservice",
 [
 	'dataservice.session',
-	'dataservice.customer'
+	'dataservice.customer',
+	'dataservice.devices',
+	'dataservice.geoFences',
+	'dataservice.events'
 ],
-function (session, customer) {
+function (session, customer, devices, geoFences, events) {
 	return {
-		session: session,
-		customer: customer
+		get Session() { return session; },
+		get Customer() { return customer; },
+		get Devices() { return devices; },
+		get GeoFences() { return geoFences; },
+		get Events() { return events; }
 	};
 });

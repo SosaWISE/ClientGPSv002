@@ -20,10 +20,10 @@ function ($, ko, datacontext, config) {
 				};
 
 				$.when(
-					datacontext.devices.getData({ results: data.devices }),
-					datacontext.events.getData({ results: data.events }),
-					datacontext.geoFences.getData({ results: data.geoFences }),
-					datacontext.users.getData({ results: data.users })
+					datacontext.Devices.getData({ results: data.devices }),
+					datacontext.Events.GetData({ results: data.events }),
+					datacontext.GeoFences.getData({ results: data.geoFences }),
+					datacontext.Users.getData({ results: data.users })
 				)
 
 				.pipe(function () {

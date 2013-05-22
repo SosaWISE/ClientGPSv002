@@ -19,7 +19,7 @@ define('bootstrapper',
 
 				config.DataServiceInit();
 
-				$.when(dataprimer.fetch())
+				$.when(dataprimer.Fetch())
 					.done(binder.bind)
 					.done(routeConfig.register)
 					.always(function () {

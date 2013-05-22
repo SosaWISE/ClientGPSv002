@@ -61,7 +61,7 @@ function (amplify, config) {
 
 	/** Return object. */
 	return {
-		sessionStart: sessionStart,
-		sessionTerminate: sessionTerminate
+		get SessionStart() { return sessionStart; },
+		get SessionTerminate() { return  sessionTerminate; }
 	};
 });

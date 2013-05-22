@@ -45,6 +45,11 @@ define('config',
 				return _useMocks;
 			},
 
+			_viewIds = {
+				LoginView: '#login-view',
+				RegisterView: '#register-view'
+			},
+
 			_toasts = {
 				changesPending: 'Please save or cancel your changes before leaving the page.',
 				errorSavingData: 'Data could not be saved.  Please check the logs.',
@@ -109,6 +114,7 @@ define('config',
 			get Throttle() { return _throttle; },
 			get Title() { return _title; },
 			get DataServiceInit() { return _dataServiceInit; },
-			get UseMocks() { return useMocks; }
+			get UseMocks() { return useMocks; },
+			get ViewIds() { return _viewIds; }
 		};
 	});
