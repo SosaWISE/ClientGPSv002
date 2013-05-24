@@ -9,6 +9,7 @@ define('dataservice.session',
 ['amplify', 'config'],
 function (amplify, config) {
 	var
+		/** START Constructor. */
 		_init = function () {
 			/**
 			 * @description This initiates the session.
@@ -18,10 +19,11 @@ function (amplify, config) {
 				dataType: 'json',
 				type: 'POST',
 				contentType: 'application/json; charset=utf-8',
+				cache: false,
 				crossDomain: true,
-				xhrFields: {
-					withCredentials: true
-				}
+					xhrFields: {
+						withCredentials: true
+					}
 			});
 
 			/**
@@ -32,17 +34,26 @@ function (amplify, config) {
 				dataType: 'json',
 				type: 'POST',
 				contentType: 'application/json; charset=utf-8',
+				cache: false,
 				crossDomain: true,
 				xhrFields: {
 					withCredentials: true
 				}
 			});
 		},
+		/**   END Constructor. */
 		/** START Public Methods. */
 		sessionStart = function (callbacks) {
 			return amplify.request({
 				resourceId: 'session-start',
-				success: callbacks.success,
+				data: JSON.stringify({ AppToken: config.ApplicationToken }),
+				success: function (response) {
+					if (response.Code !== 0) {
+						callbacks.error(response);
+						return;
+					}
+					callbacks.success(response.Value);
+				},
 				error: callbacks.error
 			});
 		},

@@ -51,6 +51,7 @@ define('config',
 			},
 
 			_toasts = {
+				errorSessionStart: 'Session failed to start.',
 				changesPending: 'Please save or cancel your changes before leaving the page.',
 				errorSavingData: 'Data could not be saved.  Please check the logs.',
 				errorGettingData: 'Could not retrieve data.  Please check the logs.',

@@ -137,6 +137,44 @@ function ($, _, ko, model, modelMapper, dataService, config, utils) {
 				updateData: updateData
 			};
 		},
+		Entity = function (getFunction, mapper, nullo) {
+			var _entity = nullo,
+				mapDtoToContext = function (dto) {
+					_entity = mapper.fromDto(dto, _entity);
+					return _entity;
+				},
+				getData = function (options) {
+					return $.Deferred(function (def) {
+						var forceRefresh = options && options.forceRefresh,
+							param = options && options.param,
+							getFunctionOverride = options && options.getFunctionOverride;
+
+						getFunction = getFunctionOverride || getFunction;
+
+						/** Check to se if we are refreshing. */
+						debugger;
+						if (_entity === nullo || forceRefresh) {
+							getFunction ({
+								success: function(dto) {
+									_entity = mapDtoToContext(dto);
+									def.resolve(_entity);
+								},
+								error: function (response) {
+									logger.error(config.Toasts.errorSessionStart);
+									def.reject(response);
+								}
+							}, param);
+						} else {
+							def.resolve(_entity);
+						}
+					}).promise();
+				};
+
+			return {
+				get MapDtoToContext() { return mapDtoToContext; },
+				get GetData() { return getData; }
+			};
+		},
 
 		/******************************
 		 * Repositories
@@ -145,12 +183,34 @@ function ($, _, ko, model, modelMapper, dataService, config, utils) {
 		 *  dataservice's 'get' method
 		 *  model mapper
 		 ******************************/
-		_customer = new EntitySet(dataService.Customer.CustomerAuth, modelMapper.Customer, dataService.Customer.CustomerUpdate),
-		_session  = new EntitySet(dataService.Session.SessionStart, modelMapper.Session, dataService.Session.Nullo),
+		_session  = new Entity(dataService.Session.SessionStart, modelMapper.Session, model.Session.Nullo),
+		_customer = new Entity(dataService.Customer.CustomerAuth, modelMapper.Customer, dataService.Customer.CustomerUpdate),
 		_devices = new EntitySet(dataService.Devices.AcquireList, modelMapper.Device, dataService.Devices.Nullo),
-		_events = new EntitySet(dataService.Events.GetData, modelMapper.Event, dataService.Events.Nullo);
+		_events = new EntitySet(dataService.Events.GetData, modelMapper.Event, dataService.Events.Nullo),
+		_geoFences = new EntitySet(dataService.GeoFences.GetData, modelMapper.GeoFence, dataService.GeoFences.Nullo),
+		_users = new EntitySet(dataService.Users.GetData, modelMapper.Users, dataService.Users.Nullo);
 
 	/** Extensions. */
+	_session.SessionStart = function () {
+		return $.Deferred(function (def) {
+			dataService.Session.SessionStart({
+				success: function (response) {
+					if (response.Code !== 0) {
+						logger.error(config.Toasts.errorSessionStart);
+						def.reject(response);
+						return;
+					}
+
+					logger.success(config.Toasts)
+				},
+				error: function (response) {
+					logger.error(config.Toasts.errorSessionStart);
+					def.reject(response);
+				}
+			});
+		}).promise();
+	};
+
 	_customer.updateData = function (customerModel, callbacks) {
 		var customerModelJson = ko.toJSON(customerModel);
 
@@ -176,7 +236,7 @@ function ($, _, ko, model, modelMapper, dataService, config, utils) {
 		var customerModelJson = ko.toJSON(customerModel);
 
 		/** Make the call. */
-		return $.Deffered().promise(function(def) {
+		return $.Deferred(function(def) {
 			dataService.Customer.customerAuth({
 				success: function (response) {
 					logger.success(config.Toasts.successfulAuth)
@@ -187,13 +247,16 @@ function ($, _, ko, model, modelMapper, dataService, config, utils) {
 					def.refect(response);
 				}
 			}, customerModelJson);
-		});
+		}).promise();
 	};
 
 	var datacontext = {
 		get Customer() { return _customer; },
 		get Session() { return _session; },
-		get Devices() { return _devices; }
+		get Devices() { return _devices; },
+		get Events() { return _events; },
+		get GeoFences() { return _geoFences; },
+		get Users() { return _users; }
 	};
 
 	// We did this so we can access the datacontext during ist construction

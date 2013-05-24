@@ -8,18 +8,32 @@
 define('model',
 	[
 		'model.customer',
-		'model.session'
+		'model.session',
+		'model.event',
+		'model.device',
+		'model.geoFence',
+		'model.user'
 	],
-	function (customer, session) {
+	function (customer, session, event, device, geoFence, user) {
 		var
 			model = {
-				Customer: customer
+				get Customer()  { return customer; },
+				get Session() { return session; },
+				get Event() { return event; },
+				get Device() { return device; },
+				get GeoFence() { return geoFence; },
+				get User() { return user; }
 			};
 
 		model.setDataContext = function (dc) {
 			// Model's that have navigation properties
 			// need a reference to the datacontext.
 			model.Customer.datacontext(dc);
+			model.Session.datacontext(dc);
+			model.Event.datacontext(dc);
+			model.Device.datacontext(dc);
+			model.GeoFence.datacontext(dc);
+			model.User.datacontext(dc);
 		};
 
 		/** Return object. */

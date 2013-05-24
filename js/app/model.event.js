@@ -8,11 +8,33 @@
 define('model.event',
 ['ko'],
 function (ko) {
-	/** Define model. */
-	var Event = function () {
-		var self = this;
+	/** Init. */
+	var
+		_dc = null,
 
-		self.EventID = ko.observable();
+		Event = function () {
+			var self = this;
+			self.EventID = ko.observable();
+
+
+			self.isBrief = ko.observable(true);
+			self.isNullo = false;
+			self.dirtyFlag = new ko.DirtyFlag([
+			]);
+
+			/** Return object. */
+			return self;
+		};
+
+	Event.Nullo = new Event();
+	Event.Nullo.isNullo = true;
+	Event.Nullo.isBrief = function () { return false; };  // nullo is never brief.
+	Event.Nullo.dirtyFlag().reset();
+
+	/** Static memeber. */
+	Event.datacontext = function (dc) {
+		if (dc) { _dc = dc; }
+		return _dc;
 	};
 
 	/** Return object. */

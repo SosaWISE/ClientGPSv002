@@ -13,6 +13,7 @@ function ($, ko, datacontext, config) {
 		fetch = function () {
 			return $.Deferred(function (def) {
 				var data = {
+					session: ko.observable(),
 					devices: ko.observableArray(),
 					events: ko.observableArray(),
 					geoFences: ko.observableArray(),
@@ -20,8 +21,9 @@ function ($, ko, datacontext, config) {
 				};
 
 				$.when(
+					datacontext.Session.GetData({ result: data.session }),
 					datacontext.Devices.getData({ results: data.devices }),
-					datacontext.Events.GetData({ results: data.events }),
+					datacontext.Events.getData({ results: data.events }),
 					datacontext.GeoFences.getData({ results: data.geoFences }),
 					datacontext.Users.getData({ results: data.users })
 				)

@@ -1,19 +1,19 @@
 /**
  * Created with JetBrains PhpStorm.
  * User: sosawise
- * Date: 5/21/13
- * Time: 10:17 PM
+ * Date: 5/22/13
+ * Time: 6:28 PM
  * To change this template use File | Settings | File Templates.
  */
-define('dataservice.events',
+define('dataservice.users',
 ['amplify','config'],
 function (amplify, config) {
 	var
 	/** START Initialize object. */
 		_init = function () {
 
-			amplify.request.define('devices-AcquireDeviceEvents', 'ajax', {
-				url: config.ServicesDomain + 'Device/AcquireDeviceEvents',
+			amplify.request.define('users-getData', 'ajax', {
+				url: config.ServicesDomain + 'Users/Read',
 				dataType: 'json',
 				type: 'POST',
 				contentType: 'application/json; charset=utf-8',
@@ -22,26 +22,25 @@ function (amplify, config) {
 					withCredentials: true
 				}
 			});
-	},
+	};
 	/**   END Initialize object. */
 
 	/** START Public Methods. */
-	_acquireEvents = function (callbacks, data) {
-		debugger;
+	_getData = function (callbacks, data) {
 		return amplify.request({
-			resourceId: 'devices-AcquireDeviceEvents',
+			resourceId: 'users-getData',
 			data: data,
 			success: callbacks.success,
 			error: callbacks.error
 		});
 	};
+		/**   END Public Methods. */
 
-	/**   END Public Methods. */
 	/** Init object. */
 	_init();
 
 	/** Return object. */
 	return {
-		get GetData() { return _acquireEvents; }
+		get GetData() { return _getData; }
 	};
 });

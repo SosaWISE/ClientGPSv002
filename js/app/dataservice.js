@@ -11,14 +11,16 @@ define("dataservice",
 	'dataservice.customer',
 	'dataservice.devices',
 	'dataservice.geoFences',
-	'dataservice.events'
+	'dataservice.events',
+	'dataservice.users'
 ],
-function (session, customer, devices, geoFences, events) {
+function (session, customer, devices, geoFences, events, users) {
 	return {
 		get Session() { return session; },
 		get Customer() { return customer; },
 		get Devices() { return devices; },
 		get GeoFences() { return geoFences; },
-		get Events() { return events; }
+		get Events() { return events; },
+		get Users() { return users; }
 	};
 });

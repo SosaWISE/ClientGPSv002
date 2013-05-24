@@ -24,7 +24,8 @@ function (amplify, config) {
 
 		},
 
-		_acquireGeoFences = function (callbacks, data) {
+		_getData = function (callbacks, data) {
+			debugger;
 			return amplify.request({
 				resourceId: 'devices-acquireGeoFences',
 				data: data,
@@ -38,6 +39,6 @@ function (amplify, config) {
 
 	/** Return object. */
 	return {
-		get AcquireGeoFences() { return _acquireGeoFences; }
+		get GetData() { return _getData; }
 	};
 });
