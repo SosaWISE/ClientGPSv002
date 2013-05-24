@@ -1,0 +1,20 @@
+<div class="login" id="login-view">
+    <h2 class="logo">Security Sciences</h2>
+    <form class="login-form">
+        <h1 class="title" data-bind="text: LoginTitle"></h1>
+        <div class="social-login">
+            <a href="/login/google" class="gplus"><span id="google_icon" class="hover"></span>Login with Google Plus</a>
+            <a href="/login/twitter" class="twitter"><span id="twitter_icon" class="hover"></span>Login with Twitter</a>
+            <a href="/login/facebook" class="fb"><span id="facebook_icon" class="hover"></span>Login with Facebook</a>
+        </div>
+        <input type="text" data-bind="value: userName" name="email" class="email" placeholder="E-mail">
+        <input type="password" data-bind="value: userPassword" name="password" class="password" placeholder="Password">
+        <input type="submit" value="Login" class="submit">
+        <div class="helper-actions">
+            <input type="checkbox" id="remember" data-bind="checked: rememberMe" class="remember"><label for="remember">Remember me</label>
+            <a href="#" class="forgot" onClick="TestSosStart()">Forgot your password?</a>
+            <a href="#" class="forgot" onClick="SSE.Services.Authentication.SessionStart({});">Restart Session</a>
+        </div>
+    </form>
+    <div class="signup-link">Not a member? <a href="signup.html">Sign up</a></div>
+</div>

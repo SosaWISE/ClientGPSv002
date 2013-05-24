@@ -19,12 +19,14 @@ define('bootstrapper',
 
 				config.DataServiceInit();
 
-				$.when(dataprimer.Fetch())
-					.done(binder.bind)
-					.done(routeConfig.register)
-					.always(function () {
-						presenter.ToggleActivity(false);
-					});
+				$.when(dataprimer.SessionStart())
+				//.then(dataprimer.Fetch())
+				.done(binder.Bind)
+				.done(routeConfig.Register)
+				.fail()
+				.always(function () {
+					presenter.ToggleActivity(false);
+				});
 			};
 
 		/** Return class. */

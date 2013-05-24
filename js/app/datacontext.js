@@ -152,7 +152,6 @@ function ($, _, ko, model, modelMapper, dataService, config, utils) {
 						getFunction = getFunctionOverride || getFunction;
 
 						/** Check to se if we are refreshing. */
-						debugger;
 						if (_entity === nullo || forceRefresh) {
 							getFunction ({
 								success: function(dto) {

@@ -15,13 +15,13 @@ function (messenger) {
 
 		/** START Private Methods. */
 		_activate = function (routeData, callback) {
-			messenger.publish.viewModelActivated();
-			refresh(callback);
+			messenger.Publish.viewModelActivated();
 		},
 		/**   END Private Methods. */
 
 		init = function () {
 			/** Initialize view model. */
+			_activate();
 		};
 
 	/** Init object. */

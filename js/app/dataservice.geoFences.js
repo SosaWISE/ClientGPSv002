@@ -25,7 +25,6 @@ function (amplify, config) {
 		},
 
 		_getData = function (callbacks, data) {
-			debugger;
 			return amplify.request({
 				resourceId: 'devices-acquireGeoFences',
 				data: data,

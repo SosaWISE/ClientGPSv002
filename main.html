@@ -7,7 +7,8 @@
     <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-<nav class="primary">
+<div id="busyindicator"></div>
+<nav class="primary" style="display: none;">
     <a href="#" class="logo">
         <span class="ico"></span>
         <h1 class="txt">Security Sciences</h1>
@@ -38,7 +39,7 @@
     </a>
     <div class="indicator"></div>
 </nav>
-<div class="wrap">
+<div class="wrap" style="display: none;">
 <div class="sidebars visible">
 <div class="sidebar-toggle">
     <div class="hide">&#59229;</div>
@@ -926,7 +927,7 @@
 </div>
 
 <!-- START Script References. -->
-    <script src="/js/lib/jquery-1.9.1.js"></script>
+    <script src="/js/lib/jquery-1.7.2.js"></script>
     <script src="/js/lib/json2.js"></script>
     <script src="/js/lib/jquery.mockjson.js"></script>
     <script src="/js/lib/TrafficCop.js"></script>
@@ -944,6 +945,7 @@
     <script src="/js/lib/amplify.request.js"></script>
     <script src="/js/lib/amplify.store.js"></script>
     <script src="/js/lib/toastr.js"></script>
+    <!--<script src="/js/lib/spin.min.js"></script>-->
     <script src="/js/lib/require.js"></script>
     <script src="/js/app/bootstrapper.js"></script>
     <script src="/js/app/binder.js"></script>

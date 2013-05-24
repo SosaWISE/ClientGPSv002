@@ -9,11 +9,28 @@ define('dataprimer',
 ['jquery', 'ko', 'datacontext', 'config'],
 function ($, ko, datacontext, config) {
 	var logger = config.logger,
+		
+		_sessionStart = function () {
+debugger;
+			return $.Deferred(function (def) {
+				var data = { session: ko.observable() };
 
-		fetch = function () {
+				$.when(datacontext.Session.GetData({ results: data.session }))
+				.fail(function () {
+					debugger;
+					def.reject();
+				})
+				.done(function () {
+					debugger;
+					def.resolve();
+				});
+			}).promise();
+		},
+
+		_fetch = function () {
+			debugger;
 			return $.Deferred(function (def) {
 				var data = {
-					session: ko.observable(),
 					devices: ko.observableArray(),
 					events: ko.observableArray(),
 					geoFences: ko.observableArray(),
@@ -21,7 +38,7 @@ function ($, ko, datacontext, config) {
 				};
 
 				$.when(
-					datacontext.Session.GetData({ result: data.session }),
+					// datacontext.Session.GetData({ result: data.session }),
 					datacontext.Devices.getData({ results: data.devices }),
 					datacontext.Events.getData({ results: data.events }),
 					datacontext.GeoFences.getData({ results: data.geoFences }),
@@ -29,6 +46,7 @@ function ($, ko, datacontext, config) {
 				)
 
 				.pipe(function () {
+						debugger;
 					logger.success('Fetch data for: '
 						+ '<div>' + data.devices().length + ' devices </div>'
 						+ '<div>' + data.events().length + ' events </div>'
@@ -37,15 +55,20 @@ function ($, ko, datacontext, config) {
 					);
 				})
 
-				.fail(function () { def.reject(); })
+				.fail(function () {
+						debugger;
+						def.reject(); })
 
-				.done(function () { def.resolve(); });
+				.done(function () {
+						debugger;
+						def.resolve(); });
 
 			}).promise();
 		};
 
 	/** Return object. */
 	return {
-		get Fetch() { return fetch; }
+		get SessionStart() { return _sessionStart; },
+		get Fetch() { return _fetch; }
 	};
 });

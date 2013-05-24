@@ -27,7 +27,6 @@ function (amplify, config) {
 
 	/** START Public Methods. */
 	_acquireEvents = function (callbacks, data) {
-		debugger;
 		return amplify.request({
 			resourceId: 'devices-AcquireDeviceEvents',
 			data: data,

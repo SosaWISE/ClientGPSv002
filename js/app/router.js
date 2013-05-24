@@ -105,7 +105,7 @@ function ($, _, Sammy, presenter, config, routeMediator, store) {
 		},
 
 		_run = function () {
-			var url = store.fetch(config.StateKeys.lastView);
+			var url = store.Fetch(config.StateKeys.lastView);
 
 			// 1) if I browse to a location, use it.
 			// 2) otherwise use the url i grabbed from storage.

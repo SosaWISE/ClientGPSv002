@@ -12,9 +12,8 @@ function ($, ko, config, vm) {
 		ids = config.ViewIds,
 
 		_bind = function () {
-			debugger;
-			ko.applyBindings(vm.Login, getView(ids.Login));
-			ko.applyBindings(vm.Register, getView(ids.Register));
+			ko.applyBindings(vm.Login, getView(ids.LoginView));
+			ko.applyBindings(vm.Register, getView(ids.RegisterView));
 		},
 
 		getView = function (viewName) {

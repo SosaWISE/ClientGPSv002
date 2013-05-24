@@ -17,7 +17,7 @@ define ('vm',
 function (vmLogin, vmRegister, events, devices, geoFences, users) {
 	return {
 		get Login() { return vmLogin; },
-		get Register() { return vmRegsiter; },
+		get Register() { return vmRegister; },
 		get Events() { return events; },
 		get Devices() { return devices; },
 		get GeoFences() { return geoFences; },
