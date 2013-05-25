@@ -30,6 +30,6 @@ function (messenger) {
 	/** Return object. */
 	return {
 		get Activate() { return _activate; },
-		get TmplName() { return _tmplName; }
+		tmplName: _tmplName
 	};
 });

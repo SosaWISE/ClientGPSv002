@@ -23,6 +23,7 @@ define('config',
 			},
 			_currentUser        = ko.observable(),
 			_hashes             = {
+				home:       '#/home',
 				devices:    '#/devices',
 				users:      '#/users',
 				billing:    '#/billing',
@@ -46,6 +47,7 @@ define('config',
 			},
 
 			_viewIds = {
+				HomeView: '#home-view',
 				LoginView: '#login-view',
 				RegisterView: '#register-view'
 			},

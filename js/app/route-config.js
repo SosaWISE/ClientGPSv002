@@ -13,7 +13,21 @@ function (config, router, vm) {
 
 		_register = function () {
 
-			var routeData = [];
+			var routeData = [
+				// Home route
+				{
+					view: config.ViewIds.HomeView,
+					routes: [
+						{
+							isDefault: true,
+							route: config.Hashes.home,
+							title: 'Home',
+							callback: vm.home.activate,
+							group: '.route-top'
+						}
+					]
+				}
+			];
 
 			for (var i = 0; i < routeData.length; i++) {
 				router.register(routeData[i]);
