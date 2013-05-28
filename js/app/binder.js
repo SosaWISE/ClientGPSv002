@@ -13,6 +13,7 @@ function ($, ko, config, vm) {
 
 		_bind = function () {
 			ko.applyBindings(vm.Login, getView(ids.LoginView));
+			ko.applyBindings(vm.Home, getView(ids.HomeView));
 			//ko.applyBindings(vm.Register, getView(ids.RegisterView));
 		},
 

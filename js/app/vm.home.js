@@ -6,11 +6,18 @@
  * To change this template use File | Settings | File Templates.
  */
 define('vm.home',
-['messenger'],
-function (messenger) {
+['messenger','utils'],
+function (messenger, utils) {
 	var
-		_activate = function () {
-			messenger.Publish.viewModelActivated();
+		_activate = function (routeData, callback) {
+			messenger.Publish.viewModelActivated({canleaveCallback: canLeave});
+			refresh(callback);
+		},
+		canLeave = function () {
+			return true;
+		},
+		refresh = function (callback) {
+			utils.InvokeFunctionIfExists(callback);
 		};
 
 	/** Return object. */

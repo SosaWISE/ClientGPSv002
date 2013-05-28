@@ -24,6 +24,7 @@ define('config',
 			_currentUser        = ko.observable(),
 			_hashes             = {
 				home:       '#/home',
+				login:      '#/login',
 				devices:    '#/devices',
 				users:      '#/users',
 				billing:    '#/billing',

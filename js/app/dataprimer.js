@@ -11,24 +11,20 @@ function ($, ko, datacontext, config) {
 	var logger = config.logger,
 		
 		_sessionStart = function () {
-debugger;
 			return $.Deferred(function (def) {
 				var data = { session: ko.observable() };
 
 				$.when(datacontext.Session.GetData({ results: data.session }))
 				.fail(function () {
-					debugger;
 					def.reject();
 				})
 				.done(function () {
-					debugger;
 					def.resolve();
 				});
 			}).promise();
 		},
 
 		_fetch = function () {
-			debugger;
 			return $.Deferred(function (def) {
 				var data = {
 					devices: ko.observableArray(),
@@ -46,7 +42,6 @@ debugger;
 				)
 
 				.pipe(function () {
-						debugger;
 					logger.success('Fetch data for: '
 						+ '<div>' + data.devices().length + ' devices </div>'
 						+ '<div>' + data.events().length + ' events </div>'
@@ -56,11 +51,9 @@ debugger;
 				})
 
 				.fail(function () {
-						debugger;
 						def.reject(); })
 
 				.done(function () {
-						debugger;
 						def.resolve(); });
 
 			}).promise();

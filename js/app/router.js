@@ -86,12 +86,12 @@ function ($, _, Sammy, presenter, config, routeMediator, store) {
 		setupGet = function (options, routeOverride) {
 			var route = routeOverride || options.route;
 			sammy.get(route, function (context) { // context is 'this'.
-				store.save(config.StateKeys.lastView, context.path);
+				store.Save(config.StateKeys.lastView, context.path);
 				options.callback(context.params); // Activate the viewModel.
 				$('.view').hide();
 				presenter.TransitionTo(
 					$(options.view),
-					optiosn.route, // context.path, // We want to find the route we defined in the config.
+					options.route, // context.path, // We want to find the route we defined in the config.
 					options.group
 				);
 				if (this.title) {
