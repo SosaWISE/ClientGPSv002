@@ -12,10 +12,12 @@ define ('vm',
 	'vm.events',
 	'vm.devices',
 	'vm.geoFences',
-	'vm.users'
+	'vm.users',
+	'vm.home'
 ],
-function (vmLogin, vmRegister, events, devices, geoFences, users) {
+function (vmLogin, vmRegister, events, devices, geoFences, users, home) {
 	return {
+		get Home() { return home; },
 		get Login() { return vmLogin; },
 		get Register() { return vmRegister; },
 		get Events() { return events; },

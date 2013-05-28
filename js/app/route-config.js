@@ -22,7 +22,7 @@ function (config, router, vm) {
 							isDefault: true,
 							route: config.Hashes.home,
 							title: 'Home',
-							callback: vm.home.activate,
+							callback: vm.Home.Activate,
 							group: '.route-top'
 						}
 					]
@@ -30,7 +30,7 @@ function (config, router, vm) {
 			];
 
 			for (var i = 0; i < routeData.length; i++) {
-				router.register(routeData[i]);
+				router.Register(routeData[i]);
 			}
 
 			/** Crank up the router. */
