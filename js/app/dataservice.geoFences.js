@@ -11,16 +11,7 @@ function (amplify, config) {
 	var
 		_init = function () {
 
-			amplify.request.define('devices-acquireGeoFences', 'ajax', {
-				url: config.ServicesDomain + 'Device/AcquireDeviceGeoFences',
-				dataType: 'json',
-				type: 'POST',
-				contentType: 'application/json; charset=utf-8',
-				crossDomain: true,
-				xhrFields: {
-					withCredentials: true
-				}
-			});
+			amplify.request.define('devices-acquireGeoFences', 'ajax', config.AjaxProps('Device/AcquireDeviceGeoFences'));
 
 		},
 

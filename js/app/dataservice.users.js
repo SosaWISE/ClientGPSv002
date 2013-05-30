@@ -12,16 +12,7 @@ function (amplify, config) {
 	/** START Initialize object. */
 		_init = function () {
 
-			amplify.request.define('users-getData', 'ajax', {
-				url: config.ServicesDomain + 'Users/Read',
-				dataType: 'json',
-				type: 'POST',
-				contentType: 'application/json; charset=utf-8',
-				crossDomain: true,
-				xhrFields: {
-					withCredentials: true
-				}
-			});
+			amplify.request.define('users-getData', 'ajax', config.AjaxProps('Users/Read'));
 	};
 	/**   END Initialize object. */
 

@@ -14,32 +14,12 @@ function (amplify, config) {
 			/**
 			 * @description This initiates the session.
 			 */
-			amplify.request.define('session-start', 'ajax', {
-				url: config.ServicesDomain + 'AuthSrv/SessionStart',
-				dataType: 'json',
-				type: 'POST',
-				contentType: 'application/json; charset=utf-8',
-				cache: false,
-				crossDomain: true,
-					xhrFields: {
-						withCredentials: true
-					}
-			});
+			amplify.request.define('session-start', 'ajax', config.AjaxProps('AuthSrv/SessionStart'));
 
 			/**
 			 * @description This terminates the session.
 			 */
-			amplify.request.define('session-terminate', 'ajax', {
-				url: config.ServicesDomain + 'AuthSrv/SessionTerminate',
-				dataType: 'json',
-				type: 'POST',
-				contentType: 'application/json; charset=utf-8',
-				cache: false,
-				crossDomain: true,
-				xhrFields: {
-					withCredentials: true
-				}
-			});
+			amplify.request.define('session-terminate', 'ajax', config.AjaxProps('AuthSrv/SessionTerminate'));
 		},
 		/**   END Constructor. */
 		/** START Public Methods. */
