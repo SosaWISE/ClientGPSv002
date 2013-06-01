@@ -20,6 +20,9 @@ define('bootstrapper',
 				config.DataServiceInit();
 
 				$.when(dataprimer.SessionStart())
+				.then(function(result) {
+					config.CurrentUser(result.AuthCustomer);
+				})
 				//.then(dataprimer.Fetch())
 				.done(binder.Bind)
 				.done(routeConfig.Register)

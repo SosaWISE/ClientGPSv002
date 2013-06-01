@@ -55,17 +55,32 @@ function ($, _, Sammy, presenter, config, routeMediator, store) {
 			sammy.before(/.*/, function () {
 				var
 					context = this,
-					response = routeMediator.CanLeave();
+					response = routeMediator.CanLeave(),
+					prevHash = currentHash;
 
-				if (isRedirecting && !response.val) {
+				if (!isRedirecting && !response.val) {
 					isRedirecting = true;
 					logger.warning(response.message);
 					// Keep hash url the same in address bar
 					context.app.setLocation(currentHash);
-				} else {
+				}
+				else {
 					isRedirecting = false;
 					currentHash = context.app.getLocation();
+					currentHash = currentHash.substr(currentHash.indexOf('#'));
 				}
+
+				if (!config.CurrentUser() &&
+						currentHash !== config.Hashes.login) {
+					if (prevHash === config.Hashes.login) {
+						window.history.back();
+					}
+					else {
+						sammy.setLocation(config.Hashes.login);
+					}
+					return false;
+				}
+
 				// cancel the route if this returns false
 				return response.val;
 			});
@@ -112,6 +127,18 @@ function ($, _, Sammy, presenter, config, routeMediator, store) {
 			// 3) otherwise use the default route.
 			var addressBarUrl = sammy.getLocation();
 			startupUrl = getUsableRoute(addressBarUrl) || getUsableRoute(url) || defaultRoute;
+
+			if (config.CurrentUser()) {
+				// go to default page if logged in
+				// and going to the login page
+				if (startupUrl === config.Hashes.login) {
+					startupUrl = defaultRoute;
+				}
+			}
+			else {
+				// always start at the login page when logged out
+				startupUrl = config.Hashes.login;
+			}
 
 			sammy.run();
 			registerBeforeLeaving();

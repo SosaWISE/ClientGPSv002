@@ -9,7 +9,7 @@ define('dataprimer',
 ['jquery', 'ko', 'datacontext', 'config'],
 function ($, ko, datacontext, config) {
 	var logger = config.logger,
-		
+
 		_sessionStart = function () {
 			return $.Deferred(function (def) {
 				var data = { session: ko.observable() };
@@ -18,8 +18,8 @@ function ($, ko, datacontext, config) {
 				.fail(function () {
 					def.reject();
 				})
-				.done(function () {
-					def.resolve();
+				.done(function (result) {
+					def.resolve(result);
 				});
 			}).promise();
 		},

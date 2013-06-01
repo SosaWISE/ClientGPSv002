@@ -19,7 +19,7 @@ function (messenger, config) {
 		_canLeave = function () {
 			// Check the active view model to see if we can leave it.
 			var val = canLeaveCallback ? canLeaveCallback() : true;
-			return { val: val, message: config.toasts.changesPending };
+			return { val: val, message: config.Toasts.changesPending };
 		},
 
 		subscribeToViewModelActivations = function () {

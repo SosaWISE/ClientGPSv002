@@ -19,6 +19,7 @@ function (config, router, vm) {
 					view: config.ViewIds.HomeView,
 					routes: [
 						{
+							isDefault: true,
 							route: config.Hashes.home,
 							title: 'Home',
 							callback: vm.Home.Activate,
@@ -32,7 +33,6 @@ function (config, router, vm) {
 					view: config.ViewIds.LoginView,
 					routes: [
 						{
-							isDefault: true,
 							route: config.Hashes.login,
 							title: 'Login',
 							callback: vm.Login.Activate,

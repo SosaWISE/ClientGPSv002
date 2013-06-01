@@ -18,7 +18,11 @@ function ($, ko, config, vm) {
 		},
 
 		getView = function (viewName) {
-			return $(viewName).get(0);
+			var result = $(viewName).get(0);
+			if (!result) {
+				throw new Error('No view for `' + viewName + '`');
+			}
+			return result;
 		};
 
 	return {
