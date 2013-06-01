@@ -12,16 +12,7 @@ function (amplify, config) {
 	/** START Initialize object. */
 		_init = function () {
 
-			amplify.request.define('devices-AcquireDeviceEvents', 'ajax', {
-				url: config.ServicesDomain + 'Device/AcquireDeviceEvents',
-				dataType: 'json',
-				type: 'POST',
-				contentType: 'application/json; charset=utf-8',
-				crossDomain: true,
-				xhrFields: {
-					withCredentials: true
-				}
-			});
+			amplify.request.define('devices-AcquireDeviceEvents', 'ajax', config.AjaxProps('Device/AcquireDeviceEvents'));
 	},
 	/**   END Initialize object. */
 

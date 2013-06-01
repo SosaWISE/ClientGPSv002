@@ -97,6 +97,24 @@ define('config',
 				toastr.options.timeOut = _toasterTimeout;
 				configureExternalTemplates();
 				validationInit();
+			},
+			_ajaxProps = function (aUrl) {
+				var props = {
+					url: _servicesDomain + aUrl,
+					dataType: 'json',
+					type: 'POST',
+					contentType: 'application/json; charset=utf-8',
+					cache: false,
+					crossDomain: true
+/** This needs to be enabled once we are in production.
+ * The header property Access-Control-Allow-Origin also needs to be changed from '*' wildcard to where the client is hosted.
+ *                   xhrFields: {
+						withCredentials: true
+					} */
+				};
+
+				/** Return result. */
+				return props;
 			};
 
 		/** Initialize. */
@@ -119,6 +137,7 @@ define('config',
 			get Title() { return _title; },
 			get DataServiceInit() { return _dataServiceInit; },
 			get UseMocks() { return useMocks; },
-			get ViewIds() { return _viewIds; }
+			get ViewIds() { return _viewIds; },
+			get AjaxProps() { return _ajaxProps; }
 		};
 	});

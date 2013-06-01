@@ -11,38 +11,11 @@ function (amplify, config) {
 	var
 	/** START Initialize object. */
 		_init = function () {
-		amplify.request.define('devices-acquire', 'ajax', {
-			url: config.ServicesDomain + 'Device/AcquireList',
-			dataType: 'json',
-			type: 'POST',
-			contentType: 'application/json; charset=utf-8',
-			crossDomain: true,
-			xhrFields: {
-				withCredentials: true
-			}
-		});
+		amplify.request.define('devices-acquire', 'ajax', config.AjaxProps('Device/AcquireList'));
 
-		amplify.request.define('devices-acquireByCustomerID', 'ajax', {
-			url: config.ServicesDomain + 'Device/AcquireListByCustomerID',
-			dataType: 'json',
-			type: 'POST',
-			contentType: 'application/json; charset=utf-8',
-			crossDomain: true,
-			xhrFields: {
-				withCredentials: true
-			}
-		});
+		amplify.request.define('devices-acquireByCustomerID', 'ajax', config.AjaxProps('Device/AcquireListByCustomerID'));
 
-		amplify.request.define('devices-acquireDetails', 'ajax', {
-			url: config.ServicesDomain + 'Device/AcquireDeviceDetails',
-			dataType: 'json',
-			type: 'POST',
-			contentType: 'application/json; charset=utf-8',
-			crossDomain: true,
-			xhrFields: {
-				withCredentials: true
-			}
-		});
+		amplify.request.define('devices-acquireDetails', 'ajax', config.AjaxProps('Device/AcquireDeviceDetails'));
 	},
 	/**   END Initialize object. */
 
