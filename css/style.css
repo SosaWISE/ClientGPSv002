@@ -1555,6 +1555,24 @@ nav.primary .indicator {
 	color: #777;
 }
 
+.module.reports .table-head th a {
+	font-size: 14px;
+	font-weight: 500;
+	color: #777;
+	text-decoration: none;
+}
+
+.module.reports .table-head th a:hover {
+	text-decoration: underline;
+}
+
+.module.reports .table-head th.decending:after {
+	content: ' \25BC';
+}
+.module.reports .table-head th.ascending:after {
+	content: ' \25B2';
+}
+
 .module.reports thead {
 	display: block;
 	position: absolute;
