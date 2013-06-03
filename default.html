@@ -416,8 +416,13 @@
                                     <input type="text" placeholder="Placeholder">
                                 </li>
                                 <li>
-                                    <span class="label">Field Title</span>
-                                    <input type="text" placeholder="Placeholder">
+                                    <span class="label">Notifications</span>
+                                    <ul class="notification">
+                                        <li class="notification">
+                                            <div class="notification-title">Notification 01</div>
+                                            <div class="notification-subtitle">Devices</div>
+                                        </li>
+                                    </ul>
                                 </li>
                                 <li>
                                     <input type="submit" value="Save" class="save">
@@ -650,56 +655,42 @@
             <div class="reports sidebar">
 
                 <h2 class="title">Reports</h2>
-                <div class="content">
-                    <ul class="fields">
-                        <li class="field">
-                            <input type="text" placeholder="field">
+                <a href="#" class="search-btn">Search</a>
+                <div class="form-wrap">
+                    <ul class="edit-form">
+                        <li>
+                            <span class="label">First Name</span>
+                            <input type="text" placeholder="Placeholder">
                         </li>
-                        <li class="field">
-                            <input type="text" placeholder="field">
+                        <li>
+                            <span class="label">Last Name</span>
+                            <input type="text" placeholder="Placeholder">
                         </li>
-                        <li class="field">
-                            <input type="text" placeholder="field">
+                       <li>
+                            <span class="label">Description</span>
+                            <textarea class="description" placeholder="Description here" rows="5"></textarea>
                         </li>
-                        <li class="field">
-                            <input type="text" placeholder="field">
+                        <li>
+                            <span class="label">Select Box</span>
+                            <div class="select-wrap">
+                                <select>
+                                    <option value="placeholder">Select one...</option>
+                                    <option>Option 1</option>
+                                    <option>Option 2</option>
+                                    <option>Option 3</option>
+                                </select>
+                            </div>
                         </li>
-                        <li class="field">
-                            <input type="text" placeholder="field">
+                        <li>
+                            <span class="label">Field Title</span>
+                            <input type="text" placeholder="Placeholder">
                         </li>
-                        <li class="field">
-                            <input type="text" placeholder="field">
+                        <li>
+                            <span class="label">Field Title</span>
+                            <input type="text" placeholder="Placeholder">
                         </li>
-                        <li class="field">
-                            <input type="text" placeholder="field">
-                        </li>
-                        <li class="field">
-                            <input type="text" placeholder="field">
-                        </li>
-                        <li class="field">
-                            <input type="text" placeholder="field">
-                        </li>
-                        <li class="field">
-                            <input type="text" placeholder="field">
-                        </li>
-                        <li class="field">
-                            <input type="text" placeholder="field">
-                        </li>
-                        <li class="field">
-                            <input type="text" placeholder="field">
-                        </li>
-                        <li class="field">
-                            <input type="text" placeholder="field">
-                        </li>
-                        <li class="field">
-                            <input type="text" placeholder="field">
-                        </li>
-                        <li class="field">
-                            <input type="text" placeholder="field">
-                        </li>
-                    </ul>                        
+                    </ul>
                 </div>
-
             </div>
             <div class="settings sidebar">Settings Sidebar</div>
         </div> 
@@ -909,13 +900,13 @@
                 </div>
                 <div class="editing-toolbar">
                     <div class="top">
-                        <a href="circle">&#xe02a;</a>
-                        <a href="square">&#xe02b;</a>
-                        <a href="polygon">&#xe029;</a>
+                        <a href="#" class="square">&#xe02a;</a>
+                        <a href="#" class="circle">&#xe029;</a>
+                        <a href="#" class="polygon">&#xe028;</a>
                     </div>
                     <div class="bottom">
-                        <a href="undo">&#xe021;</a>
-                        <a href="redo">&#xe022;</a>
+                        <a href="#" class="undo">&#xe020;</a>
+                        <a href="#" class="redo">&#xe021;</a>
                     </div>        
                 </div>
             </div>
@@ -923,7 +914,284 @@
                 Users
             </div>
             <div class="billing module">Billing</div>
-            <div class="reports module">Reports</div>
+            <div class="reports module">
+                <div class="head">
+                    <h2>Report Results</h2>
+                    <div class="search-wrap"><input type="text" class="search" placeholder="Search Results"></div>
+                    <div class="actions">
+                        <a href="#" class="btn export-csv">Export to CSV</a>
+                    </div>
+                </div>                    
+                <table class="table-head">
+                    <tbody>
+                        <tr>
+                            <th>Date</th>
+                            <th>Type</th>
+                            <th>Device</th>
+                            <th>Location/Geofence</th>
+                            <th>Description</th>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="table-body-wrap">
+                    <table class="table-body">
+                        <tbody>
+                            <tr>
+                                <td>June 05, 2013 @ 07:26pm</td>
+                                <td>Geofence Exit</td>
+                                <td>Austin's Watch</td>
+                                <td>Mark's House</td>
+                                <td>Departed to go to Austin's apartment</td>
+                            </tr>
+                            <tr>
+                                <td>June 05, 2013 @ 07:26pm</td>
+                                <td>Geofence Exit</td>
+                                <td>Austin's Watch</td>
+                                <td>Mark's House</td>
+                                <td>Departed to go to Austin's apartment</td>
+                            </tr>
+                            <tr>
+                                <td>June 05, 2013 @ 07:26pm</td>
+                                <td>Geofence Exit</td>
+                                <td>Austin's Watch</td>
+                                <td>Mark's House</td>
+                                <td>Departed to go to Austin's apartment</td>
+                            </tr>
+                            <tr>
+                                <td>June 05, 2013 @ 07:26pm</td>
+                                <td>Geofence Exit</td>
+                                <td>Austin's Watch</td>
+                                <td>Mark's House</td>
+                                <td>Departed to go to Austin's apartment</td>
+                            </tr>
+                            <tr>
+                                <td>June 05, 2013 @ 07:26pm</td>
+                                <td>Geofence Exit</td>
+                                <td>Austin's Watch</td>
+                                <td>Mark's House</td>
+                                <td>Departed to go to Austin's apartment</td>
+                            </tr>
+                            <tr>
+                                <td>June 05, 2013 @ 07:26pm</td>
+                                <td>Geofence Exit</td>
+                                <td>Austin's Watch</td>
+                                <td>Mark's House</td>
+                                <td>Departed to go to Austin's apartment</td>
+                            </tr>
+                            <tr>
+                                <td>June 05, 2013 @ 07:26pm</td>
+                                <td>Geofence Exit</td>
+                                <td>Austin's Watch</td>
+                                <td>Mark's House</td>
+                                <td>Departed to go to Austin's apartment</td>
+                            </tr>
+                            <tr>
+                                <td>June 05, 2013 @ 07:26pm</td>
+                                <td>Geofence Exit</td>
+                                <td>Austin's Watch</td>
+                                <td>Mark's House</td>
+                                <td>Departed to go to Austin's apartment</td>
+                            </tr>
+                            <tr>
+                                <td>June 05, 2013 @ 07:26pm</td>
+                                <td>Geofence Exit</td>
+                                <td>Austin's Watch</td>
+                                <td>Mark's House</td>
+                                <td>Departed to go to Austin's apartment</td>
+                            </tr>
+                            <tr>
+                                <td>June 05, 2013 @ 07:26pm</td>
+                                <td>Geofence Exit</td>
+                                <td>Austin's Watch</td>
+                                <td>Mark's House</td>
+                                <td>Departed to go to Austin's apartment</td>
+                            </tr>
+                            <tr>
+                                <td>June 05, 2013 @ 07:26pm</td>
+                                <td>Geofence Exit</td>
+                                <td>Austin's Watch</td>
+                                <td>Mark's House</td>
+                                <td>Departed to go to Austin's apartment</td>
+                            </tr>
+                            <tr>
+                                <td>June 05, 2013 @ 07:26pm</td>
+                                <td>Geofence Exit</td>
+                                <td>Austin's Watch</td>
+                                <td>Mark's House</td>
+                                <td>Departed to go to Austin's apartment</td>
+                            </tr>
+                            <tr>
+                                <td>June 05, 2013 @ 07:26pm</td>
+                                <td>Geofence Exit</td>
+                                <td>Austin's Watch</td>
+                                <td>Mark's House</td>
+                                <td>Departed to go to Austin's apartment</td>
+                            </tr>
+                            <tr>
+                                <td>June 05, 2013 @ 07:26pm</td>
+                                <td>Geofence Exit</td>
+                                <td>Austin's Watch</td>
+                                <td>Mark's House</td>
+                                <td>Departed to go to Austin's apartment</td>
+                            </tr>
+                            <tr>
+                                <td>June 05, 2013 @ 07:26pm</td>
+                                <td>Geofence Exit</td>
+                                <td>Austin's Watch</td>
+                                <td>Mark's House</td>
+                                <td>Departed to go to Austin's apartment</td>
+                            </tr>
+                            <tr>
+                                <td>June 05, 2013 @ 07:26pm</td>
+                                <td>Geofence Exit</td>
+                                <td>Austin's Watch</td>
+                                <td>Mark's House</td>
+                                <td>Departed to go to Austin's apartment</td>
+                            </tr>
+                            <tr>
+                                <td>June 05, 2013 @ 07:26pm</td>
+                                <td>Geofence Exit</td>
+                                <td>Austin's Watch</td>
+                                <td>Mark's House</td>
+                                <td>Departed to go to Austin's apartment</td>
+                            </tr>
+                            <tr>
+                                <td>June 05, 2013 @ 07:26pm</td>
+                                <td>Geofence Exit</td>
+                                <td>Austin's Watch</td>
+                                <td>Mark's House</td>
+                                <td>Departed to go to Austin's apartment</td>
+                            </tr>
+                            <tr>
+                                <td>June 05, 2013 @ 07:26pm</td>
+                                <td>Geofence Exit</td>
+                                <td>Austin's Watch</td>
+                                <td>Mark's House</td>
+                                <td>Departed to go to Austin's apartment</td>
+                            </tr>
+                            <tr>
+                                <td>June 05, 2013 @ 07:26pm</td>
+                                <td>Geofence Exit</td>
+                                <td>Austin's Watch</td>
+                                <td>Mark's House</td>
+                                <td>Departed to go to Austin's apartment</td>
+                            </tr>
+                            <tr>
+                                <td>June 05, 2013 @ 07:26pm</td>
+                                <td>Geofence Exit</td>
+                                <td>Austin's Watch</td>
+                                <td>Mark's House</td>
+                                <td>Departed to go to Austin's apartment</td>
+                            </tr>
+                            <tr>
+                                <td>June 05, 2013 @ 07:26pm</td>
+                                <td>Geofence Exit</td>
+                                <td>Austin's Watch</td>
+                                <td>Mark's House</td>
+                                <td>Departed to go to Austin's apartment</td>
+                            </tr>
+                            <tr>
+                                <td>June 05, 2013 @ 07:26pm</td>
+                                <td>Geofence Exit</td>
+                                <td>Austin's Watch</td>
+                                <td>Mark's House</td>
+                                <td>Departed to go to Austin's apartment</td>
+                            </tr>
+                            <tr>
+                                <td>June 05, 2013 @ 07:26pm</td>
+                                <td>Geofence Exit</td>
+                                <td>Austin's Watch</td>
+                                <td>Mark's House</td>
+                                <td>Departed to go to Austin's apartment</td>
+                            </tr>
+                            <tr>
+                                <td>June 05, 2013 @ 07:26pm</td>
+                                <td>Geofence Exit</td>
+                                <td>Austin's Watch</td>
+                                <td>Mark's House</td>
+                                <td>Departed to go to Austin's apartment</td>
+                            </tr>
+                            <tr>
+                                <td>June 05, 2013 @ 07:26pm</td>
+                                <td>Geofence Exit</td>
+                                <td>Austin's Watch</td>
+                                <td>Mark's House</td>
+                                <td>Departed to go to Austin's apartment</td>
+                            </tr>
+                            <tr>
+                                <td>June 05, 2013 @ 07:26pm</td>
+                                <td>Geofence Exit</td>
+                                <td>Austin's Watch</td>
+                                <td>Mark's House</td>
+                                <td>Departed to go to Austin's apartment</td>
+                            </tr>
+                            <tr>
+                                <td>June 05, 2013 @ 07:26pm</td>
+                                <td>Geofence Exit</td>
+                                <td>Austin's Watch</td>
+                                <td>Mark's House</td>
+                                <td>Departed to go to Austin's apartment</td>
+                            </tr>
+                            <tr>
+                                <td>June 05, 2013 @ 07:26pm</td>
+                                <td>Geofence Exit</td>
+                                <td>Austin's Watch</td>
+                                <td>Mark's House</td>
+                                <td>Departed to go to Austin's apartment</td>
+                            </tr>
+                            <tr>
+                                <td>June 05, 2013 @ 07:26pm</td>
+                                <td>Geofence Exit</td>
+                                <td>Austin's Watch</td>
+                                <td>Mark's House</td>
+                                <td>Departed to go to Austin's apartment</td>
+                            </tr>
+                            <tr>
+                                <td>June 05, 2013 @ 07:26pm</td>
+                                <td>Geofence Exit</td>
+                                <td>Austin's Watch</td>
+                                <td>Mark's House</td>
+                                <td>Departed to go to Austin's apartment</td>
+                            </tr>
+                            <tr>
+                                <td>June 05, 2013 @ 07:26pm</td>
+                                <td>Geofence Exit</td>
+                                <td>Austin's Watch</td>
+                                <td>Mark's House</td>
+                                <td>Departed to go to Austin's apartment</td>
+                            </tr>
+                            <tr>
+                                <td>June 05, 2013 @ 07:26pm</td>
+                                <td>Geofence Exit</td>
+                                <td>Austin's Watch</td>
+                                <td>Mark's House</td>
+                                <td>Departed to go to Austin's apartment</td>
+                            </tr>
+                            <tr>
+                                <td>June 05, 2013 @ 07:26pm</td>
+                                <td>Geofence Exit</td>
+                                <td>Austin's Watch</td>
+                                <td>Mark's House</td>
+                                <td>Departed to go to Austin's apartment</td>
+                            </tr>
+                            <tr>
+                                <td>June 05, 2013 @ 07:26pm</td>
+                                <td>Geofence Exit</td>
+                                <td>Austin's Watch</td>
+                                <td>Mark's House</td>
+                                <td>Departed to go to Austin's apartment</td>
+                            </tr>
+                            <tr>
+                                <td>June 06, 2013 @ 07:27pm</td>
+                                <td>Geofence Exit</td>
+                                <td>Austin's Watch</td>
+                                <td>Mark's House</td>
+                                <td>Departed to go to Austin's apartment</td>
+                            </tr>
+                        </tbody>
+                    </table>                        
+                </div>
+            </div>
             <div class="settings module">Settings</div>
         </div>
     </div>
