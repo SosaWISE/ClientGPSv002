@@ -1,0 +1,59 @@
+<h2 class="title">Users</h2>
+<div class="search-bar">
+    <div class="search-wrap"><input type="text" class="search" data-bind="attr:{placeholder:'Search '+name}"></div>
+</div>
+<div class="content">
+    <ul class="users" data-bind="foreach:list">
+        <li data-bind="attr:{'class':type}">
+            <div class="title"><span data-bind="text:firstName"></span> <span data-bind="text:lastName"></span></div>
+            <div class="sub" data-bind="text:time"></div>
+            <div class="actions"><a href="#" class="edit-btn">&#xe01b;</a></div>
+        </li>
+    </ul>
+</div>
+<div class="edit-wrap">
+    <a href="#" class="edit-btn">
+        <span class="add-new-txt">Add New User</span>
+        <span class="edit-txt">Edit User</span>
+    </a>
+    <div class="form-wrap">
+        <ul class="edit-form">
+            <li>
+                <span class="label">First Name</span>
+                <input type="text" placeholder="Placeholder">
+            </li>
+            <li>
+                <span class="label">Last Name</span>
+                <input type="text" placeholder="Placeholder">
+            </li>
+           <li>
+                <span class="label">Description</span>
+                <textarea class="description" placeholder="Description here" rows="5"></textarea>
+            </li>
+            <li>
+                <span class="label">Select Box</span>
+                <div class="select-wrap">
+                    <select>
+                        <option value="placeholder">Select one...</option>
+                        <option>Option 1</option>
+                        <option>Option 2</option>
+                        <option>Option 3</option>
+                    </select>
+                </div>
+            </li>
+            <li>
+                <span class="label">Field Title</span>
+                <input type="text" placeholder="Placeholder">
+            </li>
+            <li>
+                <span class="label">Field Title</span>
+                <input type="text" placeholder="Placeholder">
+            </li>
+            <li>
+                <input type="submit" value="Save" class="save">
+                <input type="button" value="Cancel" class="cancel">
+                <input type="button" value="Delete" class="delete">
+            </li>
+        </ul>
+    </div>
+</div>

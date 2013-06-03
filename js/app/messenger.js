@@ -29,7 +29,7 @@ function (amplify, config) {
 	};
 
 	return {
-		Publish: _publish,
+		publish: _publish,
 		Subscribe: _subscribe
 	};
 });

@@ -2,15 +2,15 @@
  * Created with JetBrains PhpStorm.
  * User: sosawise
  * Date: 5/20/13
- * Time: 12:27 PM
+ * Time: 12:28 PM
  * To change this template use File | Settings | File Templates.
  */
-define('vm.geoFences',
+define('vm.devices-tab',
 ['messenger'],
 function (messenger) {
 	var
 		/** START Private Properties. */
-			_tmplName = 'geoFences.view',
+			_tmplName = 'devices.view',
 		/**   END Private Properties. */
 
 		/** START Private Methods. */
@@ -25,78 +25,78 @@ function (messenger) {
 		},
 		list = [
 			{
-				type: 'fence',
-				title: 'Our House',
+				type: 'watch',
+				title: 'Austin\'s Watch',
 				time: 'April 23, 2013 at 12:42pm',
 			},
 			{
-				type: 'fence',
-				title: 'Tyler\'s House',
+				type: 'watch',
+				title: 'Tyler\'s Watch',
 				time: 'April 23, 2013 at 12:42pm',
 			},
 			{
-				type: 'fence',
-				title: 'Ethan\'s Apartment',
+				type: 'watch',
+				title: 'Ethan\'s Watch',
 				time: 'April 23, 2013 at 12:42pm',
 			},
 			{
-				type: 'fence',
-				title: 'Mark\'s House',
+				type: 'child',
+				title: 'Zak\'s Child Tracker',
 				time: 'April 23, 2013 at 12:42pm',
 			},
 			{
-				type: 'fence',
-				title: 'Carolyn\'s House',
+				type: 'phone',
+				title: 'Austin\'s Phone',
 				time: 'April 23, 2013 at 12:42pm',
 			},
 			{
-				type: 'fence',
-				title: 'Church',
+				type: 'home',
+				title: 'Our Home Alarm',
 				time: 'April 23, 2013 at 12:42pm',
 			},
 			{
-				type: 'fence',
-				title: 'Our Neighborhood',
+				type: 'watch',
+				title: 'Carolyn\'s Phone',
 				time: 'April 23, 2013 at 12:42pm',
 			},
 			{
-				type: 'fence',
-				title: 'Orem, UT',
+				type: 'phone',
+				title: 'Mark\'s Phone',
 				time: 'April 23, 2013 at 12:42pm',
 			},
 			{
-				type: 'fence',
-				title: 'Utah, USA',
+				type: 'car-nav',
+				title: 'Austin\'s Car GPS',
 				time: 'April 23, 2013 at 12:42pm',
 			},
 			{
-				type: 'fence',
-				title: 'Carolyn\'s Neighborhood',
+				type: 'car',
+				title: 'Carolyn\'s Car Tracker',
 				time: 'April 23, 2013 at 12:42pm',
 			},
 			{
-				type: 'fence',
-				title: 'Our Ward Boundries',
+				type: 'watch',
+				title: 'Austin\'s Watch',
 				time: 'April 23, 2013 at 12:42pm',
 			},
 			{
-				type: 'fence',
-				title: 'Our Stake Boundries',
+				type: 'watch',
+				title: 'Austin\'s Watch',
 				time: 'April 23, 2013 at 12:42pm',
 			},
 			{
-				type: 'fence',
-				title: 'Utah Lake',
+				type: 'watch',
+				title: 'Austin\'s Watch',
 				time: 'April 23, 2013 at 12:42pm',
 			},
 			{
-				type: 'fence',
-				title: 'Texas, USA',
+				type: 'watch',
+				title: 'Austin\'s Watch',
 				time: 'April 23, 2013 at 12:42pm',
 			},
 			{
-				type: 'fence',
-				title: 'Houston, TX',
+				type: 'watch',
+				title: 'Austin\'s Watch',
 				time: 'April 23, 2013 at 12:42pm',
 			},
 		];
@@ -106,8 +106,8 @@ function (messenger) {
 
 	/** Return object. */
 	return {
-		type: 'geofences',
-		name: 'Geofences',
+    type: 'devices',
+		name: 'Devices',
 		list: list,
 		active: ko.observable(false),
 		get Activate() { return _activate; },

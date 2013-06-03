@@ -16,7 +16,7 @@ function (messenger) {
 		/** START Private Methods. */
 			_activate = function (routeData, callback) {
 			messenger.publish.viewModelActivated();
-			refresh(callback);
+			if (callback) callback();
 		},
 		/**   END Private Methods. */
 

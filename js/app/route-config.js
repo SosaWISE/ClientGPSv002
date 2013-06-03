@@ -39,6 +39,29 @@ function (config, router, vm) {
 							group: '.route-top'
 						}
 					]
+				},
+
+				{
+					view: config.ViewIds.DevicesView,
+					routes: [
+						{
+							route: config.Hashes.devices,
+							title: 'Devices',
+							callback: vm.Devices.Activate,
+							group: '.route-top'
+						}
+					]
+				},
+				{
+					view: config.ViewIds.UsersView,
+					routes: [
+						{
+							route: config.Hashes.users,
+							title: 'Users',
+							callback: vm.Users.Activate,
+							group: '.route-top'
+						}
+					]
 				}
 			];
 

@@ -28,7 +28,8 @@ function (messenger, router, config) {
 
 		/** START Private Methods. */
 		_activate = function (routeData, callback) {
-			messenger.Publish.viewModelActivated();
+			messenger.publish.viewModelActivated();
+			if (callback) callback();
 		},
 		/**   END Private Methods. */
 
@@ -42,6 +43,7 @@ function (messenger, router, config) {
 
 	/** Return object. */
 	return {
+		TmplName: 'login.view',
 		get Activate() { return _activate; },
 		get LoginTitle() { return _loginTitle; },
 		get userName() { return _userName; },

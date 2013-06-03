@@ -6,30 +6,55 @@
  * To change this template use File | Settings | File Templates.
  */
 define('vm.devices',
-['messenger'],
-function (messenger) {
+[
+	'config',
+	'messenger',
+	'vm.events',
+	'vm.devices-tab',
+	'vm.geoFences'
+],
+function (config, messenger, events, devices, geoFences) {
 	var
 		/** START Private Properties. */
-			_tmplName = 'devices.view',
 		/**   END Private Properties. */
 
 		/** START Private Methods. */
-			_activate = function (routeData, callback) {
+		_activate = function (routeData, callback) {
 			messenger.publish.viewModelActivated();
-			refresh(callback);
+			if (callback) callback();
 		},
 		/**   END Private Methods. */
 
-			init = function () {
+		init = function () {
 			/** Initialize view model. */
-		};
+		},
+
+		groups = [
+			events,
+			devices,
+			geoFences
+		];
+
+	function activateGroup(vm) {
+		groups.forEach(function(group) {
+			group.active(false);
+		});
+		vm.active(true);
+	}
+	activateGroup(events);
 
 	/** Init object. */
 	init();
 
 	/** Return object. */
 	return {
-		get Activate() { return _activate; },
-		get TmplName() { return _tmplName; }
+		hash: config.Hashes.devices,
+		ico: '&#59176;',
+		type: 'devices',
+		name: 'Devices',
+		TmplName: 'devices.view',
+		groups: groups,
+		activateGroup: activateGroup,
+		get Activate() { return _activate; }
 	};
 });

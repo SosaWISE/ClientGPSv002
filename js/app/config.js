@@ -48,9 +48,12 @@ define('config',
 			},
 
 			_viewIds = {
+				MainView: '#vm-view',
 				HomeView: '#home-view',
 				LoginView: '#login-view',
-				RegisterView: '#register-view'
+				RegisterView: '#register-view',
+				DevicesView: '#devices-view',
+				UsersView: '#users-view'
 			},
 
 			_toasts = {
