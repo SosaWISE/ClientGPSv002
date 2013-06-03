@@ -1566,7 +1566,7 @@ nav.primary .indicator {
 	text-decoration: underline;
 }
 
-.module.reports .table-head th.decending:after {
+.module.reports .table-head th.descending:after {
 	content: ' \25BC';
 }
 .module.reports .table-head th.ascending:after {

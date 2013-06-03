@@ -114,6 +114,24 @@ $(function() {
 		resizeTable();
 	});
 
+	$('th a').click(function() {
+		that = $(this);
+		var isDescending;
+		
+		if( that.parent().hasClass('descending') ) {
+			isDescending = true;
+		} else { 
+			isDescending = false; 
+		}
+		console.log(isDescending);
+		$('th a').parent().removeClass('ascending descending');
+		if(!isDescending) {
+			that.parent().addClass('descending');
+		} else {
+			that.parent().addClass('ascending');
+		}
+	})
+
 });
 /**********************************************************************************************************************
  * @fileOverview Created by Andres Sosa
