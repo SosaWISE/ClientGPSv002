@@ -1106,7 +1106,8 @@ nav.primary .indicator {
 	top:-37px;
 }
 
-.sidebars .edit-wrap > a.edit-btn {
+.sidebars .edit-wrap > a.edit-btn,
+.sidebar.reports .search-btn {
 	color: white;
 	font-size: 18px;
 	font-weight: 500;
@@ -1121,7 +1122,15 @@ nav.primary .indicator {
             box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
     position: relative;
 }
+
+.sidebar.reports .search-btn {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+}
+
 .sidebars .editing .edit-wrap > a.edit-btn { cursor: default; }
+
 .sidebars .edit-wrap > a.edit-btn span {
 	display: block;
 	position: absolute;
@@ -1154,6 +1163,19 @@ nav.primary .indicator {
 	font-size: 28px;
 	text-align: center;
 }
+.sidebar.reports .search-btn:before {
+	content: "\e01e";
+	display: block;
+	width: 32px;
+	height: 32px;
+	position: absolute;
+	top: 20px;
+	left: 20px;
+	color: white;
+	font-family: 'SecuritySciences';
+	font-size: 28px;
+	text-align: center;
+}
 
 .sidebars .edit-wrap > a.edit-btn .edit-txt {
 	opacity: 0;
@@ -1177,7 +1199,7 @@ nav.primary .indicator {
 	opacity: 0;
 }
 
-.edit-wrap .form-wrap {
+.form-wrap {
 	position: absolute;
 	top:65px;right:0;bottom:0;left:0;
 	overflow: scroll;
@@ -1185,20 +1207,29 @@ nav.primary .indicator {
 	overflow-x: hidden;
 }
 
-.edit-wrap ul.edit-form {
+.sidebar.reports .form-wrap {
+	border-top: 1px solid rgba(255, 255, 255, 0.2);
+	top: 61px;
+	bottom: 65px;
+}
+.sidebar.reports h2.title {
+	background: rgba(255, 255, 255, 0.15);
+}
+
+.form-wrap ul.edit-form {
 	padding: 20px;
 }
-.edit-wrap ul.edit-form li {
+.form-wrap ul.edit-form li {
 	margin-bottom: 15px;
 }
-.edit-wrap ul.edit-form li .label {
+.form-wrap ul.edit-form li .label {
 	display: block;
 	text-transform: uppercase;
 	font-weight: 500;
 	margin-bottom: 3px;
 }
-.edit-wrap ul.edit-form li input[type=text],
-.edit-wrap ul.edit-form li textarea {
+.form-wrap ul.edit-form li input[type=text],
+.form-wrap ul.edit-form li textarea {
 	border: 0;
 	   -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
@@ -1214,15 +1245,15 @@ nav.primary .indicator {
 	transition: .25s;
 	resize: none;
 }
-.edit-wrap ul.edit-form li textarea {
+.form-wrap ul.edit-form li textarea {
 	font-size: 13px;
 }
-.edit-wrap ul.edit-form li input[type=text]:focus,
-.edit-wrap ul.edit-form li textarea:focus {
+.form-wrap ul.edit-form li input[type=text]:focus,
+.form-wrap ul.edit-form li textarea:focus {
     background: rgba(255,255,255,1);
 }
 
-.edit-wrap .select-wrap {
+.form-wrap .select-wrap {
     width: 100%;
     height: 26px;
     overflow: hidden;
@@ -1233,7 +1264,7 @@ nav.primary .indicator {
     position: relative;
 }
 
-.edit-wrap .select-wrap:after {
+.form-wrap .select-wrap:after {
 	content: '\E74F';
 	font-family: 'entypo';
 	position: absolute;
@@ -1243,7 +1274,7 @@ nav.primary .indicator {
 	font-size: 12px;
 }
 
-.edit-wrap .select-wrap select {
+.form-wrap .select-wrap select {
     background: transparent;
     width: 100%;
     padding: 5px 7px;
@@ -1256,14 +1287,16 @@ nav.primary .indicator {
     font:14px "Roboto",Helvetica,Arial,sans-serif;
     outline: none;
     cursor: pointer;
-    color: rgba(0, 0, 0, 0.33)
+    color: rgba(0, 0, 0, 0.33);
+    position: relative;
+    z-index: 5
 }
-.edit-wrap .select-wrap select.item-selected {
+.form-wrap .select-wrap select.item-selected {
 	color: black;
 }
 
-.edit-wrap input[type=button],
-.edit-wrap input[type=submit] {
+.form-wrap input[type=button],
+.form-wrap input[type=submit] {
 	padding: 8px 18px 6px 18px;
 	   -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
@@ -1289,12 +1322,12 @@ nav.primary .indicator {
 	width: 100%;
 	cursor: pointer;
 }
-.edit-wrap input[type=button]:hover,
-.edit-wrap input[type=submit]:hover {
+.form-wrap input[type=button]:hover,
+.form-wrap input[type=submit]:hover {
 	background-color: rgba(255,255,255,0.15);
 }
-.edit-wrap input[type=button]:active,
-.edit-wrap input[type=submit]:active {
+.form-wrap input[type=button]:active,
+.form-wrap input[type=submit]:active {
 	padding: 9px 18px 5px 18px;
 	background-color: rgba(0,0,0,0.15);
        -moz-box-shadow: 0px 1px 0px rgba(255,255,255,0.2), inset 0px 1px 2px rgba(0,0,0,0.5);
@@ -1482,7 +1515,79 @@ nav.primary .indicator {
 	right: 0;
 }
 
+.editing-toolbar a {
+	font-family: 'SecuritySciences';
+	font-size: 32px;
+	margin: 9px;
+	display: block;
+	color: #7fbb45;
+	text-decoration: none;
+}
 
+.editing-toolbar a:hover {
+	text-decoration: none;
+}
+
+
+.module.reports h3.title {
+	width: 100%;
+	padding: 14px 14px 13px 14px;
+	text-align: center;
+	background: #eeedea;
+	border-top: 1px solid #f4f4f2;
+	border-bottom: 1px solid #dedcd7;
+	color: #918a7d;
+	height: 45px;
+}
+
+.module.reports .table-head {
+	width: 100%;
+}
+
+.module.reports .table-head th {
+	height: 30px;
+	padding: 10px 15px;
+	background: #f4f4f4;
+	border-top: 1px solid #f8f8f6;
+	border-bottom: 1px solid #dedcd7;
+	font-size: 14px;
+	font-weight: 500;
+	color: #777;
+}
+
+.module.reports thead {
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+}
+
+.module.reports .table-body-wrap {
+	position: absolute;
+	top: 98px;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	overflow: scroll;
+}
+	
+.module.reports table.table-body {
+	width: 100%;
+}
+
+.module.reports table.table-body td {
+	padding: 15px 15px;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+	font-size: 14px;
+	color: #777;
+}
+
+.module.reports .head .actions {
+	position: absolute;
+	right: 261px;
+	top: 24px;
+}
 
 /* For retina display */
 

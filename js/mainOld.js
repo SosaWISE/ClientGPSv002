@@ -99,6 +99,21 @@ $(function() {
 	    }
 	});
 
+	var resizeTable = function() {
+		$('table.table-head th').each(function(i) {
+			cssIndex = i+1
+			var wrapWidth = $('.module.reports').outerWidth();
+			var cellWidth = $('.module.reports table.table-body td:nth-child('+cssIndex+')').outerWidth();
+			var cellWidthPercentage = (cellWidth/wrapWidth)*100;
+			console.log(cellWidth+'px | '+cellWidthPercentage);
+			$('.module.reports table.table-head th:nth-child('+cssIndex+')').css('width', cellWidthPercentage+'%');	
+		});
+	}
+
+	$('nav.primary a.reports').click(function() {
+		resizeTable();
+	});
+
 });
 /**********************************************************************************************************************
  * @fileOverview Created by Andres Sosa
