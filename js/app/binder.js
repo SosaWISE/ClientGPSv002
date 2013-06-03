@@ -9,21 +9,22 @@ define('binder',
 ['jquery', 'ko', 'config','vm'],
 function ($, ko, config, vm) {
 	var
-		ids = config.ViewIds,
+		// ids = config.ViewIds,
 
 		_bind = function () {
-			ko.applyBindings(vm.Login, getView(ids.LoginView));
-			ko.applyBindings(vm.Home, getView(ids.HomeView));
+			ko.applyBindings(vm);
+			// ko.applyBindings(vm.Login, getView(ids.LoginView));
 			//ko.applyBindings(vm.Register, getView(ids.RegisterView));
-		},
-
-		getView = function (viewName) {
-			var result = $(viewName).get(0);
-			if (!result) {
-				throw new Error('No view for `' + viewName + '`');
-			}
-			return result;
 		};
+		// },
+		//
+		// getView = function (viewName) {
+		// 	var result = $(viewName).get(0);
+		// 	if (!result) {
+		// 		throw new Error('No view for `' + viewName + '`');
+		// 	}
+		// 	return result;
+		// };
 
 	return {
 		Bind: _bind

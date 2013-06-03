@@ -3,6 +3,37 @@
 function ($, ko) {
     var unwrap = ko.utils.unwrapObservable;
 
+    // active
+    //---------------------------
+    ko.bindingHandlers.active = {
+        update: function (element, valueAccessor) {
+            var isActive = unwrap(valueAccessor()),
+                el = $(element);
+            if (isActive) {
+                el.addClass('active');
+            }
+            else {
+                el.removeClass('active');
+            }
+        }
+    };
+
+    // setClass
+    //---------------------------
+    ko.bindingHandlers.setClass = {
+        update: function (element, valueAccessor) {
+            var cls = unwrap(valueAccessor()),
+                el = $(element);
+            if (valueAccessor._prevCls) {
+                el.removeClass(valueAccessor._prevCls);
+            }
+            if (cls) {
+                valueAccessor._prevCls = cls;
+                el.addClass(cls);
+            }
+        }
+    };
+
     // escape
     //---------------------------
     ko.bindingHandlers.escape = {
@@ -43,7 +74,7 @@ function ($, ko) {
             ko.bindingHandlers.checkboxImage.update(
                 element, valueAccessor, allBindingsAccessor, viewModel);
         },
-        update: function (element, valueAccessor) { 
+        update: function (element, valueAccessor) {
             var $el = $(element),
                 settings = valueAccessor(),
                 enable = (settings.enable !== undefined) ? unwrap(settings.enable()) : true,
@@ -112,7 +143,7 @@ function ($, ko) {
             }else {
                 $(element).removeClass('starRating').addClass('starRating-readonly');
             }
-            
+
             // Wire up the event handlers, if enabled
             if (enable) {
                 // Handle mouse events on the stars
@@ -133,7 +164,7 @@ function ($, ko) {
                     });
                 });
             }
-            
+
             // Toggle the chosen CSS class (fills in the stars for the rating)
             $('span', element).each(function (index) {
                 $(this).toggleClass('chosen', index < ratingObservable());

@@ -9,6 +9,7 @@ define('router',
 ['jquery', 'underscore', 'sammy', 'presenter', 'config', 'route-mediator', 'store'],
 function ($, _, Sammy, presenter, config, routeMediator, store) {
 	var
+		loginOptions,
 		currentHash = '',
 		defaultRoute = '',
 		isRedirecting = false,
@@ -70,17 +71,6 @@ function ($, _, Sammy, presenter, config, routeMediator, store) {
 					currentHash = currentHash.substr(currentHash.indexOf('#'));
 				}
 
-				if (!config.CurrentUser() &&
-						currentHash !== config.Hashes.login) {
-					if (prevHash === config.Hashes.login) {
-						window.history.back();
-					}
-					else {
-						sammy.setLocation(config.Hashes.login);
-					}
-					return false;
-				}
-
 				// cancel the route if this returns false
 				return response.val;
 			});
@@ -100,23 +90,57 @@ function ($, _, Sammy, presenter, config, routeMediator, store) {
 
 		setupGet = function (options, routeOverride) {
 			var route = routeOverride || options.route;
+			if (route === config.Hashes.login) {
+				loginOptions = options;
+			}
 			sammy.get(route, function (context) { // context is 'this'.
+				var loggedOut = !config.CurrentUser(),
+						cls;
+
+				/////////////TESTING////////////////////////
+				loggedOut = false;
+				/////////////TESTING////////////////////////
+
+				// use login options if logged out
+				if (loggedOut) {
+					options = loginOptions;
+				}
+				cls = options.title.toLowerCase();
+
+				// set body class if it's not 'login'
+				$('body').attr('class', (cls!=='login') ? cls : '');
+
 				store.Save(config.StateKeys.lastView, context.path);
 				options.callback(context.params); // Activate the viewModel.
-				$('.view').hide();
-				presenter.TransitionTo(
-					$(options.view),
-					options.route, // context.path, // We want to find the route we defined in the config.
-					options.group
-				);
-				if (this.title) {
-					this.title(options.title);
+
+				if (loggedOut) {
+					$('.login-container').show();
+					$('.site-container').hide();
+					$('.view').hide();
+					presenter.TransitionTo(
+						$(options.view),
+						options.route, // context.path, // We want to find the route we defined in the config.
+						options.group
+					);
 				}
+				else {
+					$('.login-container').hide();
+					$('.site-container').show();
+					$('.sidebars > .sidebar').addClass('active');
+					$('.sidebars > .sidebar.' + cls).addClass('active');
+				}
+
+				// if (this.title) {
+				// 	this.title(options.title);
+				// }
+				$('title').text(options.title + ' | Security Sciences');
 			});
 		},
 
 		getUsableRoute = function (value) {
-			return value && value.indexOf('/#') != -1 ? value : null;
+			if (value && value.indexOf('#') >= 0) {
+				return value.substr(value.indexOf('#'));
+			}
 		},
 
 		_run = function () {
@@ -126,23 +150,12 @@ function ($, _, Sammy, presenter, config, routeMediator, store) {
 			// 2) otherwise use the url i grabbed from storage.
 			// 3) otherwise use the default route.
 			var addressBarUrl = sammy.getLocation();
-			startupUrl = getUsableRoute(addressBarUrl) || getUsableRoute(url) || defaultRoute;
+			startupHash = getUsableRoute(addressBarUrl) || getUsableRoute(url) || defaultRoute;
 
-			if (config.CurrentUser()) {
-				// go to default page if logged in
-				// and going to the login page
-				if (startupUrl === config.Hashes.login) {
-					startupUrl = defaultRoute;
-				}
-			}
-			else {
-				// always start at the login page when logged out
-				startupUrl = config.Hashes.login;
-			}
-
+			// set hash before running
+			sammy.setLocation(startupHash);
 			sammy.run();
 			registerBeforeLeaving();
-			_navigateTo(startupUrl);
 		};
 
 	/** Return object. */
