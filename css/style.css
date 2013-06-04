@@ -827,9 +827,9 @@ nav.primary .indicator {
 	background: rgba(255,255,255,0.125);
 }
 
-.sidebars .content ul li:hover {
-	background: rgba(255,255,255,0.1);
-}
+/*.sidebars .content ul li:hover {*/
+	/*background: rgba(255,255,255,0.1);*/
+/*}*/
 .sidebars .home .content ul li a:hover {
 	background: rgba(255,255,255,0.1);
 }
@@ -851,7 +851,8 @@ nav.primary .indicator {
 	color: rgba(255,255,255,0.5);
 }
 
-.sidebars .content ul li .actions {
+.sidebars .content ul li .actions,
+.sidebars .content ul li .billStatus {
 	position: absolute;
 	top: 26px;
 	right: 20px;
@@ -865,6 +866,13 @@ nav.primary .indicator {
 	font-size: 16px;
 }
 
+.sidebars .content ul li .billStatus {
+    top: 23px;
+    float: left;
+    margin-left: 10px;
+    opacity: 1;
+    font-size: 12px;
+}
 .sidebars .content ul li:hover .actions,
 .sidebars .content ul li.active .actions {
 	opacity: 1;

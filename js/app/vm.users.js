@@ -29,94 +29,94 @@ function (config, messenger) {
 		list = [
 			{
 				type: 'user',
-				firstName: 'John',
-				lastName: 'Smith',
-				time: 'April 23, 2013 at 12:42pm',
+				firstName: 'Andres',
+				lastName: 'Sosa',
+				time: 'April 23, 2013 at 12:42pm'
 			},
 			{
 				type: 'user',
 				firstName: 'John',
 				lastName: 'Smith',
-				time: 'April 23, 2013 at 12:42pm',
+				time: 'April 23, 2013 at 12:42pm'
 			},
 			{
 				type: 'user',
 				firstName: 'John',
 				lastName: 'Smith',
-				time: 'April 23, 2013 at 12:42pm',
+				time: 'April 23, 2013 at 12:42pm'
 			},
 			{
 				type: 'user',
 				firstName: 'John',
 				lastName: 'Smith',
-				time: 'April 23, 2013 at 12:42pm',
+				time: 'April 23, 2013 at 12:42pm'
 			},
 			{
 				type: 'user',
 				firstName: 'John',
 				lastName: 'Smith',
-				time: 'April 23, 2013 at 12:42pm',
+				time: 'April 23, 2013 at 12:42pm'
 			},
 			{
 				type: 'user',
 				firstName: 'John',
 				lastName: 'Smith',
-				time: 'April 23, 2013 at 12:42pm',
+				time: 'April 23, 2013 at 12:42pm'
 			},
 			{
 				type: 'user',
 				firstName: 'John',
 				lastName: 'Smith',
-				time: 'April 23, 2013 at 12:42pm',
+				time: 'April 23, 2013 at 12:42pm'
 			},
 			{
 				type: 'user',
 				firstName: 'John',
 				lastName: 'Smith',
-				time: 'April 23, 2013 at 12:42pm',
+				time: 'April 23, 2013 at 12:42pm'
 			},
 			{
 				type: 'user',
 				firstName: 'John',
 				lastName: 'Smith',
-				time: 'April 23, 2013 at 12:42pm',
+				time: 'April 23, 2013 at 12:42pm'
 			},
 			{
 				type: 'user',
 				firstName: 'John',
 				lastName: 'Smith',
-				time: 'April 23, 2013 at 12:42pm',
+				time: 'April 23, 2013 at 12:42pm'
 			},
 			{
 				type: 'user',
 				firstName: 'John',
 				lastName: 'Smith',
-				time: 'April 23, 2013 at 12:42pm',
+				time: 'April 23, 2013 at 12:42pm'
 			},
 			{
 				type: 'user',
 				firstName: 'John',
 				lastName: 'Smith',
-				time: 'April 23, 2013 at 12:42pm',
+				time: 'April 23, 2013 at 12:42pm'
 			},
 			{
 				type: 'user',
 				firstName: 'John',
 				lastName: 'Smith',
-				time: 'April 23, 2013 at 12:42pm',
+				time: 'April 23, 2013 at 12:42pm'
 			},
 			{
 				type: 'user',
 				firstName: 'John',
 				lastName: 'Smith',
-				time: 'April 23, 2013 at 12:42pm',
+				time: 'April 23, 2013 at 12:42pm'
 			},
 			{
 				type: 'user',
 				firstName: 'John',
 				lastName: 'Smith',
-				time: 'April 23, 2013 at 12:42pm',
-			},
+				time: 'April 23, 2013 at 12:42pm'
+			}
     ];
 
 	/** Init object. */
@@ -125,7 +125,7 @@ function (config, messenger) {
 	/** Return object. */
 	return {
 		hash: config.Hashes.users,
-    ico: '&#128101;',
+		ico: '&#128101;',
 		type: 'users',
 		name: 'Users',
 		list: list,

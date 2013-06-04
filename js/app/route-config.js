@@ -62,6 +62,28 @@ function (config, router, vm) {
 							group: '.route-top'
 						}
 					]
+				},
+				{
+					view: config.ViewIds.BillingView,
+					routes: [
+						{
+							route: config.Hashes.billing,
+							title: 'Billing',
+							callback: vm.Billing.Activate,
+							group: '.route-top'
+						}
+					]
+				},
+				{
+					view: config.ViewIds.ReportView,
+					routes: [
+						{
+							route: config.Hashes.reports,
+							title: 'Reports',
+							callback: vm.Reports.Activate,
+							group: '.route-top'
+						}
+					]
 				}
 			];
 

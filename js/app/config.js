@@ -53,7 +53,9 @@ define('config',
 				LoginView: '#login-view',
 				RegisterView: '#register-view',
 				DevicesView: '#devices-view',
-				UsersView: '#users-view'
+				UsersView: '#users-view',
+				BillingView: '#billing-view',
+				ReportView: '#report-view'
 			},
 
 			_toasts = {

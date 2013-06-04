@@ -3,81 +3,82 @@
     <div class="search-wrap"><input type="text" class="search" placeholder="Search Invoices"></div>
 </div>
 <div class="content">
-    <ul class="events">
-        <li class="event">
-            <div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>
-            <div class="sub">April 23, 2013 at 12:42pm</div>
-            <div class="actions"></div>
-        </li>
-        <li class="event">
-            <div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>
-            <div class="sub">April 23, 2013 at 12:42pm</div>
-            <div class="actions"></div>
-        </li>
-        <li class="event">
-            <div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>
-            <div class="sub">April 23, 2013 at 12:42pm</div>
-            <div class="actions"></div>
-        </li>
-        <li class="event">
-            <div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>
-            <div class="sub">April 23, 2013 at 12:42pm</div>
-            <div class="actions"></div>
-        </li>
-        <li class="event">
-            <div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>
-            <div class="sub">April 23, 2013 at 12:42pm</div>
-            <div class="actions"></div>
-        </li>
-        <li class="event">
-            <div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>
-            <div class="sub">April 23, 2013 at 12:42pm</div>
-            <div class="actions"></div>
-        </li>
-        <li class="event">
-            <div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>
-            <div class="sub">April 23, 2013 at 12:42pm</div>
-            <div class="actions"></div>
-        </li>
-        <li class="event">
-            <div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>
-            <div class="sub">April 23, 2013 at 12:42pm</div>
-            <div class="actions"></div>
-        </li>
-        <li class="event">
-            <div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>
-            <div class="sub">April 23, 2013 at 12:42pm</div>
-            <div class="actions"></div>
-        </li>
-        <li class="event">
-            <div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>
-            <div class="sub">April 23, 2013 at 12:42pm</div>
-            <div class="actions"></div>
-        </li>
-        <li class="event">
-            <div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>
-            <div class="sub">April 23, 2013 at 12:42pm</div>
-            <div class="actions"></div>
-        </li>
-        <li class="event">
-            <div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>
-            <div class="sub">April 23, 2013 at 12:42pm</div>
-            <div class="actions"></div>
-        </li>
-        <li class="event">
-            <div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>
-            <div class="sub">April 23, 2013 at 12:42pm</div>
-            <div class="actions"></div>
-        </li>
-        <li class="event">
-            <div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>
-            <div class="sub">April 23, 2013 at 12:42pm</div>
-            <div class="actions"></div>
-        </li>
-        <li class="event">
-            <div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>
-            <div class="sub">April 23, 2013 at 12:42pm</div>
-            <div class="actions"></div>
+    <ul class="billings" data-bind="foreach:list">
+        <li data-bind="attr:{'class':type}">
+            <div class="title">Invoice #<span data-bind="text:invoiceID"></span></div>
+            <div class="sub" data-bind="text:time"></div>
+            <div class="billStatus" data-bind="text:billStatus"></div>
         </li>
     </ul>
+        <!--<li class="event">-->
+            <!--<div class="title">Invoice #234234</div>-->
+            <!--<div class="sub">Marc 21, 2013 at 12:42pm</div>-->
+            <!--<div class="billStatus">Paid in Full</div>-->
+        <!--</li>-->
+        <!--<li class="event">-->
+            <!--<div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>-->
+            <!--<div class="sub">April 23, 2013 at 12:42pm</div>-->
+            <!--<div class="actions"><a href="#" class="edit-btn">&#xe01b;</a></div>-->
+        <!--</li>-->
+        <!--<li class="event">-->
+            <!--<div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>-->
+            <!--<div class="sub">April 23, 2013 at 12:42pm</div>-->
+            <!--<div class="actions"></div>-->
+        <!--</li>-->
+        <!--<li class="event">-->
+            <!--<div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>-->
+            <!--<div class="sub">April 23, 2013 at 12:42pm</div>-->
+            <!--<div class="actions"></div>-->
+        <!--</li>-->
+        <!--<li class="event">-->
+            <!--<div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>-->
+            <!--<div class="sub">April 23, 2013 at 12:42pm</div>-->
+            <!--<div class="actions"></div>-->
+        <!--</li>-->
+        <!--<li class="event">-->
+            <!--<div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>-->
+            <!--<div class="sub">April 23, 2013 at 12:42pm</div>-->
+            <!--<div class="actions"></div>-->
+        <!--</li>-->
+        <!--<li class="event">-->
+            <!--<div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>-->
+            <!--<div class="sub">April 23, 2013 at 12:42pm</div>-->
+            <!--<div class="actions"></div>-->
+        <!--</li>-->
+        <!--<li class="event">-->
+            <!--<div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>-->
+            <!--<div class="sub">April 23, 2013 at 12:42pm</div>-->
+            <!--<div class="actions"></div>-->
+        <!--</li>-->
+        <!--<li class="event">-->
+            <!--<div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>-->
+            <!--<div class="sub">April 23, 2013 at 12:42pm</div>-->
+            <!--<div class="actions"></div>-->
+        <!--</li>-->
+        <!--<li class="event">-->
+            <!--<div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>-->
+            <!--<div class="sub">April 23, 2013 at 12:42pm</div>-->
+            <!--<div class="actions"></div>-->
+        <!--</li>-->
+        <!--<li class="event">-->
+            <!--<div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>-->
+            <!--<div class="sub">April 23, 2013 at 12:42pm</div>-->
+            <!--<div class="actions"></div>-->
+        <!--</li>-->
+        <!--<li class="event">-->
+            <!--<div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>-->
+            <!--<div class="sub">April 23, 2013 at 12:42pm</div>-->
+            <!--<div class="actions"></div>-->
+        <!--</li>-->
+        <!--<li class="event">-->
+            <!--<div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>-->
+            <!--<div class="sub">April 23, 2013 at 12:42pm</div>-->
+            <!--<div class="actions"></div>-->
+        <!--</li>-->
+        <!--<li class="event">-->
+            <!--<div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>-->
+            <!--<div class="sub">April 23, 2013 at 12:42pm</div>-->
+            <!--<div class="actions"></div>-->
+        <!--</li>-->
+    <!--</ul>-->
 </div>

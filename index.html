@@ -13,19 +13,25 @@
             <div data-bind="template:{name:TmplName}" id="login-view" class="login view"></div>
         </div>
         <div style="display:none;" class="site-container">
-            <nav class="primary" style="top:0px;">
+            <!--<nav class="primary" style="top:0px;">-->
+                <!--<a href="#" class="logo">-->
+                    <!--<span class="ico"></span>-->
+                    <!--<h1 class="txt">Security Sciences</h1>-->
+                <!--</a>-->
+            <!--</nav>-->
+            <nav class="primary">
                 <a href="#" class="logo">
                     <span class="ico"></span>
                     <h1 class="txt">Security Sciences</h1>
                 </a>
-            </nav>
-            <nav class="primary" data-bind="foreach:topLevelViews">
-                <a data-bind="attr:{href:hash,'class':type}">
-                    <div class="indicator"></div>
-                    <span class="ico" data-bind="html:ico"></span>
-                    <span class="txt" data-bind="text:name"></span>
-                </a>
+                <div data-bind="foreach:topLevelViews">
+                    <a data-bind="attr:{href:hash,'class':type}">
+                        <div class="indicator"></div>
+                        <span class="ico" data-bind="html:ico"></span>
+                        <span class="txt" data-bind="text:name"></span>
+                    </a>
                 <!-- <div class="indicator"></div> -->
+                </div>
             </nav>
             <div class="wrap">
                 <div class="sidebars" data-bind="foreach:topLevelViews">
@@ -99,6 +105,8 @@
     <script src="/js/app/vm.users.js"></script>
     <script src="/js/app/vm.events.js"></script>
     <script src="/js/app/vm.home.js"></script>
+    <script src="/js/app/vm.billing.js"></script>
+    <script src="/js/app/vm.reports.js"></script>
     <script src="/js/app/mock/mock.dataservice.customer.js"></script>
     <script src="/js/app/mock/mock.dataservice.session.js"></script>
     <script src="/js/app/mock/mock.generator.js"></script>

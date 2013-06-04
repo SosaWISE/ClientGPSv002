@@ -49,6 +49,6 @@ function (messenger, router, config) {
 		get userName() { return _userName; },
 		get password() { return _password; },
 		get rememberMe() { return _rememberMe; },
-		get loginCmd() { return _loginCmd; },
+		get loginCmd() { return _loginCmd; }
 	};
 });

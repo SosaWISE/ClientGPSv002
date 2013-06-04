@@ -100,13 +100,18 @@ $(function() {
 	});
 
 	var resizeTable = function() {
+		var wrapWidth = $('.module.reports').outerWidth();
+
 		$('table.table-head th').each(function(i) {
 			cssIndex = i+1
-			var wrapWidth = $('.module.reports').outerWidth();
+			var cHeadWdth = $('.module.reports table.table-head th:nth-child('+cssIndex+')').outerWidth();
 			var cellWidth = $('.module.reports table.table-body td:nth-child('+cssIndex+')').outerWidth();
+			cellWidth = cHeadWdth > cellWidth ? cHeadWdth : cellWidth;
+
 			var cellWidthPercentage = (cellWidth/wrapWidth)*100;
 			console.log(cellWidth+'px | '+cellWidthPercentage);
-			$('.module.reports table.table-head th:nth-child('+cssIndex+')').css('width', cellWidthPercentage+'%');	
+			$('.module.reports table.table-head th:nth-child('+cssIndex+')').css('width', cellWidthPercentage+'%');
+			$('.module.reports table.table-body td:nth-child('+cssIndex+')').css('width', cellWidthPercentage+'%');
 		});
 	}
 

@@ -28,44 +28,44 @@ define('vm.events',
 					type: 'sos',
 					title: 'Rascal exited the Yard geofence',
 					time: 'April 23, 2013 at 12:42pm',
-					actions: '',
+					actions: ''
 				},
 				{
 					type: 'battery',
 					title: 'Rascal exited the Yard geofence',
 					time: 'April 23, 2013 at 12:42pm',
-					actions: '',
+					actions: ''
 				},
 				{
 					type: 'speed',
 					title: 'Rascal exited the Yard geofence',
 					time: 'April 23, 2013 at 12:42pm',
-					actions: '',
+					actions: ''
 				},
 				{
 					type: 'enter',
 					title: 'Rascal exited the Yard geofence',
 					time: 'April 23, 2013 at 12:42pm',
-					actions: '',
+					actions: ''
 				},
 				{
 					type: 'exit',
 					title: 'Rascal exited the Yard geofence',
 					time: 'April 23, 2013 at 12:42pm',
-					actions: '',
+					actions: ''
 				},
 				{
 					type: 'fall',
 					title: 'Rascal exited the Yard geofence',
 					time: 'April 23, 2013 at 12:42pm',
-					actions: '',
+					actions: ''
 				},
 				{
 					type: 'tamper',
 					title: 'Rascal exited the Yard geofence',
 					time: 'April 23, 2013 at 12:42pm',
-					actions: '',
-				},
+					actions: ''
+				}
 			];
 
 		/** Init object. */
