@@ -42,7 +42,6 @@ function (vmLogin, vmRegister, devices, users, home, billing, reports) {
 
 	return {
 		topLevelViews: topLevelViews,
-		// activeType: activeType,
 		get Home() { return home; },
 		get Login() { return vmLogin; },
 		get Register() { return vmRegister; },

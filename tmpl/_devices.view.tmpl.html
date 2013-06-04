@@ -1,19 +1,5 @@
 <ul class="tabs cf" data-bind="foreach:groups">
     <li class="tab"><a data-bind="active:active,click:$parent.activateGroup,text:name"></a></li>
 </ul>
-<div data-bind="foreach:groups">
-    <div data-bind="active:active,setClass:type" class="pane">
-        <div class="search-bar">
-            <div class="search-wrap"><input type="text" class="search" data-bind="attr:{'placeholder':'Search '+name}"></div>
-        </div>
-        <div class="content">
-            <ul data-bind="attr:{'class':type},foreach:list">
-                <li data-bind="attr:{'class':type}">
-                    <div class="title" data-bind="text:title"></div>
-                    <div class="sub" data-bind="text:time"></div>
-                    <div class="actions"></div>
-                </li>
-            </ul>
-        </div>
-    </div>
+<div data-bind="template:{name:getGroupTmpl,foreach:groups}">
 </div>

@@ -14,6 +14,8 @@ function (config, messenger) {
 	var
 		/** START Private Properties. */
 		_tmplName = 'users.view',
+		editing = ko.observable(false),
+		editItem = ko.observable(null),
 		/**   END Private Properties. */
 
 		/** START Private Methods. */
@@ -26,11 +28,18 @@ function (config, messenger) {
 		init = function () {
 			/** Initialize view model. */
 		},
+		startEdit = function(vm, evt) {
+			editItem(vm);
+			editing(true);
+		},
+		cancelEdit = function(vm, evt) {
+			editing(false);
+		},
 		list = [
 			{
 				type: 'user',
-				firstName: 'Andres',
-				lastName: 'Sosa',
+				firstName: 'Bob',
+				lastName: 'Bobbins',
 				time: 'April 23, 2013 at 12:42pm'
 			},
 			{
@@ -109,14 +118,14 @@ function (config, messenger) {
 				type: 'user',
 				firstName: 'John',
 				lastName: 'Smith',
-				time: 'April 23, 2013 at 12:42pm'
+				time: 'April 23, 2013 at 12:42pm',
 			},
 			{
 				type: 'user',
 				firstName: 'John',
 				lastName: 'Smith',
-				time: 'April 23, 2013 at 12:42pm'
-			}
+				time: 'April 23, 2013 at 12:42pm',
+			},
     ];
 
 	/** Init object. */
@@ -124,8 +133,12 @@ function (config, messenger) {
 
 	/** Return object. */
 	return {
+		editing: editing,
+		editItem: editItem,
+		startEdit: startEdit,
+		cancelEdit: cancelEdit,
 		hash: config.Hashes.users,
-		ico: '&#128101;',
+    ico: '&#128101;',
 		type: 'users',
 		name: 'Users',
 		list: list,

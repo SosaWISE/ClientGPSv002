@@ -10,7 +10,8 @@ define('vm.events',
 	function (messenger) {
 		var
 			/** START Private Properties. */
-				_tmplName = 'events.view',
+		editing = ko.observable(false),
+		editItem = ko.observable(null),
 		/**	 END Private Properties. */
 
 			/** START Private Methods. */
@@ -22,6 +23,13 @@ define('vm.events',
 
 				init = function () {
 				/** Initialize view model. */
+			},
+			startEdit = function(vm, evt) {
+				editItem(vm);
+				editing(true);
+			},
+			cancelEdit = function(vm, evt) {
+				editing(false);
 			},
 			list = [
 				{
@@ -73,11 +81,16 @@ define('vm.events',
 
 		/** Return object. */
 		return {
+			TmplName: 'events.view',
+			canEdit: ko.observable(false),
+			editing: editing,
+			editItem: editItem,
+			startEdit: startEdit,
+			cancelEdit: cancelEdit,
 			type: 'events',
 			name: 'Events',
 			list: list,
 			active: ko.observable(false),
-			get Activate() { return _activate; },
-			get TmplName() { return _tmplName; }
+			get Activate() { return _activate; }
 		};
 	});

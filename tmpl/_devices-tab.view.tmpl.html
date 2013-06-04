@@ -1,0 +1,62 @@
+<div data-bind="active:active,editing:editing" class="pane devices">
+    <div class="search-bar">
+        <div class="search-wrap"><input type="text" class="search" data-bind="attr:{'placeholder':'Search '+name}"></div>
+    </div>
+    <div class="content">
+        <ul class="devices" data-bind="foreach:list">
+            <li data-bind="attr:{'class':type}">
+                <div class="title" data-bind="text:title"></div>
+                <div class="sub" data-bind="text:time"></div>
+                <div class="actions" data-bind="if:$parent.canEdit">
+                    <a style="cursor:pointer;" class="edit-btn" data-bind="click:$parent.startEdit">&#xe01b;</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="edit-wrap">
+        <a href="#" class="edit-btn">
+            <span class="add-new-txt">Add New Device</span>
+            <span class="edit-txt">Edit Device</span>
+        </a>
+        <div class="form-wrap" data-bind="with:editItem">
+            <ul class="edit-form">
+                <li>
+                    <span class="label">Device Title</span>
+                    <input type="text" placeholder="Placeholder">
+                </li>
+                <li>
+                    <span class="label">Description</span>
+                    <textarea class="description" placeholder="Description here" rows="5"></textarea>
+                </li>
+                <li>
+                    <span class="label">Select Box</span>
+                    <div class="select-wrap">
+                        <select>
+                            <option value="placeholder">Select one...</option>
+                            <option>Option 1</option>
+                            <option>Option 2</option>
+                            <option>Option 3</option>
+                        </select>
+                    </div>
+                </li>
+                <li>
+                    <span class="label">Field Title</span>
+                    <input type="text" placeholder="Placeholder">
+                </li>
+                <li>
+                    <span class="label">Field Title</span>
+                    <input type="text" placeholder="Placeholder">
+                </li>
+                <li>
+                    <span class="label">Field Title</span>
+                    <input type="text" placeholder="Placeholder">
+                </li>
+                <li>
+                    <input type="submit" value="Save" class="save">
+                    <input type="button" value="Cancel" class="cancel" data-bind="click:$parent.cancelEdit">
+                    <input type="button" value="Delete" class="delete">
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

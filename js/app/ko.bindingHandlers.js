@@ -3,20 +3,31 @@
 function ($, ko) {
     var unwrap = ko.utils.unwrapObservable;
 
+    function createToggleClassHandler(name) {
+        ko.bindingHandlers[name] = {
+            update: function (element, valueAccessor) {
+                var hasVal = unwrap(valueAccessor()),
+                    el = $(element);
+                if (hasVal) {
+                    setTimeout(function() { // needed for browser transitions????
+                        el.addClass(name);
+                    }, 0);
+                }
+                else {
+                    setTimeout(function() {
+                        el.removeClass(name);
+                    }, 0);
+                }
+            }
+        };
+    }
+
     // active
     //---------------------------
-    ko.bindingHandlers.active = {
-        update: function (element, valueAccessor) {
-            var isActive = unwrap(valueAccessor()),
-                el = $(element);
-            if (isActive) {
-                el.addClass('active');
-            }
-            else {
-                el.removeClass('active');
-            }
-        }
-    };
+    createToggleClassHandler('active');
+    // active
+    //---------------------------
+    createToggleClassHandler('editing');
 
     // setClass
     //---------------------------

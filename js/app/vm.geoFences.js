@@ -10,7 +10,8 @@ define('vm.geoFences',
 function (messenger) {
 	var
 		/** START Private Properties. */
-			_tmplName = 'geoFences.view',
+		editing = ko.observable(false),
+		editItem = ko.observable(null),
 		/**   END Private Properties. */
 
 		/** START Private Methods. */
@@ -22,6 +23,13 @@ function (messenger) {
 
 			init = function () {
 			/** Initialize view model. */
+		},
+		startEdit = function(vm, evt) {
+			editItem(vm);
+			editing(true);
+		},
+		cancelEdit = function(vm, evt) {
+			editing(false);
 		},
 		list = [
 			{
@@ -106,11 +114,16 @@ function (messenger) {
 
 	/** Return object. */
 	return {
+		TmplName: 'geofences.view',
+		canEdit: ko.observable(true),
+		editing: editing,
+		editItem: editItem,
+		startEdit: startEdit,
+		cancelEdit: cancelEdit,
 		type: 'geofences',
 		name: 'Geofences',
 		list: list,
 		active: ko.observable(false),
-		get Activate() { return _activate; },
-		get TmplName() { return _tmplName; }
+		get Activate() { return _activate; }
 	};
 });
