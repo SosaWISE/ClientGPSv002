@@ -19,26 +19,10 @@ function (vmLogin, vmRegister, devices, users, home) {
 			home,
 			devices,
 			users
-		]
-		// activeType = ko.observable('home');
-
-	// function setActivateCmd(view) {
-	// 	view.activateCmd = ko.asyncCommand({
-	// 		execute: function (complete) {
-	// 			view.Activate();
-	// 			complete();
-	// 		},
-	// 		canExecute: function (isExecuting) {
-	// 			return !isExecuting;// && isDirty() && isValid();
-	// 		}
-	// 	});
-	// }
-	// devices.groups.forEach(setActivateCmd);
-	// topLevelViews.forEach(setActivateCmd);
+		];
 
 	return {
 		topLevelViews: topLevelViews,
-		// activeType: activeType,
 		get Home() { return home; },
 		get Login() { return vmLogin; },
 		get Register() { return vmRegister; },

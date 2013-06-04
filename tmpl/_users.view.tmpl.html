@@ -7,7 +7,9 @@
         <li data-bind="attr:{'class':type}">
             <div class="title"><span data-bind="text:firstName"></span> <span data-bind="text:lastName"></span></div>
             <div class="sub" data-bind="text:time"></div>
-            <div class="actions"><a href="#" class="edit-btn">&#xe01b;</a></div>
+            <div class="actions">
+                <a style="cursor:pointer;" class="edit-btn" data-bind="click:$parent.startEdit">&#xe01b;</a>
+            </div>
         </li>
     </ul>
 </div>
@@ -16,15 +18,15 @@
         <span class="add-new-txt">Add New User</span>
         <span class="edit-txt">Edit User</span>
     </a>
-    <div class="form-wrap">
+    <div class="form-wrap" data-bind="with:editItem">
         <ul class="edit-form">
             <li>
                 <span class="label">First Name</span>
-                <input type="text" placeholder="Placeholder">
+                <input type="text" placeholder="Placeholder" data-bind="value:firstName">
             </li>
             <li>
                 <span class="label">Last Name</span>
-                <input type="text" placeholder="Placeholder">
+                <input type="text" placeholder="Placeholder" data-bind="value:lastName">
             </li>
            <li>
                 <span class="label">Description</span>
@@ -51,7 +53,7 @@
             </li>
             <li>
                 <input type="submit" value="Save" class="save">
-                <input type="button" value="Cancel" class="cancel">
+                <input type="button" value="Cancel" class="cancel" data-bind="click:$parent.cancelEdit">
                 <input type="button" value="Delete" class="delete">
             </li>
         </ul>

@@ -29,7 +29,7 @@
             </nav>
             <div class="wrap">
                 <div class="sidebars" data-bind="foreach:topLevelViews">
-                    <div data-bind="template:{name:TmplName},attr:{id:type+'-view','class':'view sidebar '+type}"></div>
+                    <div class="view sidebar" data-bind="template:{name:TmplName},attr:{id:type+'-view'},setClass:type,editing:editing"></div>
                 </div>
             </div>
         </div>

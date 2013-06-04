@@ -417,7 +417,7 @@ body {
 nav.primary {
 	background: #2d3033;
 	position: fixed;
-	top:0;right:0;bottom:0;left:0;
+	top:62px;right:0;bottom:0;left:0;
 	width: 80px;
 	padding: 12px 10px;
 }
@@ -1589,7 +1589,7 @@ nav.primary .indicator {
 	left: 0;
 	overflow: scroll;
 }
-	
+
 .module.reports table.table-body {
 	width: 100%;
 }

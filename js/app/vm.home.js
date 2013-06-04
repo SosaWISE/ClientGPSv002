@@ -105,6 +105,8 @@ function (config, messenger, utils) {
 
 	/** Return object. */
 	return {
+		editing: ko.observable(false),
+		editItem: ko.observable(null),
 		hash: config.Hashes.home,
 		ico: '&#8962;',
 		type: 'home',
