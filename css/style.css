@@ -573,11 +573,13 @@ nav.primary .indicator {
 .users .sidebars > .users,
 .billing .sidebars > .billing,
 .reports .sidebars > .reports,
+.settings .sidebars > .settings,
 .home .modules > .home,
 .devices .modules > .devices,
 .users .modules > .users,
 .billing .modules > .billing,
-.reports .modules > .reports { z-index:1; opacity: 1; }
+.reports .modules > .reports,
+.settings .modules > .settings { z-index:1; opacity: 1; }
 
 .sidebars h2 {
 	font-size: 18px;
