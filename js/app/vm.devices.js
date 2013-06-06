@@ -17,7 +17,7 @@ function (config, messenger, events, devices, geofences) {
 	var
 		/** START Private Properties. */
 		_tmplName =  'devices.view',
-		_tmplModelName =  'devices.model.view',
+		_tmplModuleName =  'devices.module.view',
 		editing = ko.observable(false),
 		editItem = ko.observable(null),
 		/**   END Private Properties. */
@@ -77,7 +77,7 @@ function (config, messenger, events, devices, geofences) {
 		type: 'devices',
 		name: 'Devices',
 		get TmplName() {return _tmplName; },
-		get TmplModelName() { return _tmplModelName; },
+		get TmplModuleName() { return _tmplModuleName; },
 		getGroupTmpl: getGroupTmpl,
 		groups: groups,
 		activateGroup: activateGroup,

@@ -14,7 +14,7 @@ function (config, messenger) {
 	var
 		/** START Private Properties. */
 		_tmplName = 'billing.view',
-		_tmplModelName = 'billing.model.view',
+		_tmplModuleName = 'billing.module.view',
 		/**   END Private Properties. */
 		/** START Private Methods. */
 		_activate = function (routeData, callback) {
@@ -59,6 +59,6 @@ function (config, messenger) {
 		list: _list,
 		get Activate() { return _activate; },
 		get TmplName() { return _tmplName; },
-		get TmplModelName() { return _tmplModelName; }
+		get TmplModuleName() { return _tmplModuleName; }
 	};
 });

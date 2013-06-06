@@ -14,7 +14,7 @@ function (config, messenger) {
 	var
 		/** START Private Properties. */
 		_tmplName = 'settings.view',
-		_tmplModelName = 'settings.model.view',
+		_tmplModuleName = 'settings.model.view',
 		_ico = '&#9881;',
 		_type = 'settings',
 		_name = 'Settings',
@@ -41,6 +41,6 @@ function (config, messenger) {
 		name: _name,
 		get Activate() { return _activate; },
 		get TmplName() { return _tmplName; },
-		get TmplModelName() { return _tmplModelName; }
+		get TmplModuleName() { return _tmplModuleName; }
 	};
 });

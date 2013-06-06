@@ -14,7 +14,7 @@ function (config, messenger) {
 	var
 		/** START Private Properties. */
 		_tmplName = 'reports.view',
-		_tmplModelName = 'settings.model.view',
+		_tmplModuleName = 'settings.model.view',
 	/**   END Private Properties. */
 
 		/** START Private Methods. */
@@ -39,6 +39,6 @@ function (config, messenger) {
 		name: 'Reports',
 		get Activate() { return _activate; },
 		get TmplName() { return _tmplName; },
-		get TmplModelName() { return _tmplModelName; }
+		get TmplModuleName() { return _tmplModuleName; }
 	};
 });

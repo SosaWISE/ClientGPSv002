@@ -14,7 +14,7 @@ define('vm.home',
 function (config, messenger, utils) {
 	var
 		_tmplName = 'home.view',
-		_tmplModelName = 'home.model.view',
+		_tmplModuleName = 'home.module.view',
 		_activate = function (routeData, callback) {
 			messenger.publish.viewModelActivated({canleaveCallback: canLeave});
 			if (callback) callback();
@@ -114,7 +114,7 @@ function (config, messenger, utils) {
 		type: 'home',
 		name: 'Home',
 		get TmplName() { return _tmplName; },
-		get TmplModelName() { return _tmplModelName; },
+		get TmplModuleName() { return _tmplModuleName; },
 		devices: devices,
 		deviceTypes: deviceTypes,
 		get Activate() { return _activate; }

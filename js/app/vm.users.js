@@ -14,7 +14,7 @@ function (config, messenger) {
 	var
 		/** START Private Properties. */
 		_tmplName = 'users.view',
-		_tmplModelName = 'users.model.view',
+		_tmplModuleName = 'users.model.view',
 		editing = ko.observable(false),
 		editItem = ko.observable(null),
 		/**   END Private Properties. */
@@ -145,6 +145,6 @@ function (config, messenger) {
 		list: list,
 		get Activate() { return _activate; },
 		get TmplName() { return _tmplName; },
-		get TmplModelName() { return _tmplModelName; }
+		get TmplModuleName() { return _tmplModuleName; }
 	};
 });
