@@ -25,6 +25,9 @@ function (config, messenger, events, devices, geofences) {
 		/** START Private Methods. */
 		_activate = function (routeData, callback) {
 			messenger.publish.viewModelActivated();
+
+			/** Show map. */
+
 			if (callback) callback();
 		},
 		/**   END Private Methods. */

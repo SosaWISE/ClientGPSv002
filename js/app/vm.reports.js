@@ -14,7 +14,7 @@ function (config, messenger) {
 	var
 		/** START Private Properties. */
 		_tmplName = 'reports.view',
-		_tmplModuleName = 'settings.model.view',
+		_tmplModuleName = 'reports.module.view',
 	/**   END Private Properties. */
 
 		/** START Private Methods. */

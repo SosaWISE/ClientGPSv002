@@ -14,7 +14,7 @@ function (config, messenger) {
 	var
 		/** START Private Properties. */
 		_tmplName = 'settings.view',
-		_tmplModuleName = 'settings.model.view',
+		_tmplModuleName = 'settings.module.view',
 		_ico = '&#9881;',
 		_type = 'settings',
 		_name = 'Settings',

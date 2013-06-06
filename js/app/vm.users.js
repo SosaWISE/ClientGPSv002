@@ -14,7 +14,7 @@ function (config, messenger) {
 	var
 		/** START Private Properties. */
 		_tmplName = 'users.view',
-		_tmplModuleName = 'users.model.view',
+		_tmplModuleName = 'users.module.view',
 		editing = ko.observable(false),
 		editItem = ko.observable(null),
 		/**   END Private Properties. */
