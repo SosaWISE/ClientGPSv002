@@ -13,7 +13,8 @@ define("vm.reports",
 function (config, messenger) {
 	var
 		/** START Private Properties. */
-			_tmplName = 'reports.view',
+		_tmplName = 'reports.view',
+		_tmplModelName = 'settings.model.view',
 	/**   END Private Properties. */
 
 		/** START Private Methods. */
@@ -37,6 +38,7 @@ function (config, messenger) {
 		type: 'reports',
 		name: 'Reports',
 		get Activate() { return _activate; },
-		get TmplName() { return _tmplName; }
+		get TmplName() { return _tmplName; },
+		get TmplModelName() { return _tmplModelName; }
 	};
 });

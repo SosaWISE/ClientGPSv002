@@ -16,6 +16,8 @@ define('vm.devices',
 function (config, messenger, events, devices, geofences) {
 	var
 		/** START Private Properties. */
+		_tmplName =  'devices.view',
+		_tmplModelName =  'devices.model.view',
 		editing = ko.observable(false),
 		editItem = ko.observable(null),
 		/**   END Private Properties. */
@@ -74,7 +76,8 @@ function (config, messenger, events, devices, geofences) {
 		ico: '&#59176;',
 		type: 'devices',
 		name: 'Devices',
-		TmplName: 'devices.view',
+		get TmplName() {return _tmplName; },
+		get TmplModelName() { return _tmplModelName; },
 		getGroupTmpl: getGroupTmpl,
 		groups: groups,
 		activateGroup: activateGroup,

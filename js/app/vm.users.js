@@ -14,6 +14,7 @@ function (config, messenger) {
 	var
 		/** START Private Properties. */
 		_tmplName = 'users.view',
+		_tmplModelName = 'users.model.view',
 		editing = ko.observable(false),
 		editItem = ko.observable(null),
 		/**   END Private Properties. */
@@ -118,14 +119,14 @@ function (config, messenger) {
 				type: 'user',
 				firstName: 'John',
 				lastName: 'Smith',
-				time: 'April 23, 2013 at 12:42pm',
+				time: 'April 23, 2013 at 12:42pm'
 			},
 			{
 				type: 'user',
 				firstName: 'John',
 				lastName: 'Smith',
-				time: 'April 23, 2013 at 12:42pm',
-			},
+				time: 'April 23, 2013 at 12:42pm'
+			}
     ];
 
 	/** Init object. */
@@ -143,6 +144,7 @@ function (config, messenger) {
 		name: 'Users',
 		list: list,
 		get Activate() { return _activate; },
-		get TmplName() { return _tmplName; }
+		get TmplName() { return _tmplName; },
+		get TmplModelName() { return _tmplModelName; }
 	};
 });

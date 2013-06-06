@@ -13,6 +13,8 @@ define('vm.home',
 ],
 function (config, messenger, utils) {
 	var
+		_tmplName = 'home.view',
+		_tmplModelName = 'home.model.view',
 		_activate = function (routeData, callback) {
 			messenger.publish.viewModelActivated({canleaveCallback: canLeave});
 			if (callback) callback();
@@ -111,7 +113,8 @@ function (config, messenger, utils) {
 		ico: '&#8962;',
 		type: 'home',
 		name: 'Home',
-		TmplName: 'home.view',
+		get TmplName() { return _tmplName; },
+		get TmplModelName() { return _tmplModelName; },
 		devices: devices,
 		deviceTypes: deviceTypes,
 		get Activate() { return _activate; }
