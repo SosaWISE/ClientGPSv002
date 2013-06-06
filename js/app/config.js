@@ -29,7 +29,8 @@ define('config',
 				users:      '#/users',
 				billing:    '#/billing',
 				reports:    '#/reports',
-				customers:  '#/customers'
+				customers:  '#/customers',
+				settings:   '#/settings'
 			},
 
 			_storeExpirationMs = (1000 * 60 * 60 * 24), // 1 day in milliseconds.
@@ -55,7 +56,8 @@ define('config',
 				DevicesView: '#devices-view',
 				UsersView: '#users-view',
 				BillingView: '#billing-view',
-				ReportView: '#report-view'
+				ReportView: '#report-view',
+				SettingsView: '#settings-view'
 			},
 
 			_toasts = {

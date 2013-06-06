@@ -84,6 +84,17 @@ function (config, router, vm) {
 							group: '.route-top'
 						}
 					]
+				},
+				{
+					view: config.ViewIds.SettingsView,
+					routes: [
+						{
+							route: config.Hashes.settings,
+							title: 'Settings',
+							callback: vm.Settings.Activate,
+							group: '.route-top'
+						}
+					]
 				}
 			];
 

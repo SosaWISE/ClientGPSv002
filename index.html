@@ -34,9 +34,11 @@
                 </div>
             </nav>
             <div class="wrap">
-                <div class="sidebars" data-bind="foreach:topLevelViews">
-                    <div class="view sidebar" data-bind="template:{name:TmplName},attr:{id:type+'-view'},setClass:type,editing:editing"></div>
+                <div class="sidebars visible" data-bind="foreach:topLevelViews">
+	                <div data-bind="template:{name:TmplName},attr:{id:type+'-view','class':'view sidebar '+type}"></div>
                 </div>
+	            <div class="modules">
+	            </div>
             </div>
         </div>
     </div>
@@ -107,6 +109,7 @@
     <script src="/js/app/vm.home.js"></script>
     <script src="/js/app/vm.billing.js"></script>
     <script src="/js/app/vm.reports.js"></script>
+    <script src="/js/app/vm.settings.js"></script>
     <script src="/js/app/mock/mock.dataservice.customer.js"></script>
     <script src="/js/app/mock/mock.dataservice.session.js"></script>
     <script src="/js/app/mock/mock.generator.js"></script>

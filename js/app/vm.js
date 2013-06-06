@@ -13,16 +13,18 @@ define ('vm',
 	'vm.users',
 	'vm.home',
 	'vm.billing',
-	'vm.reports'
+	'vm.reports',
+	'vm.settings'
 ],
-function (vmLogin, vmRegister, devices, users, home, billing, reports) {
+function (vmLogin, vmRegister, devices, users, home, billing, reports, settings) {
 	var
 		topLevelViews = [
 			home,
 			devices,
 			users,
 			billing,
-			reports
+			reports,
+			settings
 		];
 		// activeType = ko.observable('home');
 
@@ -48,6 +50,7 @@ function (vmLogin, vmRegister, devices, users, home, billing, reports) {
 		get Devices() { return devices; },
 		get Users() { return users; },
 		get Billing() { return billing; },
-		get Reports() { return reports; }
+		get Reports() { return reports; },
+		get Settings() { return settings; }
 	};
 });

@@ -30,53 +30,53 @@ function (config, messenger, utils) {
 			},
 			{
 				type: 'phone',
-				name: 'Austin\'s GPS Watch',
+				name: 'Austin\'s GPS Watch'
 			},
 			{
 				type: 'home',
-				name: 'Austin\'s GPS Watch',
+				name: 'Austin\'s GPS Watch'
 			},
 			{
 				type: 'pet',
-				name: 'Austin\'s GPS Watch',
+				name: 'Austin\'s GPS Watch'
 			},
 			{
 				type: 'car',
-				name: 'Austin\'s GPS Watch',
+				name: 'Austin\'s GPS Watch'
 			}
 		]),
 		deviceTypes = ko.observableArray([
 			{
 				type: 'home',
-				name: 'Home Security System (KinTouch TM)',
+				name: 'Home Security System (KinTouch TM)'
 			},
 			{
 				type: 'car-nav',
-				name: 'Car Navigation System (Encompass TM)',
+				name: 'Car Navigation System (Encompass TM)'
 			},
 			{
 				type: 'bracelet',
-				name: 'Health Care Bracelet',
+				name: 'Health Care Bracelet'
 			},
 			{
 				type: 'phone',
-				name: 'Mobile Phone Application',
+				name: 'Mobile Phone Application'
 			},
 			{
 				type: 'child',
-				name: 'Child GPS Tracker',
+				name: 'Child GPS Tracker'
 			},
 			{
 				type: 'pet',
-				name: 'Pet GPS Tracker',
+				name: 'Pet GPS Tracker'
 			},
 			{
 				type: 'car',
-				name: 'Automobile Tracker',
+				name: 'Automobile Tracker'
 			},
 			{
 				type: 'watch',
-				name: 'GPS Watch Tracker',
+				name: 'GPS Watch Tracker'
 			}
 		]);
 

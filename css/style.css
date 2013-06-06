@@ -417,7 +417,7 @@ body {
 nav.primary {
 	background: #2d3033;
 	position: fixed;
-	top:62px;right:0;bottom:0;left:0;
+	top:0;right:0;bottom:0;left:0;
 	width: 80px;
 	padding: 12px 10px;
 }
@@ -1220,7 +1220,8 @@ nav.primary .indicator {
 	top: 61px;
 	bottom: 65px;
 }
-.sidebar.reports h2.title {
+.sidebar.reports h2.title,
+.sidebar.settings h2.title{
 	background: rgba(255, 255, 255, 0.15);
 }
 
