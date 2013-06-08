@@ -98,7 +98,7 @@ function ($, _, Sammy, presenter, config, routeMediator, store) {
 						cls;
 
 				/////////////TESTING////////////////////////
-				loggedOut = false;
+				//loggedOut = false;
 				/////////////TESTING////////////////////////
 
 				// use login options if logged out
@@ -114,7 +114,7 @@ function ($, _, Sammy, presenter, config, routeMediator, store) {
 				options.callback(context.params); // Activate the viewModel.
 
 				if (loggedOut) {
-					$('.login-container').show();
+					$('#login-container').show();
 					$('.site-container').hide();
 					$('.view').hide();
 					presenter.TransitionTo(
@@ -124,7 +124,7 @@ function ($, _, Sammy, presenter, config, routeMediator, store) {
 					);
 				}
 				else {
-					$('.login-container').hide();
+					$('#login-container').hide();
 					$('.site-container').show();
 					$('.sidebars > .sidebar').addClass('active');
 					$('.sidebars > .sidebar.' + cls).addClass('active');

@@ -19,6 +19,7 @@ function ($, ko, datacontext, config) {
 					def.reject();
 				})
 				.done(function (result) {
+					datacontext.Session.model = result;
 					def.resolve(result);
 				});
 			}).promise();

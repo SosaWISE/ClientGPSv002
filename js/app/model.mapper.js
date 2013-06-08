@@ -19,7 +19,8 @@ define('model.mapper',
 			session = {
 				getDtoId: function (dto) { return dto.SessionId; },
 				fromDto: function (dto, item) {
-					item = item || new model.Session().SessionID(dto.SessionId);
+					item = item || new model.Session();
+					item.SessionID(dto.SessionId);
 					item.ApplicationId = dto.ApplicationId;
 					item.CreatedOn = dto.CreatedOn;
 					item.IPAddress = dto.IPAddress;

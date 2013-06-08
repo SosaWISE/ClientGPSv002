@@ -6,11 +6,11 @@
  * To change this template use File | Settings | File Templates.
  */
 define('vm.login',
-['messenger', 'router', 'config'],
-function (messenger, router, config) {
+['ko', 'messenger', 'model.userAuthInfo', 'datacontext'],
+function (ko, messenger, userAuthInfo, datacontext) {
 	var
 		/** START Private Properties. */
-		_loginTitle = ko.observable('Login title goes here'),
+		_loginTitle = ko.observable('Secure Login'),
 		_userName = ko.observable(''),
 		_password = ko.observable(''),
 		_rememberMe = ko.observable(false),
@@ -19,7 +19,15 @@ function (messenger, router, config) {
 		_loginCmd = ko.asyncCommand({
 			execute: function (complete) {
 				alert('login\nusername:'+_userName()+'\npassword:'+_password()+'\nremember me:'+_rememberMe());
-				complete();
+
+				var userInfoObject = new userAuthInfo(datacontext.Session.model.SessionID());
+				userInfoObject.Username(_userName());
+				userInfoObject.Password(_password());
+				userInfoObject.RememberMe(_rememberMe());
+
+				datacontext.Customer.authenticate(userInfoObject, successfulLogin);
+
+				if (complete) complete();
 			},
 			canExecute: function (isExecuting) {
 				return !isExecuting;// && isDirty() && isValid();
@@ -32,6 +40,10 @@ function (messenger, router, config) {
 			if (callback) callback();
 		},
 		/**   END Private Methods. */
+
+		successfulLogin = function (customerResponse) {
+			debugger;
+		},
 
 		init = function () {
 			/** Initialize view model. */

@@ -112,12 +112,12 @@ define('config',
 					type: 'POST',
 					contentType: 'application/json; charset=utf-8',
 					cache: false,
-					crossDomain: true
+					crossDomain: true,
 /** This needs to be enabled once we are in production.
- * The header property Access-Control-Allow-Origin also needs to be changed from '*' wildcard to where the client is hosted.
- *                   xhrFields: {
+ * The header property Access-Control-Allow-Origin also needs to be changed from '*' wildcard to where the client is hosted. */
+					xhrFields: {
 						withCredentials: true
-					} */
+					}
 				};
 
 				/** Return result. */

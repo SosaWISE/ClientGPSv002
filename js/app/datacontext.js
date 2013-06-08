@@ -200,6 +200,7 @@ function ($, _, ko, model, modelMapper, dataService, config, utils) {
 						return;
 					}
 
+					_session.SessionID = response.SessionId;
 					logger.success(config.Toasts)
 				},
 				error: function (response) {
@@ -209,6 +210,7 @@ function ($, _, ko, model, modelMapper, dataService, config, utils) {
 			});
 		}).promise();
 	};
+	_session.model = model.Session.Nullo;
 
 	_customer.updateData = function (customerModel, callbacks) {
 		var customerModelJson = ko.toJSON(customerModel);
@@ -236,14 +238,14 @@ function ($, _, ko, model, modelMapper, dataService, config, utils) {
 
 		/** Make the call. */
 		return $.Deferred(function(def) {
-			dataService.Customer.customerAuth({
+			dataService.Customer.CustomerAuth({
 				success: function (response) {
-					logger.success(config.Toasts.successfulAuth)
+					logger.success(config.Toasts.successfulAuth);
 					def.resolve(response);
 				},
 				error: function (response) {
 					logger.error(config.Toasts.failedAuth);
-					def.refect(response);
+					def.reject(response);
 				}
 			}, customerModelJson);
 		}).promise();

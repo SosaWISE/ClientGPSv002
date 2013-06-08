@@ -27,6 +27,9 @@ function (ko) {
 			self.isNullo = false;
 			self.dirtyFlag = new ko.DirtyFlag([
 			]);
+
+			/** Return object. */
+			return self;
 		};
 
 	Session.Nullo = new Session();

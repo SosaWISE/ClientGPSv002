@@ -46,9 +46,9 @@ define('model.customer',
 				self.email = ko.observable().extend({ required: true });
 				self.dob = ko.observable();
 				self.ssn = ko.observable();
-				self.username = ko.computed(function () {
-					return self.email();
-				});
+				self.username = ko.observable();
+				self.password = ko.observable();
+				self.rememberMe = ko.observable(false);
 				self.blog = ko.observable().extend({
 					pattern: {
 						message: 'Not a valid url',

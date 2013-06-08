@@ -9,8 +9,8 @@
 <body>
     <div id="busyindicator"></div>
     <div>
-        <div style="display:none;" class="login-container" data-bind="with:Login">
-            <div data-bind="template:{name:TmplName}" id="login-view" class="login view"></div>
+        <div style="display:none;" id="login-container" data-bind="with:Login">
+            <div data-bind="template:{name:TmplName}" id="login-view"></div>
         </div>
         <div style="display:none;" class="site-container">
             <!--<nav class="primary" style="top:0px;">-->
@@ -92,6 +92,7 @@
     <script src="/js/app/model.device.js"></script>
     <script src="/js/app/model.geoFence.js"></script>
     <script src="/js/app/model.user.js"></script>
+    <script src="/js/app/model.userAuthInfo.js"></script>
     <script src="/js/app/presenter.js"></script>
     <script src="/js/app/route-config.js"></script>
     <script src="/js/app/route-mediator.js"></script>
