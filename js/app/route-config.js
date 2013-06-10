@@ -98,6 +98,7 @@ function (config, router, vm) {
 				}
 			];
 
+			debugger;
 			for (var i = 0; i < routeData.length; i++) {
 				router.Register(routeData[i]);
 			}

@@ -9,8 +9,6 @@ define('datacontext',
 ['jquery', 'underscore', 'ko', 'model', 'model.mapper', 'dataservice', 'config', 'utils'],
 function ($, _, ko, model, modelMapper, dataService, config, utils) {
 	var logger = config.Logger,
-		getCustomerId = function () { return config.CurrentUser().CustomerID(); },
-		getAccountId = function () { return config.CurrentUser().AccountId();},
 		/**
 		 * @description Maps the memo to an observableArray, then returns the observableArray.
 		 */
@@ -183,7 +181,7 @@ function ($, _, ko, model, modelMapper, dataService, config, utils) {
 		 *  model mapper
 		 ******************************/
 		_session  = new Entity(dataService.Session.SessionStart, modelMapper.Session, model.Session.Nullo),
-		_customer = new Entity(dataService.Customer.CustomerAuth, modelMapper.Customer, dataService.Customer.CustomerUpdate),
+		_customer = new Entity(dataService.Customer.CustomerAuth, modelMapper.Customer, model.Customer.Nullo),
 		_devices = new EntitySet(dataService.Devices.AcquireList, modelMapper.Device, dataService.Devices.Nullo),
 		_events = new EntitySet(dataService.Events.GetData, modelMapper.Event, dataService.Events.Nullo),
 		_geoFences = new EntitySet(dataService.GeoFences.GetData, modelMapper.GeoFence, dataService.GeoFences.Nullo),
@@ -240,7 +238,11 @@ function ($, _, ko, model, modelMapper, dataService, config, utils) {
 		return $.Deferred(function(def) {
 			dataService.Customer.CustomerAuth({
 				success: function (response) {
+					debugger;
+					_customer.model = _customer.MapDtoToContext(response.Value);
+					config.CurrentUser(_customer.model);
 					logger.success(config.Toasts.successfulAuth);
+					if (callbacks) callbacks(response);
 					def.resolve(response);
 				},
 				error: function (response) {
@@ -250,6 +252,7 @@ function ($, _, ko, model, modelMapper, dataService, config, utils) {
 			}, customerModelJson);
 		}).promise();
 	};
+	_customer.model = model.Customer.Nullo;
 
 	var datacontext = {
 		get Customer() { return _customer; },

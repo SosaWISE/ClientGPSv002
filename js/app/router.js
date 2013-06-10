@@ -14,7 +14,6 @@ function ($, _, Sammy, presenter, config, routeMediator, store) {
 		defaultRoute = '',
 		isRedirecting = false,
 		logger = config.Logger,
-		startupUrl = '',
 		window = config.Window,
 
 		sammy = new Sammy.Application(function () {
@@ -56,8 +55,8 @@ function ($, _, Sammy, presenter, config, routeMediator, store) {
 			sammy.before(/.*/, function () {
 				var
 					context = this,
-					response = routeMediator.CanLeave(),
-					prevHash = currentHash;
+					response = routeMediator.CanLeave();
+					//prevHash = currentHash;
 
 				if (!isRedirecting && !response.val) {
 					isRedirecting = true;
@@ -90,9 +89,9 @@ function ($, _, Sammy, presenter, config, routeMediator, store) {
 
 		setupGet = function (options, routeOverride) {
 			var route = routeOverride || options.route;
-			if (route === config.Hashes.login) {
-				loginOptions = options;
-			}
+//			if (route === config.Hashes.login) {
+//				loginOptions = options;
+//			}
 			sammy.get(route, function (context) { // context is 'this'.
 				var loggedOut = !config.CurrentUser(),
 						cls;
@@ -101,10 +100,11 @@ function ($, _, Sammy, presenter, config, routeMediator, store) {
 				//loggedOut = false;
 				/////////////TESTING////////////////////////
 
+				debugger;
 				// use login options if logged out
-				if (loggedOut) {
-					options = loginOptions;
-				}
+//				if (loggedOut) {
+//					options = loginOptions;
+//				}
 				cls = options.title.toLowerCase();
 
 				// set body class if it's not 'login'
@@ -122,8 +122,7 @@ function ($, _, Sammy, presenter, config, routeMediator, store) {
 						options.route, // context.path, // We want to find the route we defined in the config.
 						options.group
 					);
-				}
-				else {
+				} else {
 					$('#login-container').hide();
 					$('.site-container').show();
 					$('.sidebars > .sidebar').addClass('active');
@@ -141,6 +140,7 @@ function ($, _, Sammy, presenter, config, routeMediator, store) {
 			if (value && value.indexOf('#') >= 0) {
 				return value.substr(value.indexOf('#'));
 			}
+			return null;
 		},
 
 		_run = function () {
@@ -150,12 +150,18 @@ function ($, _, Sammy, presenter, config, routeMediator, store) {
 			// 2) otherwise use the url i grabbed from storage.
 			// 3) otherwise use the default route.
 			var addressBarUrl = sammy.getLocation();
-			startupHash = getUsableRoute(addressBarUrl) || getUsableRoute(url) || defaultRoute;
+			_startupHash = getUsableRoute(addressBarUrl) || getUsableRoute(url) || defaultRoute;
 
 			// set hash before running
-			sammy.setLocation(startupHash);
+			sammy.setLocation(_startupHash);
 			sammy.run();
 			registerBeforeLeaving();
+		},
+
+		_startupHash = '/',
+
+		_getStartupHash = function () {
+			return _startupHash;
 		};
 
 	/** Return object. */
@@ -163,6 +169,7 @@ function ($, _, Sammy, presenter, config, routeMediator, store) {
 		NavigateBack: _navigateBack,
 		NavigateTo: _navigateTo,
 		Register: _register,
-		Run: _run
+		Run: _run,
+		get GetStartupHash() { return _getStartupHash; }
 	};
 });

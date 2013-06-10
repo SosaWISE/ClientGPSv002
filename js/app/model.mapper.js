@@ -12,8 +12,30 @@ define('model.mapper',
 			customer = {
 				getDtoId: function (dto) { return dto.CustomerId; },
 				fromDto: function (dto, item) {
-					item = item || new model.Customer().CustomerID(dto.CustomerID);
-					return item.name(dto.name);
+					item = item || new model.Customer();
+					item.customerID(dto.CustomerID);
+					item.sessionID(dto.SessionID);
+					item.customerTypeId(dto.CustomerTypeId);
+					item.customerMasterFileId(dto.CustomerMasterFileId);
+					item.dealerId(dto.DealerId);
+					item.dealerName(dto.DealerName);
+					item.localizationId(dto.LocalizationId);
+					item.localizationName(dto.LocalizationName);
+					item.prefix(dto.Prefix);
+					item.firstname(dto.FirstName);
+					item.middleName(dto.MiddleName);
+					item.lastname(dto.LastName);
+					item.postfix(dto.Postfix);
+					item.gender(dto.Gender);
+					item.phoneHome(dto.PhoneHome);
+					item.phoneCell(dto.PhoneMobile);
+					item.phoneWork(dto.PhoneWork);
+					item.email(dto.Email);
+					item.dob(dto.DOB);
+					item.ssn(dto.SSN);
+					item.username(dto.Username);
+					item.password(dto.Password);
+					return item;
 				}
 			},
 			session = {

@@ -6,8 +6,8 @@
  * To change this template use File | Settings | File Templates.
  */
 define('vm.login',
-['ko', 'messenger', 'model.userAuthInfo', 'datacontext'],
-function (ko, messenger, userAuthInfo, datacontext) {
+['ko', 'messenger', 'model.userAuthInfo', 'datacontext', 'router'],
+function (ko, messenger, userAuthInfo, datacontext, router) {
 	var
 		/** START Private Properties. */
 		_loginTitle = ko.observable('Secure Login'),
@@ -42,6 +42,7 @@ function (ko, messenger, userAuthInfo, datacontext) {
 		/**   END Private Methods. */
 
 		successfulLogin = function (customerResponse) {
+			router.NavigateTo(router.GetStartupHash());
 			debugger;
 		},
 

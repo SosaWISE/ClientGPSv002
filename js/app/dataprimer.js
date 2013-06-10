@@ -19,6 +19,7 @@ function ($, ko, datacontext, config) {
 					def.reject();
 				})
 				.done(function (result) {
+						debugger;
 					datacontext.Session.model = result;
 					def.resolve(result);
 				});
