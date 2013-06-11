@@ -10,6 +10,7 @@ define('router',
 function ($, _, Sammy, presenter, config, routeMediator, store) {
 	var
 		loginOptions,
+		lastRoutOptions,
 		currentHash = '',
 		defaultRoute = '',
 		isRedirecting = false,
@@ -89,50 +90,58 @@ function ($, _, Sammy, presenter, config, routeMediator, store) {
 
 		setupGet = function (options, routeOverride) {
 			var route = routeOverride || options.route;
-//			if (route === config.Hashes.login) {
-//				loginOptions = options;
-//			}
+			if (route === config.Hashes.login) {
+				loginOptions = options;
+			}
 			sammy.get(route, function (context) { // context is 'this'.
 				var loggedOut = !config.CurrentUser(),
-						cls;
+					cls,
+					lOptions;
 
+				/** Set the last options so that when logging in we can transition to the right place. */
+				lastRoutOptions = options;
+
+				// use login options if logged out
 				/////////////TESTING////////////////////////
 				//loggedOut = false;
 				/////////////TESTING////////////////////////
-
-				debugger;
-				// use login options if logged out
-//				if (loggedOut) {
-//					options = loginOptions;
-//				}
-				cls = options.title.toLowerCase();
+				lOptions = (loggedOut && route === config.Hashes.login)
+					? loginOptions
+					: options;
+				cls = lOptions.title.toLowerCase();
 
 				// set body class if it's not 'login'
 				$('body').attr('class', (cls!=='login') ? cls : '');
 
-				store.Save(config.StateKeys.lastView, context.path);
-				options.callback(context.params); // Activate the viewModel.
+				/** Save last path but do not save login path. */
+				if (route !== config.Hashes.login)
+					store.Save(config.StateKeys.lastView, context.path);
+				lOptions.callback(context.params); // Activate the viewModel.
 
 				if (loggedOut) {
 					$('#login-container').show();
 					$('.site-container').hide();
 					$('.view').hide();
-					presenter.TransitionTo(
-						$(options.view),
-						options.route, // context.path, // We want to find the route we defined in the config.
-						options.group
-					);
+//					presenter.TransitionTo(
+//						$(lOptions.view),
+//						lOptions.route, // context.path, // We want to find the route we defined in the config.
+//						lOptions.group
+//					);
 				} else {
-					$('#login-container').hide();
-					$('.site-container').show();
-					$('.sidebars > .sidebar').addClass('active');
-					$('.sidebars > .sidebar.' + cls).addClass('active');
+					_showPortal(cls);
 				}
+
+				debugger;
+				presenter.TransitionTo(
+					$(lOptions.view),
+					lOptions.route, // context.path, // We want to find the route we defined in the config.
+					lOptions.group
+				);
 
 				// if (this.title) {
 				// 	this.title(options.title);
 				// }
-				$('title').text(options.title + ' | Security Sciences');
+				$('title').text(lOptions.title + ' | Security Sciences');
 			});
 		},
 
@@ -162,6 +171,25 @@ function ($, _, Sammy, presenter, config, routeMediator, store) {
 
 		_getStartupHash = function () {
 			return _startupHash;
+		},
+
+		_showPortal = function(cls) {
+			$('#login-container').hide();
+			$('.site-container').show();
+			$('.view').show();
+			$('.sidebars > .sidebar').addClass('active');
+			$('.sidebars > .sidebar.' + cls).addClass('active');
+		},
+		_transitionToLastView = function () {
+
+			var cls = lastRoutOptions.title.toLowerCase();
+			_showPortal(cls);
+
+//			presenter.TransitionTo(
+//				$(lastRoutOptions.view),
+//				lastRoutOptions.route,
+//				lastRoutOptions.group
+//			);
 		};
 
 	/** Return object. */
@@ -170,6 +198,7 @@ function ($, _, Sammy, presenter, config, routeMediator, store) {
 		NavigateTo: _navigateTo,
 		Register: _register,
 		Run: _run,
-		get GetStartupHash() { return _getStartupHash; }
+		get GetStartupHash() { return _getStartupHash; },
+		get TransitionToLastView() { return _transitionToLastView }
 	};
 });

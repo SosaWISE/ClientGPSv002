@@ -42,8 +42,7 @@ function (ko, messenger, userAuthInfo, datacontext, router) {
 		/**   END Private Methods. */
 
 		successfulLogin = function (customerResponse) {
-			router.NavigateTo(router.GetStartupHash());
-			debugger;
+			router.TransitionToLastView();
 		},
 
 		init = function () {

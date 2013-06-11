@@ -56,7 +56,7 @@ define('config',
 				DevicesView: '#devices-view',
 				UsersView: '#users-view',
 				BillingView: '#billing-view',
-				ReportView: '#report-view',
+				ReportView: '#reports-view',
 				SettingsView: '#settings-view'
 			},
 
