@@ -81,11 +81,19 @@ function ($, _, ko, model, modelMapper, dataService, config, utils) {
 						// or we force a refresh
 						if (forceRefresh || !items || !utils.HasProperties(items)) {
 							getFunction({
-								success: function(dtoList) {
-									items = mapToContext(dtoList, items, results, mapper, filter, sortFunction);
-									def.resolve(results);
+								success: function(response) {
+									debugger;
+									if (response.Code === 0)
+									{
+										items = mapToContext(response.Value, items, results, mapper, filter, sortFunction);
+										def.resolve(results);
+										return;
+									}
+									/** Default path of execution. */
+									logger.error(config.Toasts.errorGettingData);
+									def.reject();
 								},
-								error: function (response) {
+								error: function (/*response*/) {
 									logger.error(config.Toasts.errorGettingData);
 									def.reject();
 								}
@@ -238,12 +246,20 @@ function ($, _, ko, model, modelMapper, dataService, config, utils) {
 		return $.Deferred(function(def) {
 			dataService.Customer.CustomerAuth({
 				success: function (response) {
-					debugger;
-					_customer.model = _customer.MapDtoToContext(response.Value);
-					config.CurrentUser(_customer.model);
-					logger.success(config.Toasts.successfulAuth);
-					if (callbacks) callbacks(response);
-					def.resolve(response);
+					/** Check result. */
+					if (response.Code === 0)
+					{
+						_customer.model = _customer.MapDtoToContext(response.Value);
+						config.CurrentUser(_customer.model);
+						logger.success(config.Toasts.successfulAuth);
+						if (callbacks) callbacks(response);
+						def.resolve(response);
+						return;
+					}
+
+					/** Default path of execution. */
+					logger.error(config.Toasts.failedAuth);
+					def.reject(response);
 				},
 				error: function (response) {
 					logger.error(config.Toasts.failedAuth);

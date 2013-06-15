@@ -6,8 +6,8 @@
  * To change this template use File | Settings | File Templates.
  */
 define('dataservice.geoFences',
-['amplify', 'config'],
-function (amplify, config) {
+['amplify', 'config', 'ko'],
+function (amplify, config, ko) {
 	var
 		_init = function () {
 
@@ -16,9 +16,13 @@ function (amplify, config) {
 		},
 
 		_getData = function (callbacks, data) {
+			/** Init */
+			var jsonData = ko.toJSON(data);
+
+			/** Execute. */
 			return amplify.request({
 				resourceId: 'devices-acquireGeoFences',
-				data: data,
+				data: jsonData,
 				success: callbacks.success,
 				error: callbacks.error
 			});

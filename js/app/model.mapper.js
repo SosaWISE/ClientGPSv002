@@ -44,6 +44,7 @@ define('model.mapper',
 					item = item || new model.Session();
 					item.SessionID(dto.SessionId);
 					item.ApplicationId = dto.ApplicationId;
+					item.AuthCustomer = dto.AuthCustomer;
 					item.CreatedOn = dto.CreatedOn;
 					item.IPAddress = dto.IPAddress;
 					item.LastAccessedOn = dto.LastAccessedOn;
@@ -55,21 +56,22 @@ define('model.mapper',
 				}
 			},
 			event = {
-				getDtoId: function (dto) { return dto.EventID; },
+				getDtoId: function (dto) { debugger; return dto.EventID; },
 				fromDto: function (dto, item) {
 					item = item || new model.Event().EventID(dto.EventID);
 					return item;
 				}
 			},
 			device = {
-				getDtoId: function (dto) { return dto.DeviceID; },
+				getDtoId: function (dto) { debugger; return dto.AccountId; },
 				fromDto: function (dto, item) {
-					item = item || new model.Device().DeviceID(dto.DeviceID);
+					item = item || new model.Device();
+					item.DeviceID(dto.AccountId);
 					return item;
 				}
 			},
 			geoFence = {
-				getDtoId: function (dto) { return dto.GeoFenceID; },
+				getDtoId: function (dto) { debugger; return dto.GeoFenceID; },
 				fromDto: function (dto, item) {
 					item = item || new model.GeoFence().GeoFenceID(dto.GeoFenceID);
 					return item;

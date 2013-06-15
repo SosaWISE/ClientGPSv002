@@ -12,7 +12,6 @@ function (config, router, vm) {
 		logger = config.Logger,
 
 		_register = function () {
-
 			var routeData = [
 				// Home route
 				{

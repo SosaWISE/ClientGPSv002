@@ -6,8 +6,8 @@
  * To change this template use File | Settings | File Templates.
  */
 define('dataservice.devices',
-['amplify', 'config'],
-function (amplify, config) {
+['amplify', 'config', 'ko'],
+function (amplify, config, ko) {
 	var
 	/** START Initialize object. */
 		_init = function () {
@@ -21,25 +21,37 @@ function (amplify, config) {
 
 	/** START Public Methods. */
 	_acquireList = function (callbacks, data) {
+		/** Init. */
+		var jsonData = ko.toJSON(data);
+
+		/** Execute. */
 		return amplify.request({
 			resourceId: 'devices-acquire',
-			data: data,
+			data: jsonData,
 			success: callbacks.success,
 			error: callbacks.error
 		});
 	},
 	_acquireListByCutomerId = function (callbacks, data) {
+		/** Init. */
+		var jsonData = ko.toJSON(data);
+
+		/** Execute. */
 		return amplify.request({
 			resourceId: 'devices-acquireByCustomerID',
-			data: data,
+			data: jsonData,
 			success: callbacks.success,
 			error: callbacks.error
 		});
 	},
 	_acquireDetails = function (callbacks, data) {
+		/** Init. */
+		var jsonData = ko.toJSON(data);
+
+		/** Execute. */
 		return amplify.request({
 			resourceId: 'devices-acquireDetails',
-			data: data,
+			data: jsonData,
 			success: callbacks.success,
 			error: callbacks.error
 		});

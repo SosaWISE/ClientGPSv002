@@ -8,7 +8,7 @@
 define('dataprimer',
 ['jquery', 'ko', 'datacontext', 'config'],
 function ($, ko, datacontext, config) {
-	var logger = config.logger,
+	var logger = config.Logger,
 
 		_sessionStart = function () {
 			return $.Deferred(function (def) {
@@ -19,15 +19,22 @@ function ($, ko, datacontext, config) {
 					def.reject();
 				})
 				.done(function (result) {
-						debugger;
 					datacontext.Session.model = result;
+					/** Check to see if we are authenticated. */
+					if (result.AuthCustomer)
+					{
+						datacontext.Customer.model = datacontext.Customer.MapDtoToContext(result.AuthCustomer);
+						config.CurrentUser(datacontext.Customer.model);
+						_fetch();
+					}
 					def.resolve(result);
 				});
 			}).promise();
 		},
-
+//
 		_fetch = function () {
 			return $.Deferred(function (def) {
+				debugger;
 				var data = {
 					devices: ko.observableArray(),
 					events: ko.observableArray(),
@@ -37,10 +44,25 @@ function ($, ko, datacontext, config) {
 
 				$.when(
 					// datacontext.Session.GetData({ result: data.session }),
-					datacontext.Devices.getData({ results: data.devices }),
-					datacontext.Events.getData({ results: data.events }),
-					datacontext.GeoFences.getData({ results: data.geoFences }),
-					datacontext.Users.getData({ results: data.users })
+					datacontext.Devices.getData(
+						{
+							results: data.devices,
+							param: {
+								UniqueID: datacontext.Customer.model.customerMasterFileId()
+							}
+						}
+					)
+					//datacontext.Events.getData({ results: data.events }),
+//					datacontext.GeoFences.getData(
+//						{
+//							results: data.geoFences,
+//							param: {
+//								AccountID: 0,
+//								CustomerID: datacontext.Customer.model.customerID
+//							}
+//						}
+//					),
+//					datacontext.Users.getData({ results: data.users })
 				)
 
 				.pipe(function () {
@@ -53,10 +75,12 @@ function ($, ko, datacontext, config) {
 				})
 
 				.fail(function () {
-						def.reject(); })
+						def.reject();
+				})
 
 				.done(function () {
-						def.resolve(); });
+						def.resolve();
+				});
 
 			}).promise();
 		};

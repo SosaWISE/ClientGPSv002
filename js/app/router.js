@@ -131,7 +131,6 @@ function ($, _, Sammy, presenter, config, routeMediator, store) {
 					_showPortal(cls);
 				}
 
-				debugger;
 				presenter.TransitionTo(
 					$(lOptions.view),
 					lOptions.route, // context.path, // We want to find the route we defined in the config.

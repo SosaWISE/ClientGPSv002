@@ -15,6 +15,18 @@ function (ko) {
 		Device = function () {
 			var self = this;
 			self.DeviceID = ko.observable();
+			self.CustomerID = ko.observable();
+			self.CustomerMasterFileId = ko.observable();
+			self.Designator = ko.observable();
+			self.IndustryAccountId = ko.observable();
+			self.IndustryNumber = ko.observable();
+			self.InvItemId = ko.observable();
+			self.PanelTypeId = ko.observable();
+			self.Password = ko.observable();
+			self.SubscriberNumber = ko.observable();
+			self.SystemTypeId = ko.observable();
+			self.UnitID = ko.observable();
+			self.Username = ko.observable();
 
 			self.isBrief = ko.observable(true);
 			self.isNullo = false;
