@@ -6,8 +6,8 @@
  * To change this template use File | Settings | File Templates.
  */
 define('dataprimer',
-['jquery', 'ko', 'datacontext', 'config'],
-function ($, ko, datacontext, config) {
+['jquery', 'ko', 'datacontext', 'config','utils','moment'],
+function ($, ko, datacontext, config, utils, moment) {
 	var logger = config.Logger,
 
 		_sessionStart = function () {
@@ -34,7 +34,6 @@ function ($, ko, datacontext, config) {
 //
 		_fetch = function () {
 			return $.Deferred(function (def) {
-				debugger;
 				var data = {
 					devices: ko.observableArray(),
 					events: ko.observableArray(),
@@ -51,17 +50,27 @@ function ($, ko, datacontext, config) {
 								UniqueID: datacontext.Customer.model.customerMasterFileId()
 							}
 						}
+					),
+					datacontext.Events.getData(
+						{
+							results: data.events,
+							param: {
+								CMFID: datacontext.Customer.model.customerMasterFileId(),
+								CustomerID: datacontext.Customer.model.customerID(),
+								StartDate: moment(new Date()).toDate(),
+								EndDate: utils.EndOfDay(new Date())
+							}
+						}
+					),
+					datacontext.GeoFences.getData(
+						{
+							results: data.geoFences,
+							param: {
+								CMFID: datacontext.Customer.model.customerMasterFileId(),
+								CustomerID: datacontext.Customer.model.customerID()
+							}
+						}
 					)
-					//datacontext.Events.getData({ results: data.events }),
-//					datacontext.GeoFences.getData(
-//						{
-//							results: data.geoFences,
-//							param: {
-//								AccountID: 0,
-//								CustomerID: datacontext.Customer.model.customerID
-//							}
-//						}
-//					),
 //					datacontext.Users.getData({ results: data.users })
 				)
 

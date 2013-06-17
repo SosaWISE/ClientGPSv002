@@ -82,7 +82,6 @@ function ($, _, ko, model, modelMapper, dataService, config, utils) {
 						if (forceRefresh || !items || !utils.HasProperties(items)) {
 							getFunction({
 								success: function(response) {
-									debugger;
 									if (response.Code === 0)
 									{
 										items = mapToContext(response.Value, items, results, mapper, filter, sortFunction);

@@ -15,6 +15,7 @@ function (ko) {
 		Device = function () {
 			var self = this;
 			self.DeviceID = ko.observable();
+			self.DeviceName = ko.observable();
 			self.CustomerID = ko.observable();
 			self.CustomerMasterFileId = ko.observable();
 			self.Designator = ko.observable();

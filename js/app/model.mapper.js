@@ -56,22 +56,37 @@ define('model.mapper',
 				}
 			},
 			event = {
-				getDtoId: function (dto) { debugger; return dto.EventID; },
+				getDtoId: function (dto) { return dto.EventID; },
 				fromDto: function (dto, item) {
 					item = item || new model.Event().EventID(dto.EventID);
 					return item;
 				}
 			},
 			device = {
-				getDtoId: function (dto) { debugger; return dto.AccountId; },
+				getDtoId: function (dto) { return dto.AccountId; },
 				fromDto: function (dto, item) {
 					item = item || new model.Device();
 					item.DeviceID(dto.AccountId);
+					item.DeviceName(dto.AccountName);
+					item.CustomerID(dto.CustomerID);
+					item.CustomerMasterFileId(dto.CustomerMasterFileId);
+					item.Designator(dto.Designator);
+					item.IndustryAccountId(dto.IndustryAccountId);
+					item.IndustryNumber(dto.IndustryNunmber);
+					item.InvItemId(dto.InvItemId);
+					item.PanelTypeId(dto.PanelTypeId);
+					item.Password(dto.Password);
+					item.SubscriberNumber(dto.SubscriberNumber);
+					item.SystemTypeId(dto.SystemTypeId);
+					item.UnitID(dto.UnitID);
+					item.Username(dto.Username);
+					item.dirtyFlag().reset();
+					item.isBrief(false);
 					return item;
 				}
 			},
 			geoFence = {
-				getDtoId: function (dto) { debugger; return dto.GeoFenceID; },
+				getDtoId: function (dto) { return dto.GeoFenceID; },
 				fromDto: function (dto, item) {
 					item = item || new model.GeoFence().GeoFenceID(dto.GeoFenceID);
 					return item;

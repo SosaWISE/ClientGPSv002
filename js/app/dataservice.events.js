@@ -6,21 +6,24 @@
  * To change this template use File | Settings | File Templates.
  */
 define('dataservice.events',
-['amplify','config'],
-function (amplify, config) {
+['amplify','config','ko'],
+function (amplify, config, ko) {
 	var
 	/** START Initialize object. */
 		_init = function () {
 
-			amplify.request.define('devices-AcquireDeviceEvents', 'ajax', config.AjaxProps('Device/AcquireDeviceEvents'));
+			amplify.request.define('devices-AcquireDeviceEvents', 'ajax', config.AjaxProps('Device/AcquireMasterDeviceEvents'));
 	},
 	/**   END Initialize object. */
 
 	/** START Public Methods. */
 	_acquireEvents = function (callbacks, data) {
+		/** Init */
+		var jsonData = ko.toJSON(data);
+debugger;
 		return amplify.request({
 			resourceId: 'devices-AcquireDeviceEvents',
-			data: data,
+			data: jsonData,
 			success: callbacks.success,
 			error: callbacks.error
 		});
