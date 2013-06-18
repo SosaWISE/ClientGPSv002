@@ -29,6 +29,10 @@ function (ko) {
 			self.UnitID = ko.observable();
 			self.Username = ko.observable();
 
+			self.type = ko.observable();
+			self.title = ko.observable();
+			self.time = ko.observable();
+
 			self.isBrief = ko.observable(true);
 			self.isNullo = false;
 			self.dirtyFlag = new ko.DirtyFlag([

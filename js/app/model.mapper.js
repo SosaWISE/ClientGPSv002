@@ -94,6 +94,11 @@ define('model.mapper',
 					item.SystemTypeId(dto.SystemTypeId);
 					item.UnitID(dto.UnitID);
 					item.Username(dto.Username);
+
+					item.type(dto.PanelTypeId);
+					item.title(dto.AccountName);
+					item.time('Not Set: ' + dto.AccountId);
+
 					item.dirtyFlag().reset();
 					item.isBrief(false);
 					return item;

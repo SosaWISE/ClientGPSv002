@@ -6,12 +6,14 @@
  * To change this template use File | Settings | File Templates.
  */
 define('vm.devices-tab',
-['messenger'],
-function (messenger) {
+['jquery','messenger','underscore','datacontext','ko'],
+function ($, messenger, _, datacontext, ko) {
 	var
 		/** START Private Properties. */
 		editing = ko.observable(false),
 		editItem = ko.observable(null),
+		_list = ko.observableArray(),
+
 		/**   END Private Properties. */
 
 		/** START Private Methods. */
@@ -22,7 +24,44 @@ function (messenger) {
 		/**   END Private Methods. */
 
 			init = function () {
+			debugger;
+			/** Init. */
+			var data = {
+				devices: ko.observableArray()
+			};
+
 			/** Initialize view model. */
+			$.when(
+				datacontext.Devices.getData(
+					{
+						results: data.devices,
+						param: {
+							UniqueID: datacontext.Customer.model.customerMasterFileId()
+						}
+					}
+				)
+			)
+			.done(function (response) {
+				/** Init. */
+				debugger;
+				_list.clear();
+				_.each(data.devices(), function (item) {
+					_list.add({
+						type: item.type,
+						title: item.title,
+						time: item.time
+					});
+				});
+			});
+//
+//			/** Create new list. */
+//			_.each(listResult, function(item) {
+//				_list.add({
+//					type: item.PanelTypeId,
+//					title: item.AccountName,
+//					time: 'Not set yet' + item.AccountId
+//				});
+//			});
 		},
 		startEdit = function(vm/*, evt*/) {
 			editItem(vm);
@@ -33,7 +72,7 @@ function (messenger) {
 		},
 		list = [
 			{
-				type: 'watch',
+				type: 'watch ME DUDE',
 				title: 'Austin\'s Watch',
 				time: 'April 23, 2013 at 12:42pm'
 			},
@@ -122,7 +161,7 @@ function (messenger) {
 		cancelEdit: cancelEdit,
 		type: 'devices',
 		name: 'Devices',
-		list: list,
+		list: _list,
 		active: ko.observable(false),
 		get Activate() { return _activate; }
 	};
