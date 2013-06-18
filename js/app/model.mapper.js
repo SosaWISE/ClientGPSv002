@@ -58,7 +58,21 @@ define('model.mapper',
 			event = {
 				getDtoId: function (dto) { return dto.EventID; },
 				fromDto: function (dto, item) {
-					item = item || new model.Event().EventID(dto.EventID);
+					item = item || new model.Event();
+					item.EventID(dto.EventID);
+					item.EventTypeId(dto.EventTypeId);
+					item.EventType(dto.EventType);
+					item.AccountId(dto.AccountId);
+					item.CustomerId(dto.CustomerId);
+					item.CustomerMasterFileId(dto.CustomerMasterFileId);
+					item.AccountName(dto.AccountName);
+					item.EventName(dto.EventName);
+					item.EventDate(dto.EventDate);
+					item.Longitude(dto.Longitude);
+					item.Lattitude(dto.Lattitude);
+
+					item.dirtyFlag().reset();
+					item.isBrief(false);
 					return item;
 				}
 			},

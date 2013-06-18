@@ -56,9 +56,11 @@ function ($, ko, datacontext, config, utils, moment) {
 							results: data.events,
 							param: {
 								CMFID: datacontext.Customer.model.customerMasterFileId(),
-								CustomerID: datacontext.Customer.model.customerID(),
-								StartDate: moment(new Date()).toDate(),
-								EndDate: utils.EndOfDay(new Date())
+								//CustomerID: datacontext.Customer.model.customerID(),
+								StartDate: utils.AddToDate(new Date(), -30),
+								EndDate:  moment(new Date()).toDate(),
+								PageSize: 20,
+								PageNumber: 1
 							}
 						}
 					),

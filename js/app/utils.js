@@ -16,6 +16,14 @@ define('utils',
 					.add('seconds', -1)
 					.toDate();
 			},
+			_addToDate = function (day, daysToAdd){
+				var result = new Date();
+
+				result.setDate(day.getDate() + daysToAdd);
+
+				/** Return result. */
+				return result;
+			},
 			getFirstTimeSlot = function (timeSlots) {
 				return moment(timeSlots()[0].start()).format('MM-DD-YYYY');
 			},
@@ -81,6 +89,7 @@ define('utils',
 		/** Return object. */
 		return {
 			get EndOfDay() { return endOfDay; },
+			get AddToDate() { return _addToDate; },
 			get GetFirstTimeSlot() { return getFirstTimeSlot; },
 			get HasProperties() { return hasProperties; },
 			get InvokeFunctionIfExists() { return invokeFunctionIfExists; },

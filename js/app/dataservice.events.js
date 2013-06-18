@@ -20,7 +20,7 @@ function (amplify, config, ko) {
 	_acquireEvents = function (callbacks, data) {
 		/** Init */
 		var jsonData = ko.toJSON(data);
-debugger;
+
 		return amplify.request({
 			resourceId: 'devices-AcquireDeviceEvents',
 			data: jsonData,

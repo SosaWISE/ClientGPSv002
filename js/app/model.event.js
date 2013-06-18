@@ -15,6 +15,16 @@ function (ko) {
 		Event = function () {
 			var self = this;
 			self.EventID = ko.observable();
+			self.EventTypeId = ko.observable();
+			self.EventType = ko.observable();
+			self.AccountId = ko.observable();
+			self.CustomerId = ko.observable();
+			self.CustomerMasterFileId = ko.observable();
+			self.AccountName = ko.observable();
+			self.EventName = ko.observable();
+			self.EventDate = ko.observable();
+			self.Longitude = ko.observable();
+			self.Lattitude = ko.observable();
 
 
 			self.isBrief = ko.observable(true);

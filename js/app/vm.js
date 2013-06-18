@@ -43,7 +43,7 @@ function (vmLogin, vmRegister, devices, users, home, billing, reports, settings)
 	// topLevelViews.forEach(setActivateCmd);
 
 	return {
-		topLevelViews: topLevelViews,
+		get topLevelViews() { return topLevelViews; },
 		get Home() { return home; },
 		get Login() { return vmLogin; },
 		get Register() { return vmRegister; },
