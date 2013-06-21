@@ -58,6 +58,7 @@ $(function() {
 	});
 
 	$('a.edit-btn').click(function() {
+		debugger;
 		parent = $(this).parent();
 		activeSidebar = $('.sidebar.active');
 		if(activeSidebar.hasClass('devices')) {

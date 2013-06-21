@@ -42,7 +42,6 @@ function (ko, messenger, userAuthInfo, datacontext, router, dataprimer) {
 		/**   END Private Methods. */
 
 		successfulLogin = function (customerResponse) {
-			debugger;
 			dataprimer.Fetch();
 			router.TransitionToLastView();
 		},

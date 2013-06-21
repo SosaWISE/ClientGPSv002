@@ -20,11 +20,11 @@ function ($, messenger, _, datacontext, ko) {
 			_activate = function (routeData, callback) {
 			messenger.publish.viewModelActivated();
 			if (callback) callback();
+			debugger;
 		},
 		/**   END Private Methods. */
 
 			init = function () {
-			debugger;
 			/** Init. */
 			var data = {
 				devices: ko.observableArray()
@@ -34,25 +34,26 @@ function ($, messenger, _, datacontext, ko) {
 			$.when(
 				datacontext.Devices.getData(
 					{
-						results: data.devices,
+//						results: data.devices,
+						results: _list,
 						param: {
 							UniqueID: datacontext.Customer.model.customerMasterFileId()
 						}
 					}
 				)
-			)
-			.done(function (response) {
-				/** Init. */
-				debugger;
-				_list.clear();
-				_.each(data.devices(), function (item) {
-					_list.add({
-						type: item.type,
-						title: item.title,
-						time: item.time
-					});
-				});
-			});
+			);
+//			.done(function (response) {
+//				/** Init. */
+//				debugger;
+//				_list.clear();
+//				_.each(data.devices(), function (item) {
+//					_list.add({
+//						type: item.type,
+//						title: item.title,
+//						time: item.time
+//					});
+//				});
+//			});
 //
 //			/** Create new list. */
 //			_.each(listResult, function(item) {
@@ -62,6 +63,7 @@ function ($, messenger, _, datacontext, ko) {
 //					time: 'Not set yet' + item.AccountId
 //				});
 //			});
+			_list(list);
 		},
 		startEdit = function(vm/*, evt*/) {
 			editItem(vm);
@@ -69,6 +71,14 @@ function ($, messenger, _, datacontext, ko) {
 		},
 		cancelEdit = function(/*vm, evt*/) {
 			editing(false);
+		},
+		_addDevice = function() {
+			alert("What up");
+			_list().push({
+				type: 'Added one',
+				title: 'Andresss\'s Watch',
+				time: 'April 23, 2013 at 12:42pm'
+			});
 		},
 		list = [
 			{
@@ -159,6 +169,7 @@ function ($, messenger, _, datacontext, ko) {
 		editItem: editItem,
 		startEdit: startEdit,
 		cancelEdit: cancelEdit,
+		get addDevice() { return _addDevice; },
 		type: 'devices',
 		name: 'Devices',
 		list: _list,
