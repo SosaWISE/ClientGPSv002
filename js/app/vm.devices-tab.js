@@ -34,26 +34,29 @@ function ($, messenger, _, datacontext, ko) {
 			$.when(
 				datacontext.Devices.getData(
 					{
-//						results: data.devices,
-						results: _list,
+						results: data.devices,
+//						results: _list,
 						param: {
 							UniqueID: datacontext.Customer.model.customerMasterFileId()
 						}
 					}
 				)
-			);
-//			.done(function (response) {
-//				/** Init. */
-//				debugger;
-//				_list.clear();
-//				_.each(data.devices(), function (item) {
-//					_list.add({
-//						type: item.type,
-//						title: item.title,
-//						time: item.time
-//					});
-//				});
-//			});
+			)
+			.then(function (response) {
+				/** Init. */
+				console.log(response);
+				debugger;
+				_list.clear();
+				_.each(data.devices(), function (item) {
+					_list.add({
+						type: item.type,
+						title: item.title,
+						time: item.time
+					});
+				});
+			}, function (someArg) {
+					alert('SomeArg:' + someArg);
+				});
 //
 //			/** Create new list. */
 //			_.each(listResult, function(item) {
@@ -63,9 +66,11 @@ function ($, messenger, _, datacontext, ko) {
 //					time: 'Not set yet' + item.AccountId
 //				});
 //			});
-			_list(list);
+			//_list(list);
 		},
 		startEdit = function(vm/*, evt*/) {
+			debugger;
+			alert("Yeah baby.  I'm here!!!  Yeah!!!!!");
 			editItem(vm);
 			editing(true);
 		},
@@ -74,7 +79,7 @@ function ($, messenger, _, datacontext, ko) {
 		},
 		_addDevice = function() {
 			alert("What up");
-			_list().push({
+			_list.push({
 				type: 'Added one',
 				title: 'Andresss\'s Watch',
 				time: 'April 23, 2013 at 12:42pm'
@@ -124,36 +129,6 @@ function ($, messenger, _, datacontext, ko) {
 			{
 				type: 'car-nav',
 				title: 'Austin\'s Car GPS',
-				time: 'April 23, 2013 at 12:42pm'
-			},
-			{
-				type: 'car',
-				title: 'Carolyn\'s Car Tracker',
-				time: 'April 23, 2013 at 12:42pm'
-			},
-			{
-				type: 'watch',
-				title: 'Austin\'s Watch',
-				time: 'April 23, 2013 at 12:42pm'
-			},
-			{
-				type: 'watch',
-				title: 'Austin\'s Watch',
-				time: 'April 23, 2013 at 12:42pm'
-			},
-			{
-				type: 'watch',
-				title: 'Austin\'s Watch',
-				time: 'April 23, 2013 at 12:42pm'
-			},
-			{
-				type: 'watch',
-				title: 'Austin\'s Watch',
-				time: 'April 23, 2013 at 12:42pm'
-			},
-			{
-				type: 'watch',
-				title: 'Austin\'s Watch',
 				time: 'April 23, 2013 at 12:42pm'
 			}
 		];
