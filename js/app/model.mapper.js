@@ -95,7 +95,7 @@ define('model.mapper',
 					item.UnitID(dto.UnitID);
 					item.Username(dto.Username);
 
-					item.type(dto.PanelTypeId);
+					item.type(dto.UIName);
 					item.title(dto.AccountName);
 					item.time('Not Set: ' + dto.AccountId);
 

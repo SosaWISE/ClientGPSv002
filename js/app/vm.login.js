@@ -41,9 +41,9 @@ function (ko, messenger, userAuthInfo, datacontext, router, /*dataprimer, */ampl
 		/**   END Private Methods. */
 
 		successfulLogin = function (customerResponse) {
-			alert('login\nusername:'+_userName()+'\npassword:'+_password()+'\nremember me:'+_rememberMe());
-			//dataprimer.Fetch();
-			debugger;
+//			alert('login\nusername:'+_userName()+'\npassword:'+_password()+'\nremember me:'+_rememberMe());
+//			dataprimer.Fetch();
+
 			amplify.publish('customerAuthentication', customerResponse);
 			router.TransitionToLastView();
 		},

@@ -100,7 +100,6 @@ function (/*vm, */$, ko, datacontext, config, utils, moment, amplify) {
 				})
 
 				.done(function () {
-						debugger;
 						def.resolve(data);
 				});
 

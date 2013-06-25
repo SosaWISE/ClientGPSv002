@@ -20,19 +20,16 @@ function ($, messenger, _, datacontext, ko, amplify) {
 			_activate = function (routeData, callback) {
 			messenger.publish.viewModelActivated();
 			if (callback) callback();
-			debugger;
 		},
 		/**   END Private Methods. */
 
 			init = function () {
 			_list(list);
 			amplify.subscribe('customerAuthentication', function (data) {
-				debugger;
 				console.log(data);
 				_refresh();
 			});
 			amplify.subscribe('sessionAuthentication', function (data) {
-				debugger;
 				console.log(data);
 				_refresh();
 			});
@@ -58,8 +55,8 @@ function ($, messenger, _, datacontext, ko, amplify) {
 			.then(function (response) {
 				/** Init. */
 				console.log(response);
-				debugger;
-				//_list.destroyAll();
+
+				_list.destroyAll();
 				_.each(data.devices(), function (item) {
 					_list.push({
 						type: item.type(),
@@ -73,7 +70,6 @@ function ($, messenger, _, datacontext, ko, amplify) {
 			//_list(list);
 		},
 		startEdit = function(vm/*, evt*/) {
-			debugger;
 			alert("Yeah baby.  I'm here!!!  Yeah!!!!!");
 			editItem(vm);
 			editing(true);
