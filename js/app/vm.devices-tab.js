@@ -6,8 +6,8 @@
  * To change this template use File | Settings | File Templates.
  */
 define('vm.devices-tab',
-['jquery','messenger','underscore','datacontext','ko'],
-function ($, messenger, _, datacontext, ko) {
+['jquery','messenger','underscore','datacontext','ko','amplify'],
+function ($, messenger, _, datacontext, ko, amplify) {
 	var
 		/** START Private Properties. */
 		editing = ko.observable(false),
@@ -25,6 +25,19 @@ function ($, messenger, _, datacontext, ko) {
 		/**   END Private Methods. */
 
 			init = function () {
+			_list(list);
+			amplify.subscribe('customerAuthentication', function (data) {
+				debugger;
+				console.log(data);
+				_refresh();
+			});
+			amplify.subscribe('sessionAuthentication', function (data) {
+				debugger;
+				console.log(data);
+				_refresh();
+			});
+		},
+			_refresh = function () {
 			/** Init. */
 			var data = {
 				devices: ko.observableArray()
@@ -46,26 +59,17 @@ function ($, messenger, _, datacontext, ko) {
 				/** Init. */
 				console.log(response);
 				debugger;
-				_list.clear();
+				//_list.destroyAll();
 				_.each(data.devices(), function (item) {
-					_list.add({
-						type: item.type,
-						title: item.title,
-						time: item.time
+					_list.push({
+						type: item.type(),
+						title: item.title(),
+						time: item.time()
 					});
 				});
-			}, function (someArg) {
+				}, function (someArg) {
 					alert('SomeArg:' + someArg);
-				});
-//
-//			/** Create new list. */
-//			_.each(listResult, function(item) {
-//				_list.add({
-//					type: item.PanelTypeId,
-//					title: item.AccountName,
-//					time: 'Not set yet' + item.AccountId
-//				});
-//			});
+			});
 			//_list(list);
 		},
 		startEdit = function(vm/*, evt*/) {
@@ -144,6 +148,7 @@ function ($, messenger, _, datacontext, ko) {
 		editItem: editItem,
 		startEdit: startEdit,
 		cancelEdit: cancelEdit,
+		get refresh() { return _refresh },
 		get addDevice() { return _addDevice; },
 		type: 'devices',
 		name: 'Devices',

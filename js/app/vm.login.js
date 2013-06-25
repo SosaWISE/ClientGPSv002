@@ -6,8 +6,8 @@
  * To change this template use File | Settings | File Templates.
  */
 define('vm.login',
-['ko', 'messenger', 'model.userAuthInfo', 'datacontext', 'router', 'dataprimer'],
-function (ko, messenger, userAuthInfo, datacontext, router, dataprimer) {
+['ko', 'messenger', 'model.userAuthInfo', 'datacontext', 'router', /*'dataprimer',*/'amplify'],
+function (ko, messenger, userAuthInfo, datacontext, router, /*dataprimer, */amplify) {
 	var
 		/** START Private Properties. */
 		_loginTitle = ko.observable('Secure Login'),
@@ -18,7 +18,6 @@ function (ko, messenger, userAuthInfo, datacontext, router, dataprimer) {
 
 		_loginCmd = ko.asyncCommand({
 			execute: function (complete) {
-				alert('login\nusername:'+_userName()+'\npassword:'+_password()+'\nremember me:'+_rememberMe());
 
 				var userInfoObject = new userAuthInfo(datacontext.Session.model.SessionID());
 				userInfoObject.Username(_userName());
@@ -42,7 +41,10 @@ function (ko, messenger, userAuthInfo, datacontext, router, dataprimer) {
 		/**   END Private Methods. */
 
 		successfulLogin = function (customerResponse) {
-			dataprimer.Fetch();
+			alert('login\nusername:'+_userName()+'\npassword:'+_password()+'\nremember me:'+_rememberMe());
+			//dataprimer.Fetch();
+			debugger;
+			amplify.publish('customerAuthentication', customerResponse);
 			router.TransitionToLastView();
 		},
 

@@ -6,8 +6,17 @@
  * To change this template use File | Settings | File Templates.
  */
 define('dataprimer',
-['jquery', 'ko', 'datacontext', 'config','utils','moment'],
-function ($, ko, datacontext, config, utils, moment) {
+[
+//	'vm',
+	'jquery',
+	'ko',
+	'datacontext',
+	'config',
+	'utils',
+	'moment',
+	'amplify'
+],
+function (/*vm, */$, ko, datacontext, config, utils, moment, amplify) {
 	var logger = config.Logger,
 
 		_sessionStart = function () {
@@ -25,7 +34,8 @@ function ($, ko, datacontext, config, utils, moment) {
 					{
 						datacontext.Customer.model = datacontext.Customer.MapDtoToContext(result.AuthCustomer);
 						config.CurrentUser(datacontext.Customer.model);
-						_fetch();
+						//_fetch();
+						amplify.publish('sessionAuthentication', result.AuthCustomer);
 					}
 					def.resolve(result);
 				});
@@ -35,7 +45,7 @@ function ($, ko, datacontext, config, utils, moment) {
 		_fetch = function () {
 			return $.Deferred(function (def) {
 				var data = {
-					devices: ko.observableArray(),
+					devices:  ko.observableArray(),
 					events: ko.observableArray(),
 					geoFences: ko.observableArray(),
 					users: ko.observableArray()
@@ -90,11 +100,21 @@ function ($, ko, datacontext, config, utils, moment) {
 				})
 
 				.done(function () {
-						def.resolve();
+						debugger;
+						def.resolve(data);
 				});
 
 			}).promise();
+		},
+		init = function () {
+//			console.log("Print vm");
+//			console.log(vm);
+//			console.log("Print moment");
+//			console.log(moment);
 		};
+
+	/** Init object. */
+	init();
 
 	/** Return object. */
 	return {
