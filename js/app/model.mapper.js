@@ -6,8 +6,8 @@
  * To change this template use File | Settings | File Templates.
  */
 define('model.mapper',
-	['model'],
-	function (model) {
+	['model','utils'],
+	function (model,utils) {
 		var
 			customer = {
 				getDtoId: function (dto) { return dto.CustomerId; },
@@ -97,7 +97,8 @@ define('model.mapper',
 
 					item.type(dto.UIName);
 					item.title(dto.AccountName);
-					item.time('Not Set: ' + dto.AccountId);
+					if (dto.EventDate) item.time(utils.DateLongFormat(dto.EventDate));
+					else item.time('[No Event]');
 
 					item.dirtyFlag().reset();
 					item.isBrief(false);

@@ -84,6 +84,19 @@ define('utils',
 						}
 					}
 				});
+			},
+
+			_dateLongFormat = function (rawDate) {
+				/** Init. */
+				var result = '[Invalid Date]';
+debugger;
+				/** Validate input. */
+				if (moment(rawDate).isValid) {
+					result = moment.utc(rawDate).format('MMMM Do');
+				}
+
+				/** Return result. */
+				return result;
 			};
 
 		/** Return object. */
@@ -95,6 +108,7 @@ define('utils',
 			get InvokeFunctionIfExists() { return invokeFunctionIfExists; },
 			get MapMemoToArray() { return mapMemoToArray; },
 			get RegExEscape() { return regExEscape; },
-			get RestoreFilter() { return restoreFilter; }
+			get RestoreFilter() { return restoreFilter; },
+			get DateLongFormat() { return _dateLongFormat; }
 		};
 	});

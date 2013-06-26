@@ -148,7 +148,7 @@ function ($, messenger, _, datacontext, ko, amplify) {
 		get addDevice() { return _addDevice; },
 		type: 'devices',
 		name: 'Devices',
-		list: _list,
+		get list() { return _list; },
 		active: ko.observable(false),
 		get Activate() { return _activate; }
 	};
