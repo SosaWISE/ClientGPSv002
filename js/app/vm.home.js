@@ -9,9 +9,10 @@ define('vm.home',
 [
 	'config',
 	'messenger',
-	'utils'
+	'utils',
+	'amplify'
 ],
-function (config, messenger, utils) {
+function (config, messenger, utils, amplify) {
 	var
 		_tmplName = 'home.view',
 		_tmplModuleName = 'home.module.view',
@@ -22,8 +23,14 @@ function (config, messenger, utils) {
 		canLeave = function () {
 			return true;
 		},
-		refresh = function (callback) {
-			utils.InvokeFunctionIfExists(callback);
+		init = function () {
+			amplify.subscribe('customerAuthentication', function (data) {
+				console.log(data);
+				_refresh(data);
+			});
+			amplify.subscriber('sessionAuthentication', function (data) {
+
+			});
 		},
 		devices = ko.observableArray([
 			{
@@ -80,12 +87,25 @@ function (config, messenger, utils) {
 				type: 'watch',
 				name: 'GPS Watch Tracker'
 			}
-		]);
+		]),
+		_refresh = function (rawList, callback) {
+			utils.InvokeFunctionIfExists(callback);
+			/** Refresh */
+			devices.removeAll();
+			/** Initialize. */
+			_.each(rawList, function (item) {
+				devices.push({
+					type: item.type(),
+					name: item.title()
+				});
+			});
+		};
 
 	devices().forEach(function(device) {
 		device.selectDeviceCmd = ko.asyncCommand({
 			execute: function (complete) {
 				// currently does nothing
+				debugger;
 				complete();
 			},
 			canExecute: function (isExecuting) {
@@ -117,6 +137,7 @@ function (config, messenger, utils) {
 		get TmplModuleName() { return _tmplModuleName; },
 		devices: devices,
 		deviceTypes: deviceTypes,
-		get Activate() { return _activate; }
+		get Activate() { return _activate; },
+		get Refresh() { return _refresh; }
 	};
 });

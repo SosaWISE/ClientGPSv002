@@ -89,10 +89,10 @@ define('utils',
 			_dateLongFormat = function (rawDate) {
 				/** Init. */
 				var result = '[Invalid Date]';
-debugger;
+
 				/** Validate input. */
 				if (moment(rawDate).isValid) {
-					result = moment.utc(rawDate).format('MMMM Do');
+					result = moment.utc(rawDate).format('MMMM Do, YYYY @ hh:mm a');
 				}
 
 				/** Return result. */
