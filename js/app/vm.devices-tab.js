@@ -137,6 +137,7 @@ function ($, messenger, _, datacontext, ko, amplify) {
 	init();
 
 	/** Return object. */
+	//noinspection JSUnusedGlobalSymbols
 	return {
 		TmplName: 'devices-tab.view',
 		canEdit: ko.observable(true),

@@ -97,6 +97,14 @@ define('utils',
 
 				/** Return result. */
 				return result;
+			},
+
+			_getNowDateTime = function () {
+				/** Init */
+				var now = new Date();
+
+				/** Return value. */
+				return now;
 			};
 
 		/** Return object. */
@@ -109,6 +117,7 @@ define('utils',
 			get MapMemoToArray() { return mapMemoToArray; },
 			get RegExEscape() { return regExEscape; },
 			get RestoreFilter() { return restoreFilter; },
-			get DateLongFormat() { return _dateLongFormat; }
+			get DateLongFormat() { return _dateLongFormat; },
+			get GetNowDateTime() { return _getNowDateTime; }
 		};
 	});
