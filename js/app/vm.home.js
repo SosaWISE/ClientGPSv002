@@ -7,13 +7,15 @@
  */
 define('vm.home',
 [
+	'underscore',
 	'config',
 	'messenger',
 	'utils',
+	'ko',
 	'amplify',
 	'datacontext'
 ],
-function (config, messenger, utils, amplify, datacontext) {
+function (_, config, messenger, utils, ko, amplify, datacontext) {
 	var
 		_tmplName = 'home.view',
 		_tmplModuleName = 'home.module.view',
@@ -32,7 +34,7 @@ function (config, messenger, utils, amplify, datacontext) {
 				_refresh(/*data*/);
 			});
 		},
-		devices = ko.observableArray([
+		_devices = ko.observableArray([
 			{
 				type: 'watch',
 				name: 'Austin\'s GPS Watch'
@@ -52,6 +54,14 @@ function (config, messenger, utils, amplify, datacontext) {
 			{
 				type: 'car',
 				name: 'Austin\'s GPS Watch'
+			}
+		]),
+		_events = ko.observableArray([
+			{
+				type: 'sos',
+				title: 'Rascal exited the Yard geofence',
+				time: 'EEApril 23, 2013 at 12:42pm',
+				actions: ''
 			}
 		]),
 		deviceTypes = ko.observableArray([
@@ -91,7 +101,8 @@ function (config, messenger, utils, amplify, datacontext) {
 		_refresh = function (callback) {
 			/** Init */
 			 var data = {
-				devices: ko.observableArray()
+				devices: ko.observableArray(),
+				events: ko.observableArray()
 			};
 
 			/** Initialize view model. */
@@ -103,19 +114,44 @@ function (config, messenger, utils, amplify, datacontext) {
 							UniqueID: datacontext.Customer.model.customerMasterFileId()
 						}
 					}
+				),
+				datacontext.Events.getData(
+					{
+						results: data.events,
+						param: {
+							CMFID: datacontext.Customer.model.customerMasterFileId(),
+							PageSize: 10,
+//							EndDate: utils.GetNowDateTime(),
+//							StartDate: utils.AddToDate(utils.GetNowDateTime(), -5)
+							EndDate: '6/19/2013',
+							StartDate: '5/19/2013'
+						}
+					}
 				)
+
 			)
 			.then(function (response) {
 				/** Init. */
 				console.log(response);
 
-				devices.removeAll();
+				_devices.removeAll();
 				/** Initialize. */
 				_.each(data.devices(), function (item) {
-					devices.push({
+					_devices.push({
 						type: item.type(),
 						name: item.title(),
 						selectDeviceCmd: ko.asyncCommand({ execute: selectDeviceCmdExecute, canExecute: selectDeviceCmdCanExecute })
+					});
+				});
+
+				_events.removeAll();
+				/** Bind events to main body. */
+				_.each(data.events(), function (item) {
+					_events.push({
+						type: item.EventTypeUi(),
+						title: item.AccountName(),
+						time: item.EventDate(),
+						actions: ''
 					});
 				});
 
@@ -129,7 +165,7 @@ function (config, messenger, utils, amplify, datacontext) {
 		},
 		selectDeviceCmdCanExecute = function (isExecuting) { return !isExecuting;/* && isDirty() && isValid();*/ };
 
-	devices().forEach(function(device) {
+	_devices().forEach(function(device) {
 		device.selectDeviceCmd = ko.asyncCommand({
 			execute: selectDeviceCmdExecute,
 			canExecute: selectDeviceCmdCanExecute
@@ -160,7 +196,8 @@ function (config, messenger, utils, amplify, datacontext) {
 		name: 'Home',
 		get TmplName() { return _tmplName; },
 		get TmplModuleName() { return _tmplModuleName; },
-		devices: devices,
+		get devices() { return  _devices; },
+		get events() { return _events; },
 		deviceTypes: deviceTypes,
 		get Activate() { return _activate; }/*,
 		get Refresh() { return _refresh; }*/

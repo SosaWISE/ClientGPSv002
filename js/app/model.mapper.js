@@ -72,7 +72,8 @@ define('model.mapper',
 					item.Lattitude(dto.Lattitude);
 
 					/** Add ui stuff. */
-					item.UiType(dto.EventTypeUi);
+					item.EventTypeUi(dto.EventTypeUi);
+					item.EventShortDesc(dto.EventShortDesc);
 
 					item.dirtyFlag().reset();
 					item.isBrief(false);

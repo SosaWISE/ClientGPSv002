@@ -63,8 +63,10 @@ define('vm.events',
 				_list.destroyAll();
 				_.each(data.events(), function (item) {
 					_list.push({
-						type: item.UiType(),
-						title: 'Rascal exited the Yard geo fence',
+						type: item.EventTypeUi(),
+						//title: 'Rascal exited the Yard geo fence',
+						//title: item.AccountName(),
+						title: item.EventShortDesc(),
 						time: utils.DateLongFormat(item.EventDate()),
 						//time: 'July 1, 2013 at 1:59pm',
 						actions: ''

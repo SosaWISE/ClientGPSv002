@@ -17,7 +17,8 @@ function (ko) {
 			self.EventID = ko.observable();
 			self.EventTypeId = ko.observable();
 			self.EventType = ko.observable();
-			self.UiType = ko.observable();
+			self.EventTypeUi = ko.observable();
+			self.EventShortDesc = ko.observable();
 			self.AccountId = ko.observable();
 			self.CustomerId = ko.observable();
 			self.CustomerMasterFileId = ko.observable();
