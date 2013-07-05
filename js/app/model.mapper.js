@@ -113,6 +113,17 @@ define('model.mapper',
 				getDtoId: function (dto) { return dto.GeoFenceID; },
 				fromDto: function (dto, item) {
 					item = item || new model.GeoFence().GeoFenceID(dto.GeoFenceID);
+					item.GeoFenceID(dto.GeoFenceID);
+					item.AccountId(dto.AccountId);
+					item.Area(dto.Area);
+					item.CenterLattitude(dto.CenterLattitude);
+					item.CenterLongitude(dto.CenterLongitude);
+					item.Description(dto.Description);
+					item.Name(dto.Name);
+					item.Type(dto.Type);
+
+					item.dirtyFlag().reset();
+					item.isBrief(false);
 					return item;
 				}
 			};

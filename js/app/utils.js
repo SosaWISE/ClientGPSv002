@@ -97,6 +97,21 @@ define('utils',
 
 				/** Return result. */
 				return result;
+				var result = '[Invalid Date]';
+			},
+
+			_dateWithFormat = function (rawDate, formatString) {
+				/** Init. */
+				var result = '[Invalid Date]';
+
+				/** Validate input. */
+				if (moment(rawDate).isValid) {
+					result = moment.utc(rawDate).format(formatString);
+				}
+
+				/** Return result. */
+				return result;
+				var result = '[Invalid Date]';
 			},
 
 			_getNowDateTime = function () {
@@ -118,6 +133,7 @@ define('utils',
 			get RegExEscape() { return regExEscape; },
 			get RestoreFilter() { return restoreFilter; },
 			get DateLongFormat() { return _dateLongFormat; },
-			get GetNowDateTime() { return _getNowDateTime; }
+			get GetNowDateTime() { return _getNowDateTime; },
+			get DateWithFormat() { return _dateWithFormat; }
 		};
 	});

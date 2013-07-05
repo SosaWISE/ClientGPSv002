@@ -124,7 +124,7 @@ function (_, config, messenger, utils, ko, amplify, datacontext) {
 //							EndDate: utils.GetNowDateTime(),
 //							StartDate: utils.AddToDate(utils.GetNowDateTime(), -5)
 							EndDate: '6/19/2013',
-							StartDate: '5/19/2013'
+							StartDate: '1/19/2013'
 						}
 					}
 				)
@@ -149,8 +149,8 @@ function (_, config, messenger, utils, ko, amplify, datacontext) {
 				_.each(data.events(), function (item) {
 					_events.push({
 						type: item.EventTypeUi(),
-						title: item.AccountName(),
-						time: item.EventDate(),
+						title: item.EventShortDesc(),
+						time: utils.DateWithFormat(item.EventDate(),'MMMM Do, YYYY @ hh:mm:ss a'),
 						actions: ''
 					});
 				});
