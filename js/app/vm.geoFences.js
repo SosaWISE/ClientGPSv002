@@ -61,7 +61,9 @@ function (messenger, _, datacontext, ko, amplify/*, utils*/) {
 					/** Build new list. */
 					_.each(data.geoFences(), function(item) {
 						_list.push({
-							type:
+							type: item.Type(),
+							title: item.GeoFenceNameUi(),
+							time: item.ModifiedOn()
 						});
 					});
 

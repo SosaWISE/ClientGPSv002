@@ -119,8 +119,22 @@ define('model.mapper',
 					item.CenterLattitude(dto.CenterLattitude);
 					item.CenterLongitude(dto.CenterLongitude);
 					item.Description(dto.Description);
-					item.Name(dto.Name);
-					item.Type(dto.Type);
+					item.GeoFenceNameUi(dto.GeoFenceNameUi);
+					item.Type(dto.GeoFenceTypeUi);
+					item.TypeId(dto.GeoFenceTypeId);
+					item.ReportModeId(dto.ReportModeId);
+					item.ReportModeUi(dto.ReportModeUi);
+					item.MaxLattitude(dto.MaxLattitude);
+					item.MaxLongitude(dto.MaxLongitude);
+					item.MeanLattitude(dto.MeanLattitude);
+					item.MeanLongitude(dto.MeanLongitude);
+					item.MinLattitude(dto.MinLattitude);
+					item.MinLongitude(dto.MinLongitude);
+					item.PointLattitude(dto.PointLattitude);
+					item.PointLongitude(dto.PointLongitude);
+					item.PolyPointsList(dto.PolyPointsList);
+					item.Radius(dto.Radius);
+					item.ModifiedOn(dto.ModifiedOn);
 
 					item.dirtyFlag().reset();
 					item.isBrief(false);
