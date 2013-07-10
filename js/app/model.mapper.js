@@ -143,10 +143,33 @@ define('model.mapper',
 			},
 			user = {
 				getDtoId: function (dto) { return dto.CustomerID },
-				fromDto: function (dto) {
+				fromDto: function (dto, item) {
 					item = item || new model.User().UserID(dto.CustomerID);
 					item.sessionID(dto.SessionID);
 					item.isCurrent(dto.IsCurrent);
+					item.customerTypeId(dto.CustomerTypeId);
+					item.customerMasterFileId(dto.CustomerMasterFileId);
+					item.dealerId(dto.DealerId);
+					item.dealerName(dto.DealerName);
+					item.localizationId(dto.LocalizationId);
+					item.localizationName(dto.LocalizationName);
+					item.prefix(dto.Prefix);
+					item.firstName(dto.FirstName);
+					item.middleName(dto.MiddleName);
+					item.lastName(dto.LastName);
+					item.postfix(dto.Postfix);
+					item.gender(dto.Gender);
+					item.phoneHome(dto.PhoneHome);
+					item.phoneWork(dto.PhoneWork);
+					item.phoneCell(dto.PhoneCell);
+					item.email(dto.Email);
+					item.dob(dto.DOB);
+					item.ssn(dto.SSN);
+					item.username(dto.Username);
+
+					item.dirtyFlag().reset();
+					item.isBrief(false);
+					return item;
 				}
 			};
 

@@ -7,10 +7,15 @@
  */
 define('vm.users',
 [
+	'underscore',
 	'config',
-	'messenger'
+	'messenger',
+	'utils',
+	'ko',
+	'amplify',
+	'datacontext'
 ],
-function (config, messenger) {
+function (_, config, messenger, utils, ko, amplify, datacontext) {
 	var
 		/** START Private Properties. */
 		_tmplName = 'users.view',
@@ -26,8 +31,13 @@ function (config, messenger) {
 		},
 		/**   END Private Methods. */
 
-		init = function () {
-			/** Initialize view model. */
+			init = function () {
+			amplify.subscribe('customerAuthentication', function (/*data*/) {
+				_refresh(/*data*/);
+			});
+			amplify.subscribe('sessionAuthentication', function (/*data*/) {
+					_refresh(/*data*/);
+			});
 		},
 		startEdit = function(vm, evt) {
 			editItem(vm);
@@ -127,7 +137,17 @@ function (config, messenger) {
 				lastName: 'Smith',
 				time: 'April 23, 2013 at 12:42pm'
 			}
-    ];
+    ],
+		_refresh = function (callback) {
+			/** Init. */
+			var data = {
+				users: ko.observableArray()
+			};
+
+			/** Initialize view model. */
+			$.when()
+			.then();
+		};
 
 	/** Init object. */
 	init();
