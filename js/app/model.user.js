@@ -19,6 +19,7 @@ function (ko, config) {
 			var self = this;
 			self.UserID = ko.observable();
 			self.sessionID = ko.observable();
+			self.isCurrent = ko.observable();
 			self.customerTypeId = ko.observable();
 			self.customerMasterFileId = ko.observable();
 			self.dealerId = ko.observable();

@@ -140,6 +140,14 @@ define('model.mapper',
 					item.isBrief(false);
 					return item;
 				}
+			},
+			user = {
+				getDtoId: function (dto) { return dto.CustomerID },
+				fromDto: function (dto) {
+					item = item || new model.User().UserID(dto.CustomerID);
+					item.sessionID(dto.SessionID);
+					item.isCurrent(dto.IsCurrent);
+				}
 			};
 
 		/** Return object. */
