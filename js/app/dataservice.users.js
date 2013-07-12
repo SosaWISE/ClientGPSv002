@@ -12,7 +12,7 @@ function (amplify, config) {
 	/** START Initialize object. */
 		_init = function () {
 
-			amplify.request.define('users-getData', 'ajax', config.AjaxProps('Users/Read'));
+			amplify.request.define('users-getData', 'ajax', config.AjaxProps('AuthSrv/UsersRead'));
 	};
 	/**   END Initialize object. */
 

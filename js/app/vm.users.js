@@ -22,6 +22,7 @@ function (_, config, messenger, utils, ko, amplify, datacontext) {
 		_tmplModuleName = 'users.module.view',
 		editing = ko.observable(false),
 		editItem = ko.observable(null),
+		_users = ko.observableArray(),
 		/**   END Private Properties. */
 
 		/** START Private Methods. */
@@ -36,7 +37,7 @@ function (_, config, messenger, utils, ko, amplify, datacontext) {
 				_refresh(/*data*/);
 			});
 			amplify.subscribe('sessionAuthentication', function (/*data*/) {
-					_refresh(/*data*/);
+				_refresh(/*data*/);
 			});
 		},
 		startEdit = function(vm, evt) {
@@ -145,8 +146,30 @@ function (_, config, messenger, utils, ko, amplify, datacontext) {
 			};
 
 			/** Initialize view model. */
-			$.when()
-			.then();
+			$.when(datacontext.Users.getData(
+				{
+					results: data.users,
+					param: {}
+				}
+			))
+			.then(function (response) {
+				console.log(response);
+				_users.removeAll();
+
+				/** Initialize. */
+				_.each(data.users(), function (item) {
+					_users.push({
+						type: item.customerTypeUi(),
+						firstName: item.firstName(),
+						lastName: item.lastName(),
+						time: utils.DateLongFormat(item.lastLoginOn())
+					});
+				});
+
+				utils.InvokeFunctionIfExists(callback);
+			}, function (someArg) {
+					console.log("Error Retrieving Users: " + someArg);
+				});
 		};
 
 	/** Init object. */
@@ -162,9 +185,10 @@ function (_, config, messenger, utils, ko, amplify, datacontext) {
     ico: '&#128101;',
 		type: 'users',
 		name: 'Users',
-		list: list,
+		list: _users,
 		get Activate() { return _activate; },
 		get TmplName() { return _tmplName; },
-		get TmplModuleName() { return _tmplModuleName; }
+		get TmplModuleName() { return _tmplModuleName; },
+		get Users() { return _users; }
 	};
 });

@@ -192,7 +192,7 @@ function ($, _, ko, model, modelMapper, dataService, config, utils) {
 		_devices = new EntitySet(dataService.Devices.AcquireList, modelMapper.Device, dataService.Devices.Nullo),
 		_events = new EntitySet(dataService.Events.GetData, modelMapper.Event, dataService.Events.Nullo),
 		_geoFences = new EntitySet(dataService.GeoFences.GetData, modelMapper.GeoFence, dataService.GeoFences.Nullo),
-		_users = new EntitySet(dataService.Users.GetData, modelMapper.Users, dataService.Users.Nullo);
+		_users = new EntitySet(dataService.Users.GetData, modelMapper.User, dataService.Users.Nullo);
 
 	/** Extensions. */
 	_session.SessionStart = function () {

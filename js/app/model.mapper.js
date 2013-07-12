@@ -142,12 +142,13 @@ define('model.mapper',
 				}
 			},
 			user = {
-				getDtoId: function (dto) { return dto.CustomerID },
+				getDtoId: function (dto) { return dto.CustomerID; },
 				fromDto: function (dto, item) {
 					item = item || new model.User().UserID(dto.CustomerID);
 					item.sessionID(dto.SessionID);
 					item.isCurrent(dto.IsCurrent);
 					item.customerTypeId(dto.CustomerTypeId);
+					item.customerTypeUi(dto.CustomerTypeUi);
 					item.customerMasterFileId(dto.CustomerMasterFileId);
 					item.dealerId(dto.DealerId);
 					item.dealerName(dto.DealerName);
@@ -166,6 +167,7 @@ define('model.mapper',
 					item.dob(dto.DOB);
 					item.ssn(dto.SSN);
 					item.username(dto.Username);
+					item.lastLoginOn(dto.LastLoginOn);
 
 					item.dirtyFlag().reset();
 					item.isBrief(false);
@@ -179,6 +181,7 @@ define('model.mapper',
 			get Session() { return session; },
 			get Device() { return device; },
 			get Event() { return event; },
-			get GeoFence() { return geoFence; }
+			get GeoFence() { return geoFence; },
+			get User() { return user; }
 		};
 	});
