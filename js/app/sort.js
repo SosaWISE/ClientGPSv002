@@ -5,7 +5,7 @@
  * Time: 5:24 PM
  * To change this template use File | Settings | File Templates.
  */
-define('sort', [], function () {
+define([], function () {
 	var
 		_deviceSort = function() {};
 

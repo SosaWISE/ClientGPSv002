@@ -5,8 +5,7 @@
  * Time: 10:55 AM
  * To change this template use File | Settings | File Templates.
  */
-define('dataprimer',
-[
+define([
 //	'vm',
 	'jquery',
 	'ko',

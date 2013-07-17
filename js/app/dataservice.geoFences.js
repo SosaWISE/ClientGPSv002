@@ -5,8 +5,7 @@
  * Time: 3:56 PM
  * To change this template use File | Settings | File Templates.
  */
-define('dataservice.geoFences',
-['amplify', 'config', 'ko'],
+define(['amplify','config','ko'],
 function (amplify, config, ko) {
 	var
 		_init = function () {

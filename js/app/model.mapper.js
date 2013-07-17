@@ -5,8 +5,7 @@
  * Time: 5:44 PM
  * To change this template use File | Settings | File Templates.
  */
-define('model.mapper',
-	['model','utils'],
+define(['model','utils'],
 	function (model,utils) {
 		var
 			customer = {

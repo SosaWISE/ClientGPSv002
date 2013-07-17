@@ -8,30 +8,81 @@
 (function () {
 	/** Initialize. */
 	var root = this;
-	define3rdPartyModules();
-	loadPluginsAndBoot();
 
-	function define3rdPartyModules() {
-		/* These are already loaded via bundles.
-		* We define them and put them in the root object. */
-		define('jquery', [], function () { return root.jQuery; });
-		define('ko', [], function () { return root.ko; });  // Knockout
-		define('amplify', [], function () { return root.amplify; });  // Handler events, and also browser storage.
-		define('infuser', [], function () { return root.infuser; });  // Template loading
-		define('moment', [], function () { return root.moment; });  // Used for Date object
-		define('sammy', [], function () { return root.Sammy; }); // Allows us to uniquely assign a URL to parts of the app.
-		define('toastr', [], function () { return root.toastr; }); // Used for simple notification.
-		define('underscore', [], function () { return root._; }); // Allows for excellent data manipulation like linq in C#.
- 	}
 	function loadPluginsAndBoot() {
-		/* Plugins must be loaded after jQuery and Knockout,
-		 * since they depend on them.  */
-		requirejs([
-			'ko.bindingHandlers',
-			'ko.debug.helpers'
-		], boot);
- 	}
-	 function boot() {
-		 require(['bootstrapper'], function (bs) { bs.run(); });
-	 }
+		requirejs.config({
+			// by default load any module from this path
+			baseUrl: 'js/app',
+
+			// defines where each is located. does NOT load/require them
+			paths: {
+				jquery: '../lib/jquery-1.7.2',
+				ko: '../lib/knockout-2.2.1',
+				"knockout.activity": '../lib/knockout.activity',
+				"knockout.asyncCommand": '../lib/knockout.asyncCommand',
+				"knockout.dirtyFlag": '../lib/knockout.dirtyFlag',
+				"knockout.validation": '../lib/knockout.validation',
+				"koExternalTemplateEngine": '../lib/koExternalTemplateEngine',
+				amplify: '../lib/amplify.core', // Handler events, and also browser storage.
+				"amplify.request": '../lib/amplify.request',
+				"amplify.store": '../lib/amplify.store',
+				infuser: '../lib/infuser', // Template loading
+				moment: '../lib/moment', // Used for Date object
+				sammy: '../lib/sammy-0.7.1', // Allows us to uniquely assign a URL to parts of the app.
+				toastr: '../lib/toastr', // Used for simple notification.
+				underscore: '../lib/underscore', // Allows for excellent data manipulation like linq in C#.
+
+				trafficCop: '../lib/TrafficCop',
+				json2: '../lib/json2',
+				mockjson: '../lib/jquery.mockjson',
+			},
+
+			// defines global names(exports) and file dependencies (deps). does NOT load/require them
+			shim: {
+				amplify: { exports: 'amplify' },
+				infuser: { exports: 'infuser', deps: ['trafficCop','jquery'], },
+				underscore: { exports: '_' },
+				"knockout.activity": { deps: ['ko','jquery'], },
+				"knockout.asyncCommand": { deps: ['ko'], },
+				"knockout.dirtyFlag": { deps: ['ko'], },
+				"knockout.validation": { deps: ['ko'], },
+				"koExternalTemplateEngine": { deps: ['ko','infuser'], },
+				"amplify.request": { deps: ['amplify'], },
+				"amplify.store": { deps: ['amplify'], },
+			}
+		});
+		// load main libs
+		requirejs(['jquery','ko'],
+		function (jquery, ko) {
+			// manually set the global properties for plugins below
+			root.jQuery = jquery;
+			root.ko = ko;
+
+			/* Plugins must be loaded after jQuery and Knockout,
+			 * since they depend on them.  */
+			requirejs([
+				'ko.bindingHandlers',
+				'ko.debug.helpers',
+
+				'knockout.activity',
+				'knockout.asyncCommand',
+				'knockout.dirtyFlag',
+				'knockout.validation',
+				'koExternalTemplateEngine',
+
+				'amplify.request',
+				'amplify.store',
+
+				'json2',
+				'mockjson',
+			], boot);
+		});
+	}
+	function boot() {
+		require(['bootstrapper'], function (bs) {
+			bs.run();
+		});
+	}
+
+	loadPluginsAndBoot();
 })();

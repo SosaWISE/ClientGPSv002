@@ -5,8 +5,7 @@
  * Time: 12:19 PM
  * To change this template use File | Settings | File Templates.
  */
-define('vm.register',
-['messenger'],
+define(['messenger'],
 function (messenger) {
 	var
 		/** START Private Properties. */

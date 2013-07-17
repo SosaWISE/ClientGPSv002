@@ -5,8 +5,7 @@
  * Time: 5:15 PM
  * To change this template use File | Settings | File Templates.
  */
-define('vm.home',
-[
+define([
 	'underscore',
 	'config',
 	'messenger',

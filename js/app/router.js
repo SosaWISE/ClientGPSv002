@@ -5,8 +5,7 @@
  * Time: 12:29 PM
  * To change this template use File | Settings | File Templates.
  */
-define('router',
-['jquery', 'underscore', 'sammy', 'presenter', 'config', 'route-mediator', 'store'],
+define(['jquery', 'underscore', 'sammy', 'presenter', 'config', 'route-mediator', 'store'],
 function ($, _, Sammy, presenter, config, routeMediator, store) {
 	var
 		loginOptions,

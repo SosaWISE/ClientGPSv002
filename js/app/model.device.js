@@ -5,8 +5,7 @@
  * Time: 9:57 AM
  * To change this template use File | Settings | File Templates.
  */
-define('model.device',
-['ko'],
+define(['ko'],
 function (ko) {
 	/** Init. */
 	var

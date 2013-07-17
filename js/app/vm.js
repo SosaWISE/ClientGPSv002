@@ -5,8 +5,7 @@
  * Time: 11:23 AM
  * To change this template use File | Settings | File Templates.
  */
-define('vm',
-[
+define([
 	'vm.login',
 	'vm.register',
 	'vm.devices',

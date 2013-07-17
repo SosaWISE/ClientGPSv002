@@ -5,8 +5,7 @@
  * Time: 12:28 PM
  * To change this template use File | Settings | File Templates.
  */
-define('vm.devices-tab',
-['jquery','messenger','underscore','datacontext','ko','amplify'],
+define(['jquery','messenger','underscore','datacontext','ko','amplify'],
 function ($, messenger, _, datacontext, ko, amplify) {
 	var
 		/** START Private Properties. */

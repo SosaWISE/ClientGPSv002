@@ -5,8 +5,7 @@
  * Time: 2:22 PM
  * To change this template use File | Settings | File Templates.
  */
-define('dataservice.devices',
-['amplify', 'config', 'ko'],
+define(['amplify','config','ko'],
 function (amplify, config, ko) {
 	var
 	/** START Initialize object. */

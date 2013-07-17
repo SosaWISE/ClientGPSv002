@@ -5,8 +5,7 @@
  * Time: 10:17 AM
  * To change this template use File | Settings | File Templates.
  */
-define('messenger',
-['amplify', 'config'],
+define(['amplify', 'config'],
 function (amplify, config) {
 	var
 		priority = 1,

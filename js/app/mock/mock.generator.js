@@ -5,11 +5,12 @@
  * Time: 6:46 PM
  * To change this template use File | Settings | File Templates.
  */
-define('mock/mock.generator',
-['jquery', 'moment', 'config'],
-function ($, moment, config) {
+define(['jquery','moment'],
+function ($, moment) {
 	var
-		init = function () {
+		config,
+		init = function (conf) {
+			config = conf;
 			$.mockJSON.random = true;
 			$.mockJSON.log = false;
 			$.mockJSON.data.GENDER = ['F', 'M'];
@@ -18,8 +19,8 @@ function ($, moment, config) {
 		},
 
 		_sessionTerminate = function () {
-	        var data = $.mockJSON.generateFromTemplate({
-	        });
+			var data = $.mockJSON.generateFromTemplate({
+			});
 
 			/** Return data object. */
 			return data;
@@ -56,10 +57,9 @@ function ($, moment, config) {
 		return data;
 	};
 
-	/** Init function. */
-	init();
 	/** Return object. */
 	return {
+		init: init,
 		model: {
 			get SessionStart() { return _sessionStart; },
 			get SessionTerminate() { return _sessionTerminate; },

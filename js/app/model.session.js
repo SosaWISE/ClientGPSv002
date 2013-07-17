@@ -5,8 +5,7 @@
  * Time: 9:39 AM
  * To change this template use File | Settings | File Templates.
  */
-define('model.session',
-['ko'],
+define(['ko'],
 function (ko) {
 	/** Define the object. */
 	var

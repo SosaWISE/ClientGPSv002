@@ -5,8 +5,7 @@
  * Time: 6:14 PM
  * To change this template use File | Settings | File Templates.
  */
-define('mock/mock',
-[
+define([
 	'mock/mock.generator',
 	'mock/mock.dataservice.session',
 	'mock/mock.dataservice.customer'
@@ -16,12 +15,15 @@ function (generator, session, customer) {
 		model = generator. model,
 
 		_dataServiceInit = function () {
-			session.defineApi(model);
-			customer.defineApi(model);
+			session.DefineApi(model);
+			customer.DefineApi(model);
 		};
 
 	/** Return object. */
 	return {
-		get DataServiceInit() { return _dataServiceInit }
+		init: function (config) {
+			generator.init(config);
+		},
+		get DataServiceInit() { return _dataServiceInit; }
 	};
 });

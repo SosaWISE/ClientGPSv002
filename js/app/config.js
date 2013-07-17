@@ -6,11 +6,11 @@
  * @description This file contains the configuration settings for this SPA.
  *
  /********************************************************************************************************************/
-define('config',
-	['toastr', 'mock/mock', 'infuser', 'ko'],
+define(['toastr','mock/mock','infuser','ko'],
 	function (toastr, mock, infuser, ko) {
 		/** Initialize Constructor. */
 		var
+			config,
 			_servicesDomain     = "//sse.services.cors/",
 			_applicationToken   = "SSE_MAIN_PORTAL",
 			_applicationVersion = "1.0.0",
@@ -97,6 +97,7 @@ define('config',
 
 			_initFx = function () {
 				if (_useMocks) {
+					mock.init(config);
 					_dataServiceInit = mock.DataServiceInit;
 				}
 				_dataServiceInit();
@@ -124,11 +125,8 @@ define('config',
 				return props;
 			};
 
-		/** Initialize. */
-		_initFx();
 
-		/** Return object. */
-		return {
+		config = {
 			get ServicesDomain() { return _servicesDomain; },
 			get ApplicationToken() { return _applicationToken; },
 			get ApplicationVersion() { return _applicationVersion; },
@@ -147,4 +145,8 @@ define('config',
 			get ViewIds() { return _viewIds; },
 			get AjaxProps() { return _ajaxProps; }
 		};
+		/** Initialize. */
+		_initFx();
+		/** Return object. */
+		return config;
 	});

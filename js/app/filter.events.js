@@ -5,8 +5,7 @@
  * Time: 10:17 AM
  * To change this template use File | Settings | File Templates.
  */
-define('filter.events',
-	['ko'],
+define(['ko'],
 	function (ko) {
 		var EventFilter = function () {
 			var self = this;

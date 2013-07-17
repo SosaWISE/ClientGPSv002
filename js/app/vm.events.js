@@ -5,8 +5,7 @@
  * Time: 12:36 PM
  * To change this template use File | Settings | File Templates.
  */
-define('vm.events',
-	['messenger','underscore','datacontext','ko','amplify','utils'],
+define(['messenger','underscore','datacontext','ko','amplify','utils'],
 	function (messenger, _, datacontext, ko, amplify, utils) {
 		var
 			/** START Private Properties. */

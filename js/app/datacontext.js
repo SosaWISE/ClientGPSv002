@@ -5,8 +5,7 @@
  * Time: 9:39 AM
  * To change this template use File | Settings | File Templates.
  */
-define('datacontext',
-['jquery', 'underscore', 'ko', 'model', 'model.mapper', 'dataservice', 'config', 'utils'],
+define(['jquery','underscore','ko','model','model.mapper','dataservice','config','utils'],
 function ($, _, ko, model, modelMapper, dataService, config, utils) {
 	var logger = config.Logger,
 		/**
@@ -14,7 +13,7 @@ function ($, _, ko, model, modelMapper, dataService, config, utils) {
 		 */
 		itemsToArray = function (items, observableArray, filter, sortFunction) {
 			/** Init. */
-			if (!observableArray) return;
+			if (!observableArray) { return; }
 
 			// Create an array from the memo object
 			var underlyingArray = utils.MapMemoToArray(items);

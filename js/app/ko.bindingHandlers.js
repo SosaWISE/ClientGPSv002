@@ -1,5 +1,4 @@
-﻿define('ko.bindingHandlers',
-['jquery', 'ko'],
+﻿define(['jquery', 'ko'],
 function ($, ko) {
     var unwrap = ko.utils.unwrapObservable;
 

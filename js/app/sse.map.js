@@ -5,8 +5,7 @@
  * Time: 12:48 PM
  * To change this template use File | Settings | File Templates.
  */
-define('sse.map',
-['config'],
+define(['config'],
 function (config) {
 	var
 	/** START Private Properties. */

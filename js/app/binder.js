@@ -5,8 +5,7 @@
  * Time: 10:29 AM
  * To change this template use File | Settings | File Templates.
  */
-define('binder',
-['jquery','ko','config','vm'],
+define(['jquery','ko','config','vm'],
 function ($, ko, config, vm) {
 	var
 		// ids = config.ViewIds,

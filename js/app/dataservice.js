@@ -5,8 +5,7 @@
  * Time: 6:03 PM
  * To change this template use File | Settings | File Templates.
  */
-define("dataservice",
-[
+define([
 	'dataservice.session',
 	'dataservice.customer',
 	'dataservice.devices',

@@ -5,8 +5,7 @@
  * Time: 11:45 AM
  * To change this template use File | Settings | File Templates.
  */
-define('presenter',
-['jquery'],
+define(['jquery'],
 function ($) {
 	var
 		_transitionOptions = {

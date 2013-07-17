@@ -5,8 +5,7 @@
  * Time: 12:45 PM
  * To change this template use File | Settings | File Templates.
  */
-define('route-mediator',
-['messenger', 'config'],
+define(['messenger', 'config'],
 function (messenger, config) {
 	var
 		canLeaveCallback,

@@ -5,8 +5,7 @@
  * Time: 9:48 AM
  * To change this template use File | Settings | File Templates.
  */
-define('model.event',
-['ko'],
+define(['ko'],
 function (ko) {
 	/** Init. */
 	var

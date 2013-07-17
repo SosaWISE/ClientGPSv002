@@ -5,8 +5,7 @@
  * Time: 12:32 PM
  * To change this template use File | Settings | File Templates.
  */
-define('store',
-['jquery', 'amplify', 'config'],
+define(['jquery', 'amplify', 'config'],
 function ($, amplify, config) {
 	var
 		expires = { expires: config.StoreExpirationMs },

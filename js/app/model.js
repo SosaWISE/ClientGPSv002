@@ -5,15 +5,14 @@
  * Time: 5:35 PM
  * To change this template use File | Settings | File Templates.
  */
-define('model',
-	[
-		'model.customer',
-		'model.session',
-		'model.event',
-		'model.device',
-		'model.geoFence',
-		'model.user'
-	],
+define([
+	'model.customer',
+	'model.session',
+	'model.event',
+	'model.device',
+	'model.geoFence',
+	'model.user'
+],
 	function (customer, session, event, device, geoFence, user) {
 		var
 			model = {

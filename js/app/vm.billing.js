@@ -5,8 +5,7 @@
  * Time: 9:43 AM
  * To change this template use File | Settings | File Templates.
  */
-define('vm.billing',
-[
+define([
 	'config',
 	'messenger'
 ],

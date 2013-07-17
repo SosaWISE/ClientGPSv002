@@ -5,8 +5,7 @@
  * Time: 12:31 PM
  * To change this template use File | Settings | File Templates.
  */
-define('vm.users',
-[
+define([
 	'underscore',
 	'config',
 	'messenger',

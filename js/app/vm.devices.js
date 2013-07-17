@@ -5,8 +5,7 @@
  * Time: 12:28 PM
  * To change this template use File | Settings | File Templates.
  */
-define('vm.devices',
-[
+define([
 	'config',
 	'messenger',
 	'vm.events',

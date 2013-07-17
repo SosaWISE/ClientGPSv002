@@ -5,8 +5,7 @@
  * Time: 10:07 AM
  * To change this template use File | Settings | File Templates.
  */
-define('vm.login',
-['ko', 'messenger', 'model.userAuthInfo', 'datacontext', 'router', /*'dataprimer',*/'amplify'],
+define(['ko', 'messenger', 'model.userAuthInfo', 'datacontext', 'router', /*'dataprimer',*/'amplify'],
 function (ko, messenger, userAuthInfo, datacontext, router, /*dataprimer, */amplify) {
 	var
 		/** START Private Properties. */

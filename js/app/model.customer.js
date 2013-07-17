@@ -5,8 +5,7 @@
  * Time: 4:04 PM
  * To change this template use File | Settings | File Templates.
  */
-define('model.customer',
-	['ko', 'config'],
+define(['ko', 'config'],
 	function (ko, config) {
 		/** Init */
 		var

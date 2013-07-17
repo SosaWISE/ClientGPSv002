@@ -5,8 +5,7 @@
  * Time: 9:58 AM
  * To change this template use File | Settings | File Templates.
  */
-define('utils',
-	['underscore', 'moment'],
+define(['underscore', 'moment'],
 	function(_, moment) {
 		/** Initialize. */
 		var

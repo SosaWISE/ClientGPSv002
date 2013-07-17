@@ -5,8 +5,7 @@
  * Time: 11:15 AM
  * To change this template use File | Settings | File Templates.
  */
-define('route-config',
-['config', 'router', 'vm'],
+define(['config', 'router', 'vm'],
 function (config, router, vm) {
 	var
 		logger = config.Logger,

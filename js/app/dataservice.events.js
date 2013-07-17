@@ -5,8 +5,7 @@
  * Time: 10:17 PM
  * To change this template use File | Settings | File Templates.
  */
-define('dataservice.events',
-['amplify','config','ko'],
+define(['amplify','config','ko'],
 function (amplify, config, ko) {
 	var
 	/** START Initialize object. */

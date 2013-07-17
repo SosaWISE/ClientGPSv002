@@ -5,8 +5,7 @@
  * Time: 9:54 AM
  * To change this template use File | Settings | File Templates.
  */
-define('model.geoFence',
-['ko'],
+define(['ko'],
 function (ko) {
 	/** Define Model. */
 	var GeoFence = function () {

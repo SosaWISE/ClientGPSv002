@@ -5,8 +5,7 @@
  * Time: 10:40 AM
  * To change this template use File | Settings | File Templates.
  */
-define('mock/mock.dataservice.session',
-['amplify'],
+define(['amplify'],
 function (amplify) {
 	var _defineApi = function (model) {
 
