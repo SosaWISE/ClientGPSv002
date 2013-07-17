@@ -34,6 +34,17 @@ function (amplify, config) {
 					withCredentials: true
 				}
 			});
+
+			amplify.request.define('customer-signUp', 'ajax', {
+				url: config.ServicesDomain + 'AuthSrv/CustomerSignUp',
+				dataType: 'json',
+				type: 'POST',
+				contentType: 'application/json; charset=utf-8',
+				crossDomain: true,
+				xhrFields: {
+					withCredentials: true
+				}
+			});
 		},
 
 		/** START Public Methods. */
@@ -53,6 +64,15 @@ function (amplify, config) {
 				success: callbacks.success,
 				error: callbacks.error
 			});
+		},
+
+		customerSignUp = function (callbacks, data) {
+			return amplify.request({
+				resourceId: 'customer-signUp',
+				data: data,
+				success: callbacks.success,
+				error: callbacks.error
+			});
 		};
 	/**   END Public Methods. */
 
@@ -63,7 +83,8 @@ function (amplify, config) {
 		/** Return object. */
 	return {
 		get CustomerAuth() { return customerAuth; },
-		get CustomerUpdate() { return customerUpdate; }
+		get CustomerUpdate() { return customerUpdate; },
+		get CustomerSignUp() { return customerSignUp; }
 	};
 
 });
