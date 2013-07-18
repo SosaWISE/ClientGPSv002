@@ -17,6 +17,13 @@
 
   "predef": [
     "requirejs",
-    "define"
+    "define",
+
+    "jasmine",
+    "describe",
+    "before",
+    "after",
+    "it",
+    "expect"
   ]
 }
