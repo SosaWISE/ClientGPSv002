@@ -5,8 +5,10 @@
  * Time: 12:28 PM
  * To change this template use File | Settings | File Templates.
  */
-define(['jquery','messenger','underscore','datacontext','ko','amplify'],
-function ($, messenger, _, datacontext, ko, amplify) {
+define(['jquery','messenger','underscore','datacontext','ko','amplify','vm.device-editor',],
+function ($, messenger, _, datacontext, ko, amplify, deviceEditorVM) {
+// wrap in create function in order to create multiple instances
+return (function create() {
 	var
 		/** START Private Properties. */
 		editing = ko.observable(false),
@@ -16,13 +18,13 @@ function ($, messenger, _, datacontext, ko, amplify) {
 		/**   END Private Properties. */
 
 		/** START Private Methods. */
-			_activate = function (routeData, callback) {
+		_activate = function (routeData, callback) {
 			messenger.publish.viewModelActivated();
-			if (callback) callback();
+			if (callback) { callback(); }
 		},
 		/**   END Private Methods. */
 
-			init = function () {
+		init = function () {
 			_list(list);
 			amplify.subscribe('customerAuthentication', function (data) {
 				console.log(data);
@@ -33,7 +35,7 @@ function ($, messenger, _, datacontext, ko, amplify) {
 				_refresh();
 			});
 		},
-			_refresh = function () {
+		_refresh = function () {
 			/** Init. */
 			var data = {
 				devices: ko.observableArray()
@@ -63,17 +65,18 @@ function ($, messenger, _, datacontext, ko, amplify) {
 						time: item.time()
 					});
 				});
-				}, function (someArg) {
+			}, function (someArg) {
 					alert('SomeArg:' + someArg);
 			});
 			//_list(list);
 		},
 		startEdit = function(vm/*, evt*/) {
-			alert("Yeah baby.  I'm here!!!  Yeah!!!!!");
-			editItem(vm);
+			deviceEditorVM.start(vm);
+			editItem(deviceEditorVM);
 			editing(true);
 		},
 		cancelEdit = function(/*vm, evt*/) {
+			// deviceEditorVM.stop();
 			editing(false);
 		},
 		_addDevice = function() {
@@ -138,13 +141,15 @@ function ($, messenger, _, datacontext, ko, amplify) {
 	/** Return object. */
 	//noinspection JSUnusedGlobalSymbols
 	return {
+		create: create,
+		deviceEditorVM: deviceEditorVM,
 		TmplName: 'devices-tab.view',
 		canEdit: ko.observable(true),
 		editing: editing,
 		editItem: editItem,
 		startEdit: startEdit,
 		cancelEdit: cancelEdit,
-		get refresh() { return _refresh },
+		get refresh() { return _refresh; },
 		get addDevice() { return _addDevice; },
 		type: 'devices',
 		name: 'Devices',
@@ -152,4 +157,5 @@ function ($, messenger, _, datacontext, ko, amplify) {
 		active: ko.observable(false),
 		get Activate() { return _activate; }
 	};
+})();
 });

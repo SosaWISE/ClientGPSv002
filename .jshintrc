@@ -19,10 +19,12 @@
     "requirejs",
     "define",
 
+    "alert",
+
     "jasmine",
     "describe",
-    "before",
-    "after",
+    "beforeEach",
+    "afterEach",
     "it",
     "expect"
   ]
