@@ -99,9 +99,8 @@ define(['model','utils'],
 					item.Username(dto.Username);
 
 					item.type(dto.UIName);
-					item.title(dto.AccountName);
-					if (dto.EventDate) item.time(utils.DateLongFormat(dto.EventDate));
-					else item.time('[No Event]');
+					if (dto.EventDate) { item.time(utils.DateLongFormat(dto.EventDate)); }
+					else { item.time('[No Event]'); }
 
 					item.dirtyFlag().reset();
 					item.isBrief(false);

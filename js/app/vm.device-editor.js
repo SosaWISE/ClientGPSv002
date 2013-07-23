@@ -10,20 +10,35 @@ function (messenger, datacontext, ko) {
 	var
 		/** START Private Properties. */
 		model = ko.observable(null),
-		focusTitle = ko.observable(false),
+		focusName = ko.observable(false),
+		editing = ko.observable(false),
+		resetHack = null,
 
 		/**   END Private Properties. */
 
 		start = function (deviceModel) {
+			resetHack = deviceModel.DeviceName();
 			model(deviceModel);
-			focusTitle(true);
+			focusName(true);
+			editing(true);
+		},
+		stop = function (cancel) {
+			if (cancel) {
+				//@TODO: reset all changes on model
+				model().DeviceName(resetHack);
+			}
+			//model(null); // messes with view model
+			//focusName(false); // it should've already lost focus
+			editing(false);
 		};
 
 	/** Return object. */
 	//noinspection JSUnusedGlobalSymbols
 	return {
 		model: model,
-		focusTitle: focusTitle,
+		focusName: focusName,
+		editing: editing,
 		start: start,
+		stop: stop,
 	};
 });

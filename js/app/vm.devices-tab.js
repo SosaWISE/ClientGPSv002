@@ -5,14 +5,13 @@
  * Time: 12:28 PM
  * To change this template use File | Settings | File Templates.
  */
-define(['jquery','messenger','underscore','datacontext','ko','amplify','vm.device-editor',],
-function ($, messenger, _, datacontext, ko, amplify, deviceEditorVM) {
+define(['jquery','messenger','underscore','datacontext','ko','amplify','vm.device-editor','model.mapper'],
+function ($, messenger, _, datacontext, ko, amplify, deviceEditorVM, modelMapper) {
 // wrap in create function in order to create multiple instances
 return (function create() {
 	var
 		/** START Private Properties. */
-		editing = ko.observable(false),
-		editItem = ko.observable(null),
+		saving = ko.observable(false),
 		_list = ko.observableArray(),
 
 		/**   END Private Properties. */
@@ -36,17 +35,12 @@ return (function create() {
 			});
 		},
 		_refresh = function () {
-			/** Init. */
-			var data = {
-				devices: ko.observableArray()
-			};
-
+			_list.destroyAll();
 			/** Initialize view model. */
 			$.when(
 				datacontext.Devices.getData(
 					{
-						results: data.devices,
-//						results: _list,
+						results: _list,
 						param: {
 							UniqueID: datacontext.Customer.model.customerMasterFileId()
 						}
@@ -54,30 +48,28 @@ return (function create() {
 				)
 			)
 			.then(function (response) {
-				/** Init. */
 				console.log(response);
-
-				_list.destroyAll();
-				_.each(data.devices(), function (item) {
-					_list.push({
-						type: item.type(),
-						title: item.title(),
-						time: item.time()
-					});
-				});
 			}, function (someArg) {
 					alert('SomeArg:' + someArg);
 			});
-			//_list(list);
 		},
-		startEdit = function(vm/*, evt*/) {
-			deviceEditorVM.start(vm);
-			editItem(deviceEditorVM);
-			editing(true);
+		startEdit = function(model) {
+			deviceEditorVM.start(model);
 		},
-		cancelEdit = function(/*vm, evt*/) {
-			// deviceEditorVM.stop();
-			editing(false);
+		cancelEdit = function() {
+			deviceEditorVM.stop(true);
+		},
+		saveEdit = function() {
+			deviceEditorVM.stop(false);
+			saving(true);
+			datacontext.Devices.updateData(deviceEditorVM.model(), {
+				success: function () {
+					saving(false);
+				},
+				error: function () {
+					saving(false);
+				}
+			});
 		},
 		_addDevice = function() {
 			alert("What up");
@@ -89,51 +81,53 @@ return (function create() {
 		},
 		list = [
 			{
-				type: 'watch ME DUDE',
-				title: 'Austin\'s Watch',
-				time: 'April 23, 2013 at 12:42pm'
+				UIName: 'watch ME DUDE',
+				AccountName: 'Austin\'s Watch',
+				EventDate: 'April 23, 2013 at 12:42pm',
 			},
 			{
-				type: 'watch',
-				title: 'Tyler\'s Watch',
-				time: 'April 23, 2013 at 12:42pm'
+				UIName: 'watch',
+				AccountName: 'Tyler\'s Watch',
+				EventDate: 'April 23, 2013 at 12:42pm',
 			},
 			{
-				type: 'watch',
-				title: 'Ethan\'s Watch',
-				time: 'April 23, 2013 at 12:42pm'
+				UIName: 'watch',
+				AccountName: 'Ethan\'s Watch',
+				EventDate: 'April 23, 2013 at 12:42pm',
 			},
 			{
-				type: 'child',
-				title: 'Zak\'s Child Tracker',
-				time: 'April 23, 2013 at 12:42pm'
+				UIName: 'child',
+				AccountName: 'Zak\'s Child Tracker',
+				EventDate: 'April 23, 2013 at 12:42pm',
 			},
 			{
-				type: 'phone',
-				title: 'Austin\'s Phone',
-				time: 'April 23, 2013 at 12:42pm'
+				UIName: 'phone',
+				AccountName: 'Austin\'s Phone',
+				EventDate: 'April 23, 2013 at 12:42pm',
 			},
 			{
-				type: 'home',
-				title: 'Our Home Alarm',
-				time: 'April 23, 2013 at 12:42pm'
+				UIName: 'home',
+				AccountName: 'Our Home Alarm',
+				EventDate: 'April 23, 2013 at 12:42pm',
 			},
 			{
-				type: 'watch',
-				title: 'Carolyn\'s Phone',
-				time: 'April 23, 2013 at 12:42pm'
+				UIName: 'watch',
+				AccountName: 'Carolyn\'s Phone',
+				EventDate: 'April 23, 2013 at 12:42pm',
 			},
 			{
-				type: 'phone',
-				title: 'Mark\'s Phone',
-				time: 'April 23, 2013 at 12:42pm'
+				UIName: 'phone',
+				AccountName: 'Mark\'s Phone',
+				EventDate: 'April 23, 2013 at 12:42pm',
 			},
 			{
-				type: 'car-nav',
-				title: 'Austin\'s Car GPS',
-				time: 'April 23, 2013 at 12:42pm'
+				UIName: 'car-nav',
+				AccountName: 'Austin\'s Car GPS',
+				EventDate: 'April 23, 2013 at 12:42pm',
 			}
-		];
+		].map(function (dto) {
+			return modelMapper.Device.fromDto(dto);
+		});
 
 	/** Init object. */
 	init();
@@ -145,10 +139,12 @@ return (function create() {
 		deviceEditorVM: deviceEditorVM,
 		TmplName: 'devices-tab.view',
 		canEdit: ko.observable(true),
-		editing: editing,
-		editItem: editItem,
+		editing: deviceEditorVM.editing,
+		editItem: ko.observable(deviceEditorVM),
+		saving: saving,
 		startEdit: startEdit,
 		cancelEdit: cancelEdit,
+		saveEdit: saveEdit,
 		get refresh() { return _refresh; },
 		get addDevice() { return _addDevice; },
 		type: 'devices',

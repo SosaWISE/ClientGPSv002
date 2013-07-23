@@ -6,6 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 define([
+	'jquery',
 	'underscore',
 	'config',
 	'messenger',
@@ -14,13 +15,13 @@ define([
 	'amplify',
 	'datacontext'
 ],
-function (_, config, messenger, utils, ko, amplify, datacontext) {
+function ($, _, config, messenger, utils, ko, amplify, datacontext) {
 	var
 		_tmplName = 'home.view',
 		_tmplModuleName = 'home.module.view',
 		_activate = function (routeData, callback) {
 			messenger.publish.viewModelActivated({canleaveCallback: canLeave});
-			if (callback) callback();
+			if (callback) { callback(); }
 		},
 		canLeave = function () {
 			return true;
@@ -99,7 +100,7 @@ function (_, config, messenger, utils, ko, amplify, datacontext) {
 		]),
 		_refresh = function (callback) {
 			/** Init */
-			 var data = {
+			var data = {
 				devices: ko.observableArray(),
 				events: ko.observableArray()
 			};
@@ -136,22 +137,20 @@ function (_, config, messenger, utils, ko, amplify, datacontext) {
 				_devices.removeAll();
 				/** Initialize. */
 				_.each(data.devices(), function (item) {
-					_devices.push({
-						type: item.type(),
-						name: item.title(),
-						selectDeviceCmd: ko.asyncCommand({ execute: selectDeviceCmdExecute, canExecute: selectDeviceCmdCanExecute })
+					item.name = item.DeviceName;
+					item.selectDeviceCmd = ko.asyncCommand({
+						execute: selectDeviceCmdExecute,
+						canExecute: selectDeviceCmdCanExecute
 					});
 				});
 
 				_events.removeAll();
 				/** Bind events to main body. */
 				_.each(data.events(), function (item) {
-					_events.push({
-						type: item.EventTypeUi(),
-						title: item.EventShortDesc(),
-						time: utils.DateWithFormat(item.EventDate(),'MMMM Do, YYYY @ hh:mm:ss a'),
-						actions: ''
-					});
+					item.type = item.EventTypeUi;
+					item.title = item.EventShortDesc;
+					item.time = utils.DateWithFormat(item.EventDate(),'MMMM Do, YYYY @ hh:mm:ss a');
+					item.actions = '';
 				});
 
 				utils.InvokeFunctionIfExists(callback);

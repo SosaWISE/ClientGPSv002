@@ -26,6 +26,8 @@
     "beforeEach",
     "afterEach",
     "it",
-    "expect"
+    "expect",
+    "spyOn",
+    "waitsFor"
   ]
 }
