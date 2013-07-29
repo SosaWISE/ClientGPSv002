@@ -5,24 +5,25 @@
  * Time: 12:27 PM
  * To change this template use File | Settings | File Templates.
  */
-define(['messenger','underscore','datacontext','ko','amplify'/*,'utils'*/],
-function (messenger, _, datacontext, ko, amplify/*, utils*/) {
+define(['jquery','messenger','underscore','datacontext','ko','amplify','gmaps'],
+function ($, messenger, _, datacontext, ko, amplify, gmaps) {
 	var
 		/** START Private Properties. */
 		editing = ko.observable(false),
 		editItem = ko.observable(null),
 		_list = ko.observableArray(),
+		_devices,
 		/**   END Private Properties. */
 
 		/** START Private Methods. */
-			_activate = function (routeData, callback) {
+		_activate = function (routeData, callback) {
 			messenger.publish.viewModelActivated();
-			if (callback) callback();
+			if (callback) { callback(); }
 		},
 		/**   END Private Methods. */
 
-			init = function () {
-			/** Initialize view model. */
+		init = function (devices) {
+			_devices = devices;
 			_list(list);
 
 			/** Bind amplify events to vm. */
@@ -34,42 +35,42 @@ function (messenger, _, datacontext, ko, amplify/*, utils*/) {
 				console.log(data);
 				refresh();
 			});
+
+			refresh();
 		},
 		refresh = function () {
 			/** Init. */
-			var data = {
-				geoFences: ko.observableArray()
-			};
+			var geoFences = ko.observableArray();
 
 			/** Load Data. */
-			$.when(datacontext.GeoFences.getData(
-				{
-					results: data.geoFences,
-					param: {
-						CMFID: datacontext.Customer.model.customerMasterFileId()
-					}
+			$.when(datacontext.GeoFences.getData({
+				results: geoFences,
+				param: {
+					CMFID: datacontext.Customer.model.customerMasterFileId()
 				}
-			))
-			.then(function (response) {
-					/** Init. */
-					console.log("Made it here", response);
+			})).then(
+			function () {
+				// remove existing from the map
+				_devices.fmap.removePolygonsByOwnerId('geofences');
+				/** Clear the list. */
+				_list.destroyAll();
 
-					/** Clear the list. */
-					_list.destroyAll();
-
-					/** Build new list. */
-					_.each(data.geoFences(), function(item) {
-						_list.push({
-							type: item.Type(),
-							title: item.GeoFenceNameUi(),
-							time: item.ModifiedOn()
-						});
+				/** Build new list. */
+				_.each(geoFences(), function(item) {
+					// add to map
+					_devices.fmap.addGSRectangle('geofences', {
+						MinLattitude: item.MinLattitude(),
+						MinLongitude: item.MinLongitude(),
+						MaxLattitude: item.MaxLattitude(),
+						MaxLongitude: item.MaxLongitude(),
 					});
-
-				}, function (someArg) {
-					alert('Retrieving Geo Fences has an error with SomeArg:' + someArg);
-				}
-			);
+					// add to list
+					_list.push(item);
+				});
+			},
+			function (someArg) {
+				alert('Retrieving Geo Fences has an error with SomeArg:' + someArg);
+			});
 		},
 		startEdit = function(vm, evt) {
 			console.log(vm, evt);
@@ -82,95 +83,97 @@ function (messenger, _, datacontext, ko, amplify/*, utils*/) {
 
 			editing(false);
 		},
+		selectItem = function (vm) {
+			_devices.fmap.setCenter(new gmaps.LatLng(vm.MeanLattitude(), vm.MeanLongitude()));
+		},
 		list = [
 			{
-				type: 'fence',
-				title: 'Our House',
-				time: 'April 23, 2013 at 12:42pm'
+				Type: 'fence',
+				GeoFenceNameUi: 'Our House',
+				ModifiedOn: 'April 23, 2013 at 12:42pm'
 			},
 			{
-				type: 'fence',
-				title: 'Tyler\'s House',
-				time: 'April 23, 2013 at 12:42pm'
+				Type: 'fence',
+				GeoFenceNameUi: 'Tyler\'s House',
+				ModifiedOn: 'April 23, 2013 at 12:42pm'
 			},
 			{
-				type: 'fence',
-				title: 'Ethan\'s Apartment',
-				time: 'April 23, 2013 at 12:42pm'
+				Type: 'fence',
+				GeoFenceNameUi: 'Ethan\'s Apartment',
+				ModifiedOn: 'April 23, 2013 at 12:42pm'
 			},
 			{
-				type: 'fence',
-				title: 'Mark\'s House',
-				time: 'April 23, 2013 at 12:42pm'
+				Type: 'fence',
+				GeoFenceNameUi: 'Mark\'s House',
+				ModifiedOn: 'April 23, 2013 at 12:42pm'
 			},
 			{
-				type: 'fence',
-				title: 'Carolyn\'s House',
-				time: 'April 23, 2013 at 12:42pm'
+				Type: 'fence',
+				GeoFenceNameUi: 'Carolyn\'s House',
+				ModifiedOn: 'April 23, 2013 at 12:42pm'
 			},
 			{
-				type: 'fence',
-				title: 'Church',
-				time: 'April 23, 2013 at 12:42pm'
+				Type: 'fence',
+				GeoFenceNameUi: 'Church',
+				ModifiedOn: 'April 23, 2013 at 12:42pm'
 			},
 			{
-				type: 'fence',
-				title: 'Our Neighborhood',
-				time: 'April 23, 2013 at 12:42pm'
+				Type: 'fence',
+				GeoFenceNameUi: 'Our Neighborhood',
+				ModifiedOn: 'April 23, 2013 at 12:42pm'
 			},
 			{
-				type: 'fence',
-				title: 'Orem, UT',
-				time: 'April 23, 2013 at 12:42pm'
+				Type: 'fence',
+				GeoFenceNameUi: 'Orem, UT',
+				ModifiedOn: 'April 23, 2013 at 12:42pm'
 			},
 			{
-				type: 'fence',
-				title: 'Utah, USA',
-				time: 'April 23, 2013 at 12:42pm'
+				Type: 'fence',
+				GeoFenceNameUi: 'Utah, USA',
+				ModifiedOn: 'April 23, 2013 at 12:42pm'
 			},
 			{
-				type: 'fence',
-				title: 'Carolyn\'s Neighborhood',
-				time: 'April 23, 2013 at 12:42pm'
+				Type: 'fence',
+				GeoFenceNameUi: 'Carolyn\'s Neighborhood',
+				ModifiedOn: 'April 23, 2013 at 12:42pm'
 			},
 			{
-				type: 'fence',
-				title: 'Our Ward Boundries',
-				time: 'April 23, 2013 at 12:42pm'
+				Type: 'fence',
+				GeoFenceNameUi: 'Our Ward Boundries',
+				ModifiedOn: 'April 23, 2013 at 12:42pm'
 			},
 			{
-				type: 'fence',
-				title: 'Our Stake Boundries',
-				time: 'April 23, 2013 at 12:42pm'
+				Type: 'fence',
+				GeoFenceNameUi: 'Our Stake Boundries',
+				ModifiedOn: 'April 23, 2013 at 12:42pm'
 			},
 			{
-				type: 'fence',
-				title: 'Utah Lake',
-				time: 'April 23, 2013 at 12:42pm'
+				Type: 'fence',
+				GeoFenceNameUi: 'Utah Lake',
+				ModifiedOn: 'April 23, 2013 at 12:42pm'
 			},
 			{
-				type: 'fence',
-				title: 'Texas, USA',
-				time: 'April 23, 2013 at 12:42pm'
+				Type: 'fence',
+				GeoFenceNameUi: 'Texas, USA',
+				ModifiedOn: 'April 23, 2013 at 12:42pm'
 			},
 			{
-				type: 'fence',
-				title: 'Houston, TX',
-				time: 'April 23, 2013 at 12:42pm'
+				Type: 'fence',
+				GeoFenceNameUi: 'Houston, TX',
+				ModifiedOn: 'April 23, 2013 at 12:42pm'
 			}
 		];
 
-	/** Init object. */
-	init();
-
 	/** Return object. */
 	return {
+		init: init,
 		TmplName: 'geofences.view',
 		canEdit: ko.observable(true),
 		editing: editing,
 		editItem: editItem,
 		startEdit: startEdit,
 		cancelEdit: cancelEdit,
+		selectItem: selectItem,
 		type: 'geofences',
 		name: 'Geofences',
 		list: _list,

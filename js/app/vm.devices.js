@@ -8,12 +8,16 @@
 define([
 	'config',
 	'messenger',
+	'ko',
 	'vm.events',
 	'vm.devices-tab',
-	'vm.geoFences'
+	'vm.geoFences',
+	'flowMap/index',
+	'gmaps',
 ],
-function (config, messenger, events, devices, geofences) {
+function (config, messenger, ko, events, devices, geofences, flowMap, gmaps) {
 	var
+		self,
 		/** START Private Properties. */
 		_tmplName =  'devices.view',
 		_tmplModuleName =  'devices.module.view',
@@ -25,9 +29,38 @@ function (config, messenger, events, devices, geofences) {
 		_activate = function (routeData, callback) {
 			messenger.publish.viewModelActivated();
 
-			/** Show map. */
+			// first time
+			if (!self.fmap) {
+				/** Show map. */
+				setTimeout(function () {
+					self.fmap = new flowMap.Map(document.getElementById("devices-map"), {
+						//@TODO: dynamically set initial center and zoom
+						center: new gmaps.LatLng(40.323110654354856, -111.68210183710936),
+						zoom: 14,
 
-			if (callback) callback();
+						mapTypeId: gmaps.MapTypeId.ROADMAP,
+						zoomControl: true,
+						//zoomControlOptions: { style: gmaps.ZoomControlStyle.SMALL },
+						scaleControl: true,
+						mapTypeControl: true,
+						disableDefaultUI: true,
+					});
+					// self.fmap.clear();
+					// self.fmap.endEdit();
+					// self.fmap.beginEdit();
+
+					// initialize all group view models
+					groups.forEach(function(vm) {
+						vm.init(self);
+					});
+
+					// activate events tab
+					activateGroup(events);
+
+
+					if (callback) { callback(); }
+				}, 200);
+			}
 		},
 		/**   END Private Methods. */
 
@@ -65,13 +98,12 @@ function (config, messenger, events, devices, geofences) {
 		editing(vm.editing());
 		editItem(vm.editItem());
 	}
-	activateGroup(events);
 
 	/** Init object. */
 	init();
 
 	/** Return object. */
-	return {
+	self = {
 		editing: editing,
 		editItem: editItem,
 		hash: config.Hashes.devices,
@@ -85,4 +117,5 @@ function (config, messenger, events, devices, geofences) {
 		activateGroup: activateGroup,
 		get Activate() { return _activate; }
 	};
+	return self;
 });

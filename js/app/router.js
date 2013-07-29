@@ -9,8 +9,9 @@ define(['jquery', 'underscore', 'sammy', 'presenter', 'config', 'route-mediator'
 function ($, _, Sammy, presenter, config, routeMediator, store) {
 	var
 		loginOptions,
-		lastRoutOptions,
+		destRoute = '',
 		currentHash = '',
+		defaultOptions,
 		defaultRoute = '',
 		isRedirecting = false,
 		logger = config.Logger,
@@ -80,6 +81,7 @@ function ($, _, Sammy, presenter, config, routeMediator, store) {
 			}
 
 			if (options.isDefault) {
+				defaultOptions = options;
 				defaultRoute = options.route;
 				setupGet(options, '/');
 			}
@@ -93,48 +95,51 @@ function ($, _, Sammy, presenter, config, routeMediator, store) {
 				loginOptions = options;
 			}
 			sammy.get(route, function (context) { // context is 'this'.
-				var loggedOut = !config.CurrentUser(),
+				var loggedIn = !!config.CurrentUser(),
 					cls,
-					lOptions;
+					lOptions = options;
 
-				/** Set the last options so that when logging in we can transition to the right place. */
-				lastRoutOptions = options;
+				if (loggedIn) {
+					// user is logged in
+					if (route === config.Hashes.login) {
+						// don't let user go to login page
+						lOptions = defaultOptions;
+						context.app.setLocation(lOptions.route);
+					}
 
-				// use login options if logged out
-				/////////////TESTING////////////////////////
-				//loggedOut = false;
-				/////////////TESTING////////////////////////
-				lOptions = (loggedOut && route === config.Hashes.login)
-					? loginOptions
-					: options;
-				cls = lOptions.title.toLowerCase();
-
-				// set body class if it's not 'login'
-				$('body').attr('class', (cls!=='login') ? cls : '');
-
-				/** Save last path but do not save login path. */
-				if (route !== config.Hashes.login)
+					// save last path
 					store.Save(config.StateKeys.lastView, context.path);
-				lOptions.callback(context.params); // Activate the viewModel.
+				}
+				else if (route !== config.Hashes.login) {
+					// store route the user wanted to go to so when the
+					// user is logged in we can redirect to that route
+					destRoute = route;
 
-				if (loggedOut) {
-					$('#login-container').show();
-					$('.site-container').hide();
-					$('.view').hide();
-//					presenter.TransitionTo(
-//						$(lOptions.view),
-//						lOptions.route, // context.path, // We want to find the route we defined in the config.
-//						lOptions.group
-//					);
-				} else {
-					_showPortal(cls);
+					// user is logged out, so force user to go to login page
+					lOptions = loginOptions;
+					context.app.setLocation(lOptions.route);
 				}
 
-				presenter.TransitionTo(
-					$(lOptions.view),
-					lOptions.route, // context.path, // We want to find the route we defined in the config.
-					lOptions.group
-				);
+				cls = lOptions.title.toLowerCase();
+				// set body class if it's not 'login'
+				$('body').attr('class', (cls!=='login') ? cls : '');
+				// // set body class
+				// $('body').attr('class', cls);
+
+				if (loggedIn) {
+					lOptions.callback(context.params); // Activate the viewModel.
+					_showPortal(cls);
+
+					presenter.TransitionTo(
+						$(lOptions.view),
+						lOptions.route, // context.path, // We want to find the route we defined in the config.
+						lOptions.group
+					);
+				}
+				else {
+					lOptions.callback({}); // Activate the login viewModel.
+					_showLogin();
+				}
 
 				// if (this.title) {
 				// 	this.title(options.title);
@@ -151,12 +156,13 @@ function ($, _, Sammy, presenter, config, routeMediator, store) {
 		},
 
 		_run = function () {
-			var url = store.Fetch(config.StateKeys.lastView);
+			var url = store.Fetch(config.StateKeys.lastView),
+				addressBarUrl;
 
 			// 1) if I browse to a location, use it.
 			// 2) otherwise use the url i grabbed from storage.
 			// 3) otherwise use the default route.
-			var addressBarUrl = sammy.getLocation();
+			addressBarUrl = sammy.getLocation();
 			_startupHash = getUsableRoute(addressBarUrl) || getUsableRoute(url) || defaultRoute;
 
 			// set hash before running
@@ -178,16 +184,13 @@ function ($, _, Sammy, presenter, config, routeMediator, store) {
 			$('.sidebars > .sidebar').addClass('active');
 			$('.sidebars > .sidebar.' + cls).addClass('active');
 		},
+		_showLogin = function() {
+			$('#login-container').show();
+			$('.site-container').hide();
+			$('.view').hide();
+		},
 		_transitionToLastView = function () {
-
-			var cls = lastRoutOptions.title.toLowerCase();
-			_showPortal(cls);
-
-//			presenter.TransitionTo(
-//				$(lastRoutOptions.view),
-//				lastRoutOptions.route,
-//				lastRoutOptions.group
-//			);
+			_navigateTo(destRoute);
 		};
 
 	/** Return object. */
@@ -197,6 +200,6 @@ function ($, _, Sammy, presenter, config, routeMediator, store) {
 		Register: _register,
 		Run: _run,
 		get GetStartupHash() { return _getStartupHash; },
-		get TransitionToLastView() { return _transitionToLastView }
+		get TransitionToLastView() { return _transitionToLastView; }
 	};
 });

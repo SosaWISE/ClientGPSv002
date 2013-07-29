@@ -13,6 +13,7 @@ return (function create() {
 		/** START Private Properties. */
 		saving = ko.observable(false),
 		_list = ko.observableArray(),
+		_devices,
 
 		/**   END Private Properties. */
 
@@ -23,18 +24,22 @@ return (function create() {
 		},
 		/**   END Private Methods. */
 
-		init = function () {
+		init = function (devices) {
+			_devices = devices;
 			_list(list);
+
 			amplify.subscribe('customerAuthentication', function (data) {
 				console.log(data);
-				_refresh();
+				refresh();
 			});
 			amplify.subscribe('sessionAuthentication', function (data) {
 				console.log(data);
-				_refresh();
+				refresh();
 			});
+
+			refresh();
 		},
-		_refresh = function () {
+		refresh = function () {
 			_list.destroyAll();
 			/** Initialize view model. */
 			$.when(
@@ -129,12 +134,10 @@ return (function create() {
 			return modelMapper.Device.fromDto(dto);
 		});
 
-	/** Init object. */
-	init();
-
 	/** Return object. */
 	//noinspection JSUnusedGlobalSymbols
 	return {
+		init: init,
 		create: create,
 		deviceEditorVM: deviceEditorVM,
 		TmplName: 'devices-tab.view',
@@ -145,7 +148,7 @@ return (function create() {
 		startEdit: startEdit,
 		cancelEdit: cancelEdit,
 		saveEdit: saveEdit,
-		get refresh() { return _refresh; },
+		get refresh() { return refresh; },
 		get addDevice() { return _addDevice; },
 		type: 'devices',
 		name: 'Devices',

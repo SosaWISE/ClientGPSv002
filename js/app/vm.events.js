@@ -5,25 +5,28 @@
  * Time: 12:36 PM
  * To change this template use File | Settings | File Templates.
  */
-define(['messenger','underscore','datacontext','ko','amplify','utils'],
-	function (messenger, _, datacontext, ko, amplify, utils) {
+define(['jquery','messenger','underscore','datacontext','ko','amplify','utils','gmaps'],
+	function ($, messenger, _, datacontext, ko, amplify, utils, gmaps) {
 		var
 			/** START Private Properties. */
 		editing = ko.observable(false),
 		editItem = ko.observable(null),
 		_list = ko.observableArray(),
+		_devices,
 		/**	 END Private Properties. */
 
 		/** START Private Methods. */
 			_activate = function (routeData, callback) {
 			messenger.publish.viewModelActivated();
-		if (callback) callback();
+		if (callback) { callback(); }
 		},
 
 		/**	 END Private Methods. */
 
-		init = function () {
+		init = function (devices) {
+			_devices = devices;
 			_list(list);
+
 			amplify.subscribe('customerAuthentication', function (data) {
 				console.log(data);
 				refresh();
@@ -32,6 +35,8 @@ define(['messenger','underscore','datacontext','ko','amplify','utils'],
 				console.log(data);
 				refresh();
 			});
+
+			refresh();
 		},
 		refresh = function () {
 			/** Init */
@@ -55,21 +60,22 @@ define(['messenger','underscore','datacontext','ko','amplify','utils'],
 					}
 				)
 			)
-			.then(function (response) {
-				/** Init. */
-				console.log(response);
-
+			.then(function () {
+				// remove existing from the map
+				_devices.fmap.removeMarkersByOwnerId('events');
+				/** Clear the list. */
 				_list.destroyAll();
+
 				_.each(data.events(), function (item) {
-					_list.push({
-						type: item.EventTypeUi(),
-						//title: 'Rascal exited the Yard geo fence',
-						//title: item.AccountName(),
-						title: item.EventShortDesc(),
-						time: utils.DateLongFormat(item.EventDate()),
-						//time: 'July 1, 2013 at 1:59pm',
-						actions: ''
+					// add to map
+					_devices.fmap.addMarker('events', {
+						Lattitude: parseFloat(item.Lattitude()),
+						Longitude: parseFloat(item.Longitude()),
 					});
+					// add to list
+					item.time = utils.DateLongFormat(item.EventDate());
+					item.actions = '';
+					_list.push(item);
 				});
 				}, function (someArg) {
 					alert('Retrieving events with SomeArg:' + someArg);
@@ -82,62 +88,65 @@ define(['messenger','underscore','datacontext','ko','amplify','utils'],
 		cancelEdit = function(/*vm, evt*/) {
 			editing(false);
 		},
+		selectItem = function (vm) {
+			_devices.fmap.setCenter(
+				new gmaps.LatLng(parseFloat(vm.Lattitude()), parseFloat(vm.Longitude())));
+		},
 		list = [
 			{
-				type: 'sos',
-				title: 'Rascal exited the Yard geofence',
+				EventTypeUi: 'sos',
+				EventShortDesc: 'Rascal exited the Yard geofence',
 				time: 'April 23, 2013 at 12:42pm',
 				actions: ''
 			},
 			{
-				type: 'battery',
-				title: 'Rascal exited the Yard geofence',
+				EventTypeUi: 'battery',
+				EventShortDesc: 'Rascal exited the Yard geofence',
 				time: 'April 23, 2013 at 12:42pm',
 				actions: ''
 			},
 			{
-				type: 'speed',
-				title: 'Rascal exited the Yard geofence',
+				EventTypeUi: 'speed',
+				EventShortDesc: 'Rascal exited the Yard geofence',
 				time: 'April 23, 2013 at 12:42pm',
 				actions: ''
 			},
 			{
-				type: 'enter',
-				title: 'Rascal exited the Yard geofence',
+				EventTypeUi: 'enter',
+				EventShortDesc: 'Rascal exited the Yard geofence',
 				time: 'April 23, 2013 at 12:42pm',
 				actions: ''
 			},
 			{
-				type: 'exit',
-				title: 'Rascal exited the Yard geofence',
+				EventTypeUi: 'exit',
+				EventShortDesc: 'Rascal exited the Yard geofence',
 				time: 'April 23, 2013 at 12:42pm',
 				actions: ''
 			},
 			{
-				type: 'fall',
-				title: 'Rascal exited the Yard geofence',
+				EventTypeUi: 'fall',
+				EventShortDesc: 'Rascal exited the Yard geofence',
 				time: 'April 23, 2013 at 12:42pm',
 				actions: ''
 			},
 			{
-				type: 'tamper',
-				title: 'Rascal exited the Yard geofence',
+				EventTypeUi: 'tamper',
+				EventShortDesc: 'Rascal exited the Yard geofence',
 				time: 'April 23, 2013 at 12:42pm',
 				actions: ''
 			}
 		];
 
-		/** Init object. */
-		init();
-
 		/** Return object. */
 		return {
+			init: init,
 			TmplName: 'events.view',
 			canEdit: ko.observable(false),
 			editing: editing,
 			editItem: editItem,
 			startEdit: startEdit,
 			cancelEdit: cancelEdit,
+			selectItem: selectItem,
 			type: 'events',
 			name: 'Events',
 			list: _list,
