@@ -45,18 +45,17 @@ function (config, messenger, ko, events, devices, geofences, flowMap, gmaps) {
 						mapTypeControl: true,
 						disableDefaultUI: true,
 					});
-<<<<<<< HEAD
+
 					setTimeout(function () {
 						// self.fmap.clear();
 						// self.fmap.endEdit();
 						self.fmap.beginEdit();
 					}, 3000);
-=======
+
 					// self.fmap.clear();
 					// self.fmap.endEdit();
 					// self.fmap.beginEdit();
 					self.fmap.inEditMode = true;
->>>>>>> 33343ae015de8c87d5d16f328408bc6ae13087b1
 
 					// initialize all group view models
 					groups.forEach(function(vm) {
