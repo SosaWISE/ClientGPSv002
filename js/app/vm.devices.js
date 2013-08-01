@@ -48,6 +48,7 @@ function (config, messenger, ko, events, devices, geofences, flowMap, gmaps) {
 					// self.fmap.clear();
 					// self.fmap.endEdit();
 					// self.fmap.beginEdit();
+					self.fmap.inEditMode = true;
 
 					// initialize all group view models
 					groups.forEach(function(vm) {
@@ -60,6 +61,9 @@ function (config, messenger, ko, events, devices, geofences, flowMap, gmaps) {
 
 					if (callback) { callback(); }
 				}, 200);
+			}
+			else {
+				if (callback) { callback(); }
 			}
 		},
 		/**   END Private Methods. */

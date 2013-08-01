@@ -1,5 +1,5 @@
-﻿define(['gmaps','./polygon','./marker'],
-function (gmaps, Polygon, Marker) {
+﻿define(['gmaps','./polygon','./marker','./rectangle'],
+function (gmaps, Polygon, Marker, Rectangle) {
 	"use strict";
 
 	function Map(mapDiv, opts, paths, boundary) {
@@ -16,20 +16,20 @@ function (gmaps, Polygon, Marker) {
 		this.markers = [];
 		this.clickHandle = null;
 		this.inEditMode = false;
-
-		this.defaultPolygonOptions = {
-			fillColor: "#444444",
-			fillOpacity: 0.4,
-			map: this,
-			paths: [],
-			strokeColor: "#444444",
-			strokeOpacity: 0.75,
-			strokeWeight: 4,
-			zIndex: 5
-		};
 	}
 	// inherit from g Map
 	Map.prototype = new gmaps.Map(document.createElement("div"));
+
+	Map.defaultPolygonOptions = {
+		fillColor: "#444444",
+		fillOpacity: 0.4,
+		// map: this,
+		// paths: [],
+		strokeColor: "#444444",
+		strokeOpacity: 0.75,
+		strokeWeight: 4,
+		zIndex: 5
+	};
 
 	Map.prototype.setBoundary = function (boundary, stopFitBounds) {
 		if (boundary.getMap() !== this) {
@@ -140,7 +140,7 @@ function (gmaps, Polygon, Marker) {
 					var index, poly;
 					if (!this.currentPoly) {
 						//add new polygon with
-						poly = new Polygon(this.defaultPolygonOptions, stopUnselect);
+						poly = new Polygon(Map.defaultPolygonOptions, stopUnselect);
 						this.addPolygon(poly, true);
 						index = 0;
 					}
@@ -219,29 +219,18 @@ function (gmaps, Polygon, Marker) {
 		}
 	};
 
-	Map.prototype.addGSRectangle = function (ownerId, gsRectangle, options) {
-		var paths = new gmaps.MVCArray();
-
-		// GS_AccountGeoFenceRectangle to Laipac
-		// Laipac     = GS_AccountGeoFenceRectangle
-		// Latitude1  = MaxLattitude
-		// Longitude1 = MinLongitude
-		// Latitude2  = MinLattitude
-		// Longitude2 = MaxLongitude
-		paths.push(new gmaps.LatLng(gsRectangle.MaxLattitude, gsRectangle.MinLongitude)); // Laipac point 1
-		paths.push(new gmaps.LatLng(gsRectangle.MinLattitude, gsRectangle.MinLongitude)); // added point
-		paths.push(new gmaps.LatLng(gsRectangle.MinLattitude, gsRectangle.MaxLongitude)); // Laipac point 2
-		paths.push(new gmaps.LatLng(gsRectangle.MaxLattitude, gsRectangle.MaxLongitude)); // added point
+	Map.prototype.addRectangle = function (model, id, options) {
+		var result;
 
 		// add on defaults
 		options = extend({
-			// always use ownerId
-			ownerId: ownerId,
-			// always use paths
-			paths: paths,
-		}, options, this.defaultPolygonOptions);
+			model: model,
+			id: id,
+			map: this,
+		}, options, Map.defaultPolygonOptions);
 
-		this.addPolygon(new Polygon(options));
+		this.addPolygon(result = new Rectangle(options));
+		return result;
 	};
 
 
