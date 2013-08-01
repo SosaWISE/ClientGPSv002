@@ -51,12 +51,12 @@ function (flowUtil, gmaps, Polygon, PolyPoint, Edge) {
 		// point 1
 		point = path.getAt(index);
 		model.MinLattitude(point.lat());
-		model.MinLattitude(point.lng());
+		model.MinLongitude(point.lng());
 
 		// point 2
 		point = path.getAt(index + 2);
 		model.MaxLattitude(point.lat());
-		model.MaxLattitude(point.lng());
+		model.MaxLongitude(point.lng());
 	};
 
 	Rectangle.prototype.setAt = function (vertexIndex, latLng) {
@@ -120,9 +120,8 @@ function (flowUtil, gmaps, Polygon, PolyPoint, Edge) {
 		// make sure minlat,minlng and maxlat,maxlng are in correct indexes
 		// by putting the minimums at index 0
 		path.forEach(function (latLng, index) {
-			//@TODO: fix the min logic to most southwest
 			if (latLng.lat() <= minLatLng.lat() &&
-				latLng.lat() <= minLatLng.lat()) {
+				latLng.lng() <= minLatLng.lng()) {
 				minLatLng = latLng;
 				minIndex = index;
 			}
@@ -136,6 +135,10 @@ function (flowUtil, gmaps, Polygon, PolyPoint, Edge) {
 
 		//return valid latLng
 		return lastValidLatLng;
+	};
+	Rectangle.prototype.onPathReset = function () {
+		Polygon.prototype.onPathReset.call(this);
+		this.updateModelFromPath();
 	};
 
 
