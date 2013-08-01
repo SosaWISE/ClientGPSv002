@@ -51,40 +51,41 @@ function ($, messenger, _, datacontext, ko, amplify, gmaps) {
 			})).then(
 			function () {
 				// remove existing from the map
-				_devices.fmap.removePolygonsByOwnerId('geofences');
+				_list().forEach(function (model) {
+					if (model.polyHandle) {
+						_devices.fmap.removePolygon(model.polyHandle);
+						delete model.polyHandle;
+					}
+				});
 				/** Clear the list. */
 				_list.destroyAll();
 
 				/** Build new list. */
-				_.each(geoFences(), function(item) {
+				_.each(geoFences(), function(model) {
 					// add to map
-					_devices.fmap.addGSRectangle('geofences', {
-						MinLattitude: item.MinLattitude(),
-						MinLongitude: item.MinLongitude(),
-						MaxLattitude: item.MaxLattitude(),
-						MaxLongitude: item.MaxLongitude(),
-					});
+					model.polyHandle = _devices.fmap.addRectangle(model, model.GeoFenceID());
 					// add to list
-					_list.push(item);
+					_list.push(model);
 				});
 			},
 			function (someArg) {
 				alert('Retrieving Geo Fences has an error with SomeArg:' + someArg);
 			});
 		},
-		startEdit = function(vm, evt) {
-			console.log(vm, evt);
+		startEdit = function(model, evt) {
+			selectItem(model);
+			model.polyHandle.select();
 
-			editItem(vm);
+			editItem(model);
 			editing(true);
 		},
-		cancelEdit = function(vm, evt) {
-			console.log(vm, evt);
+		cancelEdit = function(model, evt) {
+			console.log(model, evt);
 
 			editing(false);
 		},
-		selectItem = function (vm) {
-			_devices.fmap.setCenter(new gmaps.LatLng(vm.MeanLattitude(), vm.MeanLongitude()));
+		selectItem = function (model) {
+			_devices.fmap.setCenter(new gmaps.LatLng(model.MeanLattitude(), model.MeanLongitude()));
 		},
 		list = [
 			{
