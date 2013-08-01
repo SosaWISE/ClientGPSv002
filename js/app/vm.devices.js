@@ -46,12 +46,6 @@ function (config, messenger, ko, events, devices, geofences, flowMap, gmaps) {
 						disableDefaultUI: true,
 					});
 
-					setTimeout(function () {
-						// self.fmap.clear();
-						// self.fmap.endEdit();
-						self.fmap.beginEdit();
-					}, 3000);
-
 					// self.fmap.clear();
 					// self.fmap.endEdit();
 					// self.fmap.beginEdit();
