@@ -52,9 +52,9 @@ function ($, messenger, _, datacontext, ko, amplify, gmaps) {
 			function () {
 				// remove existing from the map
 				_list().forEach(function (model) {
-					if (model.polyHandle) {
-						_devices.fmap.removePolygon(model.polyHandle);
-						delete model.polyHandle;
+					if (model.handle) {
+						_devices.fmap.removePolygon(model.handle);
+						delete model.handle;
 					}
 				});
 				/** Clear the list. */
@@ -63,7 +63,11 @@ function ($, messenger, _, datacontext, ko, amplify, gmaps) {
 				/** Build new list. */
 				_.each(geoFences(), function(model) {
 					// add to map
-					model.polyHandle = _devices.fmap.addRectangle(model, model.GeoFenceID());
+					model.handle = _devices.fmap.addRectangle(startEdit, model, model.GeoFenceID());
+					// doesn't work quite right...
+					// gmaps.event.addListener(model.handle, "click", function () {
+					// 	startEdit(model);
+					// });
 					// add to list
 					_list.push(model);
 				});
@@ -72,20 +76,27 @@ function ($, messenger, _, datacontext, ko, amplify, gmaps) {
 				alert('Retrieving Geo Fences has an error with SomeArg:' + someArg);
 			});
 		},
-		startEdit = function(model, evt) {
+		startEdit = function(model) {
+			if (editing()) {
+				return;
+			}
+
 			selectItem(model);
-			model.polyHandle.select();
+			model.handle.canEdit(true);
 
 			editItem(model);
 			editing(true);
 		},
-		cancelEdit = function(model, evt) {
-			console.log(model, evt);
+		cancelEdit = function(model) {
+			model.handle.canEdit(false);
 
 			editing(false);
 		},
 		selectItem = function (model) {
-			_devices.fmap.setCenter(new gmaps.LatLng(model.MeanLattitude(), model.MeanLongitude()));
+			_devices.fmap.panTo(new gmaps.LatLng(model.MeanLattitude(), model.MeanLongitude()));
+			if (_devices.fmap.getZoom() < 13) {
+				_devices.fmap.setZoom(13);
+			}
 		},
 		list = [
 			{

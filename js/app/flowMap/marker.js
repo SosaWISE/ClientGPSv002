@@ -18,6 +18,12 @@ function (flowUtil, gmaps) {
 	// inherits from g Marker
 	Marker.prototype = new gmaps.Marker();
 
+	Marker.prototype.dispose = function () {
+		gmaps.event.clearListeners(this, "changed");
+		gmaps.event.clearInstanceListeners(this);
+		this.setMap(null);
+	};
+
 	// pre-load marker images
 	var defaultImg = new Image();
 

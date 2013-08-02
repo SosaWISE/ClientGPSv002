@@ -62,20 +62,22 @@ define(['jquery','messenger','underscore','datacontext','ko','amplify','utils','
 			)
 			.then(function () {
 				// remove existing from the map
-				_devices.fmap.removeMarkersByOwnerId('events');
+				_list().forEach(function (model) {
+					if (model.polyHandle) {
+						_devices.fmap.removePolygon(model.polyHandle);
+						delete model.polyHandle;
+					}
+				});
 				/** Clear the list. */
 				_list.destroyAll();
 
-				_.each(data.events(), function (item) {
+				_.each(data.events(), function (model) {
 					// add to map
-					_devices.fmap.addMarker('events', {
-						Lattitude: parseFloat(item.Lattitude()),
-						Longitude: parseFloat(item.Longitude()),
-					});
+					model.handle = _devices.fmap.addMarker(model, model.bob);
 					// add to list
-					item.time = utils.DateLongFormat(item.EventDate());
-					item.actions = '';
-					_list.push(item);
+					model.time = utils.DateLongFormat(model.EventDate());
+					model.actions = '';
+					_list.push(model);
 				});
 				}, function (someArg) {
 					alert('Retrieving events with SomeArg:' + someArg);

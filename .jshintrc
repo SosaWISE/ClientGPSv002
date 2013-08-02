@@ -1,5 +1,4 @@
 {
-  "es5": true,
   "strict": false,
   "node": true,
   "browser": true,
