@@ -11,6 +11,7 @@ function (amplify, config, ko) {
 		_init = function () {
 
 			amplify.request.define('devices-acquireGeoFences', 'ajax', config.AjaxProps('Device/AcquireDeviceGeoFences'));
+			amplify.request.define('devices-saveGeoFences', 'ajax', config.AjaxProps('GeoSrv/GeoRectangleSave'));
 
 		},
 
@@ -25,6 +26,22 @@ function (amplify, config, ko) {
 				success: callbacks.success,
 				error: callbacks.error
 			});
+		},
+
+		/**
+		 *
+		 */
+		_saveData = function (callbacks, data) {
+			/** Init */
+			var jsonData = ko.toJSON(data);
+
+			/** Execute */
+			return amplify.request({
+				resourceId: 'devices-saveGeoFences',
+				data: jsonData,
+				success: callbacks.success,
+				error: callbacks.error
+			});
 		};
 
 	/** Init object. */
@@ -32,6 +49,7 @@ function (amplify, config, ko) {
 
 	/** Return object. */
 	return {
-		get GetData() { return _getData; }
+		get GetData() { return _getData; },
+		get SaveData() { return _saveData; }
 	};
 });
