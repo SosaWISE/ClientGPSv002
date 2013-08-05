@@ -29,7 +29,19 @@ function (amplify, config, ko) {
 		},
 
 		/**
-		 *
+		 * Below is a description of the properties of the data object.
+		 *	<br />long GeoFenceID -- This is the primary key of the object.  If not present then the API will create a new geoFence.
+		 *	<br />long SessionID -- This is the current SessionID
+		 *	<br />long AccountId -- The account id that this geofence is tied to.
+		 *	<br />long CustomerId -- The Customer Id to which the account id belongs to.
+		 *	<br />string GeoFenceName -- Name of the fence.  i.e. My House.
+		 *	<br />string GeoFenceDescription -- Long description
+		 *	<br />string ItemId -- This is the type of device that the geoFence belongs to.
+		 *	<br />string ReportMode -- Possible values (1-Exit Alert; 2-Enter Alert; 3-Exit Enter Alert)
+		 *	<br />double MaxLattitude -- Maximum Latitude
+		 *	<br />double MinLongitude -- Minimum Longitude
+		 *	<br />double MaxLongitude -- Maximum Longitude
+		 *	<br />double MinLattitude -- Minimum Latitude
 		 */
 		_saveData = function (callbacks, data) {
 			/** Init */

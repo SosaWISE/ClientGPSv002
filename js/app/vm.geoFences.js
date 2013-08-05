@@ -98,6 +98,7 @@ function ($, messenger, _, datacontext, ko, amplify, gmaps) {
 				_devices.fmap.setZoom(13);
 			}
 		},
+
 		list = [
 			{
 				Type: 'fence',
