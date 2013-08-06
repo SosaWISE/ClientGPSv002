@@ -115,7 +115,8 @@ define(['toastr','mock/mock','infuser','ko'],
 					cache: false,
 					crossDomain: true,
 /** This needs to be enabled once we are in production.
- * The header property Access-Control-Allow-Origin also needs to be changed from '*' wildcard to where the client is hosted. */
+ * The header property Access-Control-Allow-Origin also needs to be changed from '*' wildcard to where the client is
+ * hosted. */
 					xhrFields: {
 						withCredentials: true
 					}

@@ -132,6 +132,7 @@ define(['model','utils'],
 					item.PointLongitude(dto.PointLongitude);
 					item.PolyPointsList(dto.PolyPointsList);
 					item.Radius(dto.Radius);
+					item.ZoomLevel(dto.ZoomLevel);
 					item.ModifiedOn(dto.ModifiedOn);
 
 					item.dirtyFlag().reset();

@@ -29,8 +29,9 @@ function (amplify, config, ko) {
 		},
 
 		/**
-		 * Below is a description of the properties of the data object.
-		 *	<br />long GeoFenceID -- This is the primary key of the object.  If not present then the API will create a new geoFence.
+		 * @Description  Below is a description of the properties of the data object.
+		 *	<br />long GeoFenceID -- This is the primary key of the object.  If not present then the API will create a
+		 *	new geoFence.
 		 *	<br />long SessionID -- This is the current SessionID
 		 *	<br />long AccountId -- The account id that this geofence is tied to.
 		 *	<br />long CustomerId -- The Customer Id to which the account id belongs to.

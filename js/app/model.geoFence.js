@@ -34,6 +34,7 @@ function (ko) {
 		self.PolyPointsList = ko.observableArray();
 		self.Radius = ko.observable();
 		self.ModifiedOn = ko.observable();
+		self.ZoomLevel = ko.observable();
 
 		self.isBrief = ko.observable(true);
 		self.isNullo = false;
