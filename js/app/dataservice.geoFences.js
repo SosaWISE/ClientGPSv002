@@ -42,6 +42,7 @@ function (amplify, config, ko) {
 		 *	<br />double MinLongitude -- Minimum Longitude
 		 *	<br />double MaxLongitude -- Maximum Longitude
 		 *	<br />double MinLattitude -- Minimum Latitude
+		 *	<br />short? ZoomLevel -- Google Maps Zoom Level
 		 */
 		_saveData = function (callbacks, data) {
 			/** Init */
