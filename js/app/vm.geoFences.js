@@ -5,14 +5,16 @@
  * Time: 12:27 PM
  * To change this template use File | Settings | File Templates.
  */
-define(['jquery','messenger','underscore','datacontext','ko','amplify','gmaps'],
-function ($, messenger, _, datacontext, ko, amplify, gmaps) {
+define(['jquery','messenger','underscore','datacontext','ko','amplify','gmaps','vm.model-editor'],
+function ($, messenger, _, datacontext, ko, amplify, gmaps, modelEditor) {
+// wrap in create function in order to create multiple instances
+return (function create() {
 	var
 		/** START Private Properties. */
-		editing = ko.observable(false),
-		editItem = ko.observable(null),
+		saving = ko.observable(false),
 		_list = ko.observableArray(),
 		_devices,
+		editorVM = modelEditor.create(),
 		/**   END Private Properties. */
 
 		/** START Private Methods. */
@@ -77,20 +79,27 @@ function ($, messenger, _, datacontext, ko, amplify, gmaps) {
 			});
 		},
 		startEdit = function(model) {
-			if (editing()) {
-				return;
-			}
+			editorVM.start(model);
 
 			selectItem(model);
 			model.handle.canEdit(true);
-
-			editItem(model);
-			editing(true);
 		},
 		cancelEdit = function(model) {
-			model.handle.canEdit(false);
+			editorVM.stop(true);
 
-			editing(false);
+			model.handle.canEdit(false);
+		},
+		saveEdit = function() {
+			editorVM.stop(false);
+			saving(true);
+			datacontext.Geofences.updateData(editorVM.model(), {
+				success: function () {
+					saving(false);
+				},
+				error: function () {
+					saving(false);
+				}
+			});
 		},
 		selectItem = function (model) {
 			_devices.fmap.panTo(new gmaps.LatLng(model.MeanLattitude(), model.MeanLongitude()));
@@ -181,11 +190,13 @@ function ($, messenger, _, datacontext, ko, amplify, gmaps) {
 	return {
 		init: init,
 		TmplName: 'geofences.view',
+		editorVM: editorVM,
 		canEdit: ko.observable(true),
-		editing: editing,
-		editItem: editItem,
+		editing: editorVM.editing,
+		editItem: ko.observable(editorVM),
 		startEdit: startEdit,
 		cancelEdit: cancelEdit,
+		saveEdit: saveEdit,
 		selectItem: selectItem,
 		type: 'geofences',
 		name: 'Geofences',
@@ -193,4 +204,5 @@ function ($, messenger, _, datacontext, ko, amplify, gmaps) {
 		active: ko.observable(false),
 		get Activate() { return _activate; }
 	};
+})();
 });

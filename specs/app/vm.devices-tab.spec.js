@@ -25,8 +25,8 @@ function(devicesTabVM, Device, datacontext) {
     it('`saving` should start false', function () {
       expect(vm.saving()).toBe(false);
     });
-    it('editor `focusName` should start false', function () {
-      expect(vm.editItem().focusName()).toBe(false);
+    it('editor `focusField` should start false', function () {
+      expect(vm.editItem().focusField()).toBe(false);
     });
     it('editor `model` should start null', function () {
       expect(vm.editItem().model()).toBeNull();
@@ -42,8 +42,8 @@ function(devicesTabVM, Device, datacontext) {
       it('`editing` should change to true', function () {
         expect(vm.editing()).toBe(true);
       });
-      it('editor `focusName` should change to true', function () {
-        expect(vm.editItem().focusName()).toBe(true);
+      it('editor `focusField` should change to true', function () {
+        expect(vm.editItem().focusField()).toBe(true);
       });
       it('editor `model` should change to the passed in model', function () {
         expect(vm.editItem().model()).toBe(deviceModel);

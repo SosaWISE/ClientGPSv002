@@ -18,28 +18,28 @@
             <span class="add-new-txt">Add New Geofence</span>
             <span class="edit-txt">Edit Geofence</span>
         </a>
-        <div class="form-wrap" data-bind="with:editItem">
+        <div class="form-wrap" data-bind="with:editItem().model">
             <ul class="edit-form">
                 <li>
                     <span class="label">Geofence Title</span>
-                    <input type="text" placeholder="Placeholder">
+                    <input data-bind="hasFocus:$parent.focusField,value:GeoFenceNameUi" type="text" placeholder="Placeholder">
                 </li>
                 <li>
                     <span class="label">Description</span>
-                    <textarea class="description" placeholder="Description here" rows="5"></textarea>
+                    <textarea data-bind="value:Description" class="description" placeholder="Description here" rows="5"></textarea>
                 </li>
                 <li>
                     <span class="label">Select Box</span>
                     <div class="select-wrap">
-                        <select>
-                            <option value="placeholder">Select one...</option>
-                            <option>Option 1</option>
-                            <option>Option 2</option>
-                            <option>Option 3</option>
+                        <select data-bind="value:ReportModeId">
+                            <option value="0" disabled="disabled">Select one...</option>
+                            <option value="1">Exit Alert</option>
+                            <option value="2">Enter Alert</option>
+                            <option value="3">Enter &amp; Exit Alert</option>
                         </select>
                     </div>
                 </li>
-                <li>
+                <!-- <li>
                     <span class="label">Field Title</span>
                     <input type="text" placeholder="Placeholder">
                 </li>
@@ -55,7 +55,7 @@
                             <div class="notification-subtitle">Devices</div>
                         </li>
                     </ul>
-                </li>
+                </li> -->
                 <li>
                     <input type="submit" value="Save" class="save">
                     <input type="button" value="Cancel" class="cancel" data-bind="click:$parent.cancelEdit">

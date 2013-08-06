@@ -5,8 +5,8 @@
  * Time: 12:28 PM
  * To change this template use File | Settings | File Templates.
  */
-define(['jquery','messenger','underscore','datacontext','ko','amplify','vm.device-editor','model.mapper'],
-function ($, messenger, _, datacontext, ko, amplify, deviceEditorVM, modelMapper) {
+define(['jquery','messenger','underscore','datacontext','ko','amplify','vm.model-editor','model.mapper'],
+function ($, messenger, _, datacontext, ko, amplify, modelEditor, modelMapper) {
 // wrap in create function in order to create multiple instances
 return (function create() {
 	var
@@ -14,7 +14,7 @@ return (function create() {
 		saving = ko.observable(false),
 		_list = ko.observableArray(),
 		_devices,
-
+		editorVM = modelEditor.create(),
 		/**   END Private Properties. */
 
 		/** START Private Methods. */
@@ -59,15 +59,15 @@ return (function create() {
 			});
 		},
 		startEdit = function(model) {
-			deviceEditorVM.start(model);
+			editorVM.start(model);
 		},
 		cancelEdit = function() {
-			deviceEditorVM.stop(true);
+			editorVM.stop(true);
 		},
 		saveEdit = function() {
-			deviceEditorVM.stop(false);
+			editorVM.stop(false);
 			saving(true);
-			datacontext.Devices.updateData(deviceEditorVM.model(), {
+			datacontext.Devices.updateData(editorVM.model(), {
 				success: function () {
 					saving(false);
 				},
@@ -139,11 +139,11 @@ return (function create() {
 	return {
 		init: init,
 		create: create,
-		deviceEditorVM: deviceEditorVM,
+		editorVM: editorVM,
 		TmplName: 'devices-tab.view',
 		canEdit: ko.observable(true),
-		editing: deviceEditorVM.editing,
-		editItem: ko.observable(deviceEditorVM),
+		editing: editorVM.editing,
+		editItem: ko.observable(editorVM),
 		saving: saving,
 		startEdit: startEdit,
 		cancelEdit: cancelEdit,
