@@ -133,20 +133,28 @@ function ($, _, config, messenger, utils, ko, amplify, datacontext) {
 			.then(function (response) {
 				/** Init. */
 				console.log(response);
-
+debugger;
 				_devices.removeAll();
 				/** Initialize. */
 				_.each(data.devices(), function (item) {
 					item.name = item.DeviceName;
-					item.selectDeviceCmd = ko.asyncCommand({
-						execute: selectDeviceCmdExecute,
-						canExecute: selectDeviceCmdCanExecute
+					_devices.push({
+						type: item.type(),
+						name: item.name(),
+						selectDeviceCmd: ko.asyncCommand({ execute: selectDeviceCmdExecute, canExecute: selectDeviceCmdCanExecute })
 					});
 				});
 
 				_events.removeAll();
 				/** Bind events to main body. */
 				_.each(data.events(), function (item) {
+					_events.push({
+						type: item.EventTypeUi(),
+						title: item.EventShortDesc(),
+						time: utils.DateWithFormat(item.EventDate(),'MMMM Do, YYYY @ hh:mm:ss a'),
+						actions: ''
+					});
+
 					item.type = item.EventTypeUi;
 					item.title = item.EventShortDesc;
 					item.time = utils.DateWithFormat(item.EventDate(),'MMMM Do, YYYY @ hh:mm:ss a');

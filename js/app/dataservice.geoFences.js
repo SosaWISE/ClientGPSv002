@@ -37,7 +37,7 @@ function (amplify, config, ko) {
 		 *	<br />long CustomerId -- The Customer Id to which the account id belongs to.
 		 *	<br />string GeoFenceName -- Name of the fence.  i.e. My House.
 		 *	<br />string GeoFenceDescription -- Long description
-		 *	<br />string ItemId -- This is the type of device that the geoFence belongs to.
+		 *	<br />string ItemId -- This is the type of device that the geoFence belongs to. (For Laipac use  S911BRC-HC, S911BRC-CE)
 		 *	<br />string ReportMode -- Possible values (1-Exit Alert; 2-Enter Alert; 3-Exit Enter Alert)
 		 *	<br />double MaxLattitude -- Maximum Latitude
 		 *	<br />double MinLongitude -- Minimum Longitude
