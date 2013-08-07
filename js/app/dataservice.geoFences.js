@@ -47,6 +47,7 @@ function (amplify, config, ko) {
 		 */
 		_saveData = function (callbacks, data) {
 			/** Init */
+			debugger;
 			var jsonData = ko.toJSON(data);
 
 			/** Execute */

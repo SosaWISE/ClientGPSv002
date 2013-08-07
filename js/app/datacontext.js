@@ -104,7 +104,7 @@ function ($, _, ko, model, modelMapper, dataService, config, utils) {
 				},
 				updateData = function(entity, callbacks) {
 
-					var entityJson = ko.toJSON(entity);
+					//var entityJson = ko.toJSON(entity);
 
 					return $.Deferred(function(def) {
 						if (!updateFunction) {
@@ -127,7 +127,7 @@ function ($, _, ko, model, modelMapper, dataService, config, utils) {
 								def.reject(response);
 								return;
 							}
-						}, entityJson);
+						}, entity);
 					}).promise();
 				};
 
