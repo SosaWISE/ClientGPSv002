@@ -39,6 +39,19 @@ function (config, router, vm) {
 					]
 				},
 
+				// Sign Up route
+				{
+					view: config.ViewIds.SignUpView,
+					routes: [
+						{
+							route: config.Hashes.signUp,
+							title: 'Sign Up',
+							callback: vm.SignUp.Activate,
+							group: '.route-top'
+						}
+					]
+				},
+
 				{
 					view: config.ViewIds.DevicesView,
 					routes: [

@@ -47,6 +47,12 @@ function (ko, messenger, userAuthInfo, datacontext, router, /*dataprimer, */ampl
 			router.TransitionToLastView();
 		},
 
+		_signUp = function () {
+			alert("You are here!");
+
+			return true;
+		},
+
 		init = function () {
 			/** Initialize view model. */
 			_activate();
@@ -63,6 +69,7 @@ function (ko, messenger, userAuthInfo, datacontext, router, /*dataprimer, */ampl
 		get userName() { return _userName; },
 		get password() { return _password; },
 		get rememberMe() { return _rememberMe; },
-		get loginCmd() { return _loginCmd; }
+		get loginCmd() { return _loginCmd; },
+		get SignUp() { return _signUp; }
 	};
 });

@@ -7,6 +7,7 @@
  */
 define([
 	'vm.login',
+	'vm.signUp',
 	'vm.register',
 	'vm.devices',
 	'vm.devices-tab',
@@ -16,7 +17,7 @@ define([
 	'vm.reports',
 	'vm.settings'
 ],
-function (vmLogin, vmRegister, devices, devicesTab, users, home, billing, reports, settings) {
+function (vmLogin, vmSignUp, vmRegister, devices, devicesTab, users, home, billing, reports, settings) {
 	var
 		_topLevelViews = [
 			home,
@@ -53,6 +54,7 @@ function (vmLogin, vmRegister, devices, devicesTab, users, home, billing, report
 		get topLevelViews() { return _topLevelViews; },
 		get Home() { return home; },
 		get Login() { return vmLogin; },
+		get SignUp() { return vmSignUp; },
 		get Register() { return vmRegister; },
 		get Devices() { return devices; },
 		get DevicesTab() { return devicesTab; },
