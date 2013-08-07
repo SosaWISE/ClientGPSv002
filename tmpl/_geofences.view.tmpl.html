@@ -22,7 +22,7 @@
             <ul class="edit-form">
                 <li>
                     <span class="label">Geofence Title</span>
-                    <input data-bind="hasFocus:$parent.focusField,value:GeoFenceNameUi" type="text" placeholder="Placeholder">
+                    <input data-bind="hasFocus:$parent.editItem().focusField,value:GeoFenceNameUi" type="text" placeholder="Placeholder">
                 </li>
                 <li>
                     <span class="label">Description</span>
@@ -57,7 +57,7 @@
                     </ul>
                 </li> -->
                 <li>
-                    <input type="submit" value="Save" class="save">
+                    <input type="submit" value="Save" class="save" data-bind="click:$parent.saveEdit">
                     <input type="button" value="Cancel" class="cancel" data-bind="click:$parent.cancelEdit">
                     <input type="button" value="Delete" class="delete">
                 </li>

@@ -11,6 +11,7 @@ function (ko) {
 	var GeoFence = function () {
 		var self = this;
 
+		self.saving = ko.observable(false);
 		self.GeoFenceID = ko.observable();
 		self.AccountId = ko.observable();
 		self.Area = ko.observable();

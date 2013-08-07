@@ -116,13 +116,13 @@ function ($, _, ko, model, modelMapper, dataService, config, utils) {
 
 						updateFunction({
 							success: function(response) {
-								logger.success(config.toasts.savedData);
+								// logger.success(config.toasts.savedData);
 								entity.dirtyFlag().reset();
 								if (callbacks && callbacks.success) { callbacks.success(); }
 								def.resolve(response);
 							},
 							error: function(response) {
-								logger.error(config.toasts.errorSavingData);
+								// logger.error(config.toasts.errorSavingData);
 								if (callbacks && callbacks.error) { callbacks.error(); }
 								def.reject(response);
 								return;
@@ -190,7 +190,7 @@ function ($, _, ko, model, modelMapper, dataService, config, utils) {
 		_customer = new Entity(dataService.Customer.CustomerAuth, modelMapper.Customer, model.Customer.Nullo),
 		_devices = new EntitySet(dataService.Devices.AcquireList, modelMapper.Device, dataService.Devices.Nullo),
 		_events = new EntitySet(dataService.Events.GetData, modelMapper.Event, dataService.Events.Nullo),
-		_geoFences = new EntitySet(dataService.GeoFences.GetData, modelMapper.GeoFence, dataService.GeoFences.Nullo),
+		_geoFences = new EntitySet(dataService.GeoFences.GetData, modelMapper.GeoFence, dataService.GeoFences.Nullo, dataService.GeoFences.SaveData),
 		_users = new EntitySet(dataService.Users.GetData, modelMapper.User, dataService.Users.Nullo);
 
 	/** Extensions. */

@@ -14,6 +14,7 @@ return (function create() {
 		saving = ko.observable(false),
 		_list = ko.observableArray(),
 		_devices,
+		_active = ko.observable(false),
 		editorVM = modelEditor.create(),
 		/**   END Private Properties. */
 
@@ -66,10 +67,12 @@ return (function create() {
 				_.each(geoFences(), function(model) {
 					// add to map
 					model.handle = _devices.fmap.addRectangle(startEdit, model, model.GeoFenceID());
-					// doesn't work quite right...
-					// gmaps.event.addListener(model.handle, "click", function () {
-					// 	startEdit(model);
-					// });
+					gmaps.event.addListener(model.handle, "click", function () {
+						// this tab must be showing
+						if (_active()) {
+							startEdit(model);
+						}
+					});
 					// add to list
 					_list.push(model);
 				});
@@ -79,6 +82,10 @@ return (function create() {
 			});
 		},
 		startEdit = function(model) {
+			// we're already editing
+			if (editorVM.editing()) {
+				return;
+			}
 			editorVM.start(model);
 
 			selectItem(model);
@@ -92,12 +99,40 @@ return (function create() {
 		saveEdit = function() {
 			editorVM.stop(false);
 			saving(true);
-			datacontext.Geofences.updateData(editorVM.model(), {
-				success: function () {
+
+			var model = editorVM.model(),
+				data;
+
+			model.ZoomLevel(_devices.fmap.getZoom());
+			model.handle.storeBounds();
+
+			data = {
+				GeoFenceID: model.GeoFenceID(),
+				SessionID: datacontext.Session.model.SessionID(),//model.SessionID(),
+				AccountId: model.AccountId(),
+				// CustomerId: model.CustomerId(),
+				GeoFenceName: model.GeoFenceNameUi(),
+				GeoFenceDescription: model.Description(),
+				// ItemId: model.??(),
+				ReportModeId: model.ReportModeId(),
+				MaxLattitude: model.MaxLattitude(),
+				MinLongitude: model.MinLongitude(),
+				MaxLongitude: model.MaxLongitude(),
+				MinLattitude: model.MinLattitude(),
+				ZoomLevel: model.ZoomLevel(),
+			};
+
+			model.saving(true);
+			datacontext.GeoFences.updateData(data, {
+				success: function (response) {
+					console.log(response);
 					saving(false);
+					model.saving(false);
 				},
-				error: function () {
+				error: function (response) {
+					console.log(response);
 					saving(false);
+					model.saving(false);
 				}
 			});
 		},
@@ -201,7 +236,7 @@ return (function create() {
 		type: 'geofences',
 		name: 'Geofences',
 		list: _list,
-		active: ko.observable(false),
+		active: _active,
 		get Activate() { return _activate; }
 	};
 })();

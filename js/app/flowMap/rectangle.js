@@ -15,17 +15,39 @@ function (flowUtil, gmaps) {
 	// inherits from g Polygon
 	Rectangle.prototype = new gmaps.Rectangle();
 
+	Rectangle.prototype.resetBounds = function () {
+		this.setBounds(new gmaps.LatLngBounds(
+			new gmaps.LatLng(this.model.MinLattitude(), this.model.MinLongitude()),
+			new gmaps.LatLng(this.model.MaxLattitude(), this.model.MaxLongitude())
+		));
+	};
+	Rectangle.prototype.storeBounds = function () {
+		var model = this.model,
+			bounds = this.getBounds(),
+			sw = bounds.getSouthWest(),
+			ne = bounds.getNorthEast();
+
+		model.MinLattitude(sw.lat());
+		model.MinLongitude(sw.lng());
+		model.MaxLattitude(ne.lat());
+		model.MaxLongitude(ne.lng());
+	};
+
 	Rectangle.prototype.dispose = function () {
 		gmaps.event.clearListeners(this, "changed");
 		gmaps.event.clearInstanceListeners(this);
 		this.setMap(null);
 	};
-	Rectangle.prototype.canEdit = function (value) {
-		this.setEditable(value);
-		this.setDraggable(value);
+	Rectangle.prototype.canEdit = function (editing) {
+		this.setEditable(editing);
+		this.setDraggable(editing);
 		this.setOptions({
-			zIndex: value ? 100 : 5,
+			zIndex: editing ? 100 : 5,
 		});
+
+		if (!editing) {
+			this.resetBounds();
+		}
 	};
 
 	Rectangle.prototype.updatePathFromModel = function (path) {
