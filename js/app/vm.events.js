@@ -63,9 +63,9 @@ define(['jquery','messenger','underscore','datacontext','ko','amplify','utils','
 			.then(function () {
 				// remove existing from the map
 				_list().forEach(function (model) {
-					if (model.polyHandle) {
-						_devices.fmap.removePolygon(model.polyHandle);
-						delete model.polyHandle;
+					if (model.handle) {
+						model.handle.dispose();
+						delete model.handle;
 					}
 				});
 				/** Clear the list. */
@@ -73,14 +73,17 @@ define(['jquery','messenger','underscore','datacontext','ko','amplify','utils','
 
 				_.each(data.events(), function (model) {
 					// add to map
-					model.handle = _devices.fmap.addMarker(model, model.bob);
+					model.handle = _devices.fmap.addMarker({
+						lattitude: parseFloat(model.Lattitude()),
+						longitude: parseFloat(model.Longitude()),
+					}, model.EventID());
 					// add to list
 					model.time = utils.DateLongFormat(model.EventDate());
 					model.actions = '';
 					_list.push(model);
 				});
-				}, function (someArg) {
-					alert('Retrieving events with SomeArg:' + someArg);
+			}, function (someArg) {
+				alert('Retrieving events with SomeArg:' + someArg);
 			});
 		},
 		startEdit = function(vm/*, evt*/) {
@@ -90,9 +93,9 @@ define(['jquery','messenger','underscore','datacontext','ko','amplify','utils','
 		cancelEdit = function(/*vm, evt*/) {
 			editing(false);
 		},
-		selectItem = function (vm) {
+		selectItem = function (model) {
 			_devices.fmap.setCenter(
-				new gmaps.LatLng(parseFloat(vm.Lattitude()), parseFloat(vm.Longitude())));
+				new gmaps.LatLng(parseFloat(model.Lattitude()), parseFloat(model.Longitude())));
 		},
 		list = [
 			{

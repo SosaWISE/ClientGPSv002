@@ -5,8 +5,8 @@
  * Time: 12:28 PM
  * To change this template use File | Settings | File Templates.
  */
-define(['jquery','messenger','underscore','datacontext','ko','amplify','vm.model-editor','model.mapper'],
-function ($, messenger, _, datacontext, ko, amplify, modelEditor, modelMapper) {
+define(['jquery','messenger','underscore','datacontext','ko','amplify','vm.model-editor','model.mapper','gmaps'],
+function ($, messenger, _, datacontext, ko, amplify, modelEditor, modelMapper, gmaps) {
 // wrap in create function in order to create multiple instances
 return (function create() {
 	var
@@ -40,20 +40,37 @@ return (function create() {
 			refresh();
 		},
 		refresh = function () {
+			// remove existing from the map
+			_list().forEach(function (model) {
+				if (model.handle) {
+					model.handle.dispose();
+					delete model.handle;
+				}
+			});
 			_list.destroyAll();
+
+			var list = ko.observableArray();
 			/** Initialize view model. */
 			$.when(
 				datacontext.Devices.getData(
 					{
-						results: _list,
+						results: list,
 						param: {
 							UniqueID: datacontext.Customer.model.customerMasterFileId()
 						}
 					}
 				)
 			)
-			.then(function (response) {
-				console.log(response);
+			.then(function () {
+				_.each(list(), function (model) {
+					// add to map
+					model.handle = _devices.fmap.addMarker({
+						lattitude: parseFloat(model.LastLatt()),
+						longitude: parseFloat(model.LastLong()),
+					}, model.DeviceID());
+					// add to list
+					_list.push(model);
+				});
 			}, function (someArg) {
 					alert('SomeArg:' + someArg);
 			});
@@ -75,6 +92,10 @@ return (function create() {
 					saving(false);
 				}
 			});
+		},
+		selectItem = function (model) {
+			_devices.fmap.setCenter(
+				new gmaps.LatLng(parseFloat(model.LastLatt()), parseFloat(model.LastLong())));
 		},
 		_addDevice = function() {
 			alert("What up");
@@ -144,6 +165,7 @@ return (function create() {
 		canEdit: ko.observable(true),
 		editing: editorVM.editing,
 		editItem: ko.observable(editorVM),
+		selectItem: selectItem,
 		saving: saving,
 		startEdit: startEdit,
 		cancelEdit: cancelEdit,

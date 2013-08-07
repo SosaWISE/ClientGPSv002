@@ -4,7 +4,7 @@
     </div>
     <div class="content">
         <ul class="devices" data-bind="foreach:list">
-            <li data-bind="attr:{'class':type}">
+            <li data-bind="attr:{'class':type},click:$parent.selectItem">
                 <div class="title" data-bind="text:DeviceName"></div>
                 <div class="sub" data-bind="text:time"></div>
                 <div class="actions" data-bind="if:$parent.canEdit">
@@ -28,7 +28,7 @@
                     <span class="label">Description</span>
                     <textarea class="description" placeholder="Description here" rows="5"></textarea>
                 </li>
-                <li>
+                <!-- <li>
                     <span class="label">Select Box</span>
                     <div class="select-wrap">
                         <select>
@@ -50,7 +50,7 @@
                 <li>
                     <span class="label">Field Title</span>
                     <input type="text" placeholder="Placeholder">
-                </li>
+                </li> -->
                 <li>
                     <input type="submit" value="Save" class="save" data-bind="click:$parent.saveEdit">
                     <input type="button" value="Cancel" class="cancel" data-bind="click:$parent.cancelEdit">

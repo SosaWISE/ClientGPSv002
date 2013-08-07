@@ -133,7 +133,6 @@ function ($, _, config, messenger, utils, ko, amplify, datacontext) {
 			.then(function (response) {
 				/** Init. */
 				console.log(response);
-debugger;
 				_devices.removeAll();
 				/** Initialize. */
 				_.each(data.devices(), function (item) {

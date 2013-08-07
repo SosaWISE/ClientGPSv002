@@ -55,7 +55,7 @@ return (function create() {
 				// remove existing from the map
 				_list().forEach(function (model) {
 					if (model.handle) {
-						_devices.fmap.removePolygon(model.handle);
+						model.handle.dispose();
 						delete model.handle;
 					}
 				});

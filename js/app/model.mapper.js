@@ -97,6 +97,8 @@ define(['model','utils'],
 					item.SystemTypeId(dto.SystemTypeId);
 					item.UnitID(dto.UnitID);
 					item.Username(dto.Username);
+					item.LastLatt(dto.LastLatt);
+					item.LastLong(dto.LastLong);
 
 					item.type(dto.UIName);
 					if (dto.EventDate) { item.time(utils.DateLongFormat(dto.EventDate)); }

@@ -27,6 +27,8 @@ function (ko) {
 			self.SystemTypeId = ko.observable();
 			self.UnitID = ko.observable();
 			self.Username = ko.observable();
+			self.LastLatt = ko.observable();
+			self.LastLong = ko.observable();
 
 			self.type = ko.observable();
 			self.time = ko.observable();
