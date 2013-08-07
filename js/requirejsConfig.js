@@ -5,7 +5,7 @@ var require = {
 	// defines where each is located. does NOT load/require them
 	paths: {
 		jquery: '../lib/jquery-1.7.2',
-		ko: '../lib/knockout-2.2.1',
+		ko: '../lib/knockout',
 		"knockout.activity": '../lib/knockout.activity',
 		"knockout.asyncCommand": '../lib/knockout.asyncCommand',
 		"knockout.dirtyFlag": '../lib/knockout.dirtyFlag',
