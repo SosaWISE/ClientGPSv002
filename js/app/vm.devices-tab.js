@@ -5,15 +5,27 @@
  * Time: 12:28 PM
  * To change this template use File | Settings | File Templates.
  */
-define(['jquery','messenger','underscore','datacontext','ko','amplify','vm.model-editor','model.mapper','gmaps'],
+define([
+	'jquery',
+	'messenger',
+	'underscore',
+	'datacontext',
+	'ko',
+	'amplify',
+	'vm.model-editor',
+	'model.mapper',
+	'gmaps'
+],
 function ($, messenger, _, datacontext, ko, amplify, modelEditor, modelMapper, gmaps) {
 // wrap in create function in order to create multiple instances
 return (function create() {
 	var
 		/** START Private Properties. */
 		saving = ko.observable(false),
+		_type = 'devices',
 		_list = ko.observableArray(),
 		_devices,
+		_active = ko.observable(false),
 		editorVM = modelEditor.create(),
 		/**   END Private Properties. */
 
@@ -24,7 +36,7 @@ return (function create() {
 		},
 		/**   END Private Methods. */
 
-		init = function (devices) {
+		init = function (devices, cb) {
 			_devices = devices;
 			_list(list);
 
@@ -37,9 +49,9 @@ return (function create() {
 				refresh();
 			});
 
-			refresh();
+			refresh(cb);
 		},
-		refresh = function () {
+		refresh = function (cb) {
 			// remove existing from the map
 			_list().forEach(function (model) {
 				if (model.handle) {
@@ -71,8 +83,10 @@ return (function create() {
 					// add to list
 					_list.push(model);
 				});
+				cb();
 			}, function (someArg) {
-					alert('SomeArg:' + someArg);
+				alert('SomeArg:' + someArg);
+				cb();
 			});
 		},
 		startEdit = function(model) {
@@ -82,20 +96,40 @@ return (function create() {
 			editorVM.stop(true);
 		},
 		saveEdit = function() {
+			if (!editorVM.editing()) {
+				return;
+			}
+
+			var model = editorVM.model(),
+				handle = model.handle;
+
 			editorVM.stop(false);
 			saving(true);
-			datacontext.Devices.updateData(editorVM.model(), {
+
+			// temporarily delete handle since ko.toJSON can't handle it
+			delete model.handle;
+			model.saving(true);
+			datacontext.Devices.updateData(model, {
 				success: function () {
 					saving(false);
+					model.saving(false);
 				},
 				error: function () {
 					saving(false);
+					model.saving(false);
 				}
 			});
+			// add back the handle
+			model.handle = handle;
 		},
 		selectItem = function (model) {
 			_devices.fmap.setCenter(
 				new gmaps.LatLng(parseFloat(model.LastLatt()), parseFloat(model.LastLong())));
+
+			_list().forEach(function (model) {
+				model.active(false);
+			});
+			model.active(true);
 		},
 		_addDevice = function() {
 			alert("What up");
@@ -172,10 +206,10 @@ return (function create() {
 		saveEdit: saveEdit,
 		get refresh() { return refresh; },
 		get addDevice() { return _addDevice; },
-		type: 'devices',
+		type: _type,
 		name: 'Devices',
 		get list() { return _list; },
-		active: ko.observable(false),
+		active: _active,
 		get Activate() { return _activate; }
 	};
 })();

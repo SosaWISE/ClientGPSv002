@@ -187,7 +187,7 @@ function ($, _, ko, model, modelMapper, dataService, config, utils) {
 		 ******************************/
 		_session  = new Entity(dataService.Session.SessionStart, modelMapper.Session, model.Session.Nullo),
 		_customer = new Entity(dataService.Customer.CustomerAuth, modelMapper.Customer, model.Customer.Nullo),
-		_devices = new EntitySet(dataService.Devices.AcquireList, modelMapper.Device, dataService.Devices.Nullo),
+		_devices = new EntitySet(dataService.Devices.AcquireList, modelMapper.Device, dataService.Devices.Nullo, dataService.Devices.SaveData),
 		_events = new EntitySet(dataService.Events.GetData, modelMapper.Event, dataService.Events.Nullo),
 		_geoFences = new EntitySet(dataService.GeoFences.GetData, modelMapper.GeoFence, dataService.GeoFences.Nullo, dataService.GeoFences.SaveData),
 		_users = new EntitySet(dataService.Users.GetData, modelMapper.User, dataService.Users.Nullo);

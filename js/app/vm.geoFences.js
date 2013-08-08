@@ -12,6 +12,7 @@ return (function create() {
 	var
 		/** START Private Properties. */
 		saving = ko.observable(false),
+		_type = 'geofences',
 		_list = ko.observableArray(),
 		_devices,
 		_active = ko.observable(false),
@@ -25,7 +26,7 @@ return (function create() {
 		},
 		/**   END Private Methods. */
 
-		init = function (devices) {
+		init = function (devices, cb) {
 			_devices = devices;
 
 			/** Bind amplify events to vm. */
@@ -38,9 +39,9 @@ return (function create() {
 				refresh();
 			});
 
-			refresh();
+			refresh(cb);
 		},
-		refresh = function () {
+		refresh = function (cb) {
 			/** Init. */
 			var geoFences = ko.observableArray();
 
@@ -68,16 +69,20 @@ return (function create() {
 					model.handle = _devices.fmap.addRectangle(startEdit, model, model.GeoFenceID());
 					gmaps.event.addListener(model.handle, "click", function () {
 						// this tab must be showing
-						if (_active()) {
-							startEdit(model, null, true);
+						if (!_active()) {
+							_devices.activateTab(_type);
 						}
+						startEdit(model, null, true);
 					});
 					// add to list
 					_list.push(model);
 				});
+
+				cb();
 			},
 			function (someArg) {
 				alert('Retrieving Geo Fences has an error with SomeArg:' + someArg);
+				cb();
 			});
 		},
 		startEdit = function(model, evt, preventFocus) {
@@ -88,9 +93,7 @@ return (function create() {
 
 			editorVM.start(model);
 
-			if (!preventFocus) {
-				selectItem(model);
-			}
+			selectItem(model, evt, preventFocus);
 			model.handle.canEdit(true);
 		},
 		cancelEdit = function(model) {
@@ -134,12 +137,19 @@ return (function create() {
 			// add back the handle
 			model.handle = handle;
 		},
-		selectItem = function (model) {
-			_devices.fmap.panTo(new gmaps.LatLng(model.MeanLattitude(), model.MeanLongitude()));
-			var zoomLevel = model.ZoomLevel();
-			if (zoomLevel) {
-				_devices.fmap.setZoom(zoomLevel);
+		selectItem = function (model, evt, preventFocus) {
+			if (!preventFocus) {
+				_devices.fmap.panTo(new gmaps.LatLng(model.MeanLattitude(), model.MeanLongitude()));
+				var zoomLevel = model.ZoomLevel();
+				if (zoomLevel) {
+					_devices.fmap.setZoom(zoomLevel);
+				}
 			}
+
+			_list().forEach(function (model) {
+				model.active(false);
+			});
+			model.active(true);
 		};
 
 	/** Return object. */
@@ -154,7 +164,7 @@ return (function create() {
 		cancelEdit: cancelEdit,
 		saveEdit: saveEdit,
 		selectItem: selectItem,
-		type: 'geofences',
+		type: _type,
 		name: 'Geofences',
 		list: _list,
 		active: _active,

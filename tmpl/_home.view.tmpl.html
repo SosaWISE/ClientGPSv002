@@ -2,7 +2,7 @@
 <div class="content">
     <h3 class="title">Devices</h3>
     <ul class="devices" data-bind="foreach:devices">
-        <li data-bind="attr:{'class':type}"><a data-bind="command:selectDeviceCmd,text:name"></a></li>
+        <li data-bind="attr:{'class':type}"><a data-bind="click:$parent.selectDevice,text:DeviceName"></a></li>
     </ul>
     <h3 class="title">Add a new device</h3>
     <ul class="devices" data-bind="foreach:deviceTypes">

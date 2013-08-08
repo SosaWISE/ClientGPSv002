@@ -34,28 +34,7 @@ function ($, _, config, messenger, utils, ko, amplify, datacontext) {
 				_refresh(/*data*/);
 			});
 		},
-		_devices = ko.observableArray([
-			{
-				type: 'watch',
-				name: 'Austin\'s GPS Watch'
-			},
-			{
-				type: 'phone',
-				name: 'Austin\'s GPS Watch'
-			},
-			{
-				type: 'home',
-				name: 'Austin\'s GPS Watch'
-			},
-			{
-				type: 'pet',
-				name: 'Austin\'s GPS Watch'
-			},
-			{
-				type: 'car',
-				name: 'Austin\'s GPS Watch'
-			}
-		]),
+		_devices = ko.observableArray(),
 		_events = ko.observableArray([
 			{
 				type: 'sos',
@@ -136,12 +115,7 @@ function ($, _, config, messenger, utils, ko, amplify, datacontext) {
 				_devices.removeAll();
 				/** Initialize. */
 				_.each(data.devices(), function (item) {
-					item.name = item.DeviceName;
-					_devices.push({
-						type: item.type(),
-						name: item.name(),
-						selectDeviceCmd: ko.asyncCommand({ execute: selectDeviceCmdExecute, canExecute: selectDeviceCmdCanExecute })
-					});
+					_devices.push(item);
 				});
 
 				_events.removeAll();
@@ -165,17 +139,10 @@ function ($, _, config, messenger, utils, ko, amplify, datacontext) {
 					//alert('SomeArg:' + someArg);
 			});
 		},
-		selectDeviceCmdExecute = function (complete) {
-			complete();
-		},
-		selectDeviceCmdCanExecute = function (isExecuting) { return !isExecuting;/* && isDirty() && isValid();*/ };
+		selectDevice = function (model) {
+			amplify.publish('select:device', model.DeviceID());
+		};
 
-	_devices().forEach(function(device) {
-		device.selectDeviceCmd = ko.asyncCommand({
-			execute: selectDeviceCmdExecute,
-			canExecute: selectDeviceCmdCanExecute
-		});
-	});
 	deviceTypes().forEach(function(deviceType) {
 		deviceType.addDeviceCmd = ko.asyncCommand({
 			execute: function (complete) {
@@ -199,6 +166,7 @@ function ($, _, config, messenger, utils, ko, amplify, datacontext) {
 		ico: '&#8962;',
 		type: 'home',
 		name: 'Home',
+		selectDevice: selectDevice,
 		get TmplName() { return _tmplName; },
 		get TmplModuleName() { return _tmplModuleName; },
 		get devices() { return  _devices; },

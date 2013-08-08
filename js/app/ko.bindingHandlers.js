@@ -24,7 +24,7 @@ function ($, ko) {
     // active
     //---------------------------
     createToggleClassHandler('active');
-    // active
+    // editing
     //---------------------------
     createToggleClassHandler('editing');
 

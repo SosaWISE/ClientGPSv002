@@ -23,7 +23,7 @@ define(['jquery','messenger','underscore','datacontext','ko','amplify','utils','
 
 		/**	 END Private Methods. */
 
-		init = function (devices) {
+		init = function (devices, cb) {
 			_devices = devices;
 			_list(list);
 
@@ -36,9 +36,9 @@ define(['jquery','messenger','underscore','datacontext','ko','amplify','utils','
 				refresh();
 			});
 
-			refresh();
+			refresh(cb);
 		},
-		refresh = function () {
+		refresh = function (cb) {
 			/** Init */
 			var data = {
 				events: ko.observableArray()
@@ -82,8 +82,10 @@ define(['jquery','messenger','underscore','datacontext','ko','amplify','utils','
 					model.actions = '';
 					_list.push(model);
 				});
+				cb();
 			}, function (someArg) {
 				alert('Retrieving events with SomeArg:' + someArg);
+				cb();
 			});
 		},
 		startEdit = function(vm/*, evt*/) {

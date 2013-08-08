@@ -16,6 +16,7 @@ function ($, _, Sammy, presenter, config, routeMediator, store) {
 		isRedirecting = false,
 		logger = config.Logger,
 		window = config.Window,
+		navigateToCallback,
 
 		sammy = new Sammy.Application(function () {
 			if (Sammy.Title) {
@@ -28,8 +29,17 @@ function ($, _, Sammy, presenter, config, routeMediator, store) {
 			window.history.back();
 		},
 
-		_navigateTo = function (url) {
-			sammy.setLocation(url);
+		_navigateTo = function (hash, cb) {
+			if (currentHash !== hash) {
+				if (navigateToCallback) {
+					throw new Error('navigateToCallback is already defined');
+				}
+				navigateToCallback = cb;
+				sammy.setLocation(hash);
+			}
+			else if (cb) {
+				cb();
+			}
 		},
 
 		_register = function (options) {
@@ -127,7 +137,12 @@ function ($, _, Sammy, presenter, config, routeMediator, store) {
 				// $('body').attr('class', cls);
 
 				if (loggedIn) {
-					lOptions.callback(context.params); // Activate the viewModel.
+					lOptions.callback(context.params, function () {
+						if (navigateToCallback) {
+							navigateToCallback.apply(null, arguments);
+							navigateToCallback = null;
+						}
+					}); // Activate the viewModel.
 					_showPortal(cls);
 
 					presenter.TransitionTo(

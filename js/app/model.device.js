@@ -13,6 +13,10 @@ function (ko) {
 
 		Device = function () {
 			var self = this;
+
+			self.saving = ko.observable(false);
+			self.active = ko.observable(false);
+
 			self.DeviceID = ko.observable();
 			self.DeviceName = ko.observable();
 			self.CustomerID = ko.observable();

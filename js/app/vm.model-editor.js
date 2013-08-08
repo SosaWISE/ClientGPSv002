@@ -18,9 +18,10 @@ return (function create() {
 		origValues = {};
 		Object.keys(currModel).forEach(function (key) {
 			// only save observable fields
+			// and fields that start with an uppercase character
 			var field = currModel[key];
-			if (ko.isObservable(field) &&
-				!ko.isComputed(field)) {
+			if (ko.isObservable(field) && !ko.isComputed(field) &&
+				key[0].toUpperCase() === key[0]) {
 				origValues[key] = field();
 			}
 		});

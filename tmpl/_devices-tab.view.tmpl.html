@@ -4,7 +4,7 @@
     </div>
     <div class="content">
         <ul class="devices" data-bind="foreach:list">
-            <li data-bind="attr:{'class':type},click:$parent.selectItem">
+            <li data-bind="attr:{'class':type},click:$parent.selectItem,active:active">
                 <div class="title" data-bind="text:DeviceName"></div>
                 <div class="sub" data-bind="text:time"></div>
                 <div class="actions" data-bind="if:$parent.canEdit">

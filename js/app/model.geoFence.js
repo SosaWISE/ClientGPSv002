@@ -12,6 +12,7 @@ function (ko) {
 		var self = this;
 
 		self.saving = ko.observable(false);
+		self.active = ko.observable(false);
 
 		self.GeoFenceID = ko.observable();
 		self.AccountId = ko.observable();

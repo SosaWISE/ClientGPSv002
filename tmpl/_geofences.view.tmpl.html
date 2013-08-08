@@ -4,11 +4,11 @@
     </div>
     <div class="content">
         <ul class="geofences" data-bind="foreach:list">
-            <li data-bind="attr:{'class':Type},click:$parent.selectItem">
+            <li data-bind="attr:{'class':Type},click:$parent.selectItem,active:active">
                 <div class="title" data-bind="text:GeoFenceName"></div>
                 <div class="sub" data-bind="text:ModifiedOn"></div>
                 <div class="actions" data-bind="if:$parent.canEdit">
-                    <a style="cursor:pointer;" class="edit-btn" data-bind="click:$parent.startEdit">&#xe01b;</a>
+                    <a style="cursor:pointer;" class="edit-btn" data-bind="click:$parent.startEdit,clickBubble:false">&#xe01b;</a>
                 </div>
             </li>
         </ul>

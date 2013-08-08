@@ -14,8 +14,10 @@ define([
 	'vm.geoFences',
 	'flowMap/index',
 	'gmaps',
+	'amplify',
+	'router'
 ],
-function (config, messenger, ko, events, devices, geofences, flowMap, gmaps) {
+function (config, messenger, ko, events, devices, geofences, flowMap, gmaps, amplify, router) {
 	var
 		self,
 		/** START Private Properties. */
@@ -51,16 +53,16 @@ function (config, messenger, ko, events, devices, geofences, flowMap, gmaps) {
 					// self.fmap.beginEdit();
 					self.fmap.inEditMode = true;
 
+					var cbCount = 0;
 					// initialize all group view models
 					groups.forEach(function(vm) {
-						vm.init(self);
+						vm.init(self, function () {
+							cbCount++;
+							if (cbCount === groups.length) {
+								callback();
+							}
+						});
 					});
-
-					// activate events tab
-					activateGroup(events);
-
-
-					if (callback) { callback(); }
 				}, 200);
 			}
 			else {
@@ -71,6 +73,25 @@ function (config, messenger, ko, events, devices, geofences, flowMap, gmaps) {
 
 		init = function () {
 			/** Initialize view model. */
+
+			// activate events tab
+			activateGroup(events);
+
+			amplify.subscribe('select:device', function (deviceID) {
+				// ensure this tab is selected
+				router.NavigateTo(config.Hashes.devices, function () {
+					devices.list().some(function (model) {
+						if (model.DeviceID() === deviceID) {
+							devices.selectItem(model);
+							return true;
+						}
+					});
+				});
+				// ensure devices tab is showing
+				if (!devices.active()) {
+					activateGroup(devices);
+				}
+			});
 		},
 		getGroupTmpl = function(vm) {
 			console.log('getGroupTmpl', vm.TmplName);
@@ -103,6 +124,23 @@ function (config, messenger, ko, events, devices, geofences, flowMap, gmaps) {
 		editing(vm.editing());
 		editItem(vm.editItem());
 	}
+	function activateTab(tabName) {
+		var group;
+		switch(tabName) {
+		case 'events':
+			group = events;
+			break;
+		case 'devices':
+			group = devices;
+			break;
+		case 'geofences':
+			group = geofences;
+			break;
+		default:
+			throw new Error('invalid tab name: ' + tabName);
+		}
+		activateGroup(group);
+	}
 
 	/** Init object. */
 	init();
@@ -120,6 +158,7 @@ function (config, messenger, ko, events, devices, geofences, flowMap, gmaps) {
 		getGroupTmpl: getGroupTmpl,
 		groups: groups,
 		activateGroup: activateGroup,
+		activateTab: activateTab,
 		get Activate() { return _activate; }
 	};
 	return self;
