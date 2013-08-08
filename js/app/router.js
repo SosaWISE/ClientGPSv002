@@ -120,7 +120,6 @@ function ($, _, Sammy, presenter, config, routeMediator, store) {
 					context.app.setLocation(lOptions.route);
 				}
 
-				debugger;
 				cls = lOptions.title.toLowerCase();
 				// set body class if it's not 'login'
 				$('body').attr('class', (cls!=='login') ? cls : '');

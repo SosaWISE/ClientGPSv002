@@ -27,7 +27,6 @@ return (function create() {
 
 		init = function (devices) {
 			_devices = devices;
-			_list(list);
 
 			/** Bind amplify events to vm. */
 			amplify.subscribe('customerAuthentication', function (data) {
@@ -70,7 +69,7 @@ return (function create() {
 					gmaps.event.addListener(model.handle, "click", function () {
 						// this tab must be showing
 						if (_active()) {
-							startEdit(model);
+							startEdit(model, null, true);
 						}
 					});
 					// add to list
@@ -81,49 +80,46 @@ return (function create() {
 				alert('Retrieving Geo Fences has an error with SomeArg:' + someArg);
 			});
 		},
-		startEdit = function(model) {
+		startEdit = function(model, evt, preventFocus) {
 			// we're already editing
 			if (editorVM.editing()) {
 				return;
 			}
+
 			editorVM.start(model);
 
-			selectItem(model);
+			if (!preventFocus) {
+				selectItem(model);
+			}
 			model.handle.canEdit(true);
 		},
 		cancelEdit = function(model) {
 			editorVM.stop(true);
-
 			model.handle.canEdit(false);
+			model.handle.resetBounds();
 		},
 		saveEdit = function() {
-			editorVM.stop(false);
-			saving(true);
+			if (!editorVM.editing()) {
+				return;
+			}
 
 			var model = editorVM.model(),
-				data;
+				handle = model.handle;
+
+			editorVM.stop(false);
+			model.handle.canEdit(false);
+			saving(true);
 
 			model.ZoomLevel(_devices.fmap.getZoom());
 			model.handle.storeBounds();
 
-			data = {
-				GeoFenceID: model.GeoFenceID(),
-				SessionID: datacontext.Session.model.SessionID(),//model.SessionID(),
-				AccountId: model.AccountId(),
-				// CustomerId: model.CustomerId(),
-				GeoFenceName: model.GeoFenceNameUi(),
-				GeoFenceDescription: model.Description(),
-				ItemId: 'Junk',
-				ReportMode: model.ReportModeId(),
-				MaxLattitude: model.MaxLattitude(),
-				MinLongitude: model.MinLongitude(),
-				MaxLongitude: model.MaxLongitude(),
-				MinLattitude: model.MinLattitude(),
-				ZoomLevel: model.ZoomLevel(),
-			};
+			model.SessionID(datacontext.Session.model.SessionID());
+			model.ItemId('Junk');
 
+			// temporarily delete handle since ko.toJSON can't handle it
+			delete model.handle;
 			model.saving(true);
-			datacontext.GeoFences.updateData(data, {
+			datacontext.GeoFences.updateData(model, {
 				success: function (response) {
 					console.log(response);
 					saving(false);
@@ -135,91 +131,16 @@ return (function create() {
 					model.saving(false);
 				}
 			});
+			// add back the handle
+			model.handle = handle;
 		},
 		selectItem = function (model) {
 			_devices.fmap.panTo(new gmaps.LatLng(model.MeanLattitude(), model.MeanLongitude()));
-			if (_devices.fmap.getZoom() < 13) {
-				_devices.fmap.setZoom(13);
+			var zoomLevel = model.ZoomLevel();
+			if (zoomLevel) {
+				_devices.fmap.setZoom(zoomLevel);
 			}
-		},
-
-		list = [
-			{
-				Type: 'fence',
-				GeoFenceNameUi: 'Our House',
-				ModifiedOn: 'April 23, 2013 at 12:42pm'
-			},
-			{
-				Type: 'fence',
-				GeoFenceNameUi: 'Tyler\'s House',
-				ModifiedOn: 'April 23, 2013 at 12:42pm'
-			},
-			{
-				Type: 'fence',
-				GeoFenceNameUi: 'Ethan\'s Apartment',
-				ModifiedOn: 'April 23, 2013 at 12:42pm'
-			},
-			{
-				Type: 'fence',
-				GeoFenceNameUi: 'Mark\'s House',
-				ModifiedOn: 'April 23, 2013 at 12:42pm'
-			},
-			{
-				Type: 'fence',
-				GeoFenceNameUi: 'Carolyn\'s House',
-				ModifiedOn: 'April 23, 2013 at 12:42pm'
-			},
-			{
-				Type: 'fence',
-				GeoFenceNameUi: 'Church',
-				ModifiedOn: 'April 23, 2013 at 12:42pm'
-			},
-			{
-				Type: 'fence',
-				GeoFenceNameUi: 'Our Neighborhood',
-				ModifiedOn: 'April 23, 2013 at 12:42pm'
-			},
-			{
-				Type: 'fence',
-				GeoFenceNameUi: 'Orem, UT',
-				ModifiedOn: 'April 23, 2013 at 12:42pm'
-			},
-			{
-				Type: 'fence',
-				GeoFenceNameUi: 'Utah, USA',
-				ModifiedOn: 'April 23, 2013 at 12:42pm'
-			},
-			{
-				Type: 'fence',
-				GeoFenceNameUi: 'Carolyn\'s Neighborhood',
-				ModifiedOn: 'April 23, 2013 at 12:42pm'
-			},
-			{
-				Type: 'fence',
-				GeoFenceNameUi: 'Our Ward Boundries',
-				ModifiedOn: 'April 23, 2013 at 12:42pm'
-			},
-			{
-				Type: 'fence',
-				GeoFenceNameUi: 'Our Stake Boundries',
-				ModifiedOn: 'April 23, 2013 at 12:42pm'
-			},
-			{
-				Type: 'fence',
-				GeoFenceNameUi: 'Utah Lake',
-				ModifiedOn: 'April 23, 2013 at 12:42pm'
-			},
-			{
-				Type: 'fence',
-				GeoFenceNameUi: 'Texas, USA',
-				ModifiedOn: 'April 23, 2013 at 12:42pm'
-			},
-			{
-				Type: 'fence',
-				GeoFenceNameUi: 'Houston, TX',
-				ModifiedOn: 'April 23, 2013 at 12:42pm'
-			}
-		];
+		};
 
 	/** Return object. */
 	return {

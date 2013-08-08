@@ -45,11 +45,7 @@ function (amplify, config, ko) {
 		 *	<br />double MinLattitude -- Minimum Latitude
 		 *	<br />short? ZoomLevel -- Google Maps Zoom Level
 		 */
-		_saveData = function (callbacks, data) {
-			/** Init */
-			debugger;
-			var jsonData = ko.toJSON(data);
-
+		_saveData = function (callbacks, jsonData) {
 			/** Execute */
 			return amplify.request({
 				resourceId: 'devices-saveGeoFences',

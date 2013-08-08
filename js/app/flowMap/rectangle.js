@@ -4,10 +4,7 @@ function (flowUtil, gmaps) {
 
 	function Rectangle(options) {
 		this.model = options.model;
-		this.setBounds(new gmaps.LatLngBounds(
-			new gmaps.LatLng(this.model.MinLattitude(), this.model.MinLongitude()),
-			new gmaps.LatLng(this.model.MaxLattitude(), this.model.MaxLongitude())
-		));
+		this.resetBounds();
 
 		// call parent
 		gmaps.Rectangle.apply(this, arguments);
@@ -44,10 +41,6 @@ function (flowUtil, gmaps) {
 		this.setOptions({
 			zIndex: editing ? 100 : 5,
 		});
-
-		if (!editing) {
-			this.resetBounds();
-		}
 	};
 
 	Rectangle.prototype.updatePathFromModel = function (path) {

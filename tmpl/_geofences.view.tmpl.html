@@ -5,7 +5,7 @@
     <div class="content">
         <ul class="geofences" data-bind="foreach:list">
             <li data-bind="attr:{'class':Type},click:$parent.selectItem">
-                <div class="title" data-bind="text:GeoFenceNameUi"></div>
+                <div class="title" data-bind="text:GeoFenceName"></div>
                 <div class="sub" data-bind="text:ModifiedOn"></div>
                 <div class="actions" data-bind="if:$parent.canEdit">
                     <a style="cursor:pointer;" class="edit-btn" data-bind="click:$parent.startEdit">&#xe01b;</a>
@@ -22,16 +22,16 @@
             <ul class="edit-form">
                 <li>
                     <span class="label">Geofence Title</span>
-                    <input data-bind="hasFocus:$parent.editItem().focusField,value:GeoFenceNameUi" type="text" placeholder="Placeholder">
+                    <input data-bind="hasFocus:$parent.editItem().focusField,value:GeoFenceName" type="text" placeholder="Placeholder">
                 </li>
                 <li>
                     <span class="label">Description</span>
-                    <textarea data-bind="value:Description" class="description" placeholder="Description here" rows="5"></textarea>
+                    <textarea data-bind="value:GeoFenceDescription" class="description" placeholder="Description here" rows="5"></textarea>
                 </li>
                 <li>
                     <span class="label">Select Box</span>
                     <div class="select-wrap">
-                        <select data-bind="value:ReportModeId">
+                        <select data-bind="value:ReportMode">
                             <option value="0" disabled="disabled">Select one...</option>
                             <option value="1">Exit Alert</option>
                             <option value="2">Enter Alert</option>

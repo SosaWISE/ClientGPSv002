@@ -12,32 +12,36 @@ function (ko) {
 		var self = this;
 
 		self.saving = ko.observable(false);
+
 		self.GeoFenceID = ko.observable();
 		self.AccountId = ko.observable();
-		self.Area = ko.observable();
-		self.CenterLattitude = ko.observable();
-		self.CenterLongitude = ko.observable();
-		self.Description = ko.observable();
-		self.Name = ko.observable();
-		self.GeoFenceNameUi = ko.observable();
+		// self.Area = ko.observable();
+		// self.CenterLattitude = ko.observable();
+		// self.CenterLongitude = ko.observable();
+		self.GeoFenceDescription = ko.observable();
+		// self.Name = ko.observable();
+		self.GeoFenceName = ko.observable();
 		self.Type = ko.observable();
-		self.TypeId = ko.observable();
-		self.ReportModeId = ko.observable();
-		self.ReportModeUi = ko.observable();
+		// self.TypeId = ko.observable();
+		self.ReportMode = ko.observable();
+		// self.ReportModeUi = ko.observable();
 		self.MaxLattitude = ko.observable();
 		self.MaxLongitude = ko.observable();
 		self.MeanLattitude = ko.observable();
 		self.MeanLongitude = ko.observable();
 		self.MinLattitude = ko.observable();
 		self.MinLongitude = ko.observable();
-		self.PointLattitude = ko.observable();
-		self.PointLongitude = ko.observable();
-		self.PolyPointsList = ko.observableArray();
-		self.Radius = ko.observable();
+		// self.PointLattitude = ko.observable();
+		// self.PointLongitude = ko.observable();
+		// self.PolyPointsList = ko.observableArray();
+		// self.Radius = ko.observable();
 		self.ModifiedOn = ko.observable();
 		self.ZoomLevel = ko.observable();
 
-		self.isBrief = ko.observable(true);
+		self.SessionID = ko.observable();
+		self.ItemId = ko.observable();
+
+		// self.isBrief = ko.observable(true);
 		self.isNullo = false;
 		self.dirtyFlag = new ko.DirtyFlag([
 		]);
