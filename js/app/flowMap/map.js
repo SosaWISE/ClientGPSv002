@@ -32,12 +32,10 @@ function (gmaps, Marker, Rectangle) {
 		result = new Rectangle(options);
 		return result;
 	};
-	Map.prototype.addMarker = function (point, id) {
+	Map.prototype.addMarker = function (point, id, options) {
 		var result;
 
-		result = new Marker(this,
-			new gmaps.LatLng(point.lattitude, point.longitude)
-		);
+		result = new Marker(this, new gmaps.LatLng(point.lattitude, point.longitude), options);
 		result.id = id;
 		return result;
 	};

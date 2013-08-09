@@ -27,6 +27,7 @@ return (function create() {
 		_devices,
 		_active = ko.observable(false),
 		editorVM = modelEditor.create(),
+		_infoWindow,
 		/**   END Private Properties. */
 
 		/** START Private Methods. */
@@ -79,7 +80,9 @@ return (function create() {
 					model.handle = _devices.fmap.addMarker({
 						lattitude: parseFloat(model.LastLatt()),
 						longitude: parseFloat(model.LastLong()),
-					}, model.DeviceID());
+					}, model.DeviceID(), {
+						icon: deviceIcon,
+					});
 					// add to list
 					_list.push(model);
 				});
@@ -89,6 +92,12 @@ return (function create() {
 				cb();
 			});
 		},
+		deviceIcon = new gmaps.MarkerImage(
+			"/img/social-login-sprite.png",
+			new gmaps.Size(31, 31),
+			new gmaps.Point(31, 31),
+			new gmaps.Point(15, 15)
+		),
 		startEdit = function(model) {
 			editorVM.start(model);
 		},
@@ -123,13 +132,25 @@ return (function create() {
 			model.handle = handle;
 		},
 		selectItem = function (model) {
-			_devices.fmap.setCenter(
-				new gmaps.LatLng(parseFloat(model.LastLatt()), parseFloat(model.LastLong())));
+			var latLng;
+
+			latLng = new gmaps.LatLng(parseFloat(model.LastLatt()), parseFloat(model.LastLong()));
+			_devices.fmap.setCenter(latLng);
 
 			_list().forEach(function (model) {
 				model.active(false);
 			});
 			model.active(true);
+
+			if (_infoWindow) {
+				_infoWindow.close();
+			}
+
+			_infoWindow = new gmaps.InfoWindow({
+				content: $(document.createElement("div")).html("hello")[0],
+				position: latLng,
+			});
+			_infoWindow.open(_devices.fmap);
 		},
 		_addDevice = function() {
 			alert("What up");
