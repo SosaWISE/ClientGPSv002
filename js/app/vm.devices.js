@@ -45,7 +45,7 @@ function (config, messenger, ko, events, devices, geofences, flowMap, gmaps, amp
 						//zoomControlOptions: { style: gmaps.ZoomControlStyle.SMALL },
 						scaleControl: true,
 						mapTypeControl: true,
-						disableDefaultUI: true,
+						disableDefaultUI: true
 					});
 
 					// self.fmap.clear();
