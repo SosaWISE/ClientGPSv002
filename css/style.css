@@ -784,6 +784,7 @@ nav.primary .indicator {
 	padding: 20px 20px 20px 50px;
 	border-bottom: 1px solid rgba(0,0,0,.1);
 	position: relative;
+	cursor: pointer;
 }
 .content ul li .sub {
 	font-size: 12px;

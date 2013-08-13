@@ -4,8 +4,8 @@
 	</div>
 	<div class="content">
 		<ul class="activity" data-bind="foreach:events">
-			<li data-bind="attr:{'class':type}">
-				<div class="title" data-bind="text:title"></div>
+			<li data-bind="attr:{'class':EventTypeUi},click:$parent.selectEvent">
+				<div class="title" data-bind="text:EventShortDesc"></div>
 				<div class="sub" data-bind="text:time"></div>
 				<div class="actions" data-bind="text:actions"></div>
 			</li>

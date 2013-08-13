@@ -92,6 +92,21 @@ function (config, messenger, ko, events, devices, geofences, flowMap, gmaps, amp
 					activateGroup(devices);
 				}
 			});
+			amplify.subscribe('select:event', function (eventID) {
+				// ensure this tab is selected
+				router.NavigateTo(config.Hashes.devices, function () {
+					events.list().some(function (model) {
+						if (model.EventID() === eventID) {
+							events.selectItem(model);
+							return true;
+						}
+					});
+				});
+				// ensure events tab is showing
+				if (!events.active()) {
+					activateGroup(events);
+				}
+			});
 		},
 		getGroupTmpl = function(vm) {
 			console.log('getGroupTmpl', vm.TmplName);

@@ -35,14 +35,7 @@ function ($, _, config, messenger, utils, ko, amplify, datacontext) {
 			});
 		},
 		_devices = ko.observableArray(),
-		_events = ko.observableArray([
-			{
-				type: 'sos',
-				title: 'Rascal exited the Yard geofence',
-				time: 'EEApril 23, 2013 at 12:42pm',
-				actions: ''
-			}
-		]),
+		_events = ko.observableArray(),
 		deviceTypes = ko.observableArray([
 			{
 				type: 'home',
@@ -121,17 +114,12 @@ function ($, _, config, messenger, utils, ko, amplify, datacontext) {
 				_events.removeAll();
 				/** Bind events to main body. */
 				_.each(data.events(), function (item) {
-					_events.push({
-						type: item.EventTypeUi(),
-						title: item.EventShortDesc(),
-						time: utils.DateWithFormat(item.EventDate(),'MMMM Do, YYYY @ hh:mm:ss a'),
-						actions: ''
-					});
-
-					item.type = item.EventTypeUi;
-					item.title = item.EventShortDesc;
+					// item.type = item.EventTypeUi;
+					// item.title = item.EventShortDesc;
 					item.time = utils.DateWithFormat(item.EventDate(),'MMMM Do, YYYY @ hh:mm:ss a');
 					item.actions = '';
+
+					_events.push(item);
 				});
 
 				utils.InvokeFunctionIfExists(callback);
@@ -141,6 +129,9 @@ function ($, _, config, messenger, utils, ko, amplify, datacontext) {
 		},
 		selectDevice = function (model) {
 			amplify.publish('select:device', model.DeviceID());
+		},
+		selectEvent = function (model) {
+			amplify.publish('select:event', model.EventID());
 		};
 
 	deviceTypes().forEach(function(deviceType) {
@@ -167,6 +158,7 @@ function ($, _, config, messenger, utils, ko, amplify, datacontext) {
 		type: 'home',
 		name: 'Home',
 		selectDevice: selectDevice,
+		selectEvent: selectEvent,
 		get TmplName() { return _tmplName; },
 		get TmplModuleName() { return _tmplModuleName; },
 		get devices() { return  _devices; },

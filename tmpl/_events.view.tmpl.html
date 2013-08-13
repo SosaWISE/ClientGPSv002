@@ -4,7 +4,7 @@
     </div>
     <div class="content">
         <ul class="events" data-bind="foreach:list">
-            <li data-bind="attr:{'class':EventTypeUi},click:$parent.selectItem">
+            <li data-bind="attr:{'class':EventTypeUi},click:$parent.selectItem,active:active">
                 <div class="title" data-bind="text:EventShortDesc"></div>
                 <div class="sub" data-bind="text:time"></div>
                 <div class="actions" data-bind="if:$parent.canEdit">

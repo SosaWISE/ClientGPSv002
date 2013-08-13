@@ -13,6 +13,10 @@ function (ko) {
 
 		Event = function () {
 			var self = this;
+
+			self.saving = ko.observable(false);
+			self.active = ko.observable(false);
+
 			self.EventID = ko.observable();
 			self.EventTypeId = ko.observable();
 			self.EventType = ko.observable();

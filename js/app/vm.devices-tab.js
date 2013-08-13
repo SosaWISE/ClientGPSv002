@@ -39,7 +39,6 @@ return (function create() {
 
 		init = function (devices, cb) {
 			_devices = devices;
-			_list(list);
 
 			amplify.subscribe('customerAuthentication', function (data) {
 				console.log(data);
@@ -159,56 +158,7 @@ return (function create() {
 				title: 'Andresss\'s Watch',
 				time: 'April 23, 2013 at 12:42pm'
 			});
-		},
-		list = [
-			{
-				UIName: 'watch ME DUDE',
-				AccountName: 'Austin\'s Watch',
-				EventDate: 'April 23, 2013 at 12:42pm',
-			},
-			{
-				UIName: 'watch',
-				AccountName: 'Tyler\'s Watch',
-				EventDate: 'April 23, 2013 at 12:42pm',
-			},
-			{
-				UIName: 'watch',
-				AccountName: 'Ethan\'s Watch',
-				EventDate: 'April 23, 2013 at 12:42pm',
-			},
-			{
-				UIName: 'child',
-				AccountName: 'Zak\'s Child Tracker',
-				EventDate: 'April 23, 2013 at 12:42pm',
-			},
-			{
-				UIName: 'phone',
-				AccountName: 'Austin\'s Phone',
-				EventDate: 'April 23, 2013 at 12:42pm',
-			},
-			{
-				UIName: 'home',
-				AccountName: 'Our Home Alarm',
-				EventDate: 'April 23, 2013 at 12:42pm',
-			},
-			{
-				UIName: 'watch',
-				AccountName: 'Carolyn\'s Phone',
-				EventDate: 'April 23, 2013 at 12:42pm',
-			},
-			{
-				UIName: 'phone',
-				AccountName: 'Mark\'s Phone',
-				EventDate: 'April 23, 2013 at 12:42pm',
-			},
-			{
-				UIName: 'car-nav',
-				AccountName: 'Austin\'s Car GPS',
-				EventDate: 'April 23, 2013 at 12:42pm',
-			}
-		].map(function (dto) {
-			return modelMapper.Device.fromDto(dto);
-		});
+		};
 
 	/** Return object. */
 	//noinspection JSUnusedGlobalSymbols

@@ -25,7 +25,6 @@ define(['jquery','messenger','underscore','datacontext','ko','amplify','utils','
 
 		init = function (devices, cb) {
 			_devices = devices;
-			_list(list);
 
 			amplify.subscribe('customerAuthentication', function (data) {
 				console.log(data);
@@ -63,20 +62,45 @@ define(['jquery','messenger','underscore','datacontext','ko','amplify','utils','
 			.then(function () {
 				// remove existing from the map
 				_list().forEach(function (model) {
-					if (model.handle) {
-						model.handle.dispose();
-						delete model.handle;
-					}
+					Object.keys(model.handles).forEach(function (handle) {
+						handle.dispose();
+					});
+					delete model.handles;
 				});
 				/** Clear the list. */
 				_list.destroyAll();
 
+				if (!data.events().length) {
+					console.error('no events returned');
+				}
 				_.each(data.events(), function (model) {
+					model.handles = {};
 					// add to map
-					model.handle = _devices.fmap.addMarker({
+					model.handles.marker = _devices.fmap.addMarker({
 						lattitude: parseFloat(model.Lattitude()),
 						longitude: parseFloat(model.Longitude()),
-					}, model.EventID());
+					}, model.EventID(), {
+						icon: eventIcon,
+					});
+
+					var latLng = new gmaps.LatLng(parseFloat(model.Lattitude()), parseFloat(model.Longitude()));
+					model.handles.infoWindow = new gmaps.InfoWindow({
+						content: $(document.createElement("div")).html("event")[0],
+						position: latLng,
+					});
+					model.active.subscribe(function (active) {
+						if (active) {
+							gmaps.event.addListener(model.handles.infoWindow, "closeclick", function () {
+								model.active(false);
+							});
+							model.handles.infoWindow.open(_devices.fmap);
+						}
+						else {
+							gmaps.event.clearInstanceListeners(model.handles.infoWindow);
+							model.handles.infoWindow.close();
+						}
+					});
+
 					// add to list
 					model.time = utils.DateLongFormat(model.EventDate());
 					model.actions = '';
@@ -88,6 +112,12 @@ define(['jquery','messenger','underscore','datacontext','ko','amplify','utils','
 				cb();
 			});
 		},
+		eventIcon = new gmaps.MarkerImage(
+			"/img/social-login-sprite.png",
+			new gmaps.Size(31, 31),
+			new gmaps.Point(62, 31),
+			new gmaps.Point(15, 15)
+		),
 		startEdit = function(vm/*, evt*/) {
 			editItem(vm);
 			editing(true);
@@ -96,53 +126,13 @@ define(['jquery','messenger','underscore','datacontext','ko','amplify','utils','
 			editing(false);
 		},
 		selectItem = function (model) {
-			_devices.fmap.setCenter(
-				new gmaps.LatLng(parseFloat(model.Lattitude()), parseFloat(model.Longitude())));
-		},
-		list = [
-			{
-				EventTypeUi: 'sos',
-				EventShortDesc: 'Rascal exited the Yard geofence',
-				time: 'April 23, 2013 at 12:42pm',
-				actions: ''
-			},
-			{
-				EventTypeUi: 'battery',
-				EventShortDesc: 'Rascal exited the Yard geofence',
-				time: 'April 23, 2013 at 12:42pm',
-				actions: ''
-			},
-			{
-				EventTypeUi: 'speed',
-				EventShortDesc: 'Rascal exited the Yard geofence',
-				time: 'April 23, 2013 at 12:42pm',
-				actions: ''
-			},
-			{
-				EventTypeUi: 'enter',
-				EventShortDesc: 'Rascal exited the Yard geofence',
-				time: 'April 23, 2013 at 12:42pm',
-				actions: ''
-			},
-			{
-				EventTypeUi: 'exit',
-				EventShortDesc: 'Rascal exited the Yard geofence',
-				time: 'April 23, 2013 at 12:42pm',
-				actions: ''
-			},
-			{
-				EventTypeUi: 'fall',
-				EventShortDesc: 'Rascal exited the Yard geofence',
-				time: 'April 23, 2013 at 12:42pm',
-				actions: ''
-			},
-			{
-				EventTypeUi: 'tamper',
-				EventShortDesc: 'Rascal exited the Yard geofence',
-				time: 'April 23, 2013 at 12:42pm',
-				actions: ''
-			}
-		];
+			_list().forEach(function (model) {
+				model.active(false);
+			});
+			model.active(true);
+
+			_devices.fmap.setCenter(model.handles.infoWindow.getPosition());
+		};
 
 		/** Return object. */
 		return {
