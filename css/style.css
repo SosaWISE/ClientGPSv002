@@ -781,7 +781,7 @@ nav.primary .indicator {
 
 .content ul li {
 	color: rgba(0,0,0,0.66);
-	padding: 20px 20px 20px 50px;
+	padding: 20px 30px 20px 45px;
 	border-bottom: 1px solid rgba(0,0,0,.1);
 	position: relative;
 	cursor: pointer;
@@ -858,7 +858,7 @@ nav.primary .indicator {
 .sidebars .content ul li .billStatus {
 	position: absolute;
 	top: 26px;
-	right: 20px;
+	right: 8px;
 	opacity: 0;
 }
 
@@ -963,7 +963,7 @@ nav.primary .indicator {
 	font-size: 24px;
 	position: absolute;
 	top: 22px;
-	left: 15px;
+	left: 12px;
 	color: rgba(0, 0, 0, 0.5);
 }
 .sidebars .content ul li:before {
