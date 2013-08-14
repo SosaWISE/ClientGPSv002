@@ -9,10 +9,11 @@ define(['ko', 'messenger', 'model.userAuthInfo', 'datacontext', 'router', /*'dat
 function (ko, messenger, userAuthInfo, datacontext, router, /*dataprimer, */amplify) {
 	var
 		/** START Private Properties. */
-		_loginTitle = ko.observable('Secure Login'),
+		_title = ko.observable('Secure Login'),
 		_userName = ko.observable(''),
 		_password = ko.observable(''),
 		_rememberMe = ko.observable(false),
+		_editing = ko.observable(false),
 		/**   END Private Properties. */
 
 		_loginCmd = ko.asyncCommand({
@@ -25,7 +26,7 @@ function (ko, messenger, userAuthInfo, datacontext, router, /*dataprimer, */ampl
 
 				datacontext.Customer.authenticate(userInfoObject, successfulLogin);
 
-				if (complete) complete();
+				if (complete) { complete(); }
 			},
 			canExecute: function (isExecuting) {
 				return !isExecuting;// && isDirty() && isValid();
@@ -35,7 +36,7 @@ function (ko, messenger, userAuthInfo, datacontext, router, /*dataprimer, */ampl
 		/** START Private Methods. */
 		_activate = function (routeData, callback) {
 			messenger.publish.viewModelActivated();
-			if (callback) callback();
+			if (callback) { callback(); }
 		},
 		/**   END Private Methods. */
 
@@ -48,7 +49,8 @@ function (ko, messenger, userAuthInfo, datacontext, router, /*dataprimer, */ampl
 		},
 
 		_signUp = function () {
-			alert("You are here!");
+			_editing(!_editing());
+			// alert("You are here!");
 
 			return true;
 		},
@@ -64,8 +66,9 @@ function (ko, messenger, userAuthInfo, datacontext, router, /*dataprimer, */ampl
 	/** Return object. */
 	return {
 		TmplName: 'login.view',
+		editing: _editing,
 		get Activate() { return _activate; },
-		get LoginTitle() { return _loginTitle; },
+		get Title() { return _title; },
 		get userName() { return _userName; },
 		get password() { return _password; },
 		get rememberMe() { return _rememberMe; },
