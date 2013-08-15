@@ -5,28 +5,33 @@
  * Time: 4:26 PM
  * To change this template use File | Settings | File Templates.
  */
-define(['ko','messenger'],
-function (ko, messenger) {
+define(['ko','messenger', 'model.user'],
+function (ko, messenger, User) {
 	/** Initialize. */
 	var
-		_signUpTitle = ko.observable('Sign Up'),
-		/** START Private Methods. */
-		_activate = function (routeData, callback) {
-			messenger.publish.viewModelActivated();
-			if (callback) callback();
-		},
-		init = function () {
-			_activate();
-		};
-		/**   END Private Methods. */
+	_model = new User(),
+	/** START Private Methods. */
+	_activate = function (routeData, callback) {
+		messenger.publish.viewModelActivated();
+		if (callback) { callback(); }
+	},
+	init = function () {
+		_activate();
+	},
+	/**   END Private Methods. */
+
+	_signUp = function () {
+		debugger;
+		alert(ko.toJSON(_model));
+	};
 
 	init();
 
 	/** Return Object. */
 	return {
-		TmplName: 'signUp.view',
-		get SignUpTitle() { return _signUpTitle; },
-		get Activate() { return _activate; }
+		get Activate() { return _activate; },
+		signUp: _signUp,
+		model: _model,
 	};
 
 });

@@ -80,15 +80,15 @@ define(['toastr','mock/mock','infuser','ko'],
 			_dataServiceInit = function () {},
 
 			validationInit = function () {
-				ko.validation.configure({
-					registerExtenders: true,    // default is true.
-					messagesOnModified: true,   // default is true.
-					insertMessages: true,       // default is true.
-					parseInputAttributes: true, // default is false.
-					writeInputAttributes: true, // default is false.
-					messageTemplate: null,      // default is null.
-					decorateElement: true       // default is false.  Applies the .validationElement CSS class.
-				});
+				// ko.validation.configure({
+				// 	registerExtenders: true,    // default is true.
+				// 	messagesOnModified: true,   // default is true.
+				// 	insertMessages: true,       // default is true.
+				// 	parseInputAttributes: true, // default is false.
+				// 	writeInputAttributes: true, // default is false.
+				// 	messageTemplate: null,      // default is null.
+				// 	decorateElement: true       // default is false.  Applies the .validationElement CSS class.
+				// });
 			},
 
 			configureExternalTemplates = function () {

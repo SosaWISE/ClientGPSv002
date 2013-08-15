@@ -237,8 +237,8 @@ input{
 	transition: .5s;
 }
 .login.editing {
-	height:400px;
-	margin:-200px 0 0 -310px
+	height:500px;
+	margin:-250px 0 0 -310px
 }
 .login.signup {
 	height:360px;
@@ -375,6 +375,9 @@ input{
 	right:40px;
 	color:#818487;
 	font-weight:400
+}
+.login.editing .signup-link {
+	display: none;
 }
 .login .social-login {
 	position:absolute;

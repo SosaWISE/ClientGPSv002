@@ -5,8 +5,8 @@
  * Time: 10:07 AM
  * To change this template use File | Settings | File Templates.
  */
-define(['ko', 'messenger', 'model.userAuthInfo', 'datacontext', 'router', /*'dataprimer',*/'amplify'],
-function (ko, messenger, userAuthInfo, datacontext, router, /*dataprimer, */amplify) {
+define(['ko', 'messenger', 'model.userAuthInfo', 'datacontext', 'router', 'amplify', 'vm.signUp'],
+function (ko, messenger, userAuthInfo, datacontext, router, amplify, signupVM) {
 	var
 		/** START Private Properties. */
 		_title = ko.observable('Secure Login'),
@@ -49,9 +49,11 @@ function (ko, messenger, userAuthInfo, datacontext, router, /*dataprimer, */ampl
 		},
 
 		_signUp = function () {
-			_editing(!_editing());
-			// alert("You are here!");
-
+			_editing(true);
+			return true;
+		},
+		_cancelSignUp = function () {
+			_editing(false);
 			return true;
 		},
 
@@ -73,6 +75,8 @@ function (ko, messenger, userAuthInfo, datacontext, router, /*dataprimer, */ampl
 		get password() { return _password; },
 		get rememberMe() { return _rememberMe; },
 		get loginCmd() { return _loginCmd; },
-		get SignUp() { return _signUp; }
+		get SignUp() { return _signUp; },
+		cancelSignUp: _cancelSignUp,
+		signupVM: signupVM,
 	};
 });

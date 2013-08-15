@@ -15,18 +15,20 @@
 	        <a href="#" class="forgot" onClick="TestSosStart()">Forgot your password?</a>
 	    </div>
     </form>
-	<div class="signup">
+	<div class="signup" data-bind="with:signupVM">
         <h1 class="title">Sign up</h1>
-        <div class="social-login">
+        <!-- <div class="social-login">
             <a href="#" class="gplus"><span class="hover"></span>Login with Google Plus</a>
             <a href="#" class="twitter"><span class="hover"></span>Login with Twitter</a>
             <a href="#" class="fb"><span class="hover"></span>Login with Facebook</a>
-        </div>
-        <input type="text" name="name" class="name" placeholder="First Name">
-        <input type="text" name="name" class="name" placeholder="Last Name">
-        <input type="text" name="email" class="email" placeholder="Email">
-        <input type="password" name="password" class="password" placeholder="Password">
-        <input type="submit" value="Sign up" class="submit">
+        </div> -->
+        <input type="text" name="name" class="name" placeholder="First Name" data-bind="value:model.firstname">
+        <input type="text" name="name" class="name" placeholder="Last Name" data-bind="value:model.lastname">
+        <input type="text" name="name" class="name" placeholder="Phone number" data-bind="value:model.phoneHome">
+        <input type="text" name="email" class="email" placeholder="Email" data-bind="value:model.email">
+        <input type="password" name="password" class="password" placeholder="Password" data-bind="value:model.password">
+        <input type="submit" value="Sign up" class="submit" data-bind="click:signUp">
+        <input type="submit" value="Cancel" class="submit" data-bind="click:$parent.cancelSignUp">
     </div>
     <div class="signup-link">
 		<div>Not a member? <a data-bind="click:SignUp" style="cursor:pointer;">Sign up here</a></div>

@@ -25,7 +25,7 @@
 			'knockout.activity',
 			'knockout.asyncCommand',
 			'knockout.dirtyFlag',
-			'knockout.validation',
+			// 'knockout.validation',
 			'koExternalTemplateEngine',
 
 			'amplify.request',
