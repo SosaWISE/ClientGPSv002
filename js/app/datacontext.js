@@ -117,12 +117,12 @@ function ($, _, ko, model, modelMapper, dataService, config, utils) {
 							success: function(response) {
 								// logger.success(config.toasts.savedData);
 								entity.dirtyFlag().reset();
-								if (callbacks && callbacks.success) { callbacks.success(); }
+								if (callbacks && callbacks.success) { callbacks.success(response); }
 								def.resolve(response);
 							},
 							error: function(response) {
 								// logger.error(config.toasts.errorSavingData);
-								if (callbacks && callbacks.error) { callbacks.error(); }
+								if (callbacks && callbacks.error) { callbacks.error(response); }
 								def.reject(response);
 								return;
 							}

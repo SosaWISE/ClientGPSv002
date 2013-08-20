@@ -5,8 +5,8 @@
  * Time: 12:27 PM
  * To change this template use File | Settings | File Templates.
  */
-define(['jquery','messenger','underscore','datacontext','ko','amplify','gmaps','vm.model-editor'],
-function ($, messenger, _, datacontext, ko, amplify, gmaps, modelEditor) {
+define(['jquery','messenger','underscore','datacontext','ko','amplify','gmaps','vm.model-editor','model.geoFence'],
+function ($, messenger, _, datacontext, ko, amplify, gmaps, modelEditor, GeoFenceModel) {
 // wrap in create function in order to create multiple instances
 return (function create() {
 	var
@@ -17,14 +17,14 @@ return (function create() {
 		_devices,
 		_active = ko.observable(false),
 		editorVM = modelEditor.create(),
-		/**   END Private Properties. */
+		/**	 END Private Properties. */
 
 		/** START Private Methods. */
 		_activate = function (routeData, callback) {
 			messenger.publish.viewModelActivated();
 			if (callback) { callback(); }
 		},
-		/**   END Private Methods. */
+		/**	 END Private Methods. */
 
 		init = function (devices, cb) {
 			_devices = devices;
@@ -65,15 +65,7 @@ return (function create() {
 
 				/** Build new list. */
 				_.each(geoFences(), function(model) {
-					// add to map
-					model.handle = _devices.fmap.addRectangle(startEdit, model, model.GeoFenceID());
-					gmaps.event.addListener(model.handle, "click", function () {
-						// this tab must be showing
-						if (!_active()) {
-							_devices.activateTab(_type);
-						}
-						startEdit(model, null, true);
-					});
+					addGeoFenceRectangle(model);
 					// add to list
 					_list.push(model);
 				});
@@ -83,6 +75,17 @@ return (function create() {
 			function (someArg) {
 				alert('Retrieving Geo Fences has an error with SomeArg:' + someArg);
 				cb();
+			});
+		},
+		addGeoFenceRectangle = function (model) {
+			// add to map
+			model.handle = _devices.fmap.addRectangle(startEdit, model, model.GeoFenceID());
+			gmaps.event.addListener(model.handle, "click", function () {
+				// this tab must be showing
+				if (!_active()) {
+					_devices.activateTab(_type);
+				}
+				startEdit(model, null, true);
 			});
 		},
 		startEdit = function(model, evt, preventFocus) {
@@ -98,8 +101,15 @@ return (function create() {
 		},
 		cancelEdit = function(model) {
 			editorVM.stop(true);
-			model.handle.canEdit(false);
-			model.handle.resetBounds();
+			if (model.GeoFenceID()) {
+				// cancel edit
+				model.handle.canEdit(false);
+				model.handle.resetBounds();
+			} else {
+				// cancel add
+				model.handle.dispose();
+				delete model.handle;
+			}
 		},
 		saveEdit = function() {
 			if (!editorVM.editing()) {
@@ -127,6 +137,15 @@ return (function create() {
 					console.log(response);
 					saving(false);
 					model.saving(false);
+					if (response.Code === 0) {
+						if (!model.GeoFenceID()) {
+							model.GeoFenceID(response.Value.GeoFenceID);
+							_list.push(model);
+						}
+					} else {
+						startEdit(model);
+						window.alert(response.Message);
+					}
 				},
 				error: function (response) {
 					console.log(response);
@@ -150,6 +169,20 @@ return (function create() {
 				model.active(false);
 			});
 			model.active(true);
+		},
+		startAddItem = function () {
+			var model = new GeoFenceModel(),
+				center = _devices.fmap.getCenter(),
+				offset = 0.0002;
+			model.AccountId(_list()[0].AccountId());//@HACK: fix me
+			model.MeanLattitude(center.lat());
+			model.MeanLongitude(center.lng());
+			model.MinLattitude(center.lat()-offset);
+			model.MinLongitude(center.lng()-offset);
+			model.MaxLattitude(center.lat()+offset);
+			model.MaxLongitude(center.lng()+offset);
+			addGeoFenceRectangle(model);
+			startEdit(model);
 		};
 
 	/** Return object. */
@@ -164,6 +197,7 @@ return (function create() {
 		cancelEdit: cancelEdit,
 		saveEdit: saveEdit,
 		selectItem: selectItem,
+		startAddItem: startAddItem,
 		type: _type,
 		name: 'Geofences',
 		list: _list,
