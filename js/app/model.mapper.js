@@ -33,7 +33,6 @@ define(['model','utils'],
 					item.dob(dto.DOB);
 					item.ssn(dto.SSN);
 					item.username(dto.Username);
-					item.password(dto.Password);
 					return item;
 				}
 			},
