@@ -26,9 +26,10 @@ define(['ko', 'config'],
 				self.sessionID = ko.observable();
 				self.customerTypeId = ko.observable();
 				self.customerMasterFileId = ko.observable();
-				self.dealerId = ko.observable();
+				self.dealerId = ko.observable(config.DefaultProperties.dealerId);
 				self.dealerName = ko.observable();
-				self.localizationId = ko.observable();
+				self.salesRepId = ko.observable(config.DefaultProperties.salesRepId);
+				self.localizationId = ko.observable(config.DefaultProperties.localizationId);
 				self.localizationName = ko.observable();
 				self.prefix = ko.observable();
 				self.firstname = ko.observable().extend({ required: true });
@@ -83,6 +84,9 @@ define(['ko', 'config'],
 
 		Customer.Nullo = new Customer()
 			.customerID(0)
+			.dealerId(config.DefaultProperties.dealerId)
+			.salesRepId(config.DefaultProperties.salesRepId)
+			.localizationId(config.DefaultProperties.localizationId)
 			.firstname('Not a')
 			.lastname('Customer')
 			.gender('M');

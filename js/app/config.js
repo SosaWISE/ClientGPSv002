@@ -11,6 +11,11 @@ define(['toastr','mock/mock','infuser','ko'],
 		/** Initialize Constructor. */
 		var
 			config,
+			_defaultProperties  = {
+				dealerId:       5000,
+				localizationId: 'en-US',
+				salesRepId:     'PORT001'
+			},
 			_servicesDomain     = "//sse.services.cors/",
 			_applicationToken   = "SSE_MAIN_PORTAL",
 			_applicationVersion = "1.0.0",
@@ -130,6 +135,7 @@ define(['toastr','mock/mock','infuser','ko'],
 
 
 		config = {
+			get DefaultProperties() {return _defaultProperties; },
 			get ServicesDomain() { return _servicesDomain; },
 			get ApplicationToken() { return _applicationToken; },
 			get ApplicationVersion() { return _applicationVersion; },

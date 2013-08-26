@@ -22,12 +22,16 @@ function (ko, messenger, Customer, customerService) {
 	/**   END Private Methods. */
 
 	_signUp = function () {
+		debugger;
 		var model = {
+				LocalizationId: _model.localizationId(),
+				DealerId: _model.dealerId(),
+				SalesRepId: _model.salesRepId(),
 				FirstName: _model.firstname(),
 				LastName: _model.lastname(),
 				PhoneHome: _model.phoneHome(),
 				Email: _model.email(),
-				Password: _model.password(),
+				Password: _model.password()
 			};
 		_loading(true);
 		customerService.CustomerSignUp({
@@ -48,7 +52,7 @@ function (ko, messenger, Customer, customerService) {
 		get Activate() { return _activate; },
 		signUp: _signUp,
 		model: _model,
-		loading: _loading,
+		loading: _loading
 	};
 
 });
