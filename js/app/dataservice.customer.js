@@ -66,6 +66,9 @@ function (amplify, config) {
 		},
 
 		customerSignUp = function (callbacks, data) {
+			if (typeof(data) !== "string") {
+				data = JSON.stringify(data);
+			}
 			return amplify.request({
 				resourceId: 'customer-signUp',
 				data: data,
