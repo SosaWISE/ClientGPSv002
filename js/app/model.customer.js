@@ -26,6 +26,8 @@ define(['ko', 'config'],
 				self.sessionID = ko.observable();
 				self.customerTypeId = ko.observable();
 				self.customerMasterFileId = ko.observable();
+				self.leadSourceId = ko.observable(config.DefaultProperties.leadSourceId);
+				self.leadDispositionId = ko.observable(config.DefaultProperties.leadDispositionId);
 				self.dealerId = ko.observable(config.DefaultProperties.dealerId);
 				self.dealerName = ko.observable();
 				self.salesRepId = ko.observable(config.DefaultProperties.salesRepId);

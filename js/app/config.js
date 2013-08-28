@@ -12,9 +12,11 @@ define(['toastr','mock/mock','infuser','ko'],
 		var
 			config,
 			_defaultProperties  = {
-				dealerId:       5000,
-				localizationId: 'en-US',
-				salesRepId:     'PORT001'
+				dealerId:           5000,
+				localizationId:     'en-US',
+				salesRepId:         'PORT001',
+				leadSourceId:       '14', // Portal
+				leadDispositionId:  '8' //Signup on Portal
 			},
 			_servicesDomain     = "//sse.services.cors/",
 			_applicationToken   = "SSE_MAIN_PORTAL",

@@ -25,6 +25,8 @@ function (ko, messenger, Customer, customerService) {
 		debugger;
 		var model = {
 				LocalizationId: _model.localizationId(),
+				LeadSourceId: _model.leadSourceId(),
+				LeadDispositionId: _model.leadDispositionId(),
 				DealerId: _model.dealerId(),
 				SalesRepId: _model.salesRepId(),
 				FirstName: _model.firstname(),
