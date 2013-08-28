@@ -41,7 +41,7 @@ define(['ko', 'config'],
 				self.fullname = ko.computed(function () {
 					return self.firstname() + ' ' + self.lastname();
 				}, self);
-				self.gender = ko.observable().extend({ required: true });
+				self.gender = ko.observable('Not Set').extend({ required: true });
 				self.phoneHome = ko.observable();
 				self.phoneWork = ko.observable();
 				self.phoneCell = ko.observable();

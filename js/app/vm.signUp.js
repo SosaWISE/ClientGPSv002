@@ -33,7 +33,8 @@ function (ko, messenger, Customer, customerService) {
 				LastName: _model.lastname(),
 				PhoneHome: _model.phoneHome(),
 				Email: _model.email(),
-				Password: _model.password()
+				Password: _model.password(),
+				Gender: _model.gender()
 			};
 		_loading(true);
 		customerService.CustomerSignUp({
