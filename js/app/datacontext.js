@@ -189,6 +189,7 @@ function ($, _, ko, model, modelMapper, dataService, config, utils) {
 		_customer = new Entity(dataService.Customer.CustomerAuth, modelMapper.Customer, model.Customer.Nullo),
 		_devices = new EntitySet(dataService.Devices.AcquireList, modelMapper.Device, dataService.Devices.Nullo, dataService.Devices.SaveData),
 		_events = new EntitySet(dataService.Events.GetData, modelMapper.Event, dataService.Events.Nullo),
+		_eventTypes = new EntitySet(dataService.EventTypes.GetData, modelMapper.EventType, dataService.EventTypes.Nullo),
 		_geoFences = new EntitySet(dataService.GeoFences.GetData, modelMapper.GeoFence, dataService.GeoFences.Nullo, dataService.GeoFences.SaveData),
 		_users = new EntitySet(dataService.Users.GetData, modelMapper.User, dataService.Users.Nullo);
 
@@ -272,6 +273,7 @@ function ($, _, ko, model, modelMapper, dataService, config, utils) {
 		get Session() { return _session; },
 		get Devices() { return _devices; },
 		get Events() { return _events; },
+		get EventTypes() {return _eventTypes; },
 		get GeoFences() { return _geoFences; },
 		get Users() { return _users; }
 	};

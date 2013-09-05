@@ -16,7 +16,7 @@ define(['toastr','mock/mock','infuser','ko'],
 				localizationId:     'en-US',
 				salesRepId:         'PORT001',
 				leadSourceId:       '14', // Portal
-				leadDispositionId:  '8' //Signup on Portal
+				leadDispositionId:  '8' //Sign up on Portal
 			},
 			_servicesDomain     = "//sse.services.cors/",
 			_applicationToken   = "SSE_MAIN_PORTAL",
@@ -80,6 +80,15 @@ define(['toastr','mock/mock','infuser','ko'],
 				successfulAuth: 'Successful authentication.',
 				failedAuth: 'Failed authentication.'
 			},
+			_iconSprites = {
+				GeoMapSprite: "/img/social-login-sprite.png"
+			},
+
+			_localText = {
+				AllDevices: '[All Devices]',
+				AllEventTypes: '[All Event Types]',
+				AllLocations: '[All Locations]'
+			},
 
 			/**
 			 * Methods
@@ -137,7 +146,7 @@ define(['toastr','mock/mock','infuser','ko'],
 
 
 		config = {
-			get DefaultProperties() {return _defaultProperties; },
+			get DefaultProperties() { return _defaultProperties; },
 			get ServicesDomain() { return _servicesDomain; },
 			get ApplicationToken() { return _applicationToken; },
 			get ApplicationVersion() { return _applicationVersion; },
@@ -154,7 +163,9 @@ define(['toastr','mock/mock','infuser','ko'],
 			get DataServiceInit() { return _dataServiceInit; },
 			get UseMocks() { return useMocks; },
 			get ViewIds() { return _viewIds; },
-			get AjaxProps() { return _ajaxProps; }
+			get AjaxProps() { return _ajaxProps; },
+			get IconSprites() { return _iconSprites; },
+			get LocalText() { return _localText; }
 		};
 		/** Initialize. */
 		_initFx();

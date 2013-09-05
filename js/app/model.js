@@ -9,16 +9,18 @@ define([
 	'model.customer',
 	'model.session',
 	'model.event',
+	'model.eventType',
 	'model.device',
 	'model.geoFence',
 	'model.user'
 ],
-	function (customer, session, event, device, geoFence, user) {
+	function (customer, session, event, eventType, device, geoFence, user) {
 		var
 			model = {
 				get Customer()  { return customer; },
 				get Session() { return session; },
 				get Event() { return event; },
+				get EventType() { return eventType; },
 				get Device() { return device; },
 				get GeoFence() { return geoFence; },
 				get User() { return user; }
@@ -30,6 +32,7 @@ define([
 			model.Customer.datacontext(dc);
 			model.Session.datacontext(dc);
 			model.Event.datacontext(dc);
+			model.EventType.datacontext(dc);
 			model.Device.datacontext(dc);
 			model.GeoFence.datacontext(dc);
 			model.User.datacontext(dc);

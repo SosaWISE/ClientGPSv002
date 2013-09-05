@@ -78,6 +78,18 @@ define(['model','utils'],
 					return item;
 				}
 			},
+			eventType = {
+				getDtoId: function (dto) { return dto.EventTypeID; },
+				fromDto: function (dto, item) {
+					item = item || new model.EventType();
+					item.EventTypeID(dto.EventTypeID);
+					item.EventType(dto.EventType);
+
+					item.dirtyFlag().reset();
+					item.isBrief(false);
+					return item;
+				}
+			},
 			device = {
 				getDtoId: function (dto) { return dto.AccountId; },
 				fromDto: function (dto, item) {
@@ -181,6 +193,7 @@ define(['model','utils'],
 			get Session() { return session; },
 			get Device() { return device; },
 			get Event() { return event; },
+			get EventType() { return eventType; },
 			get GeoFence() { return geoFence; },
 			get User() { return user; }
 		};

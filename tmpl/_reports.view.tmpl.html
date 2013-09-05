@@ -5,7 +5,11 @@
 		<li>
 			<span class="label">Select Device</span>
 			<div class="select-wrap">
-				<select>
+				<select data-bind="
+					options: Devices,
+					optionsText: 'name',
+					optionsValue: 'id',
+					optionsAfterRender: SetDeviceOptionDisable">
 					<option value="">[All Devices]</option>
 					<option value="323">Sydnee's iPhone</option>
 					<option value="324">Mom's Bracelet</option>
@@ -17,7 +21,11 @@
 		<li>
 			<span class="label">Type of Event</span>
 			<div class="select-wrap">
-				<select>
+				<select data-bind="
+					options: EventTypes,
+					optionsText: 'name',
+					optionsValue: 'id',
+					optionsAfterRender: SetDeviceOptionDisable">
 					<option value="">[All Event Types]</option>
 					<option value="Z">Home Emergency</option>
 					<option value="Y">Geo Fence Exit/Enter</option>
@@ -33,7 +41,11 @@
 		<li>
 			<span class="label">Location</span>
 			<div class="select-wrap">
-				<select>
+				<select data-bind="
+					options: Locations,
+					optionsText: 'name',
+					optionsValue: 'id',
+					optionsAfterRender: SetDeviceOptionDisable">
 					<option value="">[All Locations]</option>
 					<option value="Z">Home Emergency</option>
 					<option value="Y">Geo Fence Exit/Enter</option>
@@ -53,18 +65,6 @@
 		<li>
 			<span class="label">End Date</span>
 			<input type="text" placeholder="">
-		</li>
-		<li>
-			<span class="label">Description</span>
-			<textarea class="description" placeholder="Description here" rows="5"></textarea>
-		</li>
-		<li>
-			<span class="label">Field Title</span>
-			<input type="text" placeholder="Placeholder">
-		</li>
-		<li>
-			<span class="label">Field Title</span>
-			<input type="text" placeholder="Placeholder">
 		</li>
 	</ul>
 </div>

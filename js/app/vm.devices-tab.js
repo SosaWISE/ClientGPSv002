@@ -7,6 +7,7 @@
  */
 define([
 	'jquery',
+	'config',
 	'messenger',
 	'underscore',
 	'datacontext',
@@ -16,7 +17,7 @@ define([
 	'model.mapper',
 	'gmaps'
 ],
-function ($, messenger, _, datacontext, ko, amplify, modelEditor, modelMapper, gmaps) {
+function ($, config, messenger, _, datacontext, ko, amplify, modelEditor, modelMapper, gmaps) {
 // wrap in create function in order to create multiple instances
 return (function create() {
 	var
@@ -38,6 +39,7 @@ return (function create() {
 		/**   END Private Methods. */
 
 		init = function (devices, cb) {
+
 			_devices = devices;
 
 			amplify.subscribe('customerAuthentication', function (data) {
@@ -78,9 +80,9 @@ return (function create() {
 					// add to map
 					model.handle = _devices.fmap.addMarker({
 						lattitude: parseFloat(model.LastLatt()),
-						longitude: parseFloat(model.LastLong()),
+						longitude: parseFloat(model.LastLong())
 					}, model.DeviceID(), {
-						icon: deviceIcon,
+						icon: deviceIcon
 					});
 					// add to list
 					_list.push(model);
@@ -92,7 +94,7 @@ return (function create() {
 			});
 		},
 		deviceIcon = new gmaps.MarkerImage(
-			"/img/social-login-sprite.png",
+			config.IconSprites.GeoMapSprite,
 			new gmaps.Size(31, 31),
 			new gmaps.Point(31, 31),
 			new gmaps.Point(15, 15)
@@ -147,7 +149,7 @@ return (function create() {
 
 			_infoWindow = new gmaps.InfoWindow({
 				content: $(document.createElement("div")).html("hello")[0],
-				position: latLng,
+				position: latLng
 			});
 			_infoWindow.open(_devices.fmap);
 		},
