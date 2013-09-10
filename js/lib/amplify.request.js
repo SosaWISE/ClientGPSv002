@@ -1,10 +1,10 @@
 /*!
  * Amplify Request @VERSION
- * 
+ *
  * Copyright 2011 appendTo LLC. (http://appendto.com/team)
  * Dual licensed under the MIT or GPL licenses.
  * http://appendto.com/open-source-licenses
- * 
+ *
  * http://amplifyjs.com
  */
 (function( amplify, undefined ) {
@@ -319,7 +319,7 @@ if ( amplify.store ) {
 				return false;
 			}
 			var success = ampXHR.success;
-			ampXHR.success = function( data ) {	
+			ampXHR.success = function( data ) {
 				amplify.store[ type ]( cacheKey, data, { expires: resource.cache.expires } );
 				success.apply( this, arguments );
 			};

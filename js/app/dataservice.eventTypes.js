@@ -5,8 +5,8 @@
  * Time: 04:19 PM
  * To change this template use File | Settings | File Templates.
  */
-define(['amplify','config','ko'],
-function (amplify, config, ko) {
+define(['amplify','amplify.request','config','ko'],
+function (amplify, amplify_request, config, ko) {
 	/** START Initialize. */
 	var
 		_init = function () {
