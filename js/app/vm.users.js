@@ -12,12 +12,18 @@ define([
 	'utils',
 	'ko',
 	'amplify',
-	'datacontext'
-],
-function (_, config, messenger, utils, ko, amplify, datacontext) {
-	var
-		/** START Private Properties. */
-		_tmplName = 'users.view',
+	'dataservice'
+], function(
+	_,
+	config,
+	messenger,
+	utils,
+	ko,
+	amplify,
+	dataservice
+) {
+	/** START Private Properties. */
+	var _tmplName = 'users.view',
 		_tmplModuleName = 'users.module.view',
 		editing = ko.observable(false),
 		editItem = ko.observable(null),
@@ -25,150 +31,51 @@ function (_, config, messenger, utils, ko, amplify, datacontext) {
 		/**   END Private Properties. */
 
 		/** START Private Methods. */
-		_activate = function (routeData, callback) {
+		_activate = function(routeData, callback) {
 			messenger.publish.viewModelActivated();
-			if (callback) callback();
+			if (callback) {
+				callback();
+			}
 		},
 		/**   END Private Methods. */
 
-			init = function () {
-			amplify.subscribe('customerAuthentication', function (/*data*/) {
-				_refresh(/*data*/);
+		init = function() {
+			amplify.subscribe('customerAuthentication', function( /*data*/ ) {
+				_refresh( /*data*/ );
 			});
-			amplify.subscribe('sessionAuthentication', function (/*data*/) {
-				_refresh(/*data*/);
+			amplify.subscribe('sessionAuthentication', function( /*data*/ ) {
+				_refresh( /*data*/ );
 			});
 		},
-		startEdit = function(vm, evt) {
+		startEdit = function(vm) {
 			editItem(vm);
 			editing(true);
 		},
-		cancelEdit = function(vm, evt) {
+		cancelEdit = function() {
 			editing(false);
 		},
-		list = [
-			{
-				type: 'user',
-				firstName: 'Bob',
-				lastName: 'Bobbins',
-				time: 'April 23, 2013 at 12:42pm'
-			},
-			{
-				type: 'user',
-				firstName: 'John',
-				lastName: 'Smith',
-				time: 'April 23, 2013 at 12:42pm'
-			},
-			{
-				type: 'user',
-				firstName: 'John',
-				lastName: 'Smith',
-				time: 'April 23, 2013 at 12:42pm'
-			},
-			{
-				type: 'user',
-				firstName: 'John',
-				lastName: 'Smith',
-				time: 'April 23, 2013 at 12:42pm'
-			},
-			{
-				type: 'user',
-				firstName: 'John',
-				lastName: 'Smith',
-				time: 'April 23, 2013 at 12:42pm'
-			},
-			{
-				type: 'user',
-				firstName: 'John',
-				lastName: 'Smith',
-				time: 'April 23, 2013 at 12:42pm'
-			},
-			{
-				type: 'user',
-				firstName: 'John',
-				lastName: 'Smith',
-				time: 'April 23, 2013 at 12:42pm'
-			},
-			{
-				type: 'user',
-				firstName: 'John',
-				lastName: 'Smith',
-				time: 'April 23, 2013 at 12:42pm'
-			},
-			{
-				type: 'user',
-				firstName: 'John',
-				lastName: 'Smith',
-				time: 'April 23, 2013 at 12:42pm'
-			},
-			{
-				type: 'user',
-				firstName: 'John',
-				lastName: 'Smith',
-				time: 'April 23, 2013 at 12:42pm'
-			},
-			{
-				type: 'user',
-				firstName: 'John',
-				lastName: 'Smith',
-				time: 'April 23, 2013 at 12:42pm'
-			},
-			{
-				type: 'user',
-				firstName: 'John',
-				lastName: 'Smith',
-				time: 'April 23, 2013 at 12:42pm'
-			},
-			{
-				type: 'user',
-				firstName: 'John',
-				lastName: 'Smith',
-				time: 'April 23, 2013 at 12:42pm'
-			},
-			{
-				type: 'user',
-				firstName: 'John',
-				lastName: 'Smith',
-				time: 'April 23, 2013 at 12:42pm'
-			},
-			{
-				type: 'user',
-				firstName: 'John',
-				lastName: 'Smith',
-				time: 'April 23, 2013 at 12:42pm'
-			}
-    ],
-		_refresh = function (callback) {
-			/** Init. */
-			var data = {
-				users: ko.observableArray()
-			};
-
-			/** Initialize view model. */
-			$.when(datacontext.Users.getData(
-				{
-					results: data.users,
-					param: {}
+		_refresh = function(callback) {
+			dataservice.Users.getData({}, function(resp) {
+				console.log(resp);
+				if (resp.Code !== 0) {
+					console.log("Error Retrieving Users: " + resp.Message);
+					return;
 				}
-			))
-			.then(function (response) {
-				console.log(response);
-				_users.removeAll();
 
-				/** Initialize. */
-				_.each(data.users(), function (item) {
+				_users([]);
+				resp.Value.forEach(function(item) {
 					_users.push({
-						type: item.customerTypeUi(),
-						firstName: item.firstName(),
-						lastName: item.lastName(),
-						time: utils.DateLongFormat(item.lastLoginOn())
+						type: item.CustomerTypeUi,
+						firstName: item.FirstName,
+						lastName: item.LastName,
+						time: utils.DateLongFormat(item.LastLoginOn)
 					});
 				});
 
-				utils.InvokeFunctionIfExists(callback);
-			}, function (someArg) {
-					console.log("Error Retrieving Users: " + someArg);
-				});
+				if (typeof(callback) === 'function') {
+					callback();
+				}
+			});
 		};
 
 	/** Init object. */
@@ -181,13 +88,13 @@ function (_, config, messenger, utils, ko, amplify, datacontext) {
 		startEdit: startEdit,
 		cancelEdit: cancelEdit,
 		hash: config.Hashes.users,
-    ico: '&#128101;',
+		ico: '&#128101;',
 		type: 'users',
 		name: 'Users',
 		list: _users,
-		get Activate() { return _activate; },
-		get TmplName() { return _tmplName; },
-		get TmplModuleName() { return _tmplModuleName; },
-		get Users() { return _users; }
+		Activate: _activate,
+		TmplName: _tmplName,
+		TmplModuleName: _tmplModuleName,
+		Users: _users,
 	};
 });

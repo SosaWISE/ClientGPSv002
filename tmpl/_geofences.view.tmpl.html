@@ -4,11 +4,11 @@
     </div>
     <div class="content">
         <ul class="geofences" data-bind="foreach:list">
-            <li data-bind="attr:{'class':Type},click:$parent.selectItem,active:active">
-                <div class="title" data-bind="text:GeoFenceName"></div>
+            <li data-bind="attr:{'class':GeoFenceTypeUi},click:$parent.clickItem,active:active">
+                <div class="title" data-bind="text:GeoFenceNameUi"></div>
                 <div class="sub" data-bind="text:ModifiedOn"></div>
-                <div class="actions" data-bind="if:$parent.canEdit">
-                    <a style="cursor:pointer;" class="edit-btn" data-bind="click:$parent.startEdit,clickBubble:false">&#xe01b;</a>
+                <div class="actions"><!--  data-bind="if:$parent.canEdit"> -->
+                    <a style="cursor:pointer;" class="edit-btn" data-bind="click:$parent.clickEdit,clickBubble:false">&#xe01b;</a>
                 </div>
             </li>
         </ul>
@@ -22,7 +22,7 @@
             <ul class="edit-form">
                 <li>
                     <span class="label">Geofence Title</span>
-                    <input data-bind="hasFocus:$parent.editItem().focusField,value:GeoFenceName" type="text" placeholder="Placeholder">
+                    <input data-bind="hasFocus:$parent.editItem().focusField,value:GeoFenceNameUi" type="text" placeholder="Placeholder">
                 </li>
                 <li>
                     <span class="label">Description</span>
@@ -31,7 +31,7 @@
                 <li>
                     <span class="label">Select Box</span>
                     <div class="select-wrap">
-                        <select data-bind="value:ReportMode">
+                        <select data-bind="value:ReportModeId">
                             <option value="0" disabled="disabled">Select one...</option>
                             <option value="1">Exit Alert</option>
                             <option value="2">Enter Alert</option>
@@ -57,8 +57,8 @@
                     </ul>
                 </li> -->
                 <li>
-                    <input type="submit" value="Save" class="save" data-bind="click:$parent.saveEdit">
-                    <input type="button" value="Cancel" class="cancel" data-bind="click:$parent.cancelEdit">
+                    <input type="submit" value="Save" class="save" data-bind="click:$parent.clickSave">
+                    <input type="button" value="Cancel" class="cancel" data-bind="click:$parent.clickCancel">
                     <input type="button" value="Delete" class="delete">
                 </li>
             </ul>

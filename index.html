@@ -9,8 +9,8 @@
 <body>
     <div id="busyindicator"></div>
     <div>
-        <div style="display:none;" id="login-container" data-bind="with:Login">
-            <div data-bind="template:{name:TmplName}" id="login-view"></div>
+        <div style="display:none;" id="login-container" data-bind="with:loginVM">
+            <div data-bind="template:{name:viewTemplate}" id="login-view"></div>
         </div>
         <div style="display:none;" class="site-container">
             <!--<nav class="primary" style="top:0px;">-->
@@ -24,7 +24,7 @@
                     <span class="ico"></span>
                     <h1 class="txt">Security Sciences</h1>
                 </a>
-                <div data-bind="foreach:topLevelViews">
+                <div data-bind="foreach:panels">
                     <a data-bind="attr:{href:hash,'class':type}">
                         <div class="indicator"></div>
                         <span class="ico" data-bind="html:ico"></span>
@@ -34,11 +34,11 @@
                 </div>
             </nav>
             <div class="wrap">
-                <div class="sidebars visible" data-bind="foreach:topLevelViews">
-	                <div data-bind="template:{name:TmplName},attr:{id:type+'-view','class':'view sidebar '+type}"></div>
+                <div class="sidebars visible" data-bind="foreach:panels">
+	                <div data-bind="template:viewTemplate,attr:{id:type+'-view','class':'view sidebar '+type}"></div>
                 </div>
-	            <div class="modules" data-bind="foreach:topLevelViews">
-		            <div data-bind="template:{name:TmplModuleName},attr:{'class': type+' module'}"></div>
+	            <div class="modules" data-bind="foreach:panels">
+		            <div data-bind="template:moduleTemplate,attr:{'class': type+' module'}"></div>
 	            </div>
             </div>
         </div>

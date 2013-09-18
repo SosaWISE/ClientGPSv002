@@ -1,7 +1,7 @@
 <div class="login" data-bind="editing:editing">
     <h2 class="logo">Security Sciences</h2>
     <form class="form">
-        <h1 class="title" data-bind="text:Title"></h1>
+        <h1 class="title" data-bind="text:title"></h1>
         <div class="social-login">
             <a href="/login/google" class="gplus"><span id="google_icon" class="hover"></span>Login with Google Plus</a>
             <a href="/login/twitter" class="twitter"><span id="twitter_icon" class="hover"></span>Login with Twitter</a>
@@ -9,10 +9,10 @@
         </div>
         <input type="text" data-bind="value:userName" name="email" class="email" placeholder="E-mail">
         <input type="password" data-bind="value:password" name="password" class="password" placeholder="Password">
-        <input type="submit" value="Login" class="submit" data-bind="command:loginCmd">
+        <button class="btn-blue" data-bind="command:loginCmd">Login</button>
 	    <div class="helper-actions">
 	        <input type="checkbox" id="remember" data-bind="checked:rememberMe" class="remember"><label for="remember">Remember me</label>
-	        <a href="#" class="forgot" onClick="TestSosStart()">Forgot your password?</a>
+	        <a href="#" class="btn-forgot" onClick="TestSosStart()">Forgot your password?</a>
 	    </div>
     </form>
 	<div class="signup" data-bind="with:signupVM">
@@ -27,11 +27,11 @@
         <input type="text" name="name" class="name" placeholder="Phone number" data-bind="value:model.phoneHome">
         <input type="text" name="email" class="email" placeholder="Email" data-bind="value:model.email">
         <input type="password" name="password" class="password" placeholder="Password" data-bind="value:model.password">
-		<input type="hidden" name="localizationId" data-bind="value:model.localizationId">
-        <input type="submit" value="Sign up" class="submit" data-bind="click:signUp">
-        <input type="submit" value="Cancel" class="submit" data-bind="click:$parent.cancelSignUp">
+		<!-- <input type="hidden" name="localizationId" data-bind="value:model.localizationId"> -->
+        <button class="btn-blue" data-bind="click:signUp">Sign up</button>
+        <a class="btn-blue" href="#/user/login">Cancel</a>
     </div>
     <div class="signup-link">
-		<div>Not a member? <a data-bind="click:SignUp" style="cursor:pointer;">Sign up here</a></div>
+		<div>Not a member? <a href="#/user/signup" style="cursor:pointer;">Sign up here</a></div>
 	</div>
 </div>

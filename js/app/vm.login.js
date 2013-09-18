@@ -5,78 +5,98 @@
  * Time: 10:07 AM
  * To change this template use File | Settings | File Templates.
  */
-define(['ko', 'messenger', 'model.userAuthInfo', 'datacontext', 'router', 'amplify', 'vm.signUp'],
-function (ko, messenger, userAuthInfo, datacontext, router, amplify, signupVM) {
-	var
-		/** START Private Properties. */
-		_title = ko.observable('Secure Login'),
-		_userName = ko.observable(''),
-		_password = ko.observable(''),
-		_rememberMe = ko.observable(false),
-		_editing = ko.observable(false),
-		/**   END Private Properties. */
+define([
+  'ko',
+  'utils',
+  'vm.controller',
+  'messenger',
+  'dataservice',
+  'router',
+  'amplify',
+  'vm.signUp',
+  'config'
+], function(
+  ko,
+  utils,
+  ControllerViewModel,
+  messenger,
+  dataservice,
+  Router,
+  amplify,
+  signupVM,
+  config
+) {
+  "use strict";
 
-		_loginCmd = ko.asyncCommand({
-			execute: function (complete) {
+  function LoginViewModel(options) {
+    LoginViewModel.super_.call(this, options);
 
-				var userInfoObject = new userAuthInfo(datacontext.Session.model.SessionID());
-				userInfoObject.Username(_userName());
-				userInfoObject.Password(_password());
-				userInfoObject.RememberMe(_rememberMe());
+    this.title = ko.observable('Secure Login');
+    this.userName = ko.observable('');
+    this.password = ko.observable('');
+    this.rememberMe = ko.observable(false);
+    this.editing = ko.observable(false);
 
-				datacontext.Customer.authenticate(userInfoObject, successfulLogin);
+    this.editing = ko.observable(false);
+    // this.canEdit = ko.observable(false);
+    // this.editItem = ko.observable(null);
 
-				if (complete) { complete(); }
-			},
-			canExecute: function (isExecuting) {
-				return !isExecuting;// && isDirty() && isValid();
-			}
-		}),
+    // ensure correct scope
+    this.cancelSignUp = this.cancelSignUp.bind(this);
 
-		/** START Private Methods. */
-		_activate = function (routeData, callback) {
-			messenger.publish.viewModelActivated();
-			if (callback) { callback(); }
-		},
-		/**   END Private Methods. */
+    var _this = this;
+    this.loginCmd = ko.asyncCommand({
+      execute: function(complete) {
+        dataservice.Customer.CustomerAuth({
+          SessionID: dataservice.Session.sessionID(),
+          Username: _this.userName(),
+          Password: _this.password(),
+          RememberMe: _this.rememberMe(),
+        }, function(resp) {
+          if (complete) {
+            complete();
+          }
 
-		successfulLogin = function (customerResponse) {
-//			alert('login\nusername:'+_userName()+'\npassword:'+_password()+'\nremember me:'+_rememberMe());
-//			dataprimer.Fetch();
+          if (resp.Code !== 0) {
+            console.error(resp);
+            return;
+          } else {
+            config.CurrentUser(resp.Value);
+            amplify.publish('customerAuthentication', resp);
+            Router.instance.useDestPath();
+          }
+        });
+      },
+      canExecute: function(isExecuting) {
+        return !isExecuting; // && isDirty() && isValid();
+      }
+    });
+  }
+  utils.inherits(LoginViewModel, ControllerViewModel);
+  LoginViewModel.prototype.viewTemplate = 'login.view';
+  LoginViewModel.prototype.signupVM = signupVM;
 
-			amplify.publish('customerAuthentication', customerResponse);
-			router.TransitionToLastView();
-		},
+  LoginViewModel.prototype.onLoad = function(cb) { // override me
+    cb(false);
+  };
+  LoginViewModel.prototype.onActivate = function(params) {
+    if (params.action === 'signup') {
+      this.signUp(false);
+      this.setTitle(this.signupVM.name);
+    } else {
+      params.action = 'login';
+      this.cancelSignUp(false);
+      this.setTitle(this.title());
+    }
+  };
+  LoginViewModel.prototype.signUp = function() {
+    this.editing(true);
+    // return true;
+  };
+  LoginViewModel.prototype.cancelSignUp = function() {
+    this.editing(false);
+    // return true;
+  };
 
-		_signUp = function () {
-			_editing(true);
-			return true;
-		},
-		_cancelSignUp = function () {
-			_editing(false);
-			return true;
-		},
-
-		init = function () {
-			/** Initialize view model. */
-			_activate();
-		};
-
-	/** Init object. */
-	init();
-
-	/** Return object. */
-	return {
-		TmplName: 'login.view',
-		editing: _editing,
-		get Activate() { return _activate; },
-		get Title() { return _title; },
-		get userName() { return _userName; },
-		get password() { return _password; },
-		get rememberMe() { return _rememberMe; },
-		get loginCmd() { return _loginCmd; },
-		get SignUp() { return _signUp; },
-		cancelSignUp: _cancelSignUp,
-		signupVM: signupVM,
-	};
+  return LoginViewModel;
 });

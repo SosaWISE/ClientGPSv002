@@ -5,66 +5,39 @@
  * Time: 2:22 PM
  * To change this template use File | Settings | File Templates.
  */
-define(['amplify','amplify.request','config','ko'],
-function (amplify, amplify_request, config, ko) {
-	var
-	/** START Initialize object. */
-		_init = function () {
-		amplify.request.define('devices-acquire', 'ajax', config.AjaxProps('Device/AcquireList'));
+define([
+	'config',
+	'dataservice.base',
+	'utils'
+], function(config, DataserviceBase, utils) {
 
-		amplify.request.define('devices-acquireByCustomerID', 'ajax', config.AjaxProps('Device/AcquireListByCustomerID'));
+	function DataserviceDevices() {
+		DataserviceDevices.super_.call(this, 'Device', config.serviceDomain);
+	}
+	utils.inherits(DataserviceDevices, DataserviceBase);
 
-		amplify.request.define('devices-acquireDetails', 'ajax', config.AjaxProps('Device/AcquireDeviceDetails'));
-	},
-	/**   END Initialize object. */
+	//
+	// helper functions
+	//
 
-	/** START Public Methods. */
-	_acquireList = function (callbacks, data) {
-		/** Init. */
-		var jsonData = ko.toJSON(data);
-
-		/** Execute. */
-		return amplify.request({
-			resourceId: 'devices-acquire',
-			data: jsonData,
-			success: callbacks.success,
-			error: callbacks.error
-		});
-	},
-	_acquireListByCutomerId = function (callbacks, data) {
-		/** Init. */
-		var jsonData = ko.toJSON(data);
-
-		/** Execute. */
-		return amplify.request({
-			resourceId: 'devices-acquireByCustomerID',
-			data: jsonData,
-			success: callbacks.success,
-			error: callbacks.error
-		});
-	},
-	_acquireDetails = function (callbacks, data) {
-		/** Init. */
-		var jsonData = ko.toJSON(data);
-
-		/** Execute. */
-		return amplify.request({
-			resourceId: 'devices-acquireDetails',
-			data: jsonData,
-			success: callbacks.success,
-			error: callbacks.error
-		});
+	DataserviceDevices.prototype.getData = function(data, cb) {
+		this.post('AcquireList', data, cb);
 	};
-	/**   END Public Methods. */
-
-	/** START Init Class. */
-	_init();
-	/**   END Init Class. */
-
-	/** Return object. */
-	return {
-		get AcquireList() { return _acquireList; },
-		get AcquireListByCustomerId() { return _acquireListByCutomerId; },
-		get AcquireDetails() { return _acquireDetails; }
+	DataserviceDevices.prototype.updateData = function(data, cb) {
+		console.log('DataserviceDevices.prototype.updateData not implemented');
+		setTimeout(function() {
+			cb({
+				Code: -1,
+				Message: 'not implemented',
+			});
+		}, 0);
 	};
+	DataserviceDevices.prototype.AcquireListByCustomerID = function(data, cb) {
+		this.post('AcquireListByCustomerID', data, cb);
+	};
+	DataserviceDevices.prototype.AcquireDeviceDetails = function(data, cb) {
+		this.post('AcquireDeviceDetails', data, cb);
+	};
+
+	return new DataserviceDevices();
 });

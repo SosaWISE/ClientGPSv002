@@ -5,63 +5,98 @@
  * Time: 9:54 AM
  * To change this template use File | Settings | File Templates.
  */
-define(['ko'],
-function (ko) {
-	/** Define Model. */
-	var GeoFence = function () {
-		var self = this;
+define([
+  'ukov',
+  'ko'
+], function(
+  ukov,
+  ko
+) {
+  var schemaName = 'model.geofence';
 
-		self.saving = ko.observable(false);
-		self.active = ko.observable(false);
+  //
+  // setup schema
+  //
 
-		self.GeoFenceID = ko.observable();
-		self.AccountId = ko.observable();
-		// self.Area = ko.observable();
-		// self.CenterLattitude = ko.observable();
-		// self.CenterLongitude = ko.observable();
-		self.GeoFenceDescription = ko.observable();
-		// self.Name = ko.observable();
-		self.GeoFenceName = ko.observable();
-		self.Type = ko.observable();
-		// self.TypeId = ko.observable();
-		self.ReportMode = ko.observable();
-		// self.ReportModeUi = ko.observable();
-		self.MaxLattitude = ko.observable();
-		self.MaxLongitude = ko.observable();
-		self.MeanLattitude = ko.observable();
-		self.MeanLongitude = ko.observable();
-		self.MinLattitude = ko.observable();
-		self.MinLongitude = ko.observable();
-		// self.PointLattitude = ko.observable();
-		// self.PointLongitude = ko.observable();
-		// self.PolyPointsList = ko.observableArray();
-		// self.Radius = ko.observable();
-		self.ModifiedOn = ko.observable();
-		self.ZoomLevel = ko.observable();
+  // {
+  // 	"GeoFenceID": 7,
+  // 	"GeoFenceTypeId": "RECT",
+  // 	"GeoFenceTypeUi": "fence",
+  // 	"ReportModeId": "3",
+  // 	"ReportModeUi": "INCEXC",
+  // 	"AccountId": 100169,
+  // 	"GeoFenceName": "Both Inclusion and Exclusion Zone of a Rectangular",
+  // 	"GeoFenceDescription": null,
+  // 	"GeoFenceNameUi": "Both Inclusion and Exclusion Zone of a Rectangular",
+  // 	"MeanLattitude": 40.32603879612476,
+  // 	"MeanLongitude": -111.68433833333333,
+  // 	"ZoomLevel": 12,
+  // 	"Area": 372878.2628931999,
+  // 	"MinLattitude": 40.32482425891619,
+  // 	"MinLongitude": -111.69247166666668,
+  // 	"MaxLattitude": 40.32725333333333,
+  // 	"MaxLongitude": -111.67620499999998,
+  // 	"GeoFenceType": "Rectangle",
+  // 	"PointLatitude": null,
+  // 	"PointLongitude": null,
+  // 	"CenterLattitude": null,
+  // 	"CenterLongitude": null,
+  // 	"Radius": null,
+  // 	"PolyPointsList": [],
+  // 	"IsActive": false,
+  // 	"IsDeleted": false,
+  // 	"ModifiedOn": "2013-08-19T23:30:47.623"
+  // }
+  ukov.schema[schemaName] = {
+    GeoFenceID: {},
+    // GeoFenceTypeId: {},
+    GeoFenceTypeUi: {},
+    ReportModeId: {},
+    // ReportModeUi: {},
+    AccountId: {},
+    GeoFenceName: {},
+    GeoFenceDescription: {},
+    GeoFenceNameUi: {},
+    MeanLattitude: {},
+    MeanLongitude: {},
+    ZoomLevel: {},
+    // Area: {},
+    MinLattitude: {},
+    MinLongitude: {},
+    MaxLattitude: {},
+    MaxLongitude: {},
+    // GeoFenceType: {},
+    // PointLatitude: {},
+    // PointLongitude: {},
+    // CenterLattitude: {},
+    // CenterLongitude: {},
+    // Radius: {},
+    // PolyPointsList: {},
+    // IsActive: {},
+    // IsDeleted: {},
+    ModifiedOn: {
+      alwaysClean: true,
+    },
+  };
 
-		self.SessionID = ko.observable();
-		self.ItemId = ko.observable();
+  return {
+    wrap: function(model, collectionName) {
+      model = ukov.wrapModel(model, schemaName, collectionName);
+      model.id = model.GeoFenceID();
 
-		// self.isBrief = ko.observable(true);
-		self.isNullo = false;
-		self.dirtyFlag = new ko.DirtyFlag([
-		]);
+      model.saving = ko.observable(false);
+      model.active = ko.observable(false);
+      model.activate = function() {
+        this.active(true);
+      };
+      model.deactivate = function() {
+        this.active(false);
+      };
 
-		/** Return object. */
-		return self;
-	};
+      // model.type = ko.observable();
+      model.time = ko.observable();
 
-	GeoFence.Nullo = new GeoFence();
-	GeoFence.Nullo.isNullo = true;
-	GeoFence.Nullo.isBrief = function () { return false; };  // nullo is never brief.
-	GeoFence.Nullo.dirtyFlag().reset();
-
-	/** Static memeber. */
-	GeoFence.datacontext = function (dc) {
-		if (dc) { _dc = dc; }
-		return _dc;
-	};
-
-	/** Return object. */
-	return GeoFence;
+      return model;
+    },
+  };
 });

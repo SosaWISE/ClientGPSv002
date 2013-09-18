@@ -13,135 +13,136 @@ define([
 	'utils',
 	'ko',
 	'amplify',
-	'datacontext'
-],
-function ($, _, config, messenger, utils, ko, amplify, datacontext) {
-	var
-		_tmplName = 'home.view',
+	'dataservice'
+], function(
+	$,
+	_,
+	config,
+	messenger,
+	utils,
+	ko,
+	amplify,
+	dataservice
+) {
+	var _tmplName = 'home.view',
 		_tmplModuleName = 'home.module.view',
-		_activate = function (routeData, callback) {
-			messenger.publish.viewModelActivated({canleaveCallback: canLeave});
-			if (callback) { callback(); }
+		_activate = function(routeData, callback) {
+			messenger.publish.viewModelActivated({
+				canleaveCallback: canLeave
+			});
+			if (callback) {
+				callback();
+			}
 		},
-		canLeave = function () {
+		canLeave = function() {
 			return true;
 		},
-		init = function () {
-			amplify.subscribe('customerAuthentication', function (/*data*/) {
-				_refresh(/*data*/);
+		init = function() {
+			amplify.subscribe('customerAuthentication', function() {
+				_refresh();
 			});
-			amplify.subscribe('sessionAuthentication', function (/*data*/) {
-				_refresh(/*data*/);
+			amplify.subscribe('sessionAuthentication', function() {
+				_refresh();
 			});
 		},
 		_devices = ko.observableArray(),
 		_events = ko.observableArray(),
-		deviceTypes = ko.observableArray([
-			{
-				type: 'home',
-				name: 'Home Security System (KinTouch TM)'
-			},
-			{
-				type: 'car-nav',
-				name: 'Car Navigation System (Encompass TM)'
-			},
-			{
-				type: 'bracelet',
-				name: 'Health Care Bracelet'
-			},
-			{
-				type: 'phone',
-				name: 'Mobile Phone Application'
-			},
-			{
-				type: 'child',
-				name: 'Child GPS Tracker'
-			},
-			{
-				type: 'pet',
-				name: 'Pet GPS Tracker'
-			},
-			{
-				type: 'car',
-				name: 'Automobile Tracker'
-			},
-			{
-				type: 'watch',
-				name: 'GPS Watch Tracker'
+		deviceTypes = ko.observableArray([{
+			type: 'home',
+			name: 'Home Security System (KinTouch TM)'
+		}, {
+			type: 'car-nav',
+			name: 'Car Navigation System (Encompass TM)'
+		}, {
+			type: 'bracelet',
+			name: 'Health Care Bracelet'
+		}, {
+			type: 'phone',
+			name: 'Mobile Phone Application'
+		}, {
+			type: 'child',
+			name: 'Child GPS Tracker'
+		}, {
+			type: 'pet',
+			name: 'Pet GPS Tracker'
+		}, {
+			type: 'car',
+			name: 'Automobile Tracker'
+		}, {
+			type: 'watch',
+			name: 'GPS Watch Tracker'
+		}]),
+		_refresh = function(callback) {
+			var waitingCount = 2;
+
+			function done() {
+				waitingCount--;
+				if (waitingCount) {
+					return;
+				}
+
+				if (typeof(callback) === 'function') {
+					callback();
+				}
 			}
-		]),
-		_refresh = function (callback) {
-			/** Init */
-			var data = {
-				devices: ko.observableArray(),
-				events: ko.observableArray()
-			};
 
-			/** Initialize view model. */
-			$.when(
-				datacontext.Devices.getData(
-					{
-						results: data.devices,
-						param: {
-							UniqueID: datacontext.Customer.model.customerMasterFileId()
-						}
-					}
-				),
-				datacontext.Events.getData(
-					{
-						results: data.events,
-						param: {
-							CMFID: datacontext.Customer.model.customerMasterFileId(),
-							PageSize: 10,
-//							EndDate: utils.GetNowDateTime(),
-//							StartDate: utils.AddToDate(utils.GetNowDateTime(), -5)
-							EndDate: '6/19/2013',
-							StartDate: '1/19/2013'
-						}
-					}
-				)
+			dataservice.Devices.getData({
+				UniqueID: config.CurrentUser().CustomerMasterFileId,
+			}, function(resp) {
+				console.log(resp);
+				if (resp.Code !== 0) {
+					return;
+				}
 
-			)
-			.then(function (response) {
-				/** Init. */
-				console.log(response);
-				_devices.removeAll();
-				/** Initialize. */
-				_.each(data.devices(), function (item) {
+				_devices([]);
+				resp.Value.forEach(function(item) {
 					_devices.push(item);
 				});
 
-				_events.removeAll();
-				/** Bind events to main body. */
-				_.each(data.events(), function (item) {
+				done();
+			});
+
+			dataservice.Events.getData({
+				CMFID: config.CurrentUser().CustomerMasterFileId,
+				PageSize: 10,
+				// EndDate: utils.GetNowDateTime(),
+				// StartDate: utils.AddToDate(utils.GetNowDateTime(), -5)
+				EndDate: '6/19/2013',
+				StartDate: '1/19/2013'
+			}, function(resp) {
+				console.log(resp);
+				if (resp.Code !== 0) {
+					return;
+				}
+
+				_events([]);
+				resp.Value.forEach(function(item) {
 					// item.type = item.EventTypeUi;
 					// item.title = item.EventShortDesc;
-					item.time = utils.DateWithFormat(item.EventDate(),'MMMM Do, YYYY @ hh:mm:ss a');
+					item.time = utils.DateWithFormat(item.EventDate, 'MMMM Do, YYYY @ hh:mm:ss a');
 					item.actions = '';
 
 					_events.push(item);
 				});
 
-				utils.InvokeFunctionIfExists(callback);
-			}, function (/*someArg*/) {
-					//alert('SomeArg:' + someArg);
+				done();
 			});
 		},
-		selectDevice = function (model) {
-			amplify.publish('select:device', model.DeviceID());
+		selectDevice = function(model) {
+			amplify.publish('select:device', model.AccountId());
 		},
-		selectEvent = function (model) {
+		selectEvent = function(model) {
 			amplify.publish('select:event', model.EventID());
 		};
 
 	deviceTypes().forEach(function(deviceType) {
 		deviceType.addDeviceCmd = ko.asyncCommand({
-			execute: function (complete) {
+			execute: function(complete) {
 				// currently does nothing
 				complete();
 			},
-			canExecute: function (isExecuting) {
-				return !isExecuting;// && isDirty() && isValid();
+			canExecute: function(isExecuting) {
+				return !isExecuting; // && isDirty() && isValid();
 			}
 		});
 	});
@@ -159,12 +160,13 @@ function ($, _, config, messenger, utils, ko, amplify, datacontext) {
 		name: 'Home',
 		selectDevice: selectDevice,
 		selectEvent: selectEvent,
-		get TmplName() { return _tmplName; },
-		get TmplModuleName() { return _tmplModuleName; },
-		get devices() { return  _devices; },
-		get events() { return _events; },
+		TmplName: _tmplName,
+		TmplModuleName: _tmplModuleName,
+		devices: _devices,
+		events: _events,
 		deviceTypes: deviceTypes,
-		get Activate() { return _activate; }/*,
+		Activate: _activate,
+		/*,
 		get Refresh() { return _refresh; }*/
 	};
 });

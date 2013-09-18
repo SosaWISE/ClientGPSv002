@@ -1,5 +1,5 @@
-<ul class="tabs cf" data-bind="foreach:groups">
-    <li class="tab"><a data-bind="active:active,click:$parent.activateGroup,text:name"></a></li>
+<ul class="tabs cf" data-bind="foreach:list">
+    <li class="tab"><a data-bind="click:$parent.selectItem,active:active,text:name"></a></li>
 </ul>
-<div data-bind="template:{name:getGroupTmpl,foreach:groups}">
+<div data-bind="template:{name:getTemplate,foreach:list}">
 </div>

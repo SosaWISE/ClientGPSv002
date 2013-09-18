@@ -5,26 +5,45 @@
  * Time: 1:47 PM
  * To change this template use File | Settings | File Templates.
  */
-define(['../loadDependencies'],
-function() {
-	require(['jquery','config','route-config','presenter','dataprimer','binder'],
-	function ($, config, routeConfig, presenter, dataprimer, binder) {
+define(['../loadDependencies'], function() {
+  require([
+    'jquery',
+    'infuser',
+    'config',
+    'routes',
+    'router',
+    'dataservice',
+    'ko',
+    'app'
+  ], function(
+    $,
+    infuser,
+    config,
+    routes,
+    Router,
+    dataservice,
+    ko,
+    app
+  ) {
+    console.log("Bootstrapping version: ", config.version);
+    console.log("Application Token: " + config.token);
+    console.log("CORS Domain: " + config.serviceDomain);
 
-		console.log("Bootstrapping version: ", config.ApplicationVersion);
-		console.log("Application Token: " + config.ApplicationToken);
-		console.log("CORS Domain: " + config.ServicesDomain);
+    $('#busyindicator').activity(true);
+    dataservice.Session.SessionStart(config.token, function(data) {
+      if (data.Code !== 0) {
+        console.error(data);
+        return;
+      } else {
+        // setup infuser/templates then bind
+        infuser.defaults.templatePrefix = "_";
+        infuser.defaults.templateSuffix = ".tmpl.html";
+        infuser.defaults.templateUrl = "/tmpl";
+        ko.applyBindings(app);
 
-		presenter.ToggleActivity(true);
-
-		config.DataServiceInit();
-
-		$.when(dataprimer.SessionStart())
-		//.done(dataprimer.Fetch())
-		.done(binder.Bind)
-		.done(routeConfig.Register)
-		.fail()
-		.always(function () {
-			presenter.ToggleActivity(false);
-		});
-	});
+        routes.run();
+      }
+      $('#busyindicator').activity(false);
+    });
+  });
 });

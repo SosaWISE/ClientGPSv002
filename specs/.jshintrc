@@ -21,6 +21,15 @@
     "requirejs",
     "define",
 
-    "alert"
+    "alert",
+
+    "jasmine",
+    "describe",
+    "beforeEach",
+    "afterEach",
+    "it",
+    "expect",
+    "spyOn",
+    "waitsFor"
   ]
 }

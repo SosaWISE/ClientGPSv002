@@ -1,180 +1,212 @@
-/**
- * Created with JetBrains PhpStorm.
- * User: sosawise
- * Date: 5/20/13
- * Time: 12:28 PM
- * To change this template use File | Settings | File Templates.
- */
 define([
-	'config',
-	'messenger',
-	'ko',
-	'vm.events',
-	'vm.devices-tab',
-	'vm.geoFences',
-	'flowMap/index',
-	'gmaps',
-	'amplify',
-	'router'
-],
-function (config, messenger, ko, events, devices, geofences, flowMap, gmaps, amplify, router) {
-	var
-		self,
-		/** START Private Properties. */
-		_tmplName =  'devices.view',
-		_tmplModuleName =  'devices.module.view',
-		editing = ko.observable(false),
-		editItem = ko.observable(null),
-		/**   END Private Properties. */
+  'config',
+  'utils',
+  'ko',
+  'vm.controller',
+  'dataservice',
+  'model.device',
+  'vm.model-editor',
+  'gmaps',
+  'resources'
+], function(
+  config,
+  utils,
+  ko,
+  ControllerViewModel,
+  dataservice,
+  model_device,
+  modelEditor,
+  gmaps,
+  resources
+) {
+  "use strict";
 
-		/** START Private Methods. */
-		_activate = function (routeData, callback) {
-			messenger.publish.viewModelActivated();
+  function DevicesViewModel(options) {
+    DevicesViewModel.super_.call(this, options);
 
-			// first time
-			if (!self.fmap) {
-				/** Show map. */
-				setTimeout(function () {
-					self.fmap = new flowMap.Map(document.getElementById("devices-map"), {
-						//@TODO: dynamically set initial center and zoom
-						center: new gmaps.LatLng(40.323110654354856, -111.68210183710936),
-						zoom: 14,
+    this.saving = ko.observable(false);
+    this.canEdit = ko.observable(true);
+    this.editorVM = modelEditor.create();
+    this.editing = this.editorVM.editing;
+    this.editItem = ko.observable(this.editorVM);
 
-						mapTypeId: gmaps.MapTypeId.ROADMAP,
-						zoomControl: true,
-						//zoomControlOptions: { style: gmaps.ZoomControlStyle.SMALL },
-						scaleControl: true,
-						mapTypeControl: true,
-						disableDefaultUI: true
-					});
+    // ensure correct scope
+    this.clickItem = this.clickItem.bind(this);
+    this.clickEdit = this.clickEdit.bind(this);
+    this.clickSave = this.clickSave.bind(this);
+    this.clickCancel = this.clickCancel.bind(this);
+  }
+  utils.inherits(DevicesViewModel, ControllerViewModel);
+  DevicesViewModel.prototype.viewTemplate = 'devices-tab.view';
 
-					// self.fmap.clear();
-					// self.fmap.endEdit();
-					// self.fmap.beginEdit();
-					self.fmap.inEditMode = true;
+  //
+  // events
+  //
+  DevicesViewModel.prototype.clickItem = function(model) {
+    this.selectItem(model, false, false);
+    return true;
+  };
+  DevicesViewModel.prototype.clickEdit = function(model) {
+    this.startEdit(model);
+  };
+  DevicesViewModel.prototype.clickSave = function(model) {
+    this.saveEdit(model);
+  };
+  DevicesViewModel.prototype.clickCancel = function(model) {
+    this.cancelEdit(model);
+  };
 
-					var cbCount = 0;
-					// initialize all group view models
-					groups.forEach(function(vm) {
-						vm.init(self, function () {
-							cbCount++;
-							if (cbCount === groups.length) {
-								callback();
-							}
-						});
-					});
-				}, 200);
-			}
-			else {
-				if (callback) { callback(); }
-			}
-		},
-		/**   END Private Methods. */
+  //
+  // members
+  //
+  DevicesViewModel.prototype.onLoad = function(cb) {
+    var list = this.list,
+      fmap = this.parent.fmap;
 
-		init = function () {
-			/** Initialize view model. */
+    // remove existing from the map
+    list().forEach(function(model) {
+      Object.keys(model.handles).forEach(function(handle) {
+        handle.dispose();
+      });
+      delete model.handles;
+    });
+    // clear list
+    list([]);
+    // add to list
+    dataservice.Devices.getData({
+      UniqueID: config.CurrentUser().CustomerMasterFileId,
+    }, function(resp) {
+      if (resp.Code !== 0) {
+        alert('Error loading devices:' + resp);
+      } else {
+        var collectionName = 'devices';
+        resp.Value.forEach(function(model) {
+          model = model_device.wrap(model, collectionName);
+          model.handles = {};
 
-			// activate events tab
-			activateGroup(events);
+          // add to map
+          model.handles.marker = fmap.addMarker({
+            lattitude: parseFloat(model.LastLatt()),
+            longitude: parseFloat(model.LastLong())
+          }, model.AccountId(), {
+            icon: DevicesViewModel.deviceIcon
+          });
 
-			amplify.subscribe('select:device', function (deviceID) {
-				// ensure this tab is selected
-				router.NavigateTo(config.Hashes.devices, function () {
-					devices.list().some(function (model) {
-						if (model.DeviceID() === deviceID) {
-							devices.selectItem(model);
-							return true;
-						}
-					});
-				});
-				// ensure devices tab is showing
-				if (!devices.active()) {
-					activateGroup(devices);
-				}
-			});
-			amplify.subscribe('select:event', function (eventID) {
-				// ensure this tab is selected
-				router.NavigateTo(config.Hashes.devices, function () {
-					events.list().some(function (model) {
-						if (model.EventID() === eventID) {
-							events.selectItem(model);
-							return true;
-						}
-					});
-				});
-				// ensure events tab is showing
-				if (!events.active()) {
-					activateGroup(events);
-				}
-			});
-		},
-		getGroupTmpl = function(vm) {
-			console.log('getGroupTmpl', vm.TmplName);
-			return vm.TmplName;
-		},
-		groups = [
-			events,
-			devices,
-			geofences
-		];
+          var latLng = new gmaps.LatLng(parseFloat(model.LastLatt()), parseFloat(model.LastLong())),
+            div = document.createElement("div");
+          div.innerHTML = 'device';
+          model.handles.infoWindow = new gmaps.InfoWindow({
+            content: div,
+            position: latLng,
+          });
+          model.active.subscribe(function(active) {
+            if (active) {
+              gmaps.event.addListener(model.handles.infoWindow, "closeclick", function() {
+                model.active(false);
+              });
+              model.handles.infoWindow.open(fmap);
+            } else {
+              gmaps.event.clearInstanceListeners(model.handles.infoWindow);
+              model.handles.infoWindow.close();
+            }
+          });
 
-	groups.forEach(function(vm) {
-		vm.editing.subscribe(function() {
-			if (vm.active()) {
-				editing(vm.editing());
-			}
-		});
-		vm.editItem.subscribe(function() {
-			if (vm.active()) {
-				editItem(vm.editItem());
-			}
-		});
-	});
+          // add to list
+          list.push(model);
+        });
+      }
+      cb(false);
+    });
+  };
+  DevicesViewModel.prototype.onActivate = function(routeData) { // overrides base
+    var child = this.findChild(parseInt(routeData.id, 10));
+    if (!child) {
+      this.removeExtraRouteData(routeData);
+    } else {
+      this.selectItem(child);
+      if (routeData.action) {
+        switch (routeData.action) {
+          case 'edit':
+            //@TODO: start edit
+            console.log('editing ', routeData.id);
+            break;
+          case 'view':
+            console.log('viewing ', routeData.id);
+            break;
+          default:
+            delete routeData.action;
+            break;
+        }
+      }
+    }
+    return routeData;
+  };
 
-	function activateGroup(vm) {
-		groups.forEach(function(vm) {
-			vm.active(false);
-		});
-		vm.active(true);
-		editing(vm.editing());
-		editItem(vm.editItem());
-	}
-	function activateTab(tabName) {
-		var group;
-		switch(tabName) {
-		case 'events':
-			group = events;
-			break;
-		case 'devices':
-			group = devices;
-			break;
-		case 'geofences':
-			group = geofences;
-			break;
-		default:
-			throw new Error('invalid tab name: ' + tabName);
-		}
-		activateGroup(group);
-	}
+  DevicesViewModel.prototype.selectItem = function(model, preventDeactivate) {
+    if (this.activeChild) {
+      this.activeChild.deactivate();
+      if (!preventDeactivate && this.activeChild === model) {
+        this.activeChild = null;
+        // deselect item
+        this.setRouteData({
+          tab: this.id,
+        });
+        return;
+      }
+    }
+    this.activeChild = model;
+    this.activeChild.activate();
 
-	/** Init object. */
-	init();
+    this.setRouteData({
+      tab: this.id,
+      id: this.activeChild.id,
+    });
+  };
 
-	/** Return object. */
-	self = {
-		editing: editing,
-		editItem: editItem,
-		hash: config.Hashes.devices,
-		ico: '&#59176;',
-		type: 'devices',
-		name: 'Devices',
-		get TmplName() {return _tmplName; },
-		get TmplModuleName() { return _tmplModuleName; },
-		getGroupTmpl: getGroupTmpl,
-		groups: groups,
-		activateGroup: activateGroup,
-		activateTab: activateTab,
-		get Activate() { return _activate; }
-	};
-	return self;
+  DevicesViewModel.prototype.addDevice = function() {
+    alert("What up");
+    this.list.push({
+      type: 'Added one',
+      title: 'Andresss\'s Watch',
+      time: 'April 23, 2013 at 12:42pm'
+    });
+  };
+  DevicesViewModel.prototype.startEdit = function(model) {
+    this.editorVM.start(model);
+  };
+  DevicesViewModel.prototype.cancelEdit = function() {
+    this.editorVM.stop(true);
+  };
+  DevicesViewModel.prototype.saveEdit = function() {
+    if (!this.editorVM.editing()) {
+      return;
+    }
+
+    var _this = this,
+      model = _this.editorVM.model();
+    _this.editorVM.stop(false);
+
+    _this.saving(true);
+    model.saving(true);
+    dataservice.Devices.updateData(model.getValue(), function(resp) {
+      _this.saving(false);
+      model.saving(false);
+
+      if (resp.Code !== 0) {
+        console.error(resp);
+        _this.editorVM.start(model);
+      } else {
+        model.markClean(resp.Value, true);
+      }
+    });
+  };
+
+  DevicesViewModel.deviceIcon = new gmaps.MarkerImage(
+    resources.IconSprites.GeoMapSprite,
+    new gmaps.Size(31, 31),
+    new gmaps.Point(31, 31),
+    new gmaps.Point(15, 15)
+  );
+
+  return DevicesViewModel;
 });

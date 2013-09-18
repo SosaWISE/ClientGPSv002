@@ -1,9 +1,11 @@
+// this global require variable is used by require.js when the app loads
 var require = {
 	// by default load any module from this path
 	baseUrl: 'js/app',
 
 	// defines where each is located. does NOT load/require them
 	paths: {
+		webconfig: '../../webconfig',
 		jquery: '../lib/jquery-1.7.2',
 		ko: '../lib/knockout',
 		"knockout.activity": '../lib/knockout.activity',
@@ -27,15 +29,36 @@ var require = {
 
 	// defines global names(exports) and file dependencies (deps). does NOT load/require them
 	shim: {
-		amplify: { exports: 'amplify' },
-		infuser: { exports: 'infuser', deps: ['trafficCop','jquery'], },
-		underscore: { exports: '_' },
-		"knockout.activity": { deps: ['ko','jquery'], },
-		"knockout.asyncCommand": { deps: ['ko'], },
-		"knockout.dirtyFlag": { deps: ['ko'], },
-		"knockout.validation": { deps: ['ko'], },
-		"koExternalTemplateEngine": { deps: ['ko','infuser'], },
-		"amplify.request": { deps: ['amplify'], },
-		"amplify.store": { deps: ['amplify'], },
+		amplify: {
+			exports: 'amplify'
+		},
+		infuser: {
+			exports: 'infuser',
+			deps: ['trafficCop', 'jquery'],
+		},
+		underscore: {
+			exports: '_'
+		},
+		"knockout.activity": {
+			deps: ['ko', 'jquery'],
+		},
+		"knockout.asyncCommand": {
+			deps: ['ko'],
+		},
+		"knockout.dirtyFlag": {
+			deps: ['ko'],
+		},
+		"knockout.validation": {
+			deps: ['ko'],
+		},
+		"koExternalTemplateEngine": {
+			deps: ['ko', 'infuser'],
+		},
+		"amplify.request": {
+			deps: ['amplify'],
+		},
+		"amplify.store": {
+			deps: ['amplify'],
+		},
 	}
 };

@@ -5,34 +5,24 @@
  * Time: 04:19 PM
  * To change this template use File | Settings | File Templates.
  */
-define(['amplify','amplify.request','config','ko'],
-function (amplify, amplify_request, config, ko) {
-	/** START Initialize. */
-	var
-		_init = function () {
-			amplify.request.define('eventTypes-Read', 'ajax', config.AjaxProps('Device/EventTypesReadAll'));
-	},
-	/** END   Initialize. */
+define([
+	'config',
+	'dataservice.base',
+	'utils'
+], function(config, DataserviceBase, utils) {
 
-	/** START Public Methods. */
-	_readAll = function (callbacks, data) {
-		/** Init. */
-		var jsonData = ko.toJSON(data);
+	function DataserviceEventTypes() {
+		DataserviceEventTypes.super_.call(this, 'Device', config.serviceDomain);
+	}
+	utils.inherits(DataserviceEventTypes, DataserviceBase);
 
-		return amplify.request({
-			resourceId: 'eventTypes-Read',
-			data: jsonData,
-			success: callbacks.success,
-			error: callbacks.error
-		});
+	//
+	// helper functions
+	//
+
+	DataserviceEventTypes.prototype.GetData = function(data, cb) {
+		this.post('EventTypesReadAll', data, cb);
 	};
-	/** END   Public Methods. */
 
-	/** Init object.  */
-	_init();
-
-	/** Return object. */
-	return {
-		get GetData() { return _readAll; }
-	};
+	return new DataserviceEventTypes();
 });

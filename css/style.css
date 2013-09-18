@@ -244,12 +244,12 @@ input{
 	height:360px;
 	margin:-180px 0 0 -310px
 }
-.login a {
+/*.login a {
 	color:#2a7ddc
 }
 .login a:hover {
 	text-decoration:underline
-}
+}*/
 .login h2.logo {
 	position:absolute;
 	top:35px;
@@ -320,7 +320,9 @@ input{
 	background-image:none
 }
 
-.login input[type=submit]{
+.btn-blue {
+	display:inline-block;
+	text-align: center;
 	width:100%;
 	color:#fff;
 	text-shadow:0 1px 0 #000;
@@ -342,7 +344,10 @@ input{
 	padding:8px 10px;
 	margin-bottom:10px
 }
-.login input[type=submit]:active {
+.btn-blue:hover {
+	cursor:pointer;
+}
+.btn-blue:active {
 	background-image:-webkit-gradient(linear, left top, left bottom, color-stop(0, rgba(255,255,255,0.05)), color-stop(1, rgba(0,0,0,0.05)));
 	background-image:-webkit-linear-gradient(top, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.1) 100%);
 	background-image:-moz-linear-gradient(top, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.1) 100%);
@@ -354,12 +359,12 @@ input{
 	padding:9px 10px 7px 10px;
 }
 
-.login a.forgot {
+.login .btn-forgot {
 	float:right;
 	color:rgba(0,0,0,0.75);
 	font-size:13px;
 }
-.login a.forgot:hover {
+.login .btn-forgot:hover {
 	text-decoration:underline
 }
 .login input[type=checkbox] {

@@ -4,8 +4,8 @@
     </div>
     <div class="content">
         <ul class="devices" data-bind="foreach:list">
-            <li data-bind="attr:{'class':type},click:$parent.selectItem,active:active">
-                <div class="title" data-bind="text:DeviceName"></div>
+            <li data-bind="attr:{'class':UIName},click:$parent.selectItem,active:active">
+                <div class="title" data-bind="text:AccountName"></div>
                 <div class="sub" data-bind="text:time"></div>
                 <div class="actions" data-bind="if:$parent.canEdit">
                     <a style="cursor:pointer;" class="edit-btn" data-bind="click:$parent.startEdit">&#xe01b;</a>
@@ -22,7 +22,7 @@
             <ul class="edit-form">
                 <li>
                     <span class="label">Device Title</span>
-                    <input data-bind="hasFocus:$parent.focusField,value:DeviceName" type="text" placeholder="Placeholder">
+                    <input data-bind="hasFocus:$parent.focusField,value:AccountName" type="text" placeholder="Placeholder">
                 </li>
                 <li>
                     <span class="label">Description</span>

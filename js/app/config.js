@@ -1,174 +1,54 @@
-/**********************************************************************************************************************
- * @fileOverview Created by Andres Sosa
- * Date: 5/14/2013
- * Time: 4:182 aM
- * @author: <a href="mailto:asosa@securitysciences.com">Andres Sosa</a>
- * @description This file contains the configuration settings for this SPA.
- *
- /********************************************************************************************************************/
-define(['toastr','mock/mock','infuser','ko'],
-	function (toastr, mock, infuser, ko) {
-		/** Initialize Constructor. */
-		var
-			config,
-			_defaultProperties  = {
-				dealerId:           5000,
-				localizationId:     'en-US',
-				salesRepId:         'PORT001',
-				leadSourceId:       '14', // Portal
-				leadDispositionId:  '8' //Sign up on Portal
-			},
-			_servicesDomain     = "//sse.services.cors/",
-			_applicationToken   = "SSE_MAIN_PORTAL",
-			_applicationVersion = "1.0.0",
-			_logger             = toastr,
-			_messages           = {
-				viewModelActivated: 'viewmodel-activation'
-			},
-			_stateKeys          = {
-				lastView: 'state.active-hash'
-			},
-			_currentUser        = ko.observable(),
-			_hashes             = {
-				home:       '#/home',
-				login:      '#/login',
-				signUp:     '#/signUp',
-				devices:    '#/devices',
-				users:      '#/users',
-				billing:    '#/billing',
-				reports:    '#/reports',
-				customers:  '#/customers',
-				settings:   '#/settings'
-			},
+/**
+ * Default values for window.webconfig
+ * To override the defaults, set the values in webconfig.js
+ */
+// define config module
+define([
+  'webconfig',
+  'ko',
+  'toastr',
+  'mock/mock'
+], function(
+  config,
+  ko,
+  toastr,
+  mock
+) {
+  // sets values that haven't already been set.
+  function set(key, value) {
+    if (!config.hasOwnProperty(key)) {
+      config[key] = value;
+    }
+  }
 
-			_storeExpirationMs = (1000 * 60 * 60 * 24), // 1 day in milliseconds.
+  //
+  // Explicit Properties (non-overrideable)
+  //
+  config.version = '0.0.1';
+  config.CurrentUser = ko.observable();
+  config.Logger = toastr;
 
-			_throttle = 400,
-			_title = 'SSE Console > ',
-			_toasterTimeout = 2000,
+  //
+  // Property Defaults (overrideable)
+  //
+  set('useMocks', false);
+  set('token', 'SSE_MAIN_PORTAL');
+  set('serviceDomain', 'sse.services.cors');
+  set('titlePrefix', '');
+  set('titlePostfix', '| Security Sciences');
+  set('dealerId', 5000);
+  set('salesRepId', 'PORT001');
+  set('leadSourceId', '14'); // Portal
+  set('leadDispositionId', '8'); //Sign up on Portal
+  //
+  //@TODO: remove the following properties
+  //
+  set('localizationId', 'en-US');
+  set('toasterTimeout', 2000);
+  toastr.options.timeOut = config.toasterTimeout;
 
-			_useMocks = false,
-			useMocks = function (val) {
-				if (val) {
-					_useMocks = val;
-					_initFx();
-				}
-				return _useMocks;
-			},
-
-			_viewIds = {
-				MainView: '#vm-view',
-				HomeView: '#home-view',
-				LoginView: '#login-view',
-				SignUpView: '#signup-view',
-				RegisterView: '#register-view',
-				DevicesView: '#devices-view',
-				UsersView: '#users-view',
-				BillingView: '#billing-view',
-				ReportView: '#reports-view',
-				SettingsView: '#settings-view'
-			},
-
-			_toasts = {
-				errorSessionStart: 'Session failed to start.',
-				changesPending: 'Please save or cancel your changes before leaving the page.',
-				errorSavingData: 'Data could not be saved.  Please check the logs.',
-				errorGettingData: 'Could not retrieve data.  Please check the logs.',
-				invalidRoute: 'Cannot navigate.  Invalid route.',
-				retrievedData: 'Data retrieved successfully',
-				savedData: 'Data saved successfully.',
-				successfulAuth: 'Successful authentication.',
-				failedAuth: 'Failed authentication.'
-			},
-			_iconSprites = {
-				GeoMapSprite: "/img/social-login-sprite.png"
-			},
-
-			_localText = {
-				AllDevices: '[All Devices]',
-				AllEventTypes: '[All Event Types]',
-				AllLocations: '[All Locations]'
-			},
-
-			/**
-			 * Methods
-			 */
-			_dataServiceInit = function () {},
-
-			validationInit = function () {
-				// ko.validation.configure({
-				// 	registerExtenders: true,    // default is true.
-				// 	messagesOnModified: true,   // default is true.
-				// 	insertMessages: true,       // default is true.
-				// 	parseInputAttributes: true, // default is false.
-				// 	writeInputAttributes: true, // default is false.
-				// 	messageTemplate: null,      // default is null.
-				// 	decorateElement: true       // default is false.  Applies the .validationElement CSS class.
-				// });
-			},
-
-			configureExternalTemplates = function () {
-				infuser.defaults.templatePrefix = "_";
-				infuser.defaults.templateSuffix = ".tmpl.html";
-				infuser.defaults.templateUrl = "/tmpl";
-			},
-
-			_initFx = function () {
-				if (_useMocks) {
-					mock.init(config);
-					_dataServiceInit = mock.DataServiceInit;
-				}
-				_dataServiceInit();
-
-				toastr.options.timeOut = _toasterTimeout;
-				configureExternalTemplates();
-				validationInit();
-			},
-			_ajaxProps = function (aUrl) {
-				var props = {
-					url: _servicesDomain + aUrl,
-					dataType: 'json',
-					type: 'POST',
-					contentType: 'application/json; charset=utf-8',
-					cache: false,
-					crossDomain: true,
-/** This needs to be enabled once we are in production.
- * The header property Access-Control-Allow-Origin also needs to be changed from '*' wildcard to where the client is
- * hosted. */
-					xhrFields: {
-						withCredentials: true
-					}
-				};
-
-				/** Return result. */
-				return props;
-			};
-
-
-		config = {
-			get DefaultProperties() { return _defaultProperties; },
-			get ServicesDomain() { return _servicesDomain; },
-			get ApplicationToken() { return _applicationToken; },
-			get ApplicationVersion() { return _applicationVersion; },
-			get Logger() { return _logger; },
-			get Messages() { return _messages; },
-			get StateKeys() { return _stateKeys; },
-			get CurrentUser() { return _currentUser; },
-			get Hashes() { return _hashes; },
-			get Toasts() { return _toasts; },
-			get StoreExpirationMs() { return _storeExpirationMs; },
-			get Window() { return window; },
-			get Throttle() { return _throttle; },
-			get Title() { return _title; },
-			get DataServiceInit() { return _dataServiceInit; },
-			get UseMocks() { return useMocks; },
-			get ViewIds() { return _viewIds; },
-			get AjaxProps() { return _ajaxProps; },
-			get IconSprites() { return _iconSprites; },
-			get LocalText() { return _localText; }
-		};
-		/** Initialize. */
-		_initFx();
-		/** Return object. */
-		return config;
-	});
+  if (config.useMocks) {
+    mock.init(config);
+  }
+  return config;
+});
