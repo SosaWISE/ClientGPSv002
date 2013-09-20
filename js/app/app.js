@@ -1,4 +1,5 @@
 define([
+  'router',
   'resources',
   'vm.panel.login',
   'vm.panel.home',
@@ -9,6 +10,7 @@ define([
   'vm.panel.roboto',
   'vm.panel.settings'
 ], function(
+  router,
   resources,
   LoginViewModel,
   HomePanelViewModel,
@@ -16,10 +18,10 @@ define([
   UsersPanelViewModel,
   BillingPanelViewModel,
   ReportsPanelViewModel,
-  RobotoPanelViewModel,
   SettingsPanelViewModel
 ) {
   "use strict";
+  router = router.instance;
 
   function createMap(panels) {
     var map = {};
@@ -36,6 +38,15 @@ define([
   }
 
   var app = {};
+
+  app.anonPanelMap = createMap(app.anonPanels = [
+    new LoginViewModel({
+      id: 'login',
+      name: 'Secure Login',
+      ico: null,
+    })
+  ]);
+  setTemplate(app.anonPanels, 'viewTemplate', '.view');
 
   app.panelMap = createMap(app.panels = [
     new HomePanelViewModel({
@@ -63,11 +74,6 @@ define([
       name: 'Reports',
       ico: '&#128202;',
     }),
-    new RobotoPanelViewModel({
-      id: 'roboto',
-      name: 'Roboto',
-      ico: '&#128202;',
-    }),
     new SettingsPanelViewModel({
       id: 'settings',
       name: 'Settings',
@@ -77,14 +83,28 @@ define([
   setTemplate(app.panels, 'viewTemplate', '.view');
   setTemplate(app.panels, 'moduleTemplate', '.module.view');
 
-  app.anonPanelMap = createMap(app.anonPanels = [
-    new LoginViewModel({
-      id: 'login',
-      name: 'Secure Login',
-      ico: null,
-    })
-  ]);
-  setTemplate(app.anonPanels, 'viewTemplate', '.view');
+
+  //
+  // add routes
+  //
+  router.addAnonRoute(app.anonPanelMap.login, 'user', ':action', {
+    action: 'login',
+  });
+
+  //
+  router.addRoute(app.panelMap.home, 'home', '', {});
+  router.addRoute(app.panelMap.devices, 'devices', ':tab/:id/:action', {
+    tab: 'events',
+    id: '',
+    action: 'view',
+  });
+  router.addRoute(app.panelMap.users, 'users', ':id/:action', {
+    id: '',
+    action: 'view',
+  });
+  router.addRoute(app.panelMap.billing, 'billing', '', {});
+  router.addRoute(app.panelMap.reports, 'reports', '', {});
+  router.addRoute(app.panelMap.settings, 'settings', '', {});
 
   return app;
 });

@@ -20,7 +20,12 @@ define([
     var _this = this;
     BillingPanelViewModel.super_.call(_this, options);
 
-    _this.list([
+    _this.editItem = ko.observable(null);
+  }
+  utils.inherits(BillingPanelViewModel, ControllerViewModel);
+
+  BillingPanelViewModel.prototype.onLoad = function(cb) { // overrides base
+    this.list([
       {
         type: 'billing',
         invoiceID: 234562,
@@ -40,10 +45,8 @@ define([
         billStatus: 'Paid (5/4/2013)'
       }
     ]);
-    _this.editItem = ko.observable(null);
-  }
-  utils.inherits(BillingPanelViewModel, ControllerViewModel);
-
+    cb(false);
+  };
   BillingPanelViewModel.prototype.onActivate = function() { // overrides base
     this.setTitle(this.name);
   };

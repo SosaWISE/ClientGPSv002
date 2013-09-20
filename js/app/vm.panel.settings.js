@@ -20,5 +20,12 @@ define([
   }
   utils.inherits(SettingsPanelViewModel, ControllerViewModel);
 
+  SettingsPanelViewModel.prototype.onLoad = function(cb) { // overrides base
+    cb(false);
+  };
+  SettingsPanelViewModel.prototype.onActivate = function() { // overrides base
+    this.setTitle(this.name);
+  };
+
   return SettingsPanelViewModel;
 });

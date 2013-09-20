@@ -75,8 +75,8 @@ define([
   Router.prototype.getPath = function() {
     var hash = location.hash;
     if (hash && hash.length) {
-      // remove # from front
-      hash = hash.substr(1);
+      // remove # from front and make lowercase
+      hash = hash.substr(1).toLowerCase();
     }
     return hash;
   };

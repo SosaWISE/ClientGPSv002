@@ -592,6 +592,9 @@ nav.primary .indicator {
 	transition: .25s;
 }
 
+.roboto .sidebars > .roboto,
+.roboto .modules > .roboto,
+
 .home .sidebars > .home,
 .devices .sidebars > .devices,
 .users .sidebars > .users,

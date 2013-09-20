@@ -10,8 +10,7 @@
 ) {
   "use strict";
 
-  var unwrap = ko.utils.unwrapObservable,
-    loginformEl = document.getElementById('loginform');
+  var unwrap = ko.utils.unwrapObservable;
 
 
   function createToggleClassHandler(name, cls) {
@@ -46,9 +45,11 @@
 
   // swapLoginFields
   //---------------------------
+  //@NOTE: this only works one time
   ko.bindingHandlers.swapLoginFields = {
     init: function(element, valueAccessor, allBindingsAccessor, viewModel) {
       element = $(element);
+      var loginformEl = document.getElementById('loginform');
       // replace placeholders with the actual fields from hidden form
       element.find('.ph-loginform').replaceWith(loginformEl);
       // set current browser values on viewModel

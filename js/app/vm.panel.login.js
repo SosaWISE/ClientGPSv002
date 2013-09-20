@@ -68,22 +68,6 @@ define([
         index++;
       };
     })();
-    _this.cmdShowSignup = ko.command(
-      function(cb) {
-        // setTimeout(function() {
-        _this.clickShowSignup();
-        cb();
-        // }, 1000 * 5);
-      }
-    );
-    _this.cmdHideSignup = ko.command(
-      function(cb) {
-        setTimeout(function() {
-          _this.clickHideSignup();
-          cb();
-        }, 1000 * 5);
-      }
-    );
     _this.clickShowSignup = function() {
       _this.signUp();
       _this.setRouteData({

@@ -28,9 +28,9 @@
     <input type="password" name="password" class="password" placeholder="Password" data-bind="valueUpdate:'keyup',value:model.Password,ukov:model.Password">
     <!-- <input type="hidden" name="localizationId" data-bind="value:model.localizationId"> -->
     <button class="btn-blue" data-bind="click:clickSignup">Sign up</button>
-    <a class="btn-blue" data-bind="cmd:$parent.cmdHideSignup">Cancel</a>
+    <a class="btn-blue" data-bind="click:$parent.clickHideSignup">Cancel</a>
   </div>
   <div class="signup-link">
-    <div>Not a member? <a data-bind="cmd:cmdShowSignup">Sign up here</a></div>
+    <div>Not a member? <a data-bind="click:clickShowSignup">Sign up here</a></div>
   </div>
 </div>

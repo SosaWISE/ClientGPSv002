@@ -12,7 +12,6 @@ define(['../loadDependencies'], function() {
     'jquery',
     'infuser',
     'config',
-    'routes',
     'router',
     'dataservice',
     'ko',
@@ -21,8 +20,7 @@ define(['../loadDependencies'], function() {
     $,
     infuser,
     config,
-    routes,
-    Router,
+    router,
     dataservice,
     ko,
     app
@@ -31,11 +29,19 @@ define(['../loadDependencies'], function() {
     console.log("Application Token: " + config.token);
     console.log("CORS Domain: " + config.serviceDomain);
 
+    config.CurrentUser.subscribe(function(user) {
+      if (user) {
+        // once there is a user, destroy the login forms (for security purposes)
+        delete app.anonPanelMap;
+        delete app.anonPanels;
+        $('#login-container').remove();
+      }
+    });
+
     $('#busyindicator').activity(true);
     dataservice.Session.SessionStart(config.token, function(data) {
       if (data.Code !== 0) {
         console.error(data);
-        return;
       } else {
         // setup infuser/templates then bind
         infuser.defaults.templatePrefix = "_";
@@ -43,7 +49,7 @@ define(['../loadDependencies'], function() {
         infuser.defaults.templateUrl = "/tmpl";
         ko.applyBindings(app, document.getElementById('main'));
 
-        routes.run();
+        router.instance.init();
       }
       $('#busyindicator').activity(false);
     });
