@@ -1,5 +1,5 @@
 {
-  "strict": false,
+  "strict": true,
   "node": true,
   "browser": true,
 

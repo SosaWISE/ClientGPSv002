@@ -6,23 +6,28 @@
  * To change this template use File | Settings | File Templates.
  */
 define([
-	'config',
-	'dataservice.base',
-	'utils'
-], function(config, DataserviceBase, utils) {
+  'utils',
+  'dataservice.base',
+  'config'
+], function(
+  utils,
+  DataserviceBase,
+  config
+) {
+  "use strict";
 
-	function DataserviceEvents() {
-		DataserviceEvents.super_.call(this, 'Device', config.serviceDomain);
-	}
-	utils.inherits(DataserviceEvents, DataserviceBase);
+  function DataserviceEvents() {
+    DataserviceEvents.super_.call(this, 'Device', config.serviceDomain);
+  }
+  utils.inherits(DataserviceEvents, DataserviceBase);
 
-	//
-	// helper functions
-	//
+  //
+  // helper functions
+  //
 
-	DataserviceEvents.prototype.getData = function(data, cb) {
-		this.post('AcquireMasterDeviceEvents', data, cb);
-	};
+  DataserviceEvents.prototype.getData = function(data, cb) {
+    this.post('AcquireMasterDeviceEvents', data, cb);
+  };
 
-	return new DataserviceEvents();
+  return new DataserviceEvents();
 });

@@ -6,38 +6,43 @@
  * To change this template use File | Settings | File Templates.
  */
 define([
-	'config',
-	'dataservice.base',
-	'utils'
-], function(config, DataserviceBase, utils) {
+  'utils',
+  'dataservice.base',
+  'config'
+], function(
+  utils,
+  DataserviceBase,
+  config
+) {
+  "use strict";
 
-	function DataserviceDevices() {
-		DataserviceDevices.super_.call(this, 'Device', config.serviceDomain);
-	}
-	utils.inherits(DataserviceDevices, DataserviceBase);
+  function DataserviceDevices() {
+    DataserviceDevices.super_.call(this, 'Device', config.serviceDomain);
+  }
+  utils.inherits(DataserviceDevices, DataserviceBase);
 
-	//
-	// helper functions
-	//
+  //
+  // helper functions
+  //
 
-	DataserviceDevices.prototype.getData = function(data, cb) {
-		this.post('AcquireList', data, cb);
-	};
-	DataserviceDevices.prototype.updateData = function(data, cb) {
-		console.log('DataserviceDevices.prototype.updateData not implemented');
-		setTimeout(function() {
-			cb({
-				Code: -1,
-				Message: 'not implemented',
-			});
-		}, 0);
-	};
-	DataserviceDevices.prototype.AcquireListByCustomerID = function(data, cb) {
-		this.post('AcquireListByCustomerID', data, cb);
-	};
-	DataserviceDevices.prototype.AcquireDeviceDetails = function(data, cb) {
-		this.post('AcquireDeviceDetails', data, cb);
-	};
+  DataserviceDevices.prototype.getData = function(data, cb) {
+    this.post('AcquireList', data, cb);
+  };
+  DataserviceDevices.prototype.updateData = function(data, cb) {
+    console.log('DataserviceDevices.prototype.updateData not implemented');
+    setTimeout(function() {
+      cb({
+        Code: -1,
+        Message: 'not implemented',
+      });
+    }, 0);
+  };
+  DataserviceDevices.prototype.AcquireListByCustomerID = function(data, cb) {
+    this.post('AcquireListByCustomerID', data, cb);
+  };
+  DataserviceDevices.prototype.AcquireDeviceDetails = function(data, cb) {
+    this.post('AcquireDeviceDetails', data, cb);
+  };
 
-	return new DataserviceDevices();
+  return new DataserviceDevices();
 });

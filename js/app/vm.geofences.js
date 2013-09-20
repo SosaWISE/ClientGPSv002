@@ -27,41 +27,35 @@ define([
   "use strict";
 
   function GeofencesViewModel(options) {
-    GeofencesViewModel.super_.call(this, options);
+    var _this = this;
+    GeofencesViewModel.super_.call(_this, options);
 
-    this.canEdit = ko.observable(true);
-    this.editorVM = modelEditor.create();
-    this.editing = this.editorVM.editing;
-    this.editItem = ko.observable(this.editorVM);
+    _this.canEdit = ko.observable(true);
+    _this.editorVM = modelEditor.create();
+    _this.editing = _this.editorVM.editing;
+    _this.editItem = ko.observable(_this.editorVM);
 
-    this.saving = ko.observable(false);
-    this.type = 'geofences';
+    _this.saving = ko.observable(false);
+    _this.type = 'geofences';
 
-    // ensure correct scope
-    this.clickItem = this.clickItem.bind(this);
-    this.clickEdit = this.clickEdit.bind(this);
-    this.clickSave = this.clickSave.bind(this);
-    this.clickCancel = this.clickCancel.bind(this);
+    // scoped events
+    _this.clickItem = function(model) {
+      _this.selectItem(model, false, false);
+      return true;
+    };
+    _this.clickEdit = function(model) {
+      _this.startEdit(model);
+    };
+    _this.clickSave = function(model) {
+      _this.saveEdit(model);
+    };
+    _this.clickCancel = function(model) {
+      _this.cancelEdit(model);
+    };
   }
   utils.inherits(GeofencesViewModel, ControllerViewModel);
   GeofencesViewModel.prototype.viewTemplate = 'geofences.view';
 
-  //
-  // events
-  //
-  GeofencesViewModel.prototype.clickItem = function(model) {
-    this.selectItem(model, false, false);
-    return true;
-  };
-  GeofencesViewModel.prototype.clickEdit = function(model) {
-    this.startEdit(model);
-  };
-  GeofencesViewModel.prototype.clickSave = function(model) {
-    this.saveEdit(model);
-  };
-  GeofencesViewModel.prototype.clickCancel = function(model) {
-    this.cancelEdit(model);
-  };
 
   //
   // members
@@ -80,7 +74,7 @@ define([
     // clear list
     list([]);
     // add to list
-    dataservice.GeoFences.getData({
+    dataservice.Geofences.getData({
       CMFID: config.CurrentUser().CustomerMasterFileId,
     }, function(resp) {
       if (resp.Code !== 0) {
@@ -177,7 +171,7 @@ define([
     data.ItemId = 'Junk';
     // remove unwanted stuff
     delete data.ModifiedOn;
-    dataservice.GeoFences.updateData(data, function(resp) {
+    dataservice.Geofences.updateData(data, function(resp) {
       console.log(resp);
 
       _this.saving(false);

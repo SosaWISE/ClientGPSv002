@@ -1,55 +1,90 @@
 define([
-  'vm.login',
-  // 'vm.signUp',
-  // 'vm.register',
-  'vm.panel.devices' //,
-  // 'vm.users',
-  // 'vm.home',
-  // 'vm.billing',
-  // 'vm.reports',
-  // 'vm.settings'
+  'resources',
+  'vm.panel.login',
+  'vm.panel.home',
+  'vm.panel.devices',
+  'vm.panel.users',
+  'vm.panel.billing',
+  'vm.panel.reports',
+  'vm.panel.roboto',
+  'vm.panel.settings'
 ], function(
+  resources,
   LoginViewModel,
-  // vm_signUp,
-  // vm_register,
-  DevicesPanelViewModel //,
-  // vm_users,
-  // vm_home,
-  // vm_billing,
-  // vm_reports,
-  // vm_settings
+  HomePanelViewModel,
+  DevicesPanelViewModel,
+  UsersPanelViewModel,
+  BillingPanelViewModel,
+  ReportsPanelViewModel,
+  RobotoPanelViewModel,
+  SettingsPanelViewModel
 ) {
-  var panels,
-    anonPanels,
-    devicesPanel = new DevicesPanelViewModel({
+  "use strict";
 
+  function createMap(panels) {
+    var map = {};
+    panels.forEach(function(panel) {
+      map[panel.id] = panel;
+    });
+    return map;
+  }
+
+  function setTemplate(panels, name, postfix) {
+    panels.forEach(function(panel) {
+      panel[name] = panel.id + postfix;
+    });
+  }
+
+  var app = {};
+
+  app.panelMap = createMap(app.panels = [
+    new HomePanelViewModel({
+      id: 'home',
+      name: 'Home',
+      ico: '&#8962;',
     }),
-    loginPanel = new LoginViewModel();
+    new DevicesPanelViewModel({
+      id: 'devices',
+      name: 'Devices',
+      ico: '&#59176;',
+    }),
+    new UsersPanelViewModel({
+      id: 'users',
+      name: 'Users',
+      ico: '&#128101;',
+    }),
+    new BillingPanelViewModel({
+      id: 'billing',
+      name: 'Billing',
+      ico: '&#59197;',
+    }),
+    new ReportsPanelViewModel({
+      id: 'reports',
+      name: 'Reports',
+      ico: '&#128202;',
+    }),
+    new RobotoPanelViewModel({
+      id: 'roboto',
+      name: 'Roboto',
+      ico: '&#128202;',
+    }),
+    new SettingsPanelViewModel({
+      id: 'settings',
+      name: 'Settings',
+      ico: '&#9881;',
+    })
+  ]);
+  setTemplate(app.panels, 'viewTemplate', '.view');
+  setTemplate(app.panels, 'moduleTemplate', '.module.view');
 
-  panels = [
-    // vm_home,
-    devicesPanel //,
-    // vm_users,
-    // vm_billing,
-    // vm_reports,
-    // vm_settings
-  ];
-  anonPanels = [
-    loginPanel
-  ];
+  app.anonPanelMap = createMap(app.anonPanels = [
+    new LoginViewModel({
+      id: 'login',
+      name: 'Secure Login',
+      ico: null,
+    })
+  ]);
+  setTemplate(app.anonPanels, 'viewTemplate', '.view');
 
-  return {
-    panels: panels,
-    // Home: vm_home,
-    devicesPanel: devicesPanel,
-    // Users: vm_users,
-    // Billing: vm_billing,
-    // Reports: vm_reports,
-    // Settings: vm_settings,
-
-    anonPanels: anonPanels,
-    loginVM: loginPanel,
-    // SignUp: vm_signUp,
-    // Register: vm_register,
-  };
+  return app;
 });

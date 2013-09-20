@@ -1,37 +1,36 @@
-<div class="login" data-bind="editing:editing">
-    <h2 class="logo">Security Sciences</h2>
-    <form class="form">
-        <h1 class="title" data-bind="text:title"></h1>
-        <div class="social-login">
-            <a href="/login/google" class="gplus"><span id="google_icon" class="hover"></span>Login with Google Plus</a>
-            <a href="/login/twitter" class="twitter"><span id="twitter_icon" class="hover"></span>Login with Twitter</a>
-            <a href="/login/facebook" class="fb"><span id="facebook_icon" class="hover"></span>Login with Facebook</a>
-        </div>
-        <input type="text" data-bind="value:userName" name="email" class="email" placeholder="E-mail">
-        <input type="password" data-bind="value:password" name="password" class="password" placeholder="Password">
-        <button class="btn-blue" data-bind="command:loginCmd">Login</button>
-	    <div class="helper-actions">
-	        <input type="checkbox" id="remember" data-bind="checked:rememberMe" class="remember"><label for="remember">Remember me</label>
-	        <a href="#" class="btn-forgot" onClick="TestSosStart()">Forgot your password?</a>
-	    </div>
-    </form>
-	<div class="signup" data-bind="with:signupVM">
-        <h1 class="title">Sign up</h1>
-        <!-- <div class="social-login">
-            <a href="#" class="gplus"><span class="hover"></span>Login with Google Plus</a>
-            <a href="#" class="twitter"><span class="hover"></span>Login with Twitter</a>
-            <a href="#" class="fb"><span class="hover"></span>Login with Facebook</a>
-        </div> -->
-        <input type="text" name="name" class="name" placeholder="First Name" data-bind="value:model.firstname">
-        <input type="text" name="name" class="name" placeholder="Last Name" data-bind="value:model.lastname">
-        <input type="text" name="name" class="name" placeholder="Phone number" data-bind="value:model.phoneHome">
-        <input type="text" name="email" class="email" placeholder="Email" data-bind="value:model.email">
-        <input type="password" name="password" class="password" placeholder="Password" data-bind="value:model.password">
-		<!-- <input type="hidden" name="localizationId" data-bind="value:model.localizationId"> -->
-        <button class="btn-blue" data-bind="click:signUp">Sign up</button>
-        <a class="btn-blue" href="#/user/login">Cancel</a>
+<div class="login" data-bind="swapLoginFields:1,editing:editing">
+  <h2 class="logo">Security Sciences</h2>
+  <div class="form">
+    <h1 class="title" data-bind="text:title"></h1>
+    <div class="social-login">
+      <a href="/login/google" class="gplus"><span id="google_icon" class="hover"></span>Login with Google Plus</a>
+      <a href="/login/twitter" class="twitter"><span id="twitter_icon" class="hover"></span>Login with Twitter</a>
+      <a href="/login/facebook" class="fb"><span id="facebook_icon" class="hover"></span>Login with Facebook</a>
     </div>
-    <div class="signup-link">
-		<div>Not a member? <a href="#/user/signup" style="cursor:pointer;">Sign up here</a></div>
-	</div>
+    <!-- placeholder for login form -->
+    <span class="ph-loginform"/>
+    <div class="helper-actions">
+      <input type="checkbox" id="remember" data-bind="checked:rememberMe" class="remember"><label for="remember">Remember me</label>
+      <a data-bind="click:clickForgot" class="btn-forgot">Forgot your password?</a>
+    </div>
+  </div>
+  <div class="signup" data-bind="with:signupVM">
+    <h1 class="title">Sign up</h1>
+    <!-- <div class="social-login">
+      <a href="#" class="gplus"><span class="hover"></span>Login with Google Plus</a>
+      <a href="#" class="twitter"><span class="hover"></span>Login with Twitter</a>
+      <a href="#" class="fb"><span class="hover"></span>Login with Facebook</a>
+    </div> -->
+    <input type="text" name="name" class="name" placeholder="First Name" data-bind="valueUpdate:'keyup',value:model.FirstName,ukov:model.FirstName">
+    <input type="text" name="name" class="name" placeholder="Last Name" data-bind="valueUpdate:'keyup',value:model.LastName,ukov:model.LastName">
+    <input type="text" name="name" class="name" placeholder="Phone number" data-bind="valueUpdate:'keyup',value:model.PhoneHome,ukov:model.PhoneHome">
+    <input type="text" name="email" class="email" placeholder="Email" data-bind="valueUpdate:'keyup',value:model.Email,ukov:model.Email">
+    <input type="password" name="password" class="password" placeholder="Password" data-bind="valueUpdate:'keyup',value:model.Password,ukov:model.Password">
+    <!-- <input type="hidden" name="localizationId" data-bind="value:model.localizationId"> -->
+    <button class="btn-blue" data-bind="click:clickSignup">Sign up</button>
+    <a class="btn-blue" data-bind="cmd:$parent.cmdHideSignup">Cancel</a>
+  </div>
+  <div class="signup-link">
+    <div>Not a member? <a data-bind="cmd:cmdShowSignup">Sign up here</a></div>
+  </div>
 </div>

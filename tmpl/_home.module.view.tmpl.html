@@ -1,88 +1,13 @@
-	<div class="head">
-		<h2>Recent Activity</h2>
-		<div class="search-wrap"><input type="text" class="search" placeholder="Search Events"></div>
-	</div>
-	<div class="content">
-		<ul class="activity" data-bind="foreach:events">
-			<li data-bind="attr:{'class':EventTypeUi},click:$parent.selectEvent">
-				<div class="title" data-bind="text:EventShortDesc"></div>
-				<div class="sub" data-bind="text:time"></div>
-				<div class="actions" data-bind="text:actions"></div>
-			</li>
-		</ul>
-			<!--<li class="sos">-->
-				<!--<div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>-->
-				<!--<div class="sub">April 23, 2013 at 12:42pm</div>-->
-				<!--<div class="actions"></div>-->
-			<!--</li>-->
-			<!--<li class="battery">-->
-				<!--<div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>-->
-				<!--<div class="sub">April 23, 2013 at 12:42pm</div>-->
-				<!--<div class="actions"></div>-->
-			<!--</li>-->
-			<!--<li class="speed">-->
-				<!--<div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>-->
-				<!--<div class="sub">April 23, 2013 at 12:42pm</div>-->
-				<!--<div class="actions"></div>-->
-			<!--</li>-->
-			<!--<li class="enter">-->
-				<!--<div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>-->
-				<!--<div class="sub">April 23, 2013 at 12:42pm</div>-->
-				<!--<div class="actions"></div>-->
-			<!--</li>-->
-			<!--<li class="exit">-->
-				<!--<div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>-->
-				<!--<div class="sub">April 23, 2013 at 12:42pm</div>-->
-				<!--<div class="actions"></div>-->
-			<!--</li>-->
-			<!--<li class="fall">-->
-				<!--<div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>-->
-				<!--<div class="sub">April 23, 2013 at 12:42pm</div>-->
-				<!--<div class="actions"></div>-->
-			<!--</li>-->
-			<!--<li class="tamper">-->
-				<!--<div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>-->
-				<!--<div class="sub">April 23, 2013 at 12:42pm</div>-->
-				<!--<div class="actions"></div>-->
-			<!--</li>-->
-			<!--<li class="exit">-->
-				<!--<div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>-->
-				<!--<div class="sub">April 23, 2013 at 12:42pm</div>-->
-				<!--<div class="actions"></div>-->
-			<!--</li>-->
-			<!--<li class="enter">-->
-				<!--<div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>-->
-				<!--<div class="sub">April 23, 2013 at 12:42pm</div>-->
-				<!--<div class="actions"></div>-->
-			<!--</li>-->
-			<!--<li class="speed">-->
-				<!--<div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>-->
-				<!--<div class="sub">April 23, 2013 at 12:42pm</div>-->
-				<!--<div class="actions"></div>-->
-			<!--</li>-->
-			<!--<li class="battery">-->
-				<!--<div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>-->
-				<!--<div class="sub">April 23, 2013 at 12:42pm</div>-->
-				<!--<div class="actions"></div>-->
-			<!--</li>-->
-			<!--<li class="exit">-->
-				<!--<div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>-->
-				<!--<div class="sub">April 23, 2013 at 12:42pm</div>-->
-				<!--<div class="actions"></div>-->
-			<!--</li>-->
-			<!--<li class="enter">-->
-				<!--<div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>-->
-				<!--<div class="sub">April 23, 2013 at 12:42pm</div>-->
-				<!--<div class="actions"></div>-->
-			<!--</li>-->
-			<!--<li class="fall">-->
-				<!--<div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>-->
-				<!--<div class="sub">April 23, 2013 at 12:42pm</div>-->
-				<!--<div class="actions"></div>-->
-			<!--</li>-->
-			<!--<li class="sos">-->
-				<!--<div class="title"><a href="#">Rascal</a> exited the <a href="#">Yard</a> geofence</div>-->
-				<!--<div class="sub">April 23, 2013 at 12:42pm</div>-->
-				<!--<div class="actions"></div>-->
-			<!--</li>-->
-	</div>
+<div class="head">
+	<h2>Recent Activity</h2>
+	<div class="search-wrap"><input type="text" class="search" placeholder="Search Events"></div>
+</div>
+<div class="content">
+	<ul class="activity" data-bind="foreach:events">
+		<li data-bind="attr:{'class':EventTypeUi},click:$parent.selectEvent">
+			<div class="title" data-bind="text:EventShortDesc"></div>
+			<div class="sub" data-bind="text:time"></div>
+			<div class="actions" data-bind="text:actions"></div>
+		</li>
+	</ul>
+</div>

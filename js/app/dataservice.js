@@ -6,21 +6,22 @@
  * To change this template use File | Settings | File Templates.
  */
 define([
-	'dataservice.session',
-	'dataservice.customer',
-	'dataservice.devices',
-	'dataservice.geoFences',
-	'dataservice.events',
-	'dataservice.eventTypes',
-	'dataservice.users'
-], function(session, customer, devices, geoFences, events, eventTypes, users) {
-	return {
-		Session: session,
-		Customer: customer,
-		Devices: devices,
-		GeoFences: geoFences,
-		Events: events,
-		EventTypes: eventTypes,
-		Users: users,
-	};
+ 'dataservice.session',
+ 'dataservice.customer',
+ 'dataservice.devices',
+ 'dataservice.geofences',
+ 'dataservice.events',
+ 'dataservice.eventTypes',
+ 'dataservice.users'
+], function(session, customer, devices, geofences, events, eventTypes, users) {
+  "use strict";
+  return {
+    Session: session,
+    Customer: customer,
+    Devices: devices,
+    Geofences: geofences,
+    Events: events,
+    EventTypes: eventTypes,
+    Users: users,
+  };
 });

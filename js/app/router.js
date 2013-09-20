@@ -10,30 +10,52 @@ define([
   "use strict";
 
   function Router() {
-    this.clear();
+    this.routeMap = {};
+    this.routes = [];
+    this.anonRoutes = [];
+
     this.destPath = null;
     this.prevRoute = null;
     this._ignoreCount = 0;
   }
-  Router.prototype.clear = function() {
-    this.routeMap = {};
-    this.routes = [];
-    this.anonRoutes = [];
+
+  Router.prototype.init = function() {
+    var _this = this;
+    // ,changeTimeout;
+
+    function changePath() {
+      _this.goToPath(_this.getPath(), false);
+    }
+
+    // check the user is logged in
+    if (!config.CurrentUser()) {
+      // save destination path
+      this.destPath = this.getPath();
+    }
+
+    // go to initial route, then listen for the route to change
+    changePath();
+    window.addEventListener('hashchange', function() {
+      if (_this._ignoreCount > 0) {
+        _this._ignoreCount--;
+        return;
+      }
+      // clearTimeout(changeTimeout);
+      // changeTimeout = setTimeout(function() {
+      changePath();
+      // }, 0);
+    });
+  };
+  Router.prototype.useDestPath = function() {
+    this.goToPath(this.destPath, false);
+    this.destPath = null;
   };
 
-  function addRoute(router, routes, routeName, routePath, defaultRouteData, controller) {
-    var route = Route.create(router, routeName, routePath, defaultRouteData, controller);
-    if (router.routeMap[route.name]) {
-      throw new Error('route named `' + route.name + '` already exists');
-    }
-    router.routeMap[route.name] = route;
-    routes.push(route);
-  }
-  Router.prototype.addRoute = function(routeName, routePath, defaultRouteData, controller) {
-    addRoute(this, this.routes, routeName, routePath, defaultRouteData, controller);
+  Router.prototype.addRoute = function(controller, routeName, routePath, defaultRouteData) {
+    addRoute(this, this.routes, controller, routeName, routePath, defaultRouteData);
   };
-  Router.prototype.addAnonRoute = function(routeName, routePath, defaultRouteData, controller) {
-    addRoute(this, this.anonRoutes, routeName, routePath, defaultRouteData, controller);
+  Router.prototype.addAnonRoute = function(controller, routeName, routePath, defaultRouteData) {
+    addRoute(this, this.anonRoutes, controller, routeName, routePath, defaultRouteData);
   };
 
   Router.prototype.setPath = function(path, allowHistory) {
@@ -58,11 +80,11 @@ define([
     }
     return hash;
   };
+
   Router.prototype.goToPath = function(path, allowHistory) {
     var _this = this,
       user = config.CurrentUser(),
       routes = user ? this.routes : this.anonRoutes,
-      defaultPath = user ? this.defaultPath : this.defaultAnonPath,
       route,
       activated = false;
 
@@ -82,8 +104,16 @@ define([
       this.prevRoute.deactivate();
     }
 
-    // find the first route that matches the path or the default path
-    route = findFirstRoute(routes, path) || findFirstRoute(routes, path = defaultPath);
+    // find the first route that matches the path
+    route = findFirstRoute(routes, path);
+    // check if a route was found
+    if (!route) {
+      // first route is the default route
+      route = routes[0];
+      // make default path for route
+      path = route.toPath(route.fromPath('/' + route.name));
+    }
+
     // activate the route
     route.activate(path, onActivated);
     // check if it was activated synchronously
@@ -92,62 +122,32 @@ define([
       this.setPath(path, false);
     }
 
-    if (user) {
-      $('body').attr('class', route.name);
-      showPortal(route.name);
-    } else {
-      $('body').attr('class', '');
-      showLogin();
-    }
-
+    showElements(user, route);
     this.prevRoute = route;
   };
   Router.prototype.goToRoute = function(routeName, routeData, allowHistory) {
     var route = this.routeMap[routeName];
     if (!route) {
-      throw new Error('route named `' + routeName + '` doesn\'t exist');
+      throw new Error('no route named ' + routeName);
     }
     return this.goToPath(route.toPath(routeData), allowHistory);
   };
 
-  Router.prototype.init = function() {
-    var _this = this,
-      changeTimeout;
 
-    function changePath() {
-      _this.goToPath(_this.getPath(), false);
+  function addRoute(router, routes, controller, routeName, routePath, defaultRouteData) {
+    var route = Route.create(router, controller, routeName, routePath, defaultRouteData);
+    if (router.routeMap[route.name]) {
+      throw new Error('route named `' + route.name + '` already exists');
     }
-
-    // check the user is logged in
-    if (!config.CurrentUser()) {
-      // save destination path
-      this.destPath = this.getPath();
-    }
-
-    // go to initial route, then listen for the route to change
-    changePath();
-    window.addEventListener('hashchange', function() {
-      if (_this._ignoreCount > 0) {
-        _this._ignoreCount--;
-        return;
-      }
-      clearTimeout(changeTimeout);
-      // changeTimeout = setTimeout(function() {
-      changePath();
-      // }, 0);
-    });
-  };
-  Router.prototype.useDestPath = function() {
-    this.goToPath(this.destPath, false);
-    this.destPath = null;
-  };
-
+    router.routeMap[route.name] = route;
+    routes.push(route);
+  }
 
   function findFirstRoute(routes, path) {
     var routeFound;
     // activate the first route that matches the path
     routes.some(function(route) {
-      if (route.getRouteData(path)) {
+      if (route.fromPath(path)) {
         routeFound = route;
         // break out of loop
         return routeFound;
@@ -155,32 +155,24 @@ define([
     });
     return routeFound;
   }
-  // function activateFirstRoute(routes, path, activateCallback) {
-  // 	var routeUsed;
-  // 	// activate the first route that matches the path
-  // 	routes.some(function(route) {
-  // 		if (route.activate(path, activateCallback)) {
-  // 			routeUsed = route;
-  // 			// break out of loop
-  // 			return routeUsed;
-  // 		}
-  // 	});
-  // 	return routeUsed;
-  // }
 
+  function showElements(user, route) {
+    if (user) {
+      $('body').attr('class', route.name);
 
-  function showPortal(cls) {
-    $('#login-container').hide();
-    $('.site-container').show();
-    $('.view').show();
-    $('.sidebars > .sidebar').addClass('active');
-    $('.sidebars > .sidebar.' + cls).addClass('active');
-  }
+      $('#login-container').hide();
+      $('.site-container').show();
+      $('.view').show();
+      $('.sidebars > .sidebar').addClass('active');
+      $('.sidebars > .sidebar.' + route.name).addClass('active');
 
-  function showLogin() {
-    $('#login-container').show();
-    $('.site-container').hide();
-    $('.view').hide();
+    } else {
+      $('body').attr('class', '');
+
+      $('#login-container').show();
+      $('.site-container').hide();
+      $('.view').hide();
+    }
   }
 
   Router.instance = new Router();

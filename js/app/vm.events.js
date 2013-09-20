@@ -31,14 +31,17 @@ define([
   "use strict";
 
   function EventsViewModel(options) {
-    EventsViewModel.super_.call(this, options);
+    var _this = this;
+    EventsViewModel.super_.call(_this, options);
 
-    this.canEdit = ko.observable(false);
-    this.editing = ko.observable(false);
-    this.editItem = ko.observable(null);
+    _this.canEdit = ko.observable(false);
+    _this.editing = ko.observable(false);
+    _this.editItem = ko.observable(null);
 
-    // ensure correct scope
-    this.selectItem = this.selectItem.bind(this);
+    // scoped events
+    _this.clickItem = function(model) {
+      _this.selectItem(model);
+    };
   }
   utils.inherits(EventsViewModel, ControllerViewModel);
   EventsViewModel.prototype.viewTemplate = 'events.view';

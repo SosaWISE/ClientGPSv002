@@ -22,43 +22,38 @@ define([
   "use strict";
 
   function DevicesViewModel(options) {
-    DevicesViewModel.super_.call(this, options);
+    var _this = this;
+    DevicesViewModel.super_.call(_this, options);
 
-    this.saving = ko.observable(false);
-    this.canEdit = ko.observable(true);
-    this.editorVM = modelEditor.create();
-    this.editing = this.editorVM.editing;
-    this.editItem = ko.observable(this.editorVM);
+    _this.saving = ko.observable(false);
+    _this.canEdit = ko.observable(true);
+    _this.editorVM = modelEditor.create();
+    _this.editing = _this.editorVM.editing;
+    _this.editItem = ko.observable(_this.editorVM);
 
-    // ensure correct scope
-    this.clickItem = this.clickItem.bind(this);
-    this.clickEdit = this.clickEdit.bind(this);
-    this.clickSave = this.clickSave.bind(this);
-    this.clickCancel = this.clickCancel.bind(this);
+    // scoped events
+    _this.clickItem = function(model) {
+      _this.selectItem(model, false, false);
+      return true;
+    };
+    _this.clickEdit = function(model) {
+      _this.startEdit(model);
+    };
+    _this.clickSave = function(model) {
+      _this.saveEdit(model);
+    };
+    _this.clickCancel = function(model) {
+      _this.cancelEdit(model);
+    };
   }
   utils.inherits(DevicesViewModel, ControllerViewModel);
   DevicesViewModel.prototype.viewTemplate = 'devices-tab.view';
 
-  //
-  // events
-  //
-  DevicesViewModel.prototype.clickItem = function(model) {
-    this.selectItem(model, false, false);
-    return true;
-  };
-  DevicesViewModel.prototype.clickEdit = function(model) {
-    this.startEdit(model);
-  };
-  DevicesViewModel.prototype.clickSave = function(model) {
-    this.saveEdit(model);
-  };
-  DevicesViewModel.prototype.clickCancel = function(model) {
-    this.cancelEdit(model);
-  };
 
   //
   // members
   //
+
   DevicesViewModel.prototype.onLoad = function(cb) {
     var list = this.list,
       fmap = this.parent.fmap;

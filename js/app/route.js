@@ -1,17 +1,24 @@
 define([], function() {
   "use strict";
 
-  function Route(router, name, regx, parts, defaultRouteData, controller) {
+  function Route(router, controller, name, regx, parts, defaultRouteData) {
+    controller.setRoute(this);
+
     this.router = router;
+    this.controller = controller;
     this.name = name;
     this.regx = regx;
     this.parts = parts;
     this.defaultRouteData = defaultRouteData || {};
     this.defaultRouteData.route = name;
-    this.controller = controller;
-    controller.setRoute(this);
   }
-  Route.create = function(router, name, routePath, defaultRouteData, controller) {
+
+
+  //
+  // public static
+  //
+
+  Route.create = function(router, controller, name, routePath, defaultRouteData) {
     // make regx and parts from routePath
     var regxParts = [],
       parts = [];
@@ -39,18 +46,25 @@ define([], function() {
     // anchor match to end of string
     regxParts.push('$');
 
-    return new Route(router, name, new RegExp(regxParts.join('')), parts, defaultRouteData, controller);
+    return new Route(router, controller, name, new RegExp(regxParts.join('')), parts, defaultRouteData);
   };
-  Route.prototype.goTo = function(routeData, allowHistory) {
-    this.addDefaults(routeData);
-    this.router.goToRoute(this.name, routeData, allowHistory);
+
+
+  //
+  // members
+  //
+
+  Route.prototype.addDefaults = function(routeData) {
+    var defaultRouteData = this.defaultRouteData;
+    this.parts.forEach(function(part) {
+      if (isNullOrEmpty(routeData[part])) {
+        // route value not set, so set to default value
+        routeData[part] = defaultRouteData[part];
+      }
+    });
   };
-  Route.prototype.setRouteData = function(routeData) {
-    this.addDefaults(routeData);
-    var path = this.toPath(routeData);
-    this.router.setPath(path);
-  };
-  Route.prototype.getRouteData = function(path) {
+
+  Route.prototype.fromPath = function(path) {
     var matches = this.regx.exec(path),
       routeData;
     if (matches) {
@@ -71,42 +85,27 @@ define([], function() {
     // add an empty string to prefix the path with a slash
     pathParts.push('');
     this.parts.some(function(part) {
-      var val = routeData[part];
-      if (isNullOrEmpty(val)) {
+      var value = routeData[part];
+      if (isNullOrEmpty(value)) {
         if (part === 'route') {
-          val = routeName;
+          value = routeName;
         } else {
           // break out of loop when no value is found
           return true;
         }
       }
-      // add val to path
-      pathParts.push(val);
+      // add value to path
+      pathParts.push(value);
     });
     // merge parts into path
     return pathParts.join('/');
   };
-  Route.prototype.addDefaults = function(routeData) {
-    var defaultRouteData = this.defaultRouteData;
-    this.parts.forEach(function(part) {
-      if (isNullOrEmpty(routeData[part])) {
-        // route value not set, so set to default value
-        routeData[part] = defaultRouteData[part];
-      }
-    });
-  };
   Route.prototype.deactivate = function() {
-    this.disposeOnLoaded();
+    disposeOnLoaded(this);
     this.controller.deactivate();
   };
-  Route.prototype.disposeOnLoaded = function() {
-    if (this.onLoaded) {
-      this.onLoaded.dispose();
-      this.onLoaded = null;
-    }
-  };
   Route.prototype.activate = function(path, cb) {
-    var routeData = this.getRouteData(path);
+    var routeData = this.fromPath(path);
     if (routeData) {
       // the path matches this route so we can activate it
       activateRoute(this, routeData, cb);
@@ -115,17 +114,42 @@ define([], function() {
     return !!routeData;
   };
 
+  Route.prototype.goTo = function(routeData, allowHistory) {
+    // this.addDefaults(routeData);
+    // this.router.goToRoute(this.name, routeData, allowHistory);
+    var route = this.router.routeMap[routeData.route || this.name];
+    route.addDefaults(routeData);
+    this.router.goToRoute(route.name, routeData, allowHistory);
+  };
+  Route.prototype.setRouteData = function(routeData) {
+    this.addDefaults(routeData);
+    var path = this.toPath(routeData);
+    this.router.setPath(path);
+  };
+
+
+  //
+  // private statics
+  //
+
   function isNullOrEmpty(str) {
     return str == null || str.length === 0;
   }
 
+  function disposeOnLoaded(route) {
+    if (route.onLoaded) {
+      route.onLoaded.dispose();
+      route.onLoaded = null;
+    }
+  }
+
   function activateRoute(route, routeData, cb) {
     // ensure the previous has been disposed
-    route.disposeOnLoaded();
+    disposeOnLoaded(route);
 
     function activateController() {
       // we only needed it for one event
-      route.disposeOnLoaded();
+      disposeOnLoaded(route);
       // the controller modifies the routeData to fit what it has
       route.controller.activate(routeData);
       // return the path taken

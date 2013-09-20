@@ -1,5 +1,5 @@
 <ul class="tabs cf" data-bind="foreach:list">
-    <li class="tab"><a data-bind="click:$parent.selectItem,active:active,text:name"></a></li>
+    <li class="tab"><a data-bind="click:$parent.clickItem,active:active,text:name"></a></li>
 </ul>
 <div data-bind="template:{name:getTemplate,foreach:list}">
 </div>

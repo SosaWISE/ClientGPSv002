@@ -1,15 +1,16 @@
 define([], function() {
   return {
     Hashes: {
-      home: '#/home',
-      login: '#/login',
-      signUp: '#/signUp',
-      devices: '#/devices',
-      users: '#/users',
-      billing: '#/billing',
-      reports: '#/reports',
+      // login: '#/login',
+      // signUp: '#/signUp',
+      // home: '#/home',
+      // devices: '#/devices',
+      // users: '#/users',
+      // billing: '#/billing',
+      // reports: '#/reports',
+      // settings: '#/settings',
+
       customers: '#/customers',
-      settings: '#/settings',
     },
     Messages: {
       viewModelActivated: 'viewmodel-activation'

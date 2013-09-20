@@ -2,10 +2,10 @@
 <div class="content">
     <h3 class="title">Devices</h3>
     <ul class="devices" data-bind="foreach:devices">
-        <li data-bind="attr:{'class':UIName}"><a data-bind="click:$parent.selectDevice,text:AccountName"></a></li>
+        <li data-bind="attr:{'class':UIName}"><a data-bind="click:$parent.clickDevice,text:AccountName"></a></li>
     </ul>
     <h3 class="title">Add a new device</h3>
     <ul class="devices" data-bind="foreach:deviceTypes">
-        <li data-bind="attr:{'class':type}"><a data-bind="command:addDeviceCmd,text:name"></a></li>
+        <li data-bind="attr:{'class':type}"><a data-bind="cmd:cmdAddDevice,text:name"></a></li>
     </ul>
 </div>

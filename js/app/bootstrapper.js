@@ -6,6 +6,8 @@
  * To change this template use File | Settings | File Templates.
  */
 define(['../loadDependencies'], function() {
+  "use strict";
+
   require([
     'jquery',
     'infuser',
@@ -39,7 +41,7 @@ define(['../loadDependencies'], function() {
         infuser.defaults.templatePrefix = "_";
         infuser.defaults.templateSuffix = ".tmpl.html";
         infuser.defaults.templateUrl = "/tmpl";
-        ko.applyBindings(app);
+        ko.applyBindings(app, document.getElementById('main'));
 
         routes.run();
       }

@@ -14,11 +14,12 @@ define([
   "use strict";
 
   function ControllerViewModel(options) {
-    ControllerViewModel.super_.call(this, options);
+    var _this = this;
+    ControllerViewModel.super_.call(_this, options);
 
-    this.loaded = ko.observable(false);
-    this.loading = ko.observable(false);
-    this.list = ko.observableArray();
+    _this.loaded = ko.observable(false);
+    _this.loading = ko.observable(false);
+    _this.list = ko.observableArray();
   }
   utils.inherits(ControllerViewModel, BaseViewModel);
   ControllerViewModel.prototype.childName = 'tab';
@@ -33,13 +34,23 @@ define([
   };
   ControllerViewModel.prototype.goTo = function(routeData, allowHistory) {
     this.lastRouteData = routeData;
-    var route = (this.parent) ? this.parent.route : this.route;
-    route.goTo(routeData, allowHistory);
+    // var route = (this.parent) ? this.parent.route : this.route;
+    // route.goTo(routeData, allowHistory);
+    if (this.parent) {
+      this.parent.goTo(routeData, allowHistory);
+    } else {
+      this.route.goTo(routeData, allowHistory);
+    }
   };
   ControllerViewModel.prototype.setRouteData = function(routeData) {
     this.lastRouteData = routeData;
-    var route = (this.parent) ? this.parent.route : this.route;
-    route.setRouteData(routeData);
+    // var route = (this.parent) ? this.parent.route : this.route;
+    // route.setRouteData(routeData);
+    if (this.parent) {
+      this.parent.setRouteData(routeData);
+    } else {
+      this.route.setRouteData(routeData);
+    }
   };
 
   ControllerViewModel.prototype.findChild = function(id) {

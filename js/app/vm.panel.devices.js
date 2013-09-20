@@ -1,7 +1,6 @@
 define([
   'utils',
   'ko',
-  'resources',
   'flowMap/index',
   'gmaps',
   'vm.controller',
@@ -11,47 +10,45 @@ define([
 ], function(
   utils,
   ko,
-  resources,
   flowMap,
   gmaps,
   ControllerViewModel,
   EventsViewModel,
   DevicesViewModel,
-  GeoFencesViewModel
+  GeofencesViewModel
 ) {
   "use strict";
 
   function DevicesPanelViewModel(options) {
-    DevicesPanelViewModel.super_.call(this, options);
+    var _this = this;
+    DevicesPanelViewModel.super_.call(_this, options);
 
-    this.hash = resources.Hashes.devices;
-    this.type = 'devices';
-    this.ico = '&#59176;';
-    this.name = 'Devices';
-    this.viewTemplate = 'devices.view';
-    this.moduleTemplate = 'devices.module.view';
+    _this.viewTemplate = 'devices.view';
+    _this.moduleTemplate = 'devices.module.view';
 
-    this.defaultChild = 'devices';
-    this.list([
+    _this.defaultChild = 'devices';
+    _this.list([
       new EventsViewModel({
-        parent: this,
+        parent: _this,
         id: 'events',
         name: 'Events',
       }),
       new DevicesViewModel({
-        parent: this,
+        parent: _this,
         id: 'devices',
         name: 'Devices',
       }),
-      new GeoFencesViewModel({
-        parent: this,
+      new GeofencesViewModel({
+        parent: _this,
         id: 'geofences',
         name: 'Geofences',
       })
     ]);
 
-    // ensure correct scope
-    this.selectItem = this.selectItem.bind(this);
+    // scoped events
+    _this.clickItem = function(vm) {
+      _this.selectItem(vm);
+    };
   }
   utils.inherits(DevicesPanelViewModel, ControllerViewModel);
 

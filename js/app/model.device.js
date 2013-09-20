@@ -12,6 +12,8 @@ define([
   ukov,
   ko
 ) {
+  "use strict";
+
   var schemaName = 'model.device';
 
   //

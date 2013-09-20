@@ -8,13 +8,13 @@
                 <div class="title" data-bind="text:GeoFenceNameUi"></div>
                 <div class="sub" data-bind="text:ModifiedOn"></div>
                 <div class="actions"><!--  data-bind="if:$parent.canEdit"> -->
-                    <a style="cursor:pointer;" class="edit-btn" data-bind="click:$parent.clickEdit,clickBubble:false">&#xe01b;</a>
+                    <a class="edit-btn" data-bind="click:$parent.clickEdit,clickBubble:false">&#xe01b;</a>
                 </div>
             </li>
         </ul>
     </div>
     <div class="edit-wrap">
-        <a class="edit-btn" data-bind="click:startAddItem" style="cursor:pointer;">
+        <a class="edit-btn" data-bind="click:startAddItem">
             <span class="add-new-txt">Add New Geofence</span>
             <span class="edit-txt">Edit Geofence</span>
         </a>

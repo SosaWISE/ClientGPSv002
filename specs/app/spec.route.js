@@ -8,12 +8,12 @@ define([
     beforeEach(function() {
       route = Route.create({
         goToRoute: function() {},
+      }, {
+        setRoute: function() {},
       }, 'devices', ':tab/:id/:action', {
         tab: 'index',
         id: '',
         action: 'view',
-      }, {
-        setRoute: function() {},
       });
     });
 
@@ -46,9 +46,9 @@ define([
       expect(route.parts[3]).toEqual('action');
     });
 
-    describe('getRouteData', function() {
+    describe('fromPath', function() {
       it('should match expected', function() {
-        var params = route.getRouteData('/devices/events/1/edit');
+        var params = route.fromPath('/devices/events/1/edit');
         expect(params).toEqual({
           route: 'devices',
           tab: 'events',
@@ -57,7 +57,7 @@ define([
         });
       });
       it('should add default params', function() {
-        var params = route.getRouteData('/devices');
+        var params = route.fromPath('/devices');
         expect(params).toEqual({
           route: 'devices',
           tab: 'index',
