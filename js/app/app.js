@@ -7,7 +7,6 @@ define([
   'vm.panel.users',
   'vm.panel.billing',
   'vm.panel.reports',
-  'vm.panel.roboto',
   'vm.panel.settings'
 ], function(
   router,

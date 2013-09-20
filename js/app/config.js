@@ -6,16 +6,16 @@
 define([
   'webconfig',
   'ko',
-  'toastr',
-  'mock/mock'
+  'toastr'
 ], function(
   config,
   ko,
-  toastr,
-  mock
+  toastr
 ) {
-  // sets values that haven't already been set.
+  "use strict";
+
   function set(key, value) {
+    // only sets values that haven't already been set.
     if (!config.hasOwnProperty(key)) {
       config[key] = value;
     }
@@ -25,8 +25,8 @@ define([
   // Explicit Properties (non-overrideable)
   //
   config.version = '0.0.1';
-  config.CurrentUser = ko.observable();
-  config.Logger = toastr;
+  config.user = ko.observable();
+  config.logger = toastr;
 
   //
   // Property Defaults (overrideable)
@@ -40,15 +40,10 @@ define([
   set('salesRepId', 'PORT001');
   set('leadSourceId', '14'); // Portal
   set('leadDispositionId', '8'); //Sign up on Portal
-  //
-  //@TODO: remove the following properties
-  //
   set('localizationId', 'en-US');
+  //@TODO: remove the following properties
   set('toasterTimeout', 2000);
   toastr.options.timeOut = config.toasterTimeout;
 
-  if (config.useMocks) {
-    mock.init(config);
-  }
   return config;
 });

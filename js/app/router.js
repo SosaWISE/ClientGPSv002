@@ -28,7 +28,7 @@ define([
     }
 
     // check the user is logged in
-    if (!config.CurrentUser()) {
+    if (!config.user()) {
       // save destination path
       this.destPath = this.getPath();
     }
@@ -83,7 +83,7 @@ define([
 
   Router.prototype.goToPath = function(path, allowHistory) {
     var _this = this,
-      user = config.CurrentUser(),
+      user = config.user(),
       routes = user ? this.routes : this.anonRoutes,
       route,
       activated = false;

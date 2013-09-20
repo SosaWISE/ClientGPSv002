@@ -107,7 +107,7 @@ define([
     }
 
     dataservice.Devices.getData({
-      UniqueID: config.CurrentUser().CustomerMasterFileId,
+      UniqueID: config.user().CustomerMasterFileId,
     }, function(resp) {
       console.log(resp);
       if (resp.Code !== 0) {
@@ -123,7 +123,7 @@ define([
     });
 
     dataservice.Events.getData({
-      CMFID: config.CurrentUser().CustomerMasterFileId,
+      CMFID: config.user().CustomerMasterFileId,
       PageSize: 10,
       // EndDate: utils.GetNowDateTime(),
       // StartDate: utils.AddToDate(utils.GetNowDateTime(), -5)

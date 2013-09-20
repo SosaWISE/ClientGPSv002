@@ -95,7 +95,7 @@ define([
             if (resp.Code !== 0) {
               console.error(resp);
             } else {
-              config.CurrentUser(resp.Value);
+              config.user(resp.Value);
               Router.instance.useDestPath();
             }
 

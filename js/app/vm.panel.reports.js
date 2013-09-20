@@ -76,7 +76,7 @@ define([
   ReportsPanelViewModel.prototype.loadDevices = function(cb) {
     var list = this.Devices;
     dataservice.Devices.getData({
-      UniqueID: config.CurrentUser().CustomerMasterFileId,
+      UniqueID: config.user().CustomerMasterFileId,
     }, function(resp) {
       if (resp.Code !== 0) {
         alert('Error loading devices: ' + resp.Message);
@@ -123,7 +123,7 @@ define([
   ReportsPanelViewModel.prototype.loadLocations = function(cb) {
     var list = this.Locations;
     dataservice.Geofences.getData({
-      CMFID: config.CurrentUser().CustomerMasterFileId,
+      CMFID: config.user().CustomerMasterFileId,
     }, function(resp) {
       if (resp.Code !== 0) {
         alert('Error loading locations: ' + resp.Message);

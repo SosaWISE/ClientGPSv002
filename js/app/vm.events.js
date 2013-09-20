@@ -64,7 +64,7 @@ define([
     list([]);
     // add to list
     dataservice.Events.getData({
-      CMFID: config.CurrentUser().CustomerMasterFileId,
+      CMFID: config.user().CustomerMasterFileId,
       PageSize: 10,
       // EndDate: utils.GetNowDateTime(),
       // StartDate: utils.AddToDate(utils.GetNowDateTime(), -5)

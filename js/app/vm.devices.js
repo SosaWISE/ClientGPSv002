@@ -69,7 +69,7 @@ define([
     list([]);
     // add to list
     dataservice.Devices.getData({
-      UniqueID: config.CurrentUser().CustomerMasterFileId,
+      UniqueID: config.user().CustomerMasterFileId,
     }, function(resp) {
       if (resp.Code !== 0) {
         alert('Error loading devices:' + resp);

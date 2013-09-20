@@ -75,7 +75,7 @@ define([
     list([]);
     // add to list
     dataservice.Geofences.getData({
-      CMFID: config.CurrentUser().CustomerMasterFileId,
+      CMFID: config.user().CustomerMasterFileId,
     }, function(resp) {
       if (resp.Code !== 0) {
         alert('Retrieving Geo Fences has an error:' + resp.Message);

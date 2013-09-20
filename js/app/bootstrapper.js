@@ -29,12 +29,14 @@ define(['../loadDependencies'], function() {
     console.log("Application Token: " + config.token);
     console.log("CORS Domain: " + config.serviceDomain);
 
-    config.CurrentUser.subscribe(function(user) {
+    config.user.subscribe(function(user) {
       if (user) {
         // once there is a user, destroy the login forms (for security purposes)
         delete app.anonPanelMap;
         delete app.anonPanels;
         $('#login-container').remove();
+        // incase it didn't get moved before the user was set
+        $('#loginform').remove();
       }
     });
 
@@ -48,6 +50,9 @@ define(['../loadDependencies'], function() {
         infuser.defaults.templateSuffix = ".tmpl.html";
         infuser.defaults.templateUrl = "/tmpl";
         ko.applyBindings(app, document.getElementById('main'));
+
+        // if we are authenticated, this will log us in
+        config.user(data.Value.AuthCustomer);
 
         router.instance.init();
       }

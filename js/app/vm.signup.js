@@ -27,6 +27,18 @@ define([
     SignupViewModel.super_.call(_this, options);
 
     _this.model = model_customer.wrap({});
+    _this.model.DealerId(config.dealerId);
+    _this.model.SalesRepId(config.salesRepId);
+    _this.model.LeadDispositionId(config.leadDispositionId);
+    _this.model.LeadSourceId(config.leadSourceId);
+    _this.model.LocalizationId(config.localizationId);
+
+    _this.model.FirstName('b');
+    _this.model.LastName('bb');
+    _this.model.PhoneHome('123.123.1234');
+    _this.model.Email('e@ma.il');
+    _this.model.Password('Password1');
+    _this.model.Gender('Male');
 
     // scoped events
     _this.clickSignup = function() {
@@ -42,7 +54,8 @@ define([
 
   SignupViewModel.prototype.signup = function() {
     var loading = this.loading,
-      model = this.model;
+      model = this.model,
+      data;
 
     model.validate();
     model.update();
@@ -52,7 +65,9 @@ define([
     }
 
     loading(true);
-    dataservice.Customer.CustomerSignUp(model.getValue(), function(resp) {
+    data = model.getValue();
+    console.log(data);
+    dataservice.Customer.CustomerSignUp(data, function(resp) {
       loading(false);
 
       if (resp.Code !== 0) {
@@ -60,8 +75,9 @@ define([
       } else {
         //@TODO: show success page
 
-        //@TODO: log the user in
-        config.CurrentUser(model.getValue());
+        // log the user in
+        config.user(model.getValue());
+
         //@TODO: go to home page
       }
     });
