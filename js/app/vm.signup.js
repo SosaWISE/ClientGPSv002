@@ -31,7 +31,7 @@ define([
     _this.model.SalesRepId(config.salesRepId);
     _this.model.LeadDispositionId(config.leadDispositionId);
     _this.model.LeadSourceId(config.leadSourceId);
-    _this.model.LocalizationId(config.localizationId);
+    _this.model.LocalizationId(navigator.language || config.localizationId);
 
     _this.model.FirstName('b');
     _this.model.LastName('bb');
