@@ -1,0 +1,9 @@
+<div data-bind="foreach:list" style="font-family:'SecuritySciences';position: absolute;top: 0;right: 0;bottom: 0;left: 0;overflow-y:scroll;">
+    <p>
+      <span data-bind="text:start"></span>
+      <span data-bind="foreach:nums">
+        <span data-bind="utf8:$data,attr:{title:$data}"></span>
+      <span>
+    </p>
+    <br/>
+</div>

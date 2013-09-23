@@ -5,32 +5,29 @@
  * Time: 6:28 PM
  * To change this template use File | Settings | File Templates.
  */
-define(['amplify','amplify.request','config'],
-function (amplify, amplify_request, config) {
-	var
-	/** START Initialize object. */
-		_init = function () {
+define([
+  'utils',
+  'dataservice.base',
+  'config'
+], function(
+  utils,
+  DataserviceBase,
+  config
+) {
+  "use strict";
 
-			amplify.request.define('users-getData', 'ajax', config.AjaxProps('AuthSrv/UsersRead'));
+	function DataserviceEvents() {
+		DataserviceEvents.super_.call(this, 'AuthSrv', config.serviceDomain);
+	}
+  utils.inherits(DataserviceEvents, DataserviceBase);
+
+	//
+	// helper functions
+	//
+
+	DataserviceEvents.prototype.getData = function(data, cb) {
+		this.post('UsersRead', data, cb);
 	};
-	/**   END Initialize object. */
 
-	/** START Public Methods. */
-	_getData = function (callbacks, data) {
-		return amplify.request({
-			resourceId: 'users-getData',
-			data: data,
-			success: callbacks.success,
-			error: callbacks.error
-		});
-	};
-		/**   END Public Methods. */
-
-	/** Init object. */
-	_init();
-
-	/** Return object. */
-	return {
-		get GetData() { return _getData; }
-	};
+	return new DataserviceEvents();
 });

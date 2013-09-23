@@ -5,59 +5,58 @@
  * Time: 9:57 AM
  * To change this template use File | Settings | File Templates.
  */
-define(['ko'],
-function (ko) {
-	/** Init. */
-	var
-		_dc = null,
+define([
+  'ukov',
+  'ko'
+], function(
+  ukov,
+  ko
+) {
+  "use strict";
 
-		Device = function () {
-			var self = this;
+  var schemaName = 'model.device';
 
-			self.saving = ko.observable(false);
-			self.active = ko.observable(false);
+  //
+  // setup schema
+  //
+  ukov.schema[schemaName] = {
+    AccountId: {},
+    AccountName: {},
+    CustomerID: {},
+    CustomerMasterFileId: {},
+    Designator: {},
+    IndustryAccountId: {},
+    IndustryNumber: {},
+    InvItemId: {},
+    PanelTypeId: {},
+    Password: {},
+    SubscriberNumber: {},
+    SystemTypeId: {},
+    UnitID: {},
+    Username: {},
+    LastLatt: {},
+    LastLong: {},
+    UIName: {},
+  };
 
-			self.DeviceID = ko.observable();
-			self.DeviceName = ko.observable();
-			self.CustomerID = ko.observable();
-			self.CustomerMasterFileId = ko.observable();
-			self.Designator = ko.observable();
-			self.IndustryAccountId = ko.observable();
-			self.IndustryNumber = ko.observable();
-			self.InvItemId = ko.observable();
-			self.PanelTypeId = ko.observable();
-			self.Password = ko.observable();
-			self.SubscriberNumber = ko.observable();
-			self.SystemTypeId = ko.observable();
-			self.UnitID = ko.observable();
-			self.Username = ko.observable();
-			self.LastLatt = ko.observable();
-			self.LastLong = ko.observable();
+  return {
+    wrap: function(model, collectionName) {
+      model = ukov.wrapModel(model, schemaName, collectionName);
+      model.id = model.AccountId();
 
-			self.type = ko.observable();
-			self.time = ko.observable();
+      model.saving = ko.observable(false);
+      model.active = ko.observable(false);
+      model.activate = function() {
+        this.active(true);
+      };
+      model.deactivate = function() {
+        this.active(false);
+      };
 
-			self.isBrief = ko.observable(true);
-			self.isNullo = false;
-			self.dirtyFlag = new ko.DirtyFlag([
-				self.DeviceName,
-			]);
+      // model.type = ko.observable();
+      model.time = ko.observable();
 
-			/** Return object. */
-			return self;
-		};
-
-	Device.Nullo = new Device();
-	Device.Nullo.isNullo = true;
-	Device.Nullo.isBrief = function () { return false; };  // nullo is never brief.
-	Device.Nullo.dirtyFlag().reset();
-
-	/** Static memeber. */
-	Device.datacontext = function (dc) {
-		if (dc) { _dc = dc; }
-		return _dc;
-	};
-
-	/** Return object. */
-	return Device;
+      return model;
+    },
+  };
 });

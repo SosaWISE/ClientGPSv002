@@ -1,220 +1,180 @@
-/**
- * Created with JetBrains PhpStorm.
- * User: sosawise
- * Date: 5/17/13
- * Time: 12:29 PM
- * To change this template use File | Settings | File Templates.
- */
-define(['jquery', 'underscore', 'sammy', 'presenter', 'config', 'route-mediator', 'store'],
-function ($, _, Sammy, presenter, config, routeMediator, store) {
-	var
-		loginOptions,
-		destRoute = '',
-		currentHash = '',
-		defaultOptions,
-		defaultRoute = '',
-		isRedirecting = false,
-		logger = config.Logger,
-		window = config.Window,
-		navigateToCallback,
+define([
+  'jquery',
+  'route',
+  'config'
+], function(
+  $,
+  Route,
+  config
+) {
+  "use strict";
 
-		sammy = new Sammy.Application(function () {
-			if (Sammy.Title) {
-				this.use(Sammy.Title);
-				this.setTitle(config.Title);
-			}
-		}),
+  function Router() {
+    this.routeMap = {};
+    this.routes = [];
+    this.anonRoutes = [];
 
-		_navigateBack = function () {
-			window.history.back();
-		},
+    this.destPath = null;
+    this.prevRoute = null;
+    this._ignoreCount = 0;
+  }
 
-		_navigateTo = function (hash, cb) {
-			if (currentHash !== hash) {
-				if (navigateToCallback) {
-					throw new Error('navigateToCallback is already defined');
-				}
-				navigateToCallback = cb;
-				sammy.setLocation(hash);
-			}
-			else if (cb) {
-				cb();
-			}
-		},
+  Router.prototype.init = function() {
+    var _this = this;
+    // ,changeTimeout;
 
-		_register = function (options) {
-			if (options.routes) {
-				// Register a list of routes.
-				_.each(options.routes, function (route) {
-					registerRoute({
-						route: route.route,
-						title: route.title,
-						callback: route.callback,
-						view: options.view,
-						group: route.group,
-						isDefault: !!route.isDefault
-					});
-				});
-				return;
-			}
+    function changePath() {
+      _this.goToPath(_this.getPath(), false);
+    }
 
-			// Register 1 route.
-			registerRoute(options);
-		},
+    // check the user is logged in
+    if (!config.user()) {
+      // save destination path
+      this.destPath = this.getPath();
+    }
 
-		registerBeforeLeaving = function () {
-			sammy.before(/.*/, function () {
-				var
-					context = this,
-					response = routeMediator.CanLeave();
-					//prevHash = currentHash;
+    // go to initial route, then listen for the route to change
+    changePath();
+    window.addEventListener('hashchange', function() {
+      if (_this._ignoreCount > 0) {
+        _this._ignoreCount--;
+        return;
+      }
+      // clearTimeout(changeTimeout);
+      // changeTimeout = setTimeout(function() {
+      changePath();
+      // }, 0);
+    });
+  };
+  Router.prototype.useDestPath = function() {
+    this.goToPath(this.destPath, false);
+    this.destPath = null;
+  };
 
-				if (!isRedirecting && !response.val) {
-					isRedirecting = true;
-					logger.warning(response.message);
-					// Keep hash url the same in address bar
-					context.app.setLocation(currentHash);
-				}
-				else {
-					isRedirecting = false;
-					currentHash = context.app.getLocation();
-					currentHash = currentHash.substr(currentHash.indexOf('#'));
-				}
+  Router.prototype.addRoute = function(controller, routeName, routePath, defaultRouteData) {
+    addRoute(this, this.routes, controller, routeName, routePath, defaultRouteData);
+  };
+  Router.prototype.addAnonRoute = function(controller, routeName, routePath, defaultRouteData) {
+    addRoute(this, this.anonRoutes, controller, routeName, routePath, defaultRouteData);
+  };
 
-				// cancel the route if this returns false
-				return response.val;
-			});
-		},
-		registerRoute = function (options) {
-			if (!options.callback) {
-				throw Error('callback must be specified.');
-			}
+  Router.prototype.setPath = function(path, allowHistory) {
+    if (path[0] !== '#') {
+      path = '#' + path;
+    }
+    if (location.hash !== path) {
+      // add to _ignoreCount
+      this._ignoreCount++;
+      if (allowHistory) {
+        location.hash = path;
+      } else {
+        location.replace(path);
+      }
+    }
+  };
+  Router.prototype.getPath = function() {
+    var hash = location.hash;
+    if (hash && hash.length) {
+      // remove # from front and make lowercase
+      hash = hash.substr(1).toLowerCase();
+    }
+    return hash;
+  };
 
-			if (options.isDefault) {
-				defaultOptions = options;
-				defaultRoute = options.route;
-				setupGet(options, '/');
-			}
+  Router.prototype.goToPath = function(path, allowHistory) {
+    var _this = this,
+      user = config.user(),
+      routes = user ? this.routes : this.anonRoutes,
+      route,
+      activated = false;
 
-			setupGet(options);
-		},
+    function onActivated(pathTaken) {
+      activated = true;
+      if (pathTaken) {
+        // ensure that it gets added to the history
+        if (allowHistory && pathTaken === path) {
+          _this.setPath('', false);
+        }
+        // set pathTaken in address bar
+        _this.setPath(pathTaken, allowHistory);
+      }
+    }
 
-		setupGet = function (options, routeOverride) {
-			var route = routeOverride || options.route;
-			if (route === config.Hashes.login) {
-				loginOptions = options;
-			}
-			sammy.get(route, function (context) { // context is 'this'.
-				var loggedIn = !!config.CurrentUser(),
-					cls,
-					lOptions = options;
+    if (this.prevRoute) {
+      this.prevRoute.deactivate();
+    }
 
-				if (loggedIn) {
-					// user is logged in
-					if (route === config.Hashes.login) {
-						// don't let user go to login page
-						lOptions = defaultOptions;
-						context.app.setLocation(lOptions.route);
-					}
+    // find the first route that matches the path
+    route = findFirstRoute(routes, path);
+    // check if a route was found
+    if (!route) {
+      // first route is the default route
+      route = routes[0];
+      // make default path for route
+      path = route.toPath(route.fromPath('/' + route.name));
+    }
 
-					// save last path
-					store.Save(config.StateKeys.lastView, context.path);
-				}
-				else if (route !== config.Hashes.login) {
-					// store route the user wanted to go to so when the
-					// user is logged in we can redirect to that route
-					destRoute = route;
+    // activate the route
+    route.activate(path, onActivated);
+    // check if it was activated synchronously
+    if (!activated) {
+      // temporarily set the path while the route is being activated
+      this.setPath(path, false);
+    }
 
-					// user is logged out, so force user to go to login page
-					lOptions = loginOptions;
-					context.app.setLocation(lOptions.route);
-				}
+    showElements(user, route);
+    this.prevRoute = route;
+  };
+  Router.prototype.goToRoute = function(routeName, routeData, allowHistory) {
+    var route = this.routeMap[routeName];
+    if (!route) {
+      throw new Error('no route named ' + routeName);
+    }
+    return this.goToPath(route.toPath(routeData), allowHistory);
+  };
 
-				cls = lOptions.title.toLowerCase();
-				// set body class if it's not 'login'
-				$('body').attr('class', (cls!=='login') ? cls : '');
-				// // set body class
-				// $('body').attr('class', cls);
 
-				if (loggedIn) {
-					lOptions.callback(context.params, function () {
-						if (navigateToCallback) {
-							navigateToCallback.apply(null, arguments);
-							navigateToCallback = null;
-						}
-					}); // Activate the viewModel.
-					_showPortal(cls);
+  function addRoute(router, routes, controller, routeName, routePath, defaultRouteData) {
+    var route = Route.create(router, controller, routeName, routePath, defaultRouteData);
+    if (router.routeMap[route.name]) {
+      throw new Error('route named `' + route.name + '` already exists');
+    }
+    router.routeMap[route.name] = route;
+    routes.push(route);
+  }
 
-					presenter.TransitionTo(
-						$(lOptions.view),
-						lOptions.route, // context.path, // We want to find the route we defined in the config.
-						lOptions.group
-					);
-				}
-				else {
-					lOptions.callback({}); // Activate the login viewModel.
-					_showLogin();
-				}
+  function findFirstRoute(routes, path) {
+    var routeFound;
+    // activate the first route that matches the path
+    routes.some(function(route) {
+      if (route.fromPath(path)) {
+        routeFound = route;
+        // break out of loop
+        return routeFound;
+      }
+    });
+    return routeFound;
+  }
 
-				// if (this.title) {
-				// 	this.title(options.title);
-				// }
-				$('title').text(lOptions.title + ' | Security Sciences');
-			});
-		},
+  function showElements(user, route) {
+    if (user) {
+      $('body').attr('class', route.name);
 
-		getUsableRoute = function (value) {
-			if (value && value.indexOf('#') >= 0) {
-				return value.substr(value.indexOf('#'));
-			}
-			return null;
-		},
+      $('#login-container').hide();
+      $('.site-container').show();
+      $('.view').show();
+      $('.sidebars > .sidebar').addClass('active');
+      $('.sidebars > .sidebar.' + route.name).addClass('active');
 
-		_run = function () {
-			var url = store.Fetch(config.StateKeys.lastView),
-				addressBarUrl;
+    } else {
+      $('body').attr('class', '');
 
-			// 1) if I browse to a location, use it.
-			// 2) otherwise use the url i grabbed from storage.
-			// 3) otherwise use the default route.
-			addressBarUrl = sammy.getLocation();
-			_startupHash = getUsableRoute(addressBarUrl) || getUsableRoute(url) || defaultRoute;
+      $('#login-container').show();
+      $('.site-container').hide();
+      $('.view').hide();
+    }
+  }
 
-			// set hash before running
-			sammy.setLocation(_startupHash);
-			sammy.run();
-			registerBeforeLeaving();
-		},
-
-		_startupHash = '/',
-
-		_getStartupHash = function () {
-			return _startupHash;
-		},
-
-		_showPortal = function(cls) {
-			$('#login-container').hide();
-			$('.site-container').show();
-			$('.view').show();
-			$('.sidebars > .sidebar').addClass('active');
-			$('.sidebars > .sidebar.' + cls).addClass('active');
-		},
-		_showLogin = function() {
-			$('#login-container').show();
-			$('.site-container').hide();
-			$('.view').hide();
-		},
-		_transitionToLastView = function () {
-			_navigateTo(destRoute);
-		};
-
-	/** Return object. */
-	return {
-		NavigateBack: _navigateBack,
-		NavigateTo: _navigateTo,
-		Register: _register,
-		Run: _run,
-		get GetStartupHash() { return _getStartupHash; },
-		get TransitionToLastView() { return _transitionToLastView; }
-	};
+  Router.instance = new Router();
+  return Router;
 });

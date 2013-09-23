@@ -1,13 +1,18 @@
-define(['../js/loadDependencies'], function() {
+define([
+  '../js/loadDependencies'
+], function() {
   require([
 
-    '../../specs/app/vm.devices-tab.spec',
+    '../../specs/app/spec.dataservice.base',
+    '../../specs/app/spec.route',
+    '../../specs/app/spec.router',
+    '../../specs/app/spec.vm.devices',
 
   ], function() {
     'use strict';
 
-    var jasmineEnv = jasmine.getEnv()
-      , htmlReporter;
+    var jasmineEnv = jasmine.getEnv(),
+      htmlReporter;
 
     jasmineEnv.updateInterval = 1000;
     htmlReporter = new jasmine.HtmlReporter();

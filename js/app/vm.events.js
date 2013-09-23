@@ -5,149 +5,169 @@
  * Time: 12:36 PM
  * To change this template use File | Settings | File Templates.
  */
-define(['jquery','messenger','underscore','datacontext','ko','amplify','utils','gmaps'],
-	function ($, messenger, _, datacontext, ko, amplify, utils, gmaps) {
-		var
-			/** START Private Properties. */
-		editing = ko.observable(false),
-		editItem = ko.observable(null),
-		_list = ko.observableArray(),
-		_devices,
-		/**	 END Private Properties. */
+define([
+  'jquery',
+  'config',
+  'messenger',
+  'underscore',
+  'dataservice',
+  'ko',
+  'amplify',
+  'utils',
+  'gmaps',
+  'vm.controller'
+], function(
+  $,
+  config,
+  messenger,
+  _und,
+  dataservice,
+  ko,
+  amplify,
+  utils,
+  gmaps,
+  ControllerViewModel
+) {
+  "use strict";
 
-		/** START Private Methods. */
-			_activate = function (routeData, callback) {
-			messenger.publish.viewModelActivated();
-		if (callback) { callback(); }
-		},
+  function EventsViewModel(options) {
+    var _this = this;
+    EventsViewModel.super_.call(_this, options);
 
-		/**	 END Private Methods. */
+    _this.canEdit = ko.observable(false);
+    _this.editing = ko.observable(false);
+    _this.editItem = ko.observable(null);
 
-		init = function (devices, cb) {
-			_devices = devices;
+    // scoped events
+    _this.clickItem = function(model) {
+      _this.selectItem(model);
+    };
+  }
+  utils.inherits(EventsViewModel, ControllerViewModel);
+  EventsViewModel.prototype.viewTemplate = 'events.view';
 
-			amplify.subscribe('customerAuthentication', function (data) {
-				console.log(data);
-				refresh();
-			});
-			amplify.subscribe('sessionAuthentication', function (data) {
-				console.log(data);
-				refresh();
-			});
+  //
+  // members
+  //
+  EventsViewModel.prototype.onLoad = function(cb) {
+    var list = this.list,
+      fmap = this.parent.fmap;
 
-			refresh(cb);
-		},
-		refresh = function (cb) {
-			/** Init */
-			var data = {
-				events: ko.observableArray()
-			};
+    // remove existing from the map
+    list().forEach(function(model) {
+      Object.keys(model.handles).forEach(function(handle) {
+        handle.dispose();
+      });
+      delete model.handles;
+    });
+    // clear list
+    list([]);
+    // add to list
+    dataservice.Events.getData({
+      CMFID: config.user().CustomerMasterFileId,
+      PageSize: 10,
+      // EndDate: utils.GetNowDateTime(),
+      // StartDate: utils.AddToDate(utils.GetNowDateTime(), -5)
+      EndDate: '6/19/2013',
+      StartDate: '5/19/2013'
+    }, function(resp) {
+      if (resp.Code !== 0) {
+        alert('Retrieving events:' + resp.Message);
+      } else {
+        if (!resp.Value.length) {
+          console.error('no events returned');
+        }
 
-			/** Load data. */
-			$.when(
-				datacontext.Events.getData(
-					{
-						results: data.events,
-						param: {
-							CMFID: datacontext.Customer.model.customerMasterFileId(),
-							PageSize: 10,
-//							EndDate: utils.GetNowDateTime(),
-//							StartDate: utils.AddToDate(utils.GetNowDateTime(), -5)
-							EndDate: '6/19/2013',
-							StartDate: '5/19/2013'
-						}
-					}
-				)
-			)
-			.then(function () {
-				// remove existing from the map
-				_list().forEach(function (model) {
-					Object.keys(model.handles).forEach(function (handle) {
-						handle.dispose();
-					});
-					delete model.handles;
-				});
-				/** Clear the list. */
-				_list.destroyAll();
+        resp.Value.forEach(function(model) {
+          model.handles = {};
 
-				if (!data.events().length) {
-					console.error('no events returned');
-				}
-				_.each(data.events(), function (model) {
-					model.handles = {};
-					// add to map
-					model.handles.marker = _devices.fmap.addMarker({
-						lattitude: parseFloat(model.Lattitude()),
-						longitude: parseFloat(model.Longitude()),
-					}, model.EventID(), {
-						icon: eventIcon,
-					});
+          // add to map
+          model.handles.marker = fmap.addMarker({
+            lattitude: parseFloat(model.Lattitude()),
+            longitude: parseFloat(model.Longitude()),
+          }, model.EventID(), {
+            icon: EventsViewModel.eventIcon,
+          });
 
-					var latLng = new gmaps.LatLng(parseFloat(model.Lattitude()), parseFloat(model.Longitude()));
-					model.handles.infoWindow = new gmaps.InfoWindow({
-						content: $(document.createElement("div")).html("event")[0],
-						position: latLng,
-					});
-					model.active.subscribe(function (active) {
-						if (active) {
-							gmaps.event.addListener(model.handles.infoWindow, "closeclick", function () {
-								model.active(false);
-							});
-							model.handles.infoWindow.open(_devices.fmap);
-						}
-						else {
-							gmaps.event.clearInstanceListeners(model.handles.infoWindow);
-							model.handles.infoWindow.close();
-						}
-					});
+          var latLng = new gmaps.LatLng(parseFloat(model.Lattitude()), parseFloat(model.Longitude())),
+            div = document.createElement("div");
+          div.innerHTML = 'event';
+          model.handles.infoWindow = new gmaps.InfoWindow({
+            content: div,
+            position: latLng,
+          });
+          model.active.subscribe(function(active) {
+            if (active) {
+              gmaps.event.addListener(model.handles.infoWindow, "closeclick", function() {
+                model.active(false);
+              });
+              model.handles.infoWindow.open(fmap);
+            } else {
+              gmaps.event.clearInstanceListeners(model.handles.infoWindow);
+              model.handles.infoWindow.close();
+            }
+          });
 
-					// add to list
-					model.time = utils.DateLongFormat(model.EventDate());
-					model.actions = '';
-					_list.push(model);
-				});
-				cb();
-			}, function (someArg) {
-				alert('Retrieving events with SomeArg:' + someArg);
-				cb();
-			});
-		},
-		eventIcon = new gmaps.MarkerImage(
-			"/img/social-login-sprite.png",
-			new gmaps.Size(31, 31),
-			new gmaps.Point(62, 31),
-			new gmaps.Point(15, 15)
-		),
-		startEdit = function(vm/*, evt*/) {
-			editItem(vm);
-			editing(true);
-		},
-		cancelEdit = function(/*vm, evt*/) {
-			editing(false);
-		},
-		selectItem = function (model) {
-			_list().forEach(function (model) {
-				model.active(false);
-			});
-			model.active(true);
+          // add to list
+          model.time = utils.DateLongFormat(model.EventDate());
+          model.actions = '';
+          list.push(model);
+        });
+      }
+      cb(false);
+    });
+  };
+  EventsViewModel.prototype.onActivate = function(routeData) { // overrides base
+    var child = this.findChild(parseInt(routeData.id, 10));
+    if (!child) {
+      this.removeExtraRouteData(routeData);
+    } else {
+      this.selectItem(child);
+      routeData.action = 'view';
+    }
+    return routeData;
+  };
+  EventsViewModel.prototype.startEdit = function(vm /*, evt*/ ) {
+    this.editItem(vm);
+    this.editing(true);
+  };
+  EventsViewModel.prototype.cancelEdit = function( /*vm, evt*/ ) {
+    this.editing(false);
+  };
+  EventsViewModel.prototype.selectItem = function(model) {
+    if (this.activeChild) {
+      this.activeChild.deactivate();
+      if (this.activeChild === model) {
+        this.activeChild = null;
+        // deselect item
+        this.setRouteData({
+          tab: this.id,
+        });
+        return;
+      }
+    }
+    this.activeChild = model;
+    this.activeChild.activate();
 
-			_devices.fmap.setCenter(model.handles.infoWindow.getPosition());
-		};
+    this.parent.fmap.setCenter(model.handles.infoWindow.getPosition());
 
-		/** Return object. */
-		return {
-			init: init,
-			TmplName: 'events.view',
-			canEdit: ko.observable(false),
-			editing: editing,
-			editItem: editItem,
-			startEdit: startEdit,
-			cancelEdit: cancelEdit,
-			selectItem: selectItem,
-			type: 'events',
-			name: 'Events',
-			list: _list,
-			active: ko.observable(false),
-			get Activate() { return _activate; }
-		};
-	});
+    this.setRouteData({
+      tab: this.id,
+      id: this.activeChild.id,
+    });
+  };
+
+
+  //
+  // statics
+  //
+
+  EventsViewModel.eventIcon = new gmaps.MarkerImage(
+    "/img/social-login-sprite.png",
+    new gmaps.Size(31, 31),
+    new gmaps.Point(62, 31),
+    new gmaps.Point(15, 15)
+  );
+
+  return EventsViewModel;
+});

@@ -10,8 +10,9 @@ func main() {
 	// set correct mime type for javascript files
 	mime.AddExtensionType(".js", "application/javascript")
 
+	log.Println("Listening on 8880")
 	http.Handle("/", http.StripPrefix("/", &serverWrapper{http.FileServer(http.Dir("./"))}))
-	if err := http.ListenAndServe(":8080", nil); err != nil {
+	if err := http.ListenAndServe(":8880", nil); err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}
 }

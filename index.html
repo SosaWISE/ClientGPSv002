@@ -1,52 +1,63 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>Security Sciences</title>
-    <link href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,300' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="css/style.css" />
+  <meta charset="utf-8">
+  <title>Security Sciences</title>
+  <link href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,300' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-    <div id="busyindicator"></div>
-    <div>
-        <div style="display:none;" id="login-container" data-bind="with:Login">
-            <div data-bind="template:{name:TmplName}" id="login-view"></div>
-        </div>
-        <div style="display:none;" class="site-container">
-            <!--<nav class="primary" style="top:0px;">-->
-                <!--<a href="#" class="logo">-->
-                    <!--<span class="ico"></span>-->
-                    <!--<h1 class="txt">Security Sciences</h1>-->
-                <!--</a>-->
-            <!--</nav>-->
-            <nav class="primary">
-                <a href="#" class="logo">
-                    <span class="ico"></span>
-                    <h1 class="txt">Security Sciences</h1>
-                </a>
-                <div data-bind="foreach:topLevelViews">
-                    <a data-bind="attr:{href:hash,'class':type}">
-                        <div class="indicator"></div>
-                        <span class="ico" data-bind="html:ico"></span>
-                        <span class="txt" data-bind="text:name"></span>
-                    </a>
-                <!-- <div class="indicator"></div> -->
-                </div>
-            </nav>
-            <div class="wrap">
-                <div class="sidebars visible" data-bind="foreach:topLevelViews">
-	                <div data-bind="template:{name:TmplName},attr:{id:type+'-view','class':'view sidebar '+type}"></div>
-                </div>
-	            <div class="modules" data-bind="foreach:topLevelViews">
-		            <div data-bind="template:{name:TmplModuleName},attr:{'class': type+' module'}"></div>
-	            </div>
-            </div>
-        </div>
+  <div id="busyindicator"></div>
+  <div id="main">
+    <div style="display:none;" id="login-container" data-bind="with:anonPanelMap.login">
+      <div data-bind="template:viewTemplate" id="login-view">
+      </div>
     </div>
+    <div style="display:none;" class="site-container">
+      <nav class="primary">
+        <a href="#" class="logo">
+          <span class="ico"></span>
+          <h1 class="txt">Security Sciences</h1>
+        </a>
+        <div data-bind="foreach:panels">
+          <a data-bind="attr:{href:'#/'+id,'class':id}">
+            <div class="indicator"></div>
+            <span class="ico" data-bind="html:ico"></span>
+            <span class="txt" data-bind="text:name"></span>
+          </a>
+        </div>
+      </nav>
+      <div class="wrap">
+        <div class="sidebars visible" data-bind="foreach:panels">
+          <div data-bind="template:viewTemplate,attr:{id:id+'-view','class':'view sidebar '+id}"></div>
+        </div>
+        <div class="modules" data-bind="foreach:panels">
+          <div data-bind="template:moduleTemplate,attr:{'class': id+' module'}"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="display:none">
+    <!--
+      This hidden div is to help with making browsers save and populate login info.
+      Currently, browsers check for fields suitable for remembered passwords only when the page initially loads.
+      Later we simply move this div to the actual location where we want it.
+    -->
+    <div id="loginform">
+      <!-- Our logindummy iframe where the form submits to -->
+      <iframe src="logindummy.html" name="logindummy" style="display: none"></iframe>
+      <form action="logindummy.html" method="post" target="logindummy">
+        <input type="text" data-bind="value:username" name="email" class="email" placeholder="E-mail">
+        <input type="password" data-bind="value:password" name="password" class="password" placeholder="Password">
+        <!-- cmdNoDisabledAttr: browser won't save login info if the submit button is disabled -->
+        <input type="submit" data-bind="cmd:cmdLogin,cmdNoDisabledAttr:true" class="btn-blue" value="Login" />
+      </form>
+    <div>
+  <div>
 
-<!-- START Script References. -->
-    <script src="/js/requirejsConfig.js"></script>
-    <script data-main="bootstrapper" src="/js/lib/require.js"></script>
-<!--   END Script References. -->
+  <!-- START Script References. -->
+  <script src="/js/requirejsConfig.js"></script>
+  <script data-main="bootstrapper" src="/js/lib/require.js"></script>
+  <!--   END Script References. -->
 </body>
 </html>

@@ -5,53 +5,33 @@
  * Time: 6:08 PM
  * To change this template use File | Settings | File Templates.
  */
-define(['amplify','amplify.request','config'],
-function (amplify, amplify_request, config) {
-	var
-		/** START Constructor. */
-		_init = function () {
-			/**
-			 * @description This initiates the session.
-			 */
-			amplify.request.define('session-start', 'ajax', config.AjaxProps('AuthSrv/SessionStart'));
+define([
+  'utils',
+  'dataservice.base',
+  'config'
+], function(
+  utils,
+  DataserviceBase,
+  config
+) {
+  "use strict";
 
-			/**
-			 * @description This terminates the session.
-			 */
-			amplify.request.define('session-terminate', 'ajax', config.AjaxProps('AuthSrv/SessionTerminate'));
-		},
-		/**   END Constructor. */
-		/** START Public Methods. */
-		sessionStart = function (callbacks) {
-			return amplify.request({
-				resourceId: 'session-start',
-				data: JSON.stringify({ AppToken: config.ApplicationToken }),
-				success: function (response) {
-					if (response.Code !== 0) {
-						callbacks.error(response);
-						return;
-					}
-					callbacks.success(response.Value);
-				},
-				error: callbacks.error
-			});
-		},
-		sessionTerminate = function (callbacks) {
-			return amplify.request({
-				resourceId: 'session-terminate',
-				success: callbacks.success,
-				error: callbacks.error
-			});
-		};
-		/**   END Public Methods. */
+  function DataserviceSession() {
+    DataserviceSession.super_.call(this, 'AuthSrv', config.serviceDomain);
+  }
+  utils.inherits(DataserviceSession, DataserviceBase);
 
-	/** START Init Class. */
-	_init();
-	/**   END Init Class. */
+  //
+  // helper functions
+  //
+  DataserviceSession.prototype.SessionStart = function(appToken, cb) {
+    this.post('SessionStart', {
+      AppToken: appToken,
+    }, cb);
+  };
+  DataserviceSession.prototype.SessionTerminate = function(cb) {
+    this.post('SessionTerminate', null, cb);
+  };
 
-	/** Return object. */
-	return {
-		get SessionStart() { return sessionStart; },
-		get SessionTerminate() { return  sessionTerminate; }
-	};
+  return new DataserviceSession();
 });

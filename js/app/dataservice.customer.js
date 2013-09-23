@@ -5,88 +5,34 @@
  * Time: 6:07 PM
  * To change this template use File | Settings | File Templates.
  */
-define(['amplify','amplify.request','config'],
-function (amplify, amplify_request, config) {
-	var
-		_init = function () {
-			/**
-			 * @description This does the authentication of the customer logging in.
-			 */
-			amplify.request.define('customer-auth', 'ajax', {
-				url: config.ServicesDomain + 'AuthSrv/CustomerAuth',
-				dataType: 'json',
-				type: 'POST',
-				contentType: 'application/json; charset=utf-8',
-				crossDomain: true,
-				xhrFields: {
-					withCredentials: true
-				}
-			});
+define([
+  'utils',
+  'dataservice.base',
+  'config'
+], function(
+  utils,
+  DataserviceBase,
+  config
+) {
+  "use strict";
 
-			amplify.request.define('customer-update', 'ajax', {
-				url: config.ServicesDomain + 'AuthSrv/CustomerUpdate',
-				dataType: 'json',
-				type: 'POST',
-				contentType: 'application/json; charset=utf-8',
-				crossDomain: true,
-				xhrFields: {
-					withCredentials: true
-				}
-			});
+  function DataserviceCustomer() {
+    DataserviceCustomer.super_.call(this, 'AuthSrv', config.serviceDomain);
+  }
+  utils.inherits(DataserviceCustomer, DataserviceBase);
 
-			amplify.request.define('customer-signUp', 'ajax', {
-				url: config.ServicesDomain + 'AuthSrv/CustomerSignUp',
-				dataType: 'json',
-				type: 'POST',
-				contentType: 'application/json; charset=utf-8',
-				crossDomain: true,
-				xhrFields: {
-					withCredentials: true
-				}
-			});
-		},
+  //
+  // helper functions
+  //
+  DataserviceCustomer.prototype.CustomerAuth = function(data, cb) {
+    this.post('CustomerAuth', data, cb);
+  };
+  DataserviceCustomer.prototype.CustomerUpdate = function(data, cb) {
+    this.post('CustomerUpdate', data, cb);
+  };
+  DataserviceCustomer.prototype.CustomerSignUp = function(data, cb) {
+    this.post('CustomerSignUp', data, cb);
+  };
 
-		/** START Public Methods. */
-		customerAuth = function(callbacks, data) {
-			return amplify.request({
-				resourceId: 'customer-auth',
-				data: data,
-				success: callbacks.success,
-				error: callbacks.error
-			});
-		},
-
-		customerUpdate = function (callbacks, data) {
-			return amplify.request({
-				resourceId: 'customer-update',
-				data: data,
-				success: callbacks.success,
-				error: callbacks.error
-			});
-		},
-
-		customerSignUp = function (callbacks, data) {
-			if (typeof(data) !== "string") {
-				data = JSON.stringify(data);
-			}
-			return amplify.request({
-				resourceId: 'customer-signUp',
-				data: data,
-				success: callbacks.success,
-				error: callbacks.error
-			});
-		};
-	/**   END Public Methods. */
-
-	/** START Init Class. */
-	_init();
-	/**   END Init Class. */
-
-		/** Return object. */
-	return {
-		get CustomerAuth() { return customerAuth; },
-		get CustomerUpdate() { return customerUpdate; },
-		get CustomerSignUp() { return customerSignUp; }
-	};
-
+  return new DataserviceCustomer();
 });

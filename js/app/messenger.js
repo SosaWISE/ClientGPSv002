@@ -5,30 +5,32 @@
  * Time: 10:17 AM
  * To change this template use File | Settings | File Templates.
  */
-define(['amplify', 'config'],
-function (amplify, config) {
-	var
-		priority = 1,
+define([
+  'amplify',
+  'resources'
+], function(
+  amplify,
+  resources
+) {
+  var priority = 1,
+    _publish = function(topic, options) {
+      amplify.publish(topic, options);
+    },
+    _subscribe = function(options) {
+      amplify.subscribe(
+        options.topic,
+        options.context,
+        options.callback,
+        priority
+      );
+    };
 
-		_publish = function (topic, options) {
-			amplify.publish(topic, options);
-		},
+  _publish.viewModelActivated = function(options) {
+    amplify.publish(resources.Messages.viewModelActivated, options);
+  };
 
-		_subscribe = function (options) {
-			amplify.subscribe(
-				options.topic,
-				options.context,
-				options.callback,
-				priority
-			);
-		};
-
-	_publish.viewModelActivated = function (options) {
-		amplify.publish(config.Messages.viewModelActivated, options);
-	};
-
-	return {
-		publish: _publish,
-		Subscribe: _subscribe
-	};
+  return {
+    publish: _publish,
+    Subscribe: _subscribe
+  };
 });

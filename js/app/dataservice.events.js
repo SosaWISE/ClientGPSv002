@@ -5,35 +5,29 @@
  * Time: 10:17 PM
  * To change this template use File | Settings | File Templates.
  */
-define(['amplify','amplify.request','config','ko'],
-function (amplify, amplify_request, config, ko) {
-	var
-	/** START Initialize object. */
-		_init = function () {
+define([
+  'utils',
+  'dataservice.base',
+  'config'
+], function(
+  utils,
+  DataserviceBase,
+  config
+) {
+  "use strict";
 
-			amplify.request.define('devices-AcquireDeviceEvents', 'ajax', config.AjaxProps('Device/AcquireMasterDeviceEvents'));
-	},
-	/**   END Initialize object. */
+  function DataserviceEvents() {
+    DataserviceEvents.super_.call(this, 'Device', config.serviceDomain);
+  }
+  utils.inherits(DataserviceEvents, DataserviceBase);
 
-	/** START Public Methods. */
-	_acquireEvents = function (callbacks, data) {
-		/** Init */
-		var jsonData = ko.toJSON(data);
+  //
+  // helper functions
+  //
 
-		return amplify.request({
-			resourceId: 'devices-AcquireDeviceEvents',
-			data: jsonData,
-			success: callbacks.success,
-			error: callbacks.error
-		});
-	};
+  DataserviceEvents.prototype.getData = function(data, cb) {
+    this.post('AcquireMasterDeviceEvents', data, cb);
+  };
 
-	/**   END Public Methods. */
-	/** Init object. */
-	_init();
-
-	/** Return object. */
-	return {
-		get GetData() { return _acquireEvents; }
-	};
+  return new DataserviceEvents();
 });
