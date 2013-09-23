@@ -31,7 +31,7 @@ define([
     this.post('CustomerUpdate', data, cb);
   };
   DataserviceCustomer.prototype.CustomerSignUp = function(data, cb) {
-    this.post('CustomerSignUp', data, cb);
+    this.post('UserSignUp', data, cb);
   };
 
   return new DataserviceCustomer();
