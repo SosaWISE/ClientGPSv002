@@ -18,6 +18,9 @@ define([
     this.prevRoute = null;
     this._ignoreCount = 0;
   }
+  Router.prototype.create = function() {
+    return new Router();
+  };
 
   Router.prototype.init = function() {
     var _this = this;
@@ -101,6 +104,10 @@ define([
     }
 
     if (this.prevRoute) {
+      //@TODO: store in app data???
+      // StateKeys: {
+      //   lastView: 'state.active-hash'
+      // },
       this.prevRoute.deactivate();
     }
 
@@ -175,6 +182,5 @@ define([
     }
   }
 
-  Router.instance = new Router();
-  return Router;
+  return new Router();
 });

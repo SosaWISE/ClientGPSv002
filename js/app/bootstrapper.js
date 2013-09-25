@@ -54,7 +54,7 @@ define(['../loadDependencies'], function() {
         // if we are authenticated, this will log us in
         config.user(data.Value.AuthCustomer);
 
-        router.instance.init();
+        router.init();
       }
       $('#busyindicator').activity(false);
     });

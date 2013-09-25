@@ -46,19 +46,51 @@ define([
       expect(route.parts[3]).toEqual('action');
     });
 
+    describe('addDefaults', function() {
+      it('should add default routeData', function() {
+        var routeData = {
+          // route: 'devices',
+          tab: 'events',
+          // id: '',
+          // action: 'view',
+        };
+        route.addDefaults(routeData);
+        expect(routeData).toEqual({
+          route: 'devices',
+          tab: 'events',
+          id: '',
+          action: 'view',
+        });
+      });
+      it('should add default routeData, but break when the first value is found', function() {
+        var routeData = {
+          // route: 'devices',
+          // tab: 'events',
+          id: '1',
+          // action: 'view',
+        };
+        route.addDefaults(routeData, true);
+        expect(routeData).toEqual({
+          route: 'devices',
+          tab: 'index',
+          id: '1',
+        });
+      });
+    });
+
     describe('fromPath', function() {
       it('should match expected', function() {
-        var params = route.fromPath('/devices/events/1/edit');
-        expect(params).toEqual({
+        var routeData = route.fromPath('/devices/events/1/edit');
+        expect(routeData).toEqual({
           route: 'devices',
           tab: 'events',
           id: '1',
           action: 'edit',
         });
       });
-      it('should add default params', function() {
-        var params = route.fromPath('/devices');
-        expect(params).toEqual({
+      it('should add default routeData', function() {
+        var routeData = route.fromPath('/devices');
+        expect(routeData).toEqual({
           route: 'devices',
           tab: 'index',
           id: '',
@@ -76,7 +108,7 @@ define([
         });
         expect(path).toBe('/devices/events/10/edit');
       });
-      it('should NOT add default params (except for `route`)', function() {
+      it('should NOT add default routeData (except for `route`)', function() {
         var path = route.toPath({
           // route: 'devices',
           tab: 'events',

@@ -6,8 +6,7 @@ define([
   'dataservice',
   'model.device',
   'vm.model-editor',
-  'gmaps',
-  'resources'
+  'gmaps'
 ], function(
   config,
   utils,
@@ -16,8 +15,7 @@ define([
   dataservice,
   model_device,
   modelEditor,
-  gmaps,
-  resources
+  gmaps
 ) {
   "use strict";
 
@@ -197,7 +195,7 @@ define([
   };
 
   DevicesViewModel.deviceIcon = new gmaps.MarkerImage(
-    resources.IconSprites.GeoMapSprite,
+    "/img/social-login-sprite.png",
     new gmaps.Size(31, 31),
     new gmaps.Point(31, 31),
     new gmaps.Point(15, 15)

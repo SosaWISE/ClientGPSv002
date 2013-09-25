@@ -1,26 +1,25 @@
 define([
   'router',
-  'resources',
   'vm.panel.login',
   'vm.panel.home',
   'vm.panel.devices',
   'vm.panel.users',
   'vm.panel.billing',
   'vm.panel.reports',
-  'vm.panel.settings'
+  'vm.panel.settings',
+  'notify'
 ], function(
   router,
-  resources,
   LoginViewModel,
   HomePanelViewModel,
   DevicesPanelViewModel,
   UsersPanelViewModel,
   BillingPanelViewModel,
   ReportsPanelViewModel,
-  SettingsPanelViewModel
+  SettingsPanelViewModel,
+  notify
 ) {
   "use strict";
-  router = router.instance;
 
   function createMap(panels) {
     var map = {};
@@ -37,6 +36,8 @@ define([
   }
 
   var app = {};
+
+  app.notify = notify;
 
   app.anonPanelMap = createMap(app.anonPanels = [
     new LoginViewModel({

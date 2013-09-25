@@ -61,7 +61,7 @@ define([
       model = this.model;
 
     if (!model.hasOwnProperty(key)) {
-      console.log('property `' + key + '` not on model. adding...');
+      // console.log('property `' + key + '` not on model. adding...');
       // add property since it doesn't exist
       if (doc._model) {
         model[key] = {};

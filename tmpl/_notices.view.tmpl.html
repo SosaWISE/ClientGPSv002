@@ -1,0 +1,14 @@
+<div class="notice-wrapper" data-bind="foreach:list">
+  <div data-bind="notice:$data" class="notice-item-wrapper">
+    <div class="notice-item">
+      <span data-bind="attr:{'class':'ico '+type}"></span>
+      <div class="content">
+        <!-- <span class="title" data-bind="text:title"></span> -->
+        <span class="msg" data-bind="text:message"></span>
+      </div>
+      <div class="actions" data-bind="foreach:actions">
+        <a data-bind="text:name,click:action"></a>
+      </div>
+    </div>
+  </div>
+</div>

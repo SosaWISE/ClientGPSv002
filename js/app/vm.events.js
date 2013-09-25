@@ -6,24 +6,16 @@
  * To change this template use File | Settings | File Templates.
  */
 define([
-  'jquery',
   'config',
-  'messenger',
-  'underscore',
   'dataservice',
   'ko',
-  'amplify',
   'utils',
   'gmaps',
   'vm.controller'
 ], function(
-  $,
   config,
-  messenger,
-  _und,
   dataservice,
   ko,
-  amplify,
   utils,
   gmaps,
   ControllerViewModel

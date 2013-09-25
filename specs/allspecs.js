@@ -4,8 +4,10 @@ define([
   require([
 
     '../../specs/app/spec.dataservice.base',
+    '../../specs/app/spec.notify',
     '../../specs/app/spec.route',
     '../../specs/app/spec.router',
+    '../../specs/app/spec.util.strings',
     '../../specs/app/spec.vm.devices',
 
   ], function() {

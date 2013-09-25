@@ -2,6 +2,7 @@
   'jquery',
   'ko',
   // include other handlers
+  'ko.bindingHandlers.notice',
   'ko.bindingHandlers.value',
   'ko.bindingHandlers.cmd'
 ], function(

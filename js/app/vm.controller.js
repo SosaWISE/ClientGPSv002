@@ -32,20 +32,16 @@ define([
     }
     this.route = route;
   };
-  ControllerViewModel.prototype.goTo = function(routeData, allowHistory) {
+  ControllerViewModel.prototype.goToRoute = function(routeData, allowHistory) {
     this.lastRouteData = routeData;
-    // var route = (this.parent) ? this.parent.route : this.route;
-    // route.goTo(routeData, allowHistory);
     if (this.parent) {
-      this.parent.goTo(routeData, allowHistory);
+      this.parent.goToRoute(routeData, allowHistory);
     } else {
       this.route.goTo(routeData, allowHistory);
     }
   };
   ControllerViewModel.prototype.setRouteData = function(routeData) {
     this.lastRouteData = routeData;
-    // var route = (this.parent) ? this.parent.route : this.route;
-    // route.setRouteData(routeData);
     if (this.parent) {
       this.parent.setRouteData(routeData);
     } else {

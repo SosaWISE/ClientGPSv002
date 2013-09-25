@@ -54,12 +54,15 @@ define([], function() {
   // members
   //
 
-  Route.prototype.addDefaults = function(routeData) {
+  Route.prototype.addDefaults = function(routeData, breakOnFound) {
     var defaultRouteData = this.defaultRouteData;
-    this.parts.forEach(function(part) {
+    this.parts.some(function(part) {
       if (isNullOrEmpty(routeData[part])) {
         // route value not set, so set to default value
         routeData[part] = defaultRouteData[part];
+      } else if (breakOnFound) {
+        // break
+        return true;
       }
     });
   };
@@ -114,17 +117,19 @@ define([], function() {
     return !!routeData;
   };
 
+  // use this if the the panel should change
+  // this tries to look up the route
   Route.prototype.goTo = function(routeData, allowHistory) {
-    // this.addDefaults(routeData);
-    // this.router.goToRoute(this.name, routeData, allowHistory);
-    var route = this.router.routeMap[routeData.route || this.name];
-    route.addDefaults(routeData);
-    this.router.goToRoute(route.name, routeData, allowHistory);
+    // look up new route
+    var otherRoute = this.router.routeMap[routeData.route || this.name];
+    otherRoute.addDefaults(routeData);
+    this.router.goToRoute(otherRoute.name, routeData, allowHistory);
   };
+  // use this if the panel will stay the same
   Route.prototype.setRouteData = function(routeData) {
     this.addDefaults(routeData);
     var path = this.toPath(routeData);
-    this.router.setPath(path);
+    this.router.setPath(path, false);
   };
 
 

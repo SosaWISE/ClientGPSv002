@@ -6,25 +6,23 @@
  * To change this template use File | Settings | File Templates.
  */
 define([
-  'jquery',
+  'notify',
+  'util.strings',
   'ko',
   'utils',
   'vm.controller',
-  'messenger',
   'dataservice',
   'router',
-  'amplify',
   'vm.signup',
   'config'
 ], function(
-  $,
+  notify,
+  strings,
   ko,
   utils,
   ControllerViewModel,
-  messenger,
   dataservice,
-  Router,
-  amplify,
+  router,
   SignupViewModel,
   config
 ) {
@@ -33,14 +31,6 @@ define([
   function LoginViewModel(options) {
     var _this = this;
     LoginViewModel.super_.call(_this, options);
-
-    setTimeout(function() {
-      $('#login-button').click(function() {
-        // do NOT call ev.preventDefault() or return false
-        // otherwise you will not get Remember Password prompt in IE and Chrome
-        alert('AJAX login...');
-      });
-    }, 1000 * 1);
 
     _this.signupVM = ko.observable();
     _this.title = ko.observable(_this.name);
@@ -81,7 +71,6 @@ define([
         action: 'login',
       });
       _this.setTitle(_this.title());
-      // return true;
     };
     _this.cmdLogin = ko.command(
       function(cb) {
@@ -94,17 +83,19 @@ define([
           }, function(resp) {
             if (resp.Code !== 0) {
               console.error(resp);
+              notify.warn('auth-failed', resp.Code, 6);
             } else {
               config.user(resp.Value);
-              Router.instance.useDestPath();
+              router.useDestPath();
             }
 
             cb();
           });
         }, 500); // the login call is too fast for development purposes...
+
         // must return true so the form will be submitted and the
-        // browser will ask the user if the login info should be saved
-        // basically tells knockout to no call event.preventDefault()
+        // browser will ask the user if the login info should be saved.
+        // basically tells knockout to not call event.preventDefault()
         return true;
       }
     );
@@ -131,8 +122,10 @@ define([
   };
   LoginViewModel.prototype.signUp = function() {
     if (!this.signupVM()) {
+      // lazy create the signup view model
       this.signupVM(new SignupViewModel({
         name: 'Sign up',
+        parent: this,
       }));
     }
     this.editing(true);

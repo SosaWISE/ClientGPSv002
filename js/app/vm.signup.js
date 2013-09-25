@@ -53,8 +53,9 @@ define([
   //
 
   SignupViewModel.prototype.signup = function() {
-    var loading = this.loading,
-      model = this.model,
+    var _this = this,
+      loading = _this.loading,
+      model = _this.model,
       data;
 
     model.validate();
@@ -73,12 +74,14 @@ define([
       if (resp.Code !== 0) {
         console.error(resp);
       } else {
-        //@TODO: show success page
+        //@TODO: show success page and possibly ask for more info
 
         // log the user in
-        config.user(model.getValue());
-
-        //@TODO: go to home page
+        config.user(resp.Value);
+        // go to home page
+        _this.goToRoute({
+          route: 'home',
+        });
       }
     });
   };

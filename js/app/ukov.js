@@ -1,4 +1,5 @@
-// wrapper to path simpler and make it work with require.js
+// wrapper to make path simpler with require.js
 define(['../lib/u-kov/index'], function(ukov) {
-	return ukov;
+  "use strict";
+  return ukov;
 });

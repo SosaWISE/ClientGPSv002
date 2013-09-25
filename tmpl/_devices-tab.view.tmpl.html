@@ -4,11 +4,11 @@
     </div>
     <div class="content">
         <ul class="devices" data-bind="foreach:list">
-            <li data-bind="attr:{'class':UIName},click:$parent.selectItem,active:active">
+            <li data-bind="attr:{'class':UIName},click:$parent.clickItem,active:active">
                 <div class="title" data-bind="text:AccountName"></div>
                 <div class="sub" data-bind="text:time"></div>
                 <div class="actions" data-bind="if:$parent.canEdit">
-                    <a class="edit-btn" data-bind="click:$parent.startEdit">&#xe01b;</a>
+                    <a class="edit-btn" data-bind="click:$parent.clickEdit">&#xe01b;</a>
                 </div>
             </li>
         </ul>
@@ -52,8 +52,8 @@
                     <input type="text" placeholder="Placeholder">
                 </li> -->
                 <li>
-                    <input type="submit" value="Save" class="save" data-bind="click:$parent.saveEdit">
-                    <input type="button" value="Cancel" class="cancel" data-bind="click:$parent.cancelEdit">
+                    <input type="submit" value="Save" class="save" data-bind="click:$parent.clickSave">
+                    <input type="button" value="Cancel" class="cancel" data-bind="click:$parent.clickCancel">
                     <input type="button" value="Delete" class="delete">
                 </li>
             </ul>

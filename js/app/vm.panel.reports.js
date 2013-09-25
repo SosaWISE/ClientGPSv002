@@ -10,14 +10,12 @@ define([
   'vm.controller',
   'ko',
   'config',
-  'resources',
   'dataservice'
 ], function(
   utils,
   ControllerViewModel,
   ko,
   config,
-  resources,
   dataservice
 ) {
   "use strict";
@@ -83,7 +81,7 @@ define([
       } else {
         /** Add to DDL. */
         list.push({
-          name: resources.LocalText.AllDevices,
+          name: '[All Devices]',
           id: 0,
           disable: ko.observable(false)
         });
@@ -105,7 +103,7 @@ define([
         alert('Error loading event types: ' + resp.Message);
       } else {
         list.push({
-          name: resources.LocalText.AllEventTypes,
+          name: '[All Event Types]',
           id: 0,
           disable: ko.observable(false)
         });
@@ -129,7 +127,7 @@ define([
         alert('Error loading locations: ' + resp.Message);
       } else {
         list.push({
-          name: resources.LocalText.AllLocations,
+          name: '[All Locations]',
           id: 0,
           disable: ko.observable(false)
         });

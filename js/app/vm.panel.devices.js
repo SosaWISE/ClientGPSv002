@@ -76,7 +76,7 @@ define([
   DevicesPanelViewModel.prototype.selectItem = function(vm) {
     var routeData = vm.lastRouteData || {};
     routeData.tab = vm.id;
-    this.goTo(routeData);
+    this.goToRoute(routeData);
   };
 
   return DevicesPanelViewModel;

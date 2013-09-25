@@ -16,18 +16,18 @@ define([
 ) {
   "use strict";
 
-	function DataserviceEvents() {
-		DataserviceEvents.super_.call(this, 'AuthSrv', config.serviceDomain);
-	}
+  function DataserviceEvents() {
+    DataserviceEvents.super_.call(this, 'AuthSrv', config.serviceDomain);
+  }
   utils.inherits(DataserviceEvents, DataserviceBase);
 
-	//
-	// helper functions
-	//
+  //
+  // helper functions
+  //
 
-	DataserviceEvents.prototype.getData = function(data, cb) {
-		this.post('UsersRead', data, cb);
-	};
+  DataserviceEvents.prototype.getData = function(data, cb) {
+    this.post('UsersRead', data, cb);
+  };
 
-	return new DataserviceEvents();
+  return new DataserviceEvents();
 });
