@@ -1,0 +1,91 @@
+.sidebar.reports {
+  .search-btn {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    &:before {
+      .mixin-edit-btn("\e01e", 20px, 20px);
+    }
+  }
+  .form-wrap {
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    top: 61px;
+    bottom: 65px;
+  }
+  h2.title {
+    background: rgba(255, 255, 255, 0.15);
+  }
+}
+
+.module.reports {
+  h3.title {
+    width: 100%;
+    padding: 14px 14px 13px 14px;
+    text-align: center;
+    background: #eeedea;
+    border-top: 1px solid #f4f4f2;
+    border-bottom: 1px solid #dedcd7;
+    color: #918a7d;
+    height: 45px;
+  }
+
+  .table-head {
+    width: 100%;
+    th {
+      height: 30px;
+      padding: 10px 15px;
+      background: #f4f4f4;
+      border-top: 1px solid #f8f8f6;
+      border-bottom: 1px solid #dedcd7;
+      font-size: 14px;
+      font-weight: 500;
+      color: #777;
+      &.descending:after {
+        content: ' \25BC';
+      }
+      &.ascending:after {
+        content: ' \25B2';
+      }
+      a {
+        font-size: 14px;
+        font-weight: 500;
+        color: #777;
+        text-decoration: none;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+  thead {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+
+  .table-body-wrap {
+    position: absolute;
+    top: 98px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: scroll;
+  }
+  table.table-body {
+    width: 100%;
+    td {
+      padding: 15px 15px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      font-size: 14px;
+      color: #777;
+    }
+  }
+
+  .head .actions {
+    position: absolute;
+    right: 261px;
+    top: 24px;
+  }
+}

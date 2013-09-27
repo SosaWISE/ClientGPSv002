@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <title>Security Sciences</title>
   <link href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,300' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="index.css" />
 </head>
 <body>
   <div id="busyindicator"></div>
@@ -20,19 +20,27 @@
           <h1 class="txt">Security Sciences</h1>
         </a>
         <div data-bind="foreach:panels">
-          <a data-bind="attr:{href:'#/'+id,'class':id}">
-            <div class="indicator"></div>
-            <span class="ico" data-bind="html:ico"></span>
-            <span class="txt" data-bind="text:name"></span>
-          </a>
+          <div data-bind="active:active">
+            <a data-bind="attr:{href:'#/'+id,'class':id}">
+              <div data-bind="visible:active">
+                <div class="indicator"></div>
+              </div>
+              <span class="ico" data-bind="html:ico"></span>
+              <span class="txt" data-bind="text:name"></span>
+            </a>
+          </div>
         </div>
       </nav>
       <div class="wrap">
-        <div class="sidebars visible" data-bind="foreach:panels">
-          <div data-bind="template:viewTemplate,attr:{id:id+'-view','class':'view sidebar '+id}"></div>
+        <div class="panels visible" data-bind="foreach:panels">
+          <div data-bind="active:active">
+            <div data-bind="template:viewTemplate,attr:{id:id+'-view','class':'view sidebar '+id}"></div>
+          </div>
         </div>
         <div class="modules" data-bind="foreach:panels">
-          <div data-bind="template:moduleTemplate,attr:{'class': id+' module'}"></div>
+          <div data-bind="active:active">
+            <div data-bind="template:moduleTemplate,attr:{'class': id+' module'}"></div>
+          </div>
         </div>
       </div>
     </div>

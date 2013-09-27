@@ -1,0 +1,126 @@
+.panels .devices .devices.pane .content,
+.panels .devices .geofences.pane .content,
+.panels .users .content {
+  bottom: 65px;
+}
+
+.devices-pane {
+  background-color: white;
+  width: 300px;
+  position: absolute;
+  top:0;right:-300px;bottom:0;
+  -webkit-transition: .5s;
+  -moz-transition: .5s;
+  -ms-transition: .5s;
+  transition: .5s;
+  .titlebar {
+    padding: 20px 20px 20px 55px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    position: relative;
+    &:before {
+      display: block;
+      width: 32px;
+      height: 32px;
+      position: absolute;
+      top: 20px;
+      left: 15px;
+      color: rgba(0, 0, 0, 0.5);
+      font-family: 'SecuritySciences';
+      font-size: 32px;
+      text-align: center;
+    }
+    &.home:before {
+      content: "\e007";
+    }
+    &.car-nav:before {
+      content: "\e002";
+    }
+    &.bracelet:before {
+      content: "\e008";
+    }
+    &.phone:before {
+      content: "\e009";
+    }
+    &.child:before {
+      content: "\e00a";
+    }
+    &.pet:before {
+      content: "\e00b";
+    }
+    &.car:before {
+      content: "\e00c";
+    }
+    &.watch:before {
+      content: "\e00d";
+    }
+  }
+  h3.title {
+    color: #6c6c6c;
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+  .subtitle {
+    color: #a4a4a4;
+    font-size: 12px;
+    font-weight: bold;
+  }
+  > h4 {
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.5);
+    font-size: 12px;
+    font-weight: 500;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 15px;
+  }
+  .content {
+    top: 213px;
+  }
+  > .actions {
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    a {
+      display: block;
+      padding: 50px 0 0 0;
+      width: 75px;
+      color: #7fbb45;
+      font-size: 11px;
+      font-weight: bold;
+      text-transform: uppercase;
+      text-align: center;
+      text-decoration: none;
+      float: left;
+      border-right: 1px solid rgba(0, 0, 0, 0.1);
+      position: relative;
+      &:before {
+        content: '';
+        display: block;
+        width: 32px;
+        height: 32px;
+        position: absolute;
+        top:10px;
+        left: 50%;
+        margin-left: -16px;
+        color: #7fbb45;
+        font-family: 'SecuritySciences';
+        font-size: 28px;
+        text-align: center;
+      }
+      &:last-child {
+        border-right: 0px solid transparent;
+      }
+      &.alert:before {
+        content: "\e01f";
+      }
+      &.text:before {
+        content: "\e027";
+      }
+      &.call:before {
+        content: "\e026";
+      }
+      &.directions:before {
+        content: "\e002";
+      }
+    }
+  }
+}
