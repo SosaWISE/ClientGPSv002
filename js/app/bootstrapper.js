@@ -40,7 +40,7 @@ define(['../loadDependencies'], function() {
       }
     });
 
-    $('#busyindicator').activity(true);
+    // $('#busyindicator').activity(true);
     dataservice.Session.SessionStart(config.token, function(data) {
       if (data.Code !== 0) {
         console.error(data);
@@ -56,7 +56,7 @@ define(['../loadDependencies'], function() {
 
         router.init();
       }
-      $('#busyindicator').activity(false);
+      // $('#busyindicator').activity(false);
     });
   });
 });
